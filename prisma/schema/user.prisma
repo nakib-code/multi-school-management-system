@@ -1,0 +1,26 @@
+model User {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String     @unique
+  passwordHash String
+  phone        String?
+  role         UserRole   @default(GUARDIAN)
+  status       UserStatus @default(ACTIVE)
+
+  lastLoginAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  guardian                Guardian?
+  teacher                 Teacher?
+  manager                 Manager?
+  markedAttendances       Attendance[]
+  receivedStudentPayments StudentPayment[]
+  paidSalaryPayments      SalaryPayment[]
+  admissionsReviewed      Admission[]      @relation("AdmissionReviewer")
+  auditLogs               AuditLog[]
+
+  @@index([role])
+  @@index([status])
+  @@map("users")
+}

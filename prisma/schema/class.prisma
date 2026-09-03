@@ -1,0 +1,22 @@
+model SchoolClass {
+  id       Int @id @default(autoincrement())
+  schoolId Int
+
+  name        String
+  code        String
+  description String?
+  isActive    Boolean @default(true)
+
+  school   School    @relation(fields: [schoolId], references: [id])
+  sections Section[]
+
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  teacherAssignments TeacherAssignment[]
+  enrollments        Enrollment[]
+  exams              Exam[]
+
+  @@unique([schoolId, code])
+  @@index([schoolId])
+  @@map("school_classes")
+}

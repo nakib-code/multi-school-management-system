@@ -1,0 +1,35 @@
+model School {
+  id      Int     @id @default(autoincrement())
+  name    String
+  code    String  @unique
+  email   String?
+  phone   String?
+  address String?
+  logo    String?
+
+  isActive Boolean @default(true)
+
+  guardians Guardian[]
+
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  teachers           Teacher[]
+  managers           Manager[]
+  classes            SchoolClass[]
+  sections           Section[]
+  subjects           Subject[]
+  teacherAssignments TeacherAssignment[]
+  enrollments        Enrollment[]
+  attendances        Attendance[]
+  exams              Exam[]
+  results            Result[]
+  studentFees        StudentFee[]
+  studentPayments    StudentPayment[]
+  teacherSalaries    TeacherSalary[]
+  salaryPayments     SalaryPayment[]
+  admissions         Admission[]
+  auditLogs          AuditLog[]
+
+  @@index([name])
+  @@map("schools")
+}

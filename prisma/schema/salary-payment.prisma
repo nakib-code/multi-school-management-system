@@ -1,0 +1,30 @@
+model SalaryPayment {
+  id        Int @id @default(autoincrement())
+  schoolId  Int
+  teacherId Int
+  salaryId  Int
+
+  transactionId String              @unique
+  amount        Decimal             @db.Decimal(10, 2)
+  paymentMethod SalaryPaymentMethod
+  status        SalaryPaymentStatus @default(COMPLETED)
+
+  paidAt  DateTime @default(now())
+  paidBy  Int?
+  remarks String?
+
+  school     School        @relation(fields: [schoolId], references: [id])
+  teacher    Teacher       @relation(fields: [teacherId], references: [id])
+  salary     TeacherSalary @relation(fields: [salaryId], references: [id])
+  paidByUser User?         @relation(fields: [paidBy], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([teacherId])
+  @@index([salaryId])
+  @@index([status])
+  @@index([paidAt])
+  @@map("salary_payments")
+}

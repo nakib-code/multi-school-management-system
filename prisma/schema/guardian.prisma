@@ -1,0 +1,34 @@
+model Guardian {
+  id       Int @id @default(autoincrement())
+  userId   Int @unique
+  schoolId Int
+
+  relation   String?
+  occupation String?
+  address    String?
+
+  user     User              @relation(fields: [userId], references: [id])
+  school   School            @relation(fields: [schoolId], references: [id])
+  students GuardianStudent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@map("guardians")
+}
+
+model GuardianStudent {
+  guardianId Int
+  studentId  Int
+  isPrimary  Boolean @default(false)
+
+  guardian Guardian @relation(fields: [guardianId], references: [id], onDelete: Cascade)
+  student  Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([guardianId, studentId])
+  @@index([studentId])
+  @@map("guardian_students")
+}

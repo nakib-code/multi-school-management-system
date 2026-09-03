@@ -1,0 +1,33 @@
+model Result {
+  id           Int @id @default(autoincrement())
+  schoolId     Int
+  studentId    Int
+  examId       Int
+  subjectId    Int
+  enrollmentId Int
+
+  marks      Decimal @db.Decimal(5, 2)
+  grade      Grade
+  gradePoint Decimal @db.Decimal(3, 2)
+
+  remarks String?
+
+  publishedAt DateTime?
+
+  school     School     @relation(fields: [schoolId], references: [id])
+  student    Student    @relation(fields: [studentId], references: [id])
+  exam       Exam       @relation(fields: [examId], references: [id])
+  subject    Subject    @relation(fields: [subjectId], references: [id])
+  enrollment Enrollment @relation(fields: [enrollmentId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, examId, subjectId])
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([examId])
+  @@index([subjectId])
+  @@index([enrollmentId])
+  @@map("results")
+}

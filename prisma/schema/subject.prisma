@@ -1,0 +1,23 @@
+model Subject {
+  id       Int @id @default(autoincrement())
+  schoolId Int
+
+  name        String
+  code        String
+  description String?
+  fullMarks   Int     @default(100)
+  passMarks   Int     @default(33)
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  isActive Boolean @default(true)
+
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  teacherAssignments TeacherAssignment[]
+  results            Result[]
+
+  @@unique([schoolId, code])
+  @@index([schoolId])
+  @@map("subjects")
+}

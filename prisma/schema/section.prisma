@@ -1,0 +1,26 @@
+model Section {
+  id       Int @id @default(autoincrement())
+  schoolId Int
+  classId  Int
+
+  name       String
+  code       String
+  capacity   Int?
+  roomNumber String?
+
+  school School      @relation(fields: [schoolId], references: [id])
+  class  SchoolClass @relation(fields: [classId], references: [id])
+
+  isActive Boolean @default(true)
+
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  teacherAssignments TeacherAssignment[]
+  enrollments        Enrollment[]
+  exams              Exam[]
+
+  @@unique([classId, code])
+  @@index([schoolId])
+  @@index([classId])
+  @@map("sections")
+}

@@ -1,0 +1,29 @@
+model StudentFee {
+  id           Int @id @default(autoincrement())
+  schoolId     Int
+  studentId    Int
+  enrollmentId Int
+
+  feeType FeeType
+  title   String
+  amount  Decimal  @db.Decimal(10, 2)
+  dueDate DateTime
+
+  status      FeeStatus @default(PENDING)
+  description String?
+
+  school     School           @relation(fields: [schoolId], references: [id])
+  student    Student          @relation(fields: [studentId], references: [id])
+  enrollment Enrollment       @relation(fields: [enrollmentId], references: [id])
+  payments   StudentPayment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([enrollmentId])
+  @@index([status])
+  @@index([dueDate])
+  @@map("student_fees")
+}

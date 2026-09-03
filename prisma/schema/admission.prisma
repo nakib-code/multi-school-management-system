@@ -1,0 +1,32 @@
+model Admission {
+  id            Int    @id @default(autoincrement())
+  schoolId      Int
+  applicationNo String @unique
+
+  studentName   String
+  dateOfBirth   DateTime?
+  gender        String?
+  guardianName  String
+  guardianPhone String
+  guardianEmail String?
+
+  previousSchool String?
+  address        String?
+
+  status AdmissionStatus @default(PENDING)
+
+  reviewedAt      DateTime?
+  reviewedBy      Int?
+  rejectionReason String?
+
+  school   School @relation(fields: [schoolId], references: [id])
+  reviewer User?  @relation("AdmissionReviewer", fields: [reviewedBy], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([status])
+  @@index([guardianPhone])
+  @@map("admissions")
+}

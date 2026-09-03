@@ -1,0 +1,30 @@
+model TeacherSalary {
+  id        Int @id @default(autoincrement())
+  schoolId  Int
+  teacherId Int
+
+  month Int
+  year  Int
+
+  basicSalary Decimal @db.Decimal(10, 2)
+  bonus       Decimal @default(0) @db.Decimal(10, 2)
+  deduction   Decimal @default(0) @db.Decimal(10, 2)
+  netSalary   Decimal @db.Decimal(10, 2)
+
+  status  SalaryStatus @default(PENDING)
+  remarks String?
+
+  school   School          @relation(fields: [schoolId], references: [id])
+  teacher  Teacher         @relation(fields: [teacherId], references: [id])
+  payments SalaryPayment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([teacherId, month, year])
+  @@index([schoolId])
+  @@index([teacherId])
+  @@index([year, month])
+  @@index([status])
+  @@map("teacher_salaries")
+}

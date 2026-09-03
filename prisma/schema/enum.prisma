@@ -1,0 +1,100 @@
+enum AdmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+  EXCUSED
+}
+
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  APPROVE
+  REJECT
+  PAYMENT
+  REFUND
+  PASSWORD_CHANGE
+}
+
+enum ExamType {
+  CLASS_TEST
+  HALF_YEARLY
+  ANNUAL
+  MODEL_TEST
+  FINAL
+}
+
+enum ExamStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum Grade {
+  A_PLUS
+  A
+  A_MINUS
+  B
+  C
+  D
+  F
+}
+
+enum SalaryPaymentMethod {
+  CASH
+  BANK
+  MOBILE_BANKING
+  ONLINE
+}
+
+enum SalaryPaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REVERSED
+}
+
+enum FeeType {
+  ADMISSION
+  MONTHLY
+  EXAM
+  TRANSPORT
+  LIBRARY
+  OTHER
+}
+
+enum FeeStatus {
+  PENDING
+  PARTIAL
+  PAID
+  WAIVED
+}
+
+enum SalaryStatus {
+  PENDING
+  PARTIAL
+  PAID
+}
+
+enum UserRole {
+  ADMIN
+  MANAGER
+  TEACHER
+  GUARDIAN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}

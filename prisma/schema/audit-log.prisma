@@ -1,0 +1,25 @@
+model AuditLog {
+  id       Int  @id @default(autoincrement())
+  schoolId Int
+  userId   Int?
+
+  action      AuditAction
+  entity      String
+  entityId    Int?
+  description String?
+
+  ipAddress String?
+  userAgent String?
+
+  school School @relation(fields: [schoolId], references: [id])
+  user   User?  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([schoolId])
+  @@index([userId])
+  @@index([action])
+  @@index([entity])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

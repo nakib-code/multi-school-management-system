@@ -1,0 +1,28 @@
+model TeacherAssignment {
+  id        Int @id @default(autoincrement())
+  schoolId  Int
+  teacherId Int
+  classId   Int
+  sectionId Int
+  subjectId Int
+
+  academicYear String
+  isActive     Boolean @default(true)
+
+  school  School      @relation(fields: [schoolId], references: [id])
+  teacher Teacher     @relation(fields: [teacherId], references: [id])
+  class   SchoolClass @relation(fields: [classId], references: [id])
+  section Section     @relation(fields: [sectionId], references: [id])
+  subject Subject     @relation(fields: [subjectId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([teacherId, sectionId, subjectId, academicYear])
+  @@index([schoolId])
+  @@index([teacherId])
+  @@index([classId])
+  @@index([sectionId])
+  @@index([subjectId])
+  @@map("teacher_assignments")
+}

@@ -1,0 +1,44 @@
+enum PaymentMethod {
+  CASH
+  BANK
+  MOBILE_BANKING
+  ONLINE
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+model StudentPayment {
+  id        Int @id @default(autoincrement())
+  schoolId  Int
+  studentId Int
+  feeId     Int
+
+  transactionId String        @unique
+  amount        Decimal       @db.Decimal(10, 2)
+  paymentMethod PaymentMethod
+  status        PaymentStatus @default(COMPLETED)
+
+  paidAt     DateTime @default(now())
+  receivedBy Int?
+  remarks    String?
+
+  school         School     @relation(fields: [schoolId], references: [id])
+  student        Student    @relation(fields: [studentId], references: [id])
+  fee            StudentFee @relation(fields: [feeId], references: [id])
+  receivedByUser User?      @relation(fields: [receivedBy], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@index([feeId])
+  @@index([status])
+  @@index([paidAt])
+  @@map("student_payments")
+}

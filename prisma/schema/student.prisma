@@ -1,0 +1,27 @@
+model Student {
+  id            Int       @id @default(autoincrement())
+  schoolId      Int
+  studentId     String    @unique
+  firstName     String
+  lastName      String?
+  dateOfBirth   DateTime?
+  gender        String?
+  phone         String?
+  address       String?
+  admissionDate DateTime  @default(now())
+
+  isActive Boolean @default(true)
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  guardians   GuardianStudent[]
+  enrollments Enrollment[]
+  attendances Attendance[]
+  results     Result[]
+  fees        StudentFee[]
+  payments    StudentPayment[]
+
+  @@index([schoolId])
+  @@index([studentId])
+  @@map("students")
+}

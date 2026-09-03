@@ -1,0 +1,29 @@
+model Exam {
+  id        Int  @id @default(autoincrement())
+  schoolId  Int
+  classId   Int
+  sectionId Int?
+
+  name         String
+  type         ExamType
+  academicYear String
+
+  startDate DateTime
+  endDate   DateTime
+  status    ExamStatus @default(UPCOMING)
+
+  school  School      @relation(fields: [schoolId], references: [id])
+  class   SchoolClass @relation(fields: [classId], references: [id])
+  section Section?    @relation(fields: [sectionId], references: [id])
+  results Result[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([classId])
+  @@index([sectionId])
+  @@index([academicYear])
+  @@index([status])
+  @@map("exams")
+}
