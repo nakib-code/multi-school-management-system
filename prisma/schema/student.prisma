@@ -1,7 +1,9 @@
 model Student {
-  id            Int       @id @default(autoincrement())
-  schoolId      Int
-  studentId     String    @unique
+  id        Int    @id @default(autoincrement())
+  userId    Int    @unique
+  schoolId  Int
+  studentId String @unique
+
   firstName     String
   lastName      String?
   dateOfBirth   DateTime?
@@ -12,14 +14,17 @@ model Student {
 
   isActive Boolean @default(true)
 
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  user User @relation(fields: [userId], references: [id])
+
   guardians   GuardianStudent[]
   enrollments Enrollment[]
   attendances Attendance[]
   results     Result[]
   fees        StudentFee[]
   payments    StudentPayment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([schoolId])
   @@index([studentId])

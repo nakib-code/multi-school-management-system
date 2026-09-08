@@ -141,10 +141,12 @@ export type SalaryStatus = (typeof SalaryStatus)[keyof typeof SalaryStatus]
 
 
 export const UserRole = {
+  SUPER_ADMIN: 'SUPER_ADMIN',
   ADMIN: 'ADMIN',
   MANAGER: 'MANAGER',
   TEACHER: 'TEACHER',
-  GUARDIAN: 'GUARDIAN'
+  GUARDIAN: 'GUARDIAN',
+  STUDENT: 'STUDENT'
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
@@ -157,6 +159,16 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const SchoolStatus = {
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  REJECTED: 'REJECTED',
+  BLOCKED: 'BLOCKED'
+} as const
+
+export type SchoolStatus = (typeof SchoolStatus)[keyof typeof SchoolStatus]
 
 
 export const PaymentMethod = {

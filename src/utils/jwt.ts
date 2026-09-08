@@ -3,7 +3,7 @@ import env from "../config/env.js";
 
 export interface JwtPayload {
   userId: number;
-  role: "ADMIN" | "MANAGER" | "TEACHER" | "GUARDIAN";
+  role: "SUPER_ADMIN" | "ADMIN" | "MANAGER" | "TEACHER" | "STUDENT";
 }
 
 export const generateToken = (payload: JwtPayload): string => {

@@ -1,6 +1,9 @@
 import express from "express";
 import { notFound } from "./middleware/notFound.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { authRoutes } from "./modules/auth/route.js";
+import { admissionRoutes } from "./modules/admission/route.js";
+import { schoolRoutes } from "./modules/school/route.js";
 
 const app = express();
 
@@ -16,10 +19,12 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
-// 404 handler
-app.use(notFound);
+app.use("/api/auth", authRoutes);
+app.use("/api/admissions", admissionRoutes);
+app.use("/api/schools", schoolRoutes);
 
-// Global error handler
+
+app.use(notFound);
 app.use(errorHandler);
 
 export default app;

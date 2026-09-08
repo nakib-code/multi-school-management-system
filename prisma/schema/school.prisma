@@ -1,5 +1,6 @@
 model School {
-  id      Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+
   name    String
   code    String  @unique
   email   String?
@@ -7,12 +8,17 @@ model School {
   address String?
   logo    String?
 
-  isActive Boolean @default(true)
+  status SchoolStatus @default(PENDING)
+
+  adminName  String?
+  adminEmail String?
+  adminPhone String?
 
   guardians Guardian[]
 
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   teachers           Teacher[]
   managers           Manager[]
   classes            SchoolClass[]
@@ -29,6 +35,7 @@ model School {
   salaryPayments     SalaryPayment[]
   admissions         Admission[]
   auditLogs          AuditLog[]
+  users              User[]
 
   @@index([name])
   @@map("schools")

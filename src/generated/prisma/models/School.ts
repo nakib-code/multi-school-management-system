@@ -42,7 +42,10 @@ export type SchoolMinAggregateOutputType = {
   phone: string | null
   address: string | null
   logo: string | null
-  isActive: boolean | null
+  status: $Enums.SchoolStatus | null
+  adminName: string | null
+  adminEmail: string | null
+  adminPhone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -55,7 +58,10 @@ export type SchoolMaxAggregateOutputType = {
   phone: string | null
   address: string | null
   logo: string | null
-  isActive: boolean | null
+  status: $Enums.SchoolStatus | null
+  adminName: string | null
+  adminEmail: string | null
+  adminPhone: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -68,7 +74,10 @@ export type SchoolCountAggregateOutputType = {
   phone: number
   address: number
   logo: number
-  isActive: number
+  status: number
+  adminName: number
+  adminEmail: number
+  adminPhone: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -91,7 +100,10 @@ export type SchoolMinAggregateInputType = {
   phone?: true
   address?: true
   logo?: true
-  isActive?: true
+  status?: true
+  adminName?: true
+  adminEmail?: true
+  adminPhone?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -104,7 +116,10 @@ export type SchoolMaxAggregateInputType = {
   phone?: true
   address?: true
   logo?: true
-  isActive?: true
+  status?: true
+  adminName?: true
+  adminEmail?: true
+  adminPhone?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -117,7 +132,10 @@ export type SchoolCountAggregateInputType = {
   phone?: true
   address?: true
   logo?: true
-  isActive?: true
+  status?: true
+  adminName?: true
+  adminEmail?: true
+  adminPhone?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -217,7 +235,10 @@ export type SchoolGroupByOutputType = {
   phone: string | null
   address: string | null
   logo: string | null
-  isActive: boolean
+  status: $Enums.SchoolStatus
+  adminName: string | null
+  adminEmail: string | null
+  adminPhone: string | null
   createdAt: Date
   updatedAt: Date
   _count: SchoolCountAggregateOutputType | null
@@ -253,7 +274,10 @@ export type SchoolWhereInput = {
   phone?: Prisma.StringNullableFilter<"School"> | string | null
   address?: Prisma.StringNullableFilter<"School"> | string | null
   logo?: Prisma.StringNullableFilter<"School"> | string | null
-  isActive?: Prisma.BoolFilter<"School"> | boolean
+  status?: Prisma.EnumSchoolStatusFilter<"School"> | $Enums.SchoolStatus
+  adminName?: Prisma.StringNullableFilter<"School"> | string | null
+  adminEmail?: Prisma.StringNullableFilter<"School"> | string | null
+  adminPhone?: Prisma.StringNullableFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
   guardians?: Prisma.GuardianListRelationFilter
@@ -273,6 +297,7 @@ export type SchoolWhereInput = {
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
   admissions?: Prisma.AdmissionListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  users?: Prisma.UserListRelationFilter
 }
 
 export type SchoolOrderByWithRelationInput = {
@@ -283,7 +308,10 @@ export type SchoolOrderByWithRelationInput = {
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   logo?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  adminName?: Prisma.SortOrderInput | Prisma.SortOrder
+  adminEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  adminPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   guardians?: Prisma.GuardianOrderByRelationAggregateInput
@@ -303,6 +331,7 @@ export type SchoolOrderByWithRelationInput = {
   salaryPayments?: Prisma.SalaryPaymentOrderByRelationAggregateInput
   admissions?: Prisma.AdmissionOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
+  users?: Prisma.UserOrderByRelationAggregateInput
 }
 
 export type SchoolWhereUniqueInput = Prisma.AtLeast<{
@@ -316,7 +345,10 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringNullableFilter<"School"> | string | null
   address?: Prisma.StringNullableFilter<"School"> | string | null
   logo?: Prisma.StringNullableFilter<"School"> | string | null
-  isActive?: Prisma.BoolFilter<"School"> | boolean
+  status?: Prisma.EnumSchoolStatusFilter<"School"> | $Enums.SchoolStatus
+  adminName?: Prisma.StringNullableFilter<"School"> | string | null
+  adminEmail?: Prisma.StringNullableFilter<"School"> | string | null
+  adminPhone?: Prisma.StringNullableFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
   guardians?: Prisma.GuardianListRelationFilter
@@ -336,6 +368,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
   admissions?: Prisma.AdmissionListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
+  users?: Prisma.UserListRelationFilter
 }, "id" | "code">
 
 export type SchoolOrderByWithAggregationInput = {
@@ -346,7 +379,10 @@ export type SchoolOrderByWithAggregationInput = {
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   logo?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  adminName?: Prisma.SortOrderInput | Prisma.SortOrder
+  adminEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  adminPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolCountOrderByAggregateInput
@@ -367,7 +403,10 @@ export type SchoolScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   logo?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
-  isActive?: Prisma.BoolWithAggregatesFilter<"School"> | boolean
+  status?: Prisma.EnumSchoolStatusWithAggregatesFilter<"School"> | $Enums.SchoolStatus
+  adminName?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
+  adminEmail?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
+  adminPhone?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
 }
@@ -379,7 +418,10 @@ export type SchoolCreateInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -399,6 +441,7 @@ export type SchoolCreateInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateInput = {
@@ -409,7 +452,10 @@ export type SchoolUncheckedCreateInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -429,6 +475,7 @@ export type SchoolUncheckedCreateInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUpdateInput = {
@@ -438,7 +485,10 @@ export type SchoolUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -458,6 +508,7 @@ export type SchoolUpdateInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateInput = {
@@ -468,7 +519,10 @@ export type SchoolUncheckedUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -488,6 +542,7 @@ export type SchoolUncheckedUpdateInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateManyInput = {
@@ -498,7 +553,10 @@ export type SchoolCreateManyInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -510,7 +568,10 @@ export type SchoolUpdateManyMutationInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -523,7 +584,10 @@ export type SchoolUncheckedUpdateManyInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -541,7 +605,10 @@ export type SchoolCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   logo?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  adminName?: Prisma.SortOrder
+  adminEmail?: Prisma.SortOrder
+  adminPhone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -558,7 +625,10 @@ export type SchoolMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   logo?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  adminName?: Prisma.SortOrder
+  adminEmail?: Prisma.SortOrder
+  adminPhone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -571,13 +641,21 @@ export type SchoolMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   logo?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  status?: Prisma.SortOrder
+  adminName?: Prisma.SortOrder
+  adminEmail?: Prisma.SortOrder
+  adminPhone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type SchoolSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+}
+
+export type SchoolNullableScalarRelationFilter = {
+  is?: Prisma.SchoolWhereInput | null
+  isNot?: Prisma.SchoolWhereInput | null
 }
 
 export type SchoolCreateNestedOneWithoutAdmissionsInput = {
@@ -720,6 +798,10 @@ export type SchoolUpdateOneRequiredWithoutSalaryPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutSalaryPaymentsInput, Prisma.SchoolUpdateWithoutSalaryPaymentsInput>, Prisma.SchoolUncheckedUpdateWithoutSalaryPaymentsInput>
 }
 
+export type EnumSchoolStatusFieldUpdateOperationsInput = {
+  set?: $Enums.SchoolStatus
+}
+
 export type SchoolCreateNestedOneWithoutSectionsInput = {
   create?: Prisma.XOR<Prisma.SchoolCreateWithoutSectionsInput, Prisma.SchoolUncheckedCreateWithoutSectionsInput>
   connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSectionsInput
@@ -818,6 +900,22 @@ export type SchoolUpdateOneRequiredWithoutTeachersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutTeachersInput, Prisma.SchoolUpdateWithoutTeachersInput>, Prisma.SchoolUncheckedUpdateWithoutTeachersInput>
 }
 
+export type SchoolCreateNestedOneWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutUsersInput, Prisma.SchoolUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutUsersInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutUsersInput, Prisma.SchoolUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutUsersInput
+  upsert?: Prisma.SchoolUpsertWithoutUsersInput
+  disconnect?: Prisma.SchoolWhereInput | boolean
+  delete?: Prisma.SchoolWhereInput | boolean
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutUsersInput, Prisma.SchoolUpdateWithoutUsersInput>, Prisma.SchoolUncheckedUpdateWithoutUsersInput>
+}
+
 export type SchoolCreateWithoutAdmissionsInput = {
   name: string
   code: string
@@ -825,7 +923,10 @@ export type SchoolCreateWithoutAdmissionsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -844,6 +945,7 @@ export type SchoolCreateWithoutAdmissionsInput = {
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAdmissionsInput = {
@@ -854,7 +956,10 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -873,6 +978,7 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAdmissionsInput = {
@@ -898,7 +1004,10 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -917,6 +1026,7 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
@@ -927,7 +1037,10 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -946,6 +1059,7 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutAttendancesInput = {
@@ -955,7 +1069,10 @@ export type SchoolCreateWithoutAttendancesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -974,6 +1091,7 @@ export type SchoolCreateWithoutAttendancesInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAttendancesInput = {
@@ -984,7 +1102,10 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1003,6 +1124,7 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAttendancesInput = {
@@ -1028,7 +1150,10 @@ export type SchoolUpdateWithoutAttendancesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1047,6 +1172,7 @@ export type SchoolUpdateWithoutAttendancesInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAttendancesInput = {
@@ -1057,7 +1183,10 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1076,6 +1205,7 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutAuditLogsInput = {
@@ -1085,7 +1215,10 @@ export type SchoolCreateWithoutAuditLogsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -1104,6 +1237,7 @@ export type SchoolCreateWithoutAuditLogsInput = {
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAuditLogsInput = {
@@ -1114,7 +1248,10 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1133,6 +1270,7 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAuditLogsInput = {
@@ -1158,7 +1296,10 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1177,6 +1318,7 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
@@ -1187,7 +1329,10 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1206,6 +1351,7 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutClassesInput = {
@@ -1215,7 +1361,10 @@ export type SchoolCreateWithoutClassesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -1234,6 +1383,7 @@ export type SchoolCreateWithoutClassesInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutClassesInput = {
@@ -1244,7 +1394,10 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1263,6 +1416,7 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutClassesInput = {
@@ -1288,7 +1442,10 @@ export type SchoolUpdateWithoutClassesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1307,6 +1464,7 @@ export type SchoolUpdateWithoutClassesInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutClassesInput = {
@@ -1317,7 +1475,10 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1336,6 +1497,7 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutEnrollmentsInput = {
@@ -1345,7 +1507,10 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -1364,6 +1529,7 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
@@ -1374,7 +1540,10 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1393,6 +1562,7 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutEnrollmentsInput = {
@@ -1418,7 +1588,10 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1437,6 +1610,7 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1447,7 +1621,10 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1466,6 +1643,7 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutExamsInput = {
@@ -1475,7 +1653,10 @@ export type SchoolCreateWithoutExamsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -1494,6 +1675,7 @@ export type SchoolCreateWithoutExamsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutExamsInput = {
@@ -1504,7 +1686,10 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1523,6 +1708,7 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutExamsInput = {
@@ -1548,7 +1734,10 @@ export type SchoolUpdateWithoutExamsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1567,6 +1756,7 @@ export type SchoolUpdateWithoutExamsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutExamsInput = {
@@ -1577,7 +1767,10 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1596,6 +1789,7 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutGuardiansInput = {
@@ -1605,7 +1799,10 @@ export type SchoolCreateWithoutGuardiansInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
@@ -1624,6 +1821,7 @@ export type SchoolCreateWithoutGuardiansInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutGuardiansInput = {
@@ -1634,7 +1832,10 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
@@ -1653,6 +1854,7 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutGuardiansInput = {
@@ -1678,7 +1880,10 @@ export type SchoolUpdateWithoutGuardiansInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
@@ -1697,6 +1902,7 @@ export type SchoolUpdateWithoutGuardiansInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutGuardiansInput = {
@@ -1707,7 +1913,10 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1726,6 +1935,7 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutManagersInput = {
@@ -1735,7 +1945,10 @@ export type SchoolCreateWithoutManagersInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -1754,6 +1967,7 @@ export type SchoolCreateWithoutManagersInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutManagersInput = {
@@ -1764,7 +1978,10 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1783,6 +2000,7 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutManagersInput = {
@@ -1808,7 +2026,10 @@ export type SchoolUpdateWithoutManagersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1827,6 +2048,7 @@ export type SchoolUpdateWithoutManagersInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutManagersInput = {
@@ -1837,7 +2059,10 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1856,6 +2081,7 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutResultsInput = {
@@ -1865,7 +2091,10 @@ export type SchoolCreateWithoutResultsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -1884,6 +2113,7 @@ export type SchoolCreateWithoutResultsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutResultsInput = {
@@ -1894,7 +2124,10 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -1913,6 +2146,7 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutResultsInput = {
@@ -1938,7 +2172,10 @@ export type SchoolUpdateWithoutResultsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -1957,6 +2194,7 @@ export type SchoolUpdateWithoutResultsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutResultsInput = {
@@ -1967,7 +2205,10 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1986,6 +2227,7 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSalaryPaymentsInput = {
@@ -1995,7 +2237,10 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2014,6 +2259,7 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
@@ -2024,7 +2270,10 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2043,6 +2292,7 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSalaryPaymentsInput = {
@@ -2068,7 +2318,10 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2087,6 +2340,7 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
@@ -2097,7 +2351,10 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2116,6 +2373,7 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSectionsInput = {
@@ -2125,7 +2383,10 @@ export type SchoolCreateWithoutSectionsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2144,6 +2405,7 @@ export type SchoolCreateWithoutSectionsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSectionsInput = {
@@ -2154,7 +2416,10 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2173,6 +2438,7 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSectionsInput = {
@@ -2198,7 +2464,10 @@ export type SchoolUpdateWithoutSectionsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2217,6 +2486,7 @@ export type SchoolUpdateWithoutSectionsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSectionsInput = {
@@ -2227,7 +2497,10 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2246,6 +2519,7 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutStudentFeesInput = {
@@ -2255,7 +2529,10 @@ export type SchoolCreateWithoutStudentFeesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2274,6 +2551,7 @@ export type SchoolCreateWithoutStudentFeesInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutStudentFeesInput = {
@@ -2284,7 +2562,10 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2303,6 +2584,7 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutStudentFeesInput = {
@@ -2328,7 +2610,10 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2347,6 +2632,7 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
@@ -2357,7 +2643,10 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2376,6 +2665,7 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutStudentPaymentsInput = {
@@ -2385,7 +2675,10 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2404,6 +2697,7 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
@@ -2414,7 +2708,10 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2433,6 +2730,7 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutStudentPaymentsInput = {
@@ -2458,7 +2756,10 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2477,6 +2778,7 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
@@ -2487,7 +2789,10 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2506,6 +2811,7 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSubjectsInput = {
@@ -2515,7 +2821,10 @@ export type SchoolCreateWithoutSubjectsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2534,6 +2843,7 @@ export type SchoolCreateWithoutSubjectsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSubjectsInput = {
@@ -2544,7 +2854,10 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2563,6 +2876,7 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSubjectsInput = {
@@ -2588,7 +2902,10 @@ export type SchoolUpdateWithoutSubjectsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2607,6 +2924,7 @@ export type SchoolUpdateWithoutSubjectsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSubjectsInput = {
@@ -2617,7 +2935,10 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2636,6 +2957,7 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTeacherAssignmentsInput = {
@@ -2645,7 +2967,10 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2664,6 +2989,7 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
@@ -2674,7 +3000,10 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2693,6 +3022,7 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTeacherAssignmentsInput = {
@@ -2718,7 +3048,10 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2737,6 +3070,7 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
@@ -2747,7 +3081,10 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2766,6 +3103,7 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTeacherSalariesInput = {
@@ -2775,7 +3113,10 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2794,6 +3135,7 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
@@ -2804,7 +3146,10 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2823,6 +3168,7 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTeacherSalariesInput = {
@@ -2848,7 +3194,10 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2867,6 +3216,7 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
@@ -2877,7 +3227,10 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2896,6 +3249,7 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTeachersInput = {
@@ -2905,7 +3259,10 @@ export type SchoolCreateWithoutTeachersInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
@@ -2924,6 +3281,7 @@ export type SchoolCreateWithoutTeachersInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTeachersInput = {
@@ -2934,7 +3292,10 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   phone?: string | null
   address?: string | null
   logo?: string | null
-  isActive?: boolean
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
@@ -2953,6 +3314,7 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTeachersInput = {
@@ -2978,7 +3340,10 @@ export type SchoolUpdateWithoutTeachersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
@@ -2997,6 +3362,7 @@ export type SchoolUpdateWithoutTeachersInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTeachersInput = {
@@ -3007,10 +3373,160 @@ export type SchoolUncheckedUpdateWithoutTeachersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutUsersInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutUsersInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutUsersInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutUsersInput, Prisma.SchoolUncheckedCreateWithoutUsersInput>
+}
+
+export type SchoolUpsertWithoutUsersInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutUsersInput, Prisma.SchoolUncheckedUpdateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutUsersInput, Prisma.SchoolUncheckedCreateWithoutUsersInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutUsersInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutUsersInput, Prisma.SchoolUncheckedUpdateWithoutUsersInput>
+}
+
+export type SchoolUpdateWithoutUsersInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutUsersInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3051,6 +3567,7 @@ export type SchoolCountOutputType = {
   salaryPayments: number
   admissions: number
   auditLogs: number
+  users: number
 }
 
 export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3071,6 +3588,7 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   salaryPayments?: boolean | SchoolCountOutputTypeCountSalaryPaymentsArgs
   admissions?: boolean | SchoolCountOutputTypeCountAdmissionsArgs
   auditLogs?: boolean | SchoolCountOutputTypeCountAuditLogsArgs
+  users?: boolean | SchoolCountOutputTypeCountUsersArgs
 }
 
 /**
@@ -3202,6 +3720,13 @@ export type SchoolCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Type
   where?: Prisma.AuditLogWhereInput
 }
 
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserWhereInput
+}
+
 
 export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -3211,7 +3736,10 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   phone?: boolean
   address?: boolean
   logo?: boolean
-  isActive?: boolean
+  status?: boolean
+  adminName?: boolean
+  adminEmail?: boolean
+  adminPhone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   guardians?: boolean | Prisma.School$guardiansArgs<ExtArgs>
@@ -3231,6 +3759,7 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   salaryPayments?: boolean | Prisma.School$salaryPaymentsArgs<ExtArgs>
   admissions?: boolean | Prisma.School$admissionsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.School$auditLogsArgs<ExtArgs>
+  users?: boolean | Prisma.School$usersArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["school"]>
 
@@ -3242,7 +3771,10 @@ export type SchoolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phone?: boolean
   address?: boolean
   logo?: boolean
-  isActive?: boolean
+  status?: boolean
+  adminName?: boolean
+  adminEmail?: boolean
+  adminPhone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["school"]>
@@ -3255,7 +3787,10 @@ export type SchoolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   phone?: boolean
   address?: boolean
   logo?: boolean
-  isActive?: boolean
+  status?: boolean
+  adminName?: boolean
+  adminEmail?: boolean
+  adminPhone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["school"]>
@@ -3268,12 +3803,15 @@ export type SchoolSelectScalar = {
   phone?: boolean
   address?: boolean
   logo?: boolean
-  isActive?: boolean
+  status?: boolean
+  adminName?: boolean
+  adminEmail?: boolean
+  adminPhone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "email" | "phone" | "address" | "logo" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["school"]>
+export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "email" | "phone" | "address" | "logo" | "status" | "adminName" | "adminEmail" | "adminPhone" | "createdAt" | "updatedAt", ExtArgs["result"]["school"]>
 export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   guardians?: boolean | Prisma.School$guardiansArgs<ExtArgs>
   teachers?: boolean | Prisma.School$teachersArgs<ExtArgs>
@@ -3292,6 +3830,7 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   salaryPayments?: boolean | Prisma.School$salaryPaymentsArgs<ExtArgs>
   admissions?: boolean | Prisma.School$admissionsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.School$auditLogsArgs<ExtArgs>
+  users?: boolean | Prisma.School$usersArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SchoolIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3317,6 +3856,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     salaryPayments: Prisma.$SalaryPaymentPayload<ExtArgs>[]
     admissions: Prisma.$AdmissionPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+    users: Prisma.$UserPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -3326,7 +3866,10 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     phone: string | null
     address: string | null
     logo: string | null
-    isActive: boolean
+    status: $Enums.SchoolStatus
+    adminName: string | null
+    adminEmail: string | null
+    adminPhone: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["school"]>
@@ -3740,6 +4283,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   salaryPayments<T extends Prisma.School$salaryPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$salaryPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalaryPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   admissions<T extends Prisma.School$admissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.School$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  users<T extends Prisma.School$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3776,7 +4320,10 @@ export interface SchoolFieldRefs {
   readonly phone: Prisma.FieldRef<"School", 'String'>
   readonly address: Prisma.FieldRef<"School", 'String'>
   readonly logo: Prisma.FieldRef<"School", 'String'>
-  readonly isActive: Prisma.FieldRef<"School", 'Boolean'>
+  readonly status: Prisma.FieldRef<"School", 'SchoolStatus'>
+  readonly adminName: Prisma.FieldRef<"School", 'String'>
+  readonly adminEmail: Prisma.FieldRef<"School", 'String'>
+  readonly adminPhone: Prisma.FieldRef<"School", 'String'>
   readonly createdAt: Prisma.FieldRef<"School", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"School", 'DateTime'>
 }
@@ -4577,6 +5124,30 @@ export type School$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
+ * School.users
+ */
+export type School$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
+  orderBy?: Prisma.UserOrderByWithRelationInput | Prisma.UserOrderByWithRelationInput[]
+  cursor?: Prisma.UserWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
 }
 
 /**

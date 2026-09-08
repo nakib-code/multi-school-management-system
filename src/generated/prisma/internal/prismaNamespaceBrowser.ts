@@ -95,11 +95,11 @@ export const AdmissionScalarFieldEnum = {
   schoolId: 'schoolId',
   applicationNo: 'applicationNo',
   studentName: 'studentName',
+  studentEmail: 'studentEmail',
   dateOfBirth: 'dateOfBirth',
   gender: 'gender',
   guardianName: 'guardianName',
   guardianPhone: 'guardianPhone',
-  guardianEmail: 'guardianEmail',
   previousSchool: 'previousSchool',
   address: 'address',
   status: 'status',
@@ -284,7 +284,10 @@ export const SchoolScalarFieldEnum = {
   phone: 'phone',
   address: 'address',
   logo: 'logo',
-  isActive: 'isActive',
+  status: 'status',
+  adminName: 'adminName',
+  adminEmail: 'adminEmail',
+  adminPhone: 'adminPhone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -347,6 +350,7 @@ export type StudentPaymentScalarFieldEnum = (typeof StudentPaymentScalarFieldEnu
 
 export const StudentScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
   schoolId: 'schoolId',
   studentId: 'studentId',
   firstName: 'firstName',
@@ -444,6 +448,8 @@ export const UserScalarFieldEnum = {
   phone: 'phone',
   role: 'role',
   status: 'status',
+  mustChangePassword: 'mustChangePassword',
+  schoolId: 'schoolId',
   lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -3,13 +3,13 @@ model Admission {
   schoolId      Int
   applicationNo String @unique
 
-  studentName   String
-  dateOfBirth   DateTime?
-  gender        String?
-  guardianName  String
-  guardianPhone String
-  guardianEmail String?
+  studentName  String
+  studentEmail String
+  dateOfBirth  DateTime?
+  gender       String?
 
+  guardianName   String?
+  guardianPhone  String?
   previousSchool String?
   address        String?
 
@@ -27,6 +27,7 @@ model Admission {
 
   @@index([schoolId])
   @@index([status])
+  @@index([studentEmail])
   @@index([guardianPhone])
   @@map("admissions")
 }

@@ -1,19 +1,26 @@
 model User {
-  id           Int        @id @default(autoincrement())
-  name         String
-  email        String     @unique
-  passwordHash String
-  phone        String?
-  role         UserRole   @default(GUARDIAN)
-  status       UserStatus @default(ACTIVE)
+  id                 Int        @id @default(autoincrement())
+  name               String
+  email              String     @unique
+  passwordHash       String
+  phone              String?
+  role               UserRole
+  status             UserStatus @default(ACTIVE)
+  mustChangePassword Boolean    @default(true)
+
+  // Multi-school relation
+  schoolId Int?
+  school   School? @relation(fields: [schoolId], references: [id])
 
   lastLoginAt DateTime?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  guardian                Guardian?
-  teacher                 Teacher?
-  manager                 Manager?
+  guardian Guardian?
+  student  Student?
+  teacher  Teacher?
+  manager  Manager?
+
   markedAttendances       Attendance[]
   receivedStudentPayments StudentPayment[]
   paidSalaryPayments      SalaryPayment[]
@@ -22,5 +29,6 @@ model User {
 
   @@index([role])
   @@index([status])
+  @@index([schoolId])
   @@map("users")
 }

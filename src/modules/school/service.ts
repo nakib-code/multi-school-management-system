@@ -41,18 +41,21 @@ export const createSchool = async (
     );
   }
 
-  // Create school as PENDING
   const school = await prisma.school.create({
-    data: {
-      name,
-      code,
-      email,
-      phone,
-      address,
-      logo,
-      status: "PENDING",
-    },
-  });
+  data: {
+    name,
+    code,
+    email,
+    phone,
+    address,
+    logo,
+    status: "PENDING",
+
+    adminName,
+    adminEmail,
+    adminPhone,
+  },
+});
 
   return {
     school,
@@ -62,4 +65,32 @@ export const createSchool = async (
       phone: adminPhone,
     },
   };
+};
+export const approveSchool = async (
+  schoolId: number,
+  reviewerId: number,
+) => {
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+  });
+
+  if (!school) {
+    throw new AppError(404, "School not found");
+  }
+
+  if (school.status !== "PENDING") {
+    throw new AppError(
+      400,
+      `School cannot be approved from ${school.status} status`,
+    );
+  }
+
+  const updatedSchool = await prisma.school.update({
+    where: { id: schoolId },
+    data: {
+      status: "ACTIVE",
+    },
+  });
+
+  return updatedSchool;
 };
