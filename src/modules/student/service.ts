@@ -1,65 +1,48 @@
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
-import type { CreateSchoolInput } from "./interface.js";
 
-export const createSchool = async (
-  payload: CreateSchoolInput,
+export const getMyStudentProfile = async (
+  userId: number,
+  schoolId: number,
 ) => {
-  const {
-    name,
-    code,
-    email,
-    phone,
-    address,
-    logo,
-    adminName,
-    adminEmail,
-    adminPhone,
-  } = payload;
+  const student = await prisma.student.findFirst({
+    where: {
+      userId,
+      schoolId,
+      isActive: true,
+    },
+    select: {
+      id: true,
+      studentId: true,
+      firstName: true,
+      lastName: true,
+      dateOfBirth: true,
+      gender: true,
+      phone: true,
+      address: true,
+      admissionDate: true,
+      isActive: true,
 
-  // Check school code
-  const existingSchool = await prisma.school.findUnique({
-    where: { code },
-  });
-
-  if (existingSchool) {
-    throw new AppError(
-      409,
-      "A school with this code already exists",
-    );
-  }
-
-  // Check admin email
-  const existingAdmin = await prisma.user.findUnique({
-    where: { email: adminEmail },
-  });
-
-  if (existingAdmin) {
-    throw new AppError(
-      409,
-      "A user with this admin email already exists",
-    );
-  }
-
-  // Create school as PENDING
-  const school = await prisma.school.create({
-    data: {
-      name,
-      code,
-      email,
-      phone,
-      address,
-      logo,
-      status: "PENDING",
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          role: true,
+          status: true,
+          schoolId: true,
+        },
+      },
     },
   });
 
-  return {
-    school,
-    admin: {
-      name: adminName,
-      email: adminEmail,
-      phone: adminPhone,
-    },
-  };
+  if (!student) {
+    throw new AppError(
+      404,
+      "Student profile not found",
+    );
+  }
+
+  return student;
 };

@@ -1,21 +1,39 @@
-import type { Request, Response, NextFunction } from "express";
+import type { Response } from "express";
+
+import type { AuthRequest } from "../../middleware/auth.js";
+import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { createSchool } from "./service.js";
 
-export const createSchoolController = async (
-  req: Request,
+import { getMyStudentProfile } from "./service.js";
+
+export const getMyStudentProfileController = async (
+  req: AuthRequest,
   res: Response,
-  next: NextFunction,
 ) => {
-  try {
-    const result = await createSchool(req.body);
-
-    sendResponse(res, {
-      statusCode: 201,
-      message: "School registration submitted successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
+  if (!req.user) {
+    throw new AppError(
+      401,
+      "Authentication required",
+    );
   }
+
+  const schoolId = Number(req.params.schoolId);
+
+  if (!schoolId || Number.isNaN(schoolId)) {
+    throw new AppError(
+      400,
+      "Invalid school ID",
+    );
+  }
+
+  const result = await getMyStudentProfile(
+    req.user.userId,
+    schoolId,
+  );
+
+  return sendResponse(res, {
+    statusCode: 200,
+    message: "Student profile retrieved successfully",
+    data: result,
+  });
 };

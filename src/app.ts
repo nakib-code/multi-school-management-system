@@ -4,6 +4,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 import { authRoutes } from "./modules/auth/route.js";
 import { admissionRoutes } from "./modules/admission/route.js";
 import { schoolRoutes } from "./modules/school/route.js";
+import { studentRoutes } from "./modules/student/route.js";
 
 const app = express();
 
@@ -20,8 +21,9 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
-app.use("/api/admissions", admissionRoutes);
+app.use("/api", admissionRoutes);
 app.use("/api/schools", schoolRoutes);
+app.use("/api", studentRoutes);
 
 
 app.use(notFound);

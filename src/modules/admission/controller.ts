@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { createAdmission } from "./service.js";
+import { approveAdmission, createAdmission, getAdmissionById } from "./service.js";
 import sendResponse from "../../utils/sendResponse.js";
 
 export const createAdmissionController = async (
@@ -16,6 +16,8 @@ export const createAdmissionController = async (
 };
 
 import { verifyStudentEmail } from "./service.js";
+import AppError from "../../utils/appError.js";
+import type { AuthRequest } from "../../middleware/auth.js";
 
 export const verifyStudentEmailController = async (
   req: Request,
@@ -26,6 +28,77 @@ export const verifyStudentEmailController = async (
   return sendResponse(res, {
     statusCode: 200,
     message: "Student email verified successfully",
+    data: result,
+  });
+};
+
+
+
+export const getAdmissionByIdController = async (
+  req: AuthRequest,
+  res: Response,
+) => {
+  const schoolId = Number(req.params.schoolId);
+  const admissionId = Number(req.params.id);
+
+  if (!schoolId || Number.isNaN(schoolId)) {
+    throw new AppError(400, "Invalid school ID");
+  }
+
+  if (!admissionId || Number.isNaN(admissionId)) {
+    throw new AppError(400, "Invalid admission ID");
+  }
+
+  const result = await getAdmissionById(
+    schoolId,
+    admissionId,
+  );
+
+  return sendResponse(res, {
+    statusCode: 200,
+    message: "Admission retrieved successfully",
+    data: result,
+  });
+};
+
+
+export const approveAdmissionController = async (
+  req: AuthRequest,
+  res: Response,
+) => {
+  const schoolId = Number(req.params.schoolId);
+  const admissionId = Number(req.params.id);
+
+  if (!schoolId || Number.isNaN(schoolId)) {
+    throw new AppError(
+      400,
+      "Invalid school ID",
+    );
+  }
+
+  if (!admissionId || Number.isNaN(admissionId)) {
+    throw new AppError(
+      400,
+      "Invalid admission ID",
+    );
+  }
+
+  if (!req.user) {
+    throw new AppError(
+      401,
+      "Authentication required",
+    );
+  }
+
+  const result = await approveAdmission(
+    schoolId,
+    admissionId,
+    req.user.userId,
+  );
+
+  return sendResponse(res, {
+    statusCode: 200,
+    message: "Admission approved successfully",
     data: result,
   });
 };

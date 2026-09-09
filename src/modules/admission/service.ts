@@ -355,3 +355,203 @@ export const verifyStudentEmail = async (
       updatedAdmission.studentEmailVerified,
   };
 };
+
+
+
+export const getAdmissionById = async (
+  schoolId: number,
+  admissionId: number,
+) => {
+  const admission = await prisma.admission.findFirst({
+    where: {
+      id: admissionId,
+      schoolId,
+    },
+    select: {
+      id: true,
+      schoolId: true,
+      applicationNo: true,
+
+      studentName: true,
+      studentEmail: true,
+
+      dateOfBirth: true,
+      gender: true,
+
+      guardianName: true,
+      guardianPhone: true,
+
+      previousSchool: true,
+      address: true,
+
+      studentEmailVerified: true,
+
+      status: true,
+      reviewedAt: true,
+      reviewedBy: true,
+      rejectionReason: true,
+
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  if (!admission) {
+    throw new AppError(
+      404,
+      "Admission not found",
+    );
+  }
+
+  return admission;
+};
+// ======================================================
+// APPROVE ADMISSION
+// ======================================================
+
+export const approveAdmission = async (
+  schoolId: number,
+  admissionId: number,
+  reviewerId: number,
+) => {
+  // Find admission
+  const admission = await prisma.admission.findFirst({
+    where: {
+      id: admissionId,
+      schoolId,
+    },
+  });
+
+  if (!admission) {
+    throw new AppError(
+      404,
+      "Admission not found",
+    );
+  }
+
+  // Must be pending
+  if (admission.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Only pending admissions can be approved",
+    );
+  }
+
+  // Email must be verified
+  if (!admission.studentEmailVerified) {
+    throw new AppError(
+      400,
+      "Student email must be verified before approval",
+    );
+  }
+
+  // Make sure email is not already used
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email: admission.studentEmail,
+    },
+  });
+
+  if (existingUser) {
+    throw new AppError(
+      409,
+      "A user with this email already exists",
+    );
+  }
+
+  // Generate unique Student ID
+  const studentId = `STU-${schoolId}-${Date.now()}-${Math.floor(
+    1000 + Math.random() * 9000,
+  )}`;
+
+  // Split student name
+  const nameParts = admission.studentName
+    .trim()
+    .split(/\s+/);
+
+  const firstName = nameParts[0];
+
+  const lastName =
+    nameParts.length > 1
+      ? nameParts.slice(1).join(" ")
+      : null;
+
+  // Create everything in one transaction
+  const result = await prisma.$transaction(
+    async (tx) => {
+      // Create Student User
+      const user = await tx.user.create({
+        data: {
+          name: admission.studentName,
+          email: admission.studentEmail,
+          passwordHash: admission.passwordHash,
+
+          role: "STUDENT",
+          status: "ACTIVE",
+
+          mustChangePassword: false,
+
+          schoolId,
+        },
+      });
+
+      // Create Student profile
+      const student = await tx.student.create({
+        data: {
+          userId: user.id,
+          schoolId,
+
+          studentId,
+
+          firstName,
+          lastName,
+
+          dateOfBirth: admission.dateOfBirth,
+          gender: admission.gender,
+
+          admissionDate: new Date(),
+
+          isActive: true,
+        },
+      });
+
+      // Update admission
+      const updatedAdmission =
+        await tx.admission.update({
+          where: {
+            id: admission.id,
+          },
+          data: {
+            status: "APPROVED",
+            reviewedAt: new Date(),
+            reviewedBy: reviewerId,
+          },
+        });
+
+      return {
+        admission: updatedAdmission,
+        user,
+        student,
+      };
+    },
+  );
+
+  return {
+    admissionId: result.admission.id,
+
+    applicationNo:
+      result.admission.applicationNo,
+
+    studentId: result.student.studentId,
+
+    studentName: result.admission.studentName,
+
+    studentEmail: result.user.email,
+
+    status: result.admission.status,
+
+    reviewedAt:
+      result.admission.reviewedAt,
+  };
+};
+
