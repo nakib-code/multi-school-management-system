@@ -16,3 +16,7 @@ export interface VerifyAdminEmailInput {
   email: string;
   code: string;
 }
+
+export interface RejectSchoolInput {
+  rejectionReason: string;
+}

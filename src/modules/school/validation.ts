@@ -52,3 +52,12 @@ export const verifyAdminEmailSchema = z.object({
       ),
   }),
 });
+
+export const rejectSchoolSchema = z.object({
+  body: z.object({
+    rejectionReason: z
+      .string()
+      .min(5, "Rejection reason must be at least 5 characters")
+      .max(500, "Rejection reason is too long"),
+  }),
+});

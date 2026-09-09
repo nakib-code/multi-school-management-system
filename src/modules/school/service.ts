@@ -8,7 +8,7 @@ import {
   saveVerificationCode,
 } from "../../utils/verificationCode.js";
 import { sendVerificationEmail } from "../../utils/sendEmail.js";
-import type { CreateSchoolInput, VerifyAdminEmailInput } from "./interface.js";
+import type { CreateSchoolInput, RejectSchoolInput, VerifyAdminEmailInput } from "./interface.js";
 
 export const createSchool = async (
   payload: CreateSchoolInput,
@@ -301,5 +301,124 @@ export const verifyAdminEmail = async (
     schoolId: updatedSchool.id,
     adminEmail: updatedSchool.adminEmail,
     emailVerified: updatedSchool.adminEmailVerified,
+  };
+};
+
+export const blockSchool = async (schoolId: number) => {
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+  });
+
+  if (!school) {
+    throw new AppError(404, "School not found");
+  }
+
+  if (school.status === "BLOCKED") {
+    throw new AppError(400, "School is already blocked");
+  }
+
+  if (school.status !== "ACTIVE") {
+    throw new AppError(
+      400,
+      `School cannot be blocked from ${school.status} status`,
+    );
+  }
+
+  const updatedSchool = await prisma.school.update({
+    where: { id: schoolId },
+    data: {
+      status: "BLOCKED",
+    },
+  });
+
+  return updatedSchool;
+};
+
+
+export const unblockSchool = async (schoolId: number) => {
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+  });
+
+  if (!school) {
+    throw new AppError(404, "School not found");
+  }
+
+  if (school.status === "ACTIVE") {
+    throw new AppError(400, "School is already active");
+  }
+
+  if (school.status !== "BLOCKED") {
+    throw new AppError(
+      400,
+      `School cannot be unblocked from ${school.status} status`,
+    );
+  }
+
+  const updatedSchool = await prisma.school.update({
+    where: { id: schoolId },
+    data: {
+      status: "ACTIVE",
+    },
+  });
+
+  return updatedSchool;
+};
+
+export const rejectSchool = async (
+  schoolId: number,
+  payload: RejectSchoolInput,
+) => {
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+  });
+
+  if (!school) {
+    throw new AppError(404, "School not found");
+  }
+
+  if (school.status !== "PENDING") {
+    throw new AppError(
+      400,
+      `School cannot be rejected from ${school.status} status`,
+    );
+  }
+
+  const updatedSchool = await prisma.school.update({
+    where: { id: schoolId },
+    data: {
+      status: "REJECTED",
+      rejectionReason: payload.rejectionReason,
+    },
+  });
+
+  return updatedSchool;
+};
+
+export const deleteSchool = async (schoolId: number) => {
+  const school = await prisma.school.findUnique({
+    where: { id: schoolId },
+  });
+
+  if (!school) {
+    throw new AppError(404, "School not found");
+  }
+
+  if (school.status !== "REJECTED") {
+    throw new AppError(
+      400,
+      `Only rejected schools can be deleted. Current status: ${school.status}`,
+    );
+  }
+
+  await prisma.school.delete({
+    where: {
+      id: schoolId,
+    },
+  });
+
+  return {
+    schoolId,
+    deleted: true,
   };
 };

@@ -2230,6 +2230,7 @@ export const SchoolScalarFieldEnum = {
   adminPhone: 'adminPhone',
   adminPasswordHash: 'adminPasswordHash',
   adminEmailVerified: 'adminEmailVerified',
+  rejectionReason: 'rejectionReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
