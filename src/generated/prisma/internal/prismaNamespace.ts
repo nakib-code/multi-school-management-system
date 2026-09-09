@@ -2036,6 +2036,7 @@ export const AdmissionScalarFieldEnum = {
   applicationNo: 'applicationNo',
   studentName: 'studentName',
   studentEmail: 'studentEmail',
+  passwordHash: 'passwordHash',
   dateOfBirth: 'dateOfBirth',
   gender: 'gender',
   guardianName: 'guardianName',
@@ -2043,6 +2044,7 @@ export const AdmissionScalarFieldEnum = {
   previousSchool: 'previousSchool',
   address: 'address',
   status: 'status',
+  studentEmailVerified: 'studentEmailVerified',
   reviewedAt: 'reviewedAt',
   reviewedBy: 'reviewedBy',
   rejectionReason: 'rejectionReason',
@@ -2488,6 +2490,13 @@ export type ListEnumAdmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'AttendanceStatus'
  */
 export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus'>
@@ -2512,13 +2521,6 @@ export type EnumAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$Pris
  * Reference to a field of type 'AuditAction[]'
  */
 export type ListEnumAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AuditAction[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 

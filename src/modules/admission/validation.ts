@@ -10,11 +10,16 @@ export const createAdmissionSchema = z.object({
     studentName: z
       .string()
       .min(2, "Student name must be at least 2 characters")
-      .max(100, "Student name is too long"),
+      .max(150, "Student name is too long"),
 
     studentEmail: z
       .string()
       .email("Please provide a valid student email"),
+
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .max(100, "Password is too long"),
 
     dateOfBirth: z
       .string()
@@ -39,5 +44,21 @@ export const createAdmissionSchema = z.object({
     address: z
       .string()
       .optional(),
+  }),
+});
+
+export const verifyStudentEmailSchema = z.object({
+  body: z.object({
+    email: z
+      .string()
+      .email("Please provide a valid email"),
+
+    code: z
+      .string()
+      .length(6, "Verification code must be 6 digits")
+      .regex(
+        /^\d+$/,
+        "Verification code must contain only digits",
+      ),
   }),
 });

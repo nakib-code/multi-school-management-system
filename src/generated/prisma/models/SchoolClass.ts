@@ -469,10 +469,6 @@ export type SchoolClassOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type SchoolClassCreateNestedOneWithoutEnrollmentsInput = {
   create?: Prisma.XOR<Prisma.SchoolClassCreateWithoutEnrollmentsInput, Prisma.SchoolClassUncheckedCreateWithoutEnrollmentsInput>
   connectOrCreate?: Prisma.SchoolClassCreateOrConnectWithoutEnrollmentsInput

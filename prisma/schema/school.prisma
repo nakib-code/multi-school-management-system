@@ -2,7 +2,7 @@ model School {
   id Int @id @default(autoincrement())
 
   name    String
-  code    String @unique
+  code    String  @unique
   email   String?
   phone   String?
   address String?
@@ -10,13 +10,13 @@ model School {
 
   status SchoolStatus @default(PENDING)
 
-  adminName             String?
-  adminEmail            String?
-  adminPhone            String?
-  adminPasswordHash     String?
-  adminEmailVerified    Boolean @default(false)
+  adminName          String?
+  adminEmail         String?
+  adminPhone         String?
+  adminPasswordHash  String?
+  adminEmailVerified Boolean @default(false)
 
-  rejectionReason       String?
+  rejectionReason String?
 
   guardians Guardian[]
 
@@ -38,7 +38,7 @@ model School {
   teacherSalaries    TeacherSalary[]
   salaryPayments     SalaryPayment[]
   admissions         Admission[]
-  auditLogs           AuditLog[]
+  auditLogs          AuditLog[]
   users              User[]
 
   @@index([name])

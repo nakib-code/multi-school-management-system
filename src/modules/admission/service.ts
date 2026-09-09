@@ -1,6 +1,25 @@
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
-import type { CreateAdmissionInput } from "./interface.js";
+import { hashPassword } from "../../utils/password.js";
+
+import {
+  generateVerificationCode,
+  saveVerificationCode,
+  getVerificationCode,
+  deleteVerificationCode,
+} from "../../utils/verificationCode.js";
+
+import { sendVerificationEmail } from "../../utils/sendEmail.js";
+
+import type {
+  CreateAdmissionInput,
+  VerifyStudentEmailInput,
+} from "./interface.js";
+
+
+// ======================================================
+// CREATE ADMISSION
+// ======================================================
 
 export const createAdmission = async (
   payload: CreateAdmissionInput,
@@ -9,6 +28,7 @@ export const createAdmission = async (
     schoolId,
     studentName,
     studentEmail,
+    password,
     dateOfBirth,
     gender,
     guardianName,
@@ -17,22 +37,50 @@ export const createAdmission = async (
     address,
   } = payload;
 
+
+  // ----------------------------------------------------
   // Check school
+  // ----------------------------------------------------
+
   const school = await prisma.school.findUnique({
-    where: { id: schoolId },
+    where: {
+      id: schoolId,
+    },
+    select: {
+      id: true,
+      status: true,
+    },
   });
 
   if (!school) {
     throw new AppError(404, "School not found");
   }
 
-  if (!school.isActive) {
-    throw new AppError(400, "School is not active");
+  if (school.status !== "ACTIVE") {
+    throw new AppError(
+      400,
+      "Admission is not available for this school",
+    );
   }
 
-  // Check if student email already belongs to a user
+
+  // ----------------------------------------------------
+  // Normalize email
+  // ----------------------------------------------------
+
+  const normalizedEmail = studentEmail
+    .trim()
+    .toLowerCase();
+
+
+  // ----------------------------------------------------
+  // Check existing user
+  // ----------------------------------------------------
+
   const existingUser = await prisma.user.findUnique({
-    where: { email: studentEmail },
+    where: {
+      email: normalizedEmail,
+    },
   });
 
   if (existingUser) {
@@ -42,24 +90,268 @@ export const createAdmission = async (
     );
   }
 
+
+  // ----------------------------------------------------
+  // Check pending admission
+  // ----------------------------------------------------
+
+  const existingAdmission =
+    await prisma.admission.findFirst({
+      where: {
+        schoolId,
+        studentEmail: normalizedEmail,
+        status: "PENDING",
+      },
+    });
+
+  if (existingAdmission) {
+    throw new AppError(
+      409,
+      "A pending admission already exists for this email",
+    );
+  }
+
+
+  // ----------------------------------------------------
+  // Hash password
+  // ----------------------------------------------------
+
+  const passwordHash = await hashPassword(password);
+
+
+  // ----------------------------------------------------
   // Generate application number
-  const applicationNo = `ADM-${Date.now()}`;
+  // ----------------------------------------------------
+
+  const applicationNo = `ADM-${Date.now()}-${Math.floor(
+    1000 + Math.random() * 9000,
+  )}`;
+
+
+  // ----------------------------------------------------
+  // Create admission
+  // ----------------------------------------------------
 
   const admission = await prisma.admission.create({
     data: {
       schoolId,
       applicationNo,
+
       studentName,
-      studentEmail,
-      dateOfBirth: dateOfBirth ? new Date(dateOfBirth) : undefined,
+      studentEmail: normalizedEmail,
+
+      passwordHash,
+
+      dateOfBirth: dateOfBirth
+        ? new Date(dateOfBirth)
+        : undefined,
+
       gender,
+
       guardianName,
       guardianPhone,
+
       previousSchool,
       address,
+
       status: "PENDING",
     },
   });
 
-  return admission;
+
+  // ----------------------------------------------------
+  // Generate verification code
+  // ----------------------------------------------------
+
+  const verificationCode =
+    generateVerificationCode();
+
+
+  // ----------------------------------------------------
+  // Save verification code to Redis
+  // ----------------------------------------------------
+
+  await saveVerificationCode(
+    normalizedEmail,
+    verificationCode,
+  );
+
+
+  // ----------------------------------------------------
+  // Send verification email
+  // ----------------------------------------------------
+
+  try {
+    await sendVerificationEmail(
+      normalizedEmail,
+      verificationCode,
+    );
+  } catch (error) {
+    // Delete OTP from Redis
+    await deleteVerificationCode(
+      normalizedEmail,
+    );
+
+    // Delete admission if email sending fails
+    await prisma.admission.delete({
+      where: {
+        id: admission.id,
+      },
+    });
+
+    throw new AppError(
+      500,
+      "Failed to send verification email",
+    );
+  }
+
+
+  // ----------------------------------------------------
+  // Response
+  // ----------------------------------------------------
+
+  return {
+    id: admission.id,
+
+    schoolId: admission.schoolId,
+
+    applicationNo: admission.applicationNo,
+
+    studentName: admission.studentName,
+
+    studentEmail: admission.studentEmail,
+
+    status: admission.status,
+
+    emailVerified:
+      admission.studentEmailVerified,
+
+    createdAt: admission.createdAt,
+  };
+};
+
+
+// ======================================================
+// VERIFY STUDENT EMAIL
+// ======================================================
+
+export const verifyStudentEmail = async (
+  payload: VerifyStudentEmailInput,
+) => {
+  const {
+    email,
+    code,
+  } = payload;
+
+
+  // ----------------------------------------------------
+  // Normalize email
+  // ----------------------------------------------------
+
+  const normalizedEmail = email
+    .trim()
+    .toLowerCase();
+
+
+  // ----------------------------------------------------
+  // Find pending admission
+  // ----------------------------------------------------
+
+  const admission =
+    await prisma.admission.findFirst({
+      where: {
+        studentEmail: normalizedEmail,
+        status: "PENDING",
+      },
+    });
+
+  if (!admission) {
+    throw new AppError(
+      404,
+      "Pending admission not found",
+    );
+  }
+
+
+  // ----------------------------------------------------
+  // Check already verified
+  // ----------------------------------------------------
+
+  if (admission.studentEmailVerified) {
+    throw new AppError(
+      400,
+      "Student email is already verified",
+    );
+  }
+
+
+  // ----------------------------------------------------
+  // Get OTP from Redis
+  // ----------------------------------------------------
+
+  const savedCode =
+    await getVerificationCode(
+      normalizedEmail,
+    );
+
+  if (!savedCode) {
+    throw new AppError(
+      400,
+      "Verification code has expired or is invalid",
+    );
+  }
+
+
+  // ----------------------------------------------------
+  // Compare OTP
+  // ----------------------------------------------------
+
+  if (savedCode !== code) {
+    throw new AppError(
+      400,
+      "Invalid verification code",
+    );
+  }
+
+
+  // ----------------------------------------------------
+  // Mark email as verified
+  // ----------------------------------------------------
+
+  const updatedAdmission =
+    await prisma.admission.update({
+      where: {
+        id: admission.id,
+      },
+      data: {
+        studentEmailVerified: true,
+      },
+    });
+
+
+  // ----------------------------------------------------
+  // Delete OTP from Redis
+  // ----------------------------------------------------
+
+  await deleteVerificationCode(
+    normalizedEmail,
+  );
+
+
+  // ----------------------------------------------------
+  // Response
+  // ----------------------------------------------------
+
+  return {
+    admissionId: updatedAdmission.id,
+
+    applicationNo:
+      updatedAdmission.applicationNo,
+
+    studentEmail:
+      updatedAdmission.studentEmail,
+
+    emailVerified:
+      updatedAdmission.studentEmailVerified,
+  };
 };
