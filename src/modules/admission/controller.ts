@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { approveAdmission, createAdmission, getAdmissionById } from "./service.js";
+import { approveAdmission, createAdmission, getAdmissionById, rejectAdmission } from "./service.js";
 import sendResponse from "../../utils/sendResponse.js";
 
 export const createAdmissionController = async (
@@ -99,6 +99,41 @@ export const approveAdmissionController = async (
   return sendResponse(res, {
     statusCode: 200,
     message: "Admission approved successfully",
+    data: result,
+  });
+};
+
+export const rejectAdmissionController = async (
+  req: AuthRequest,
+  res: Response,
+) => {
+  if (!req.user) {
+    throw new AppError(401, "Authentication required");
+  }
+
+  const schoolId = Number(req.params.schoolId);
+  const admissionId = Number(req.params.id);
+
+  if (!schoolId || Number.isNaN(schoolId)) {
+    throw new AppError(400, "Invalid school ID");
+  }
+
+  if (!admissionId || Number.isNaN(admissionId)) {
+    throw new AppError(400, "Invalid admission ID");
+  }
+
+  const { rejectionReason } = req.body;
+
+  const result = await rejectAdmission(
+    schoolId,
+    admissionId,
+    req.user.userId,
+    rejectionReason,
+  );
+
+  return sendResponse(res, {
+    statusCode: 200,
+    message: "Admission rejected successfully",
     data: result,
   });
 };

@@ -4,6 +4,7 @@ import {
   approveAdmissionController,
   createAdmissionController,
   getAdmissionByIdController,
+  rejectAdmissionController,
   verifyStudentEmailController,
 } from "./controller.js";
 
@@ -11,6 +12,7 @@ import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
   createAdmissionSchema,
+  rejectAdmissionSchema,
   verifyStudentEmailSchema,
 } from "./validation.js";
 
@@ -67,6 +69,15 @@ router.patch(
   ),
   requireSchoolAccess,
   approveAdmissionController,
+);
+
+router.patch(
+  "/schools/:schoolId/admissions/:id/reject",
+  authenticate,
+  authorize(UserRole.ADMIN, UserRole.MANAGER),
+  requireSchoolAccess,
+  validateRequest(rejectAdmissionSchema),
+  rejectAdmissionController,
 );
 
 

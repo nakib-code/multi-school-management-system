@@ -62,3 +62,9 @@ export const verifyStudentEmailSchema = z.object({
       ),
   }),
 });
+
+export const rejectAdmissionSchema = z.object({
+  body: z.object({
+    rejectionReason: z.string().min(5).max(500),
+  }),
+});

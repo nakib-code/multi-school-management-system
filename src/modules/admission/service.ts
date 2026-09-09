@@ -555,3 +555,58 @@ export const approveAdmission = async (
   };
 };
 
+export const rejectAdmission = async (
+  schoolId: number,
+  admissionId: number,
+  reviewerId: number,
+  rejectionReason: string,
+) => {
+  const admission = await prisma.admission.findFirst({
+    where: {
+      id: admissionId,
+      schoolId,
+    },
+  });
+
+  if (!admission) {
+    throw new AppError(404, "Admission not found");
+  }
+
+  if (admission.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Only pending admissions can be rejected",
+    );
+  }
+
+  if (!admission.studentEmailVerified) {
+    throw new AppError(
+      400,
+      "Student email must be verified before rejection",
+    );
+  }
+
+  const updatedAdmission = await prisma.admission.update({
+    where: {
+      id: admissionId,
+    },
+    data: {
+      status: "REJECTED",
+      rejectionReason,
+      reviewedAt: new Date(),
+      reviewedBy: reviewerId,
+    },
+    select: {
+      id: true,
+      applicationNo: true,
+      studentName: true,
+      studentEmail: true,
+      status: true,
+      rejectionReason: true,
+      reviewedAt: true,
+      reviewedBy: true,
+    },
+  });
+
+  return updatedAdmission;
+};
