@@ -288,6 +288,8 @@ export const SchoolScalarFieldEnum = {
   adminName: 'adminName',
   adminEmail: 'adminEmail',
   adminPhone: 'adminPhone',
+  adminPasswordHash: 'adminPasswordHash',
+  adminEmailVerified: 'adminEmailVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

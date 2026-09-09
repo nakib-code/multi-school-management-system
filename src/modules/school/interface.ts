@@ -9,4 +9,10 @@ export interface CreateSchoolInput {
   adminName: string;
   adminEmail: string;
   adminPhone?: string;
+  adminPassword: string;
+}
+
+export interface VerifyAdminEmailInput {
+  email: string;
+  code: string;
 }

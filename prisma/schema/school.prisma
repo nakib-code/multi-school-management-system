@@ -10,9 +10,11 @@ model School {
 
   status SchoolStatus @default(PENDING)
 
-  adminName  String?
-  adminEmail String?
-  adminPhone String?
+  adminName                       String?
+  adminEmail                      String?
+  adminPhone                      String?
+  adminPasswordHash               String?
+  adminEmailVerified              Boolean   @default(false)
 
   guardians Guardian[]
 

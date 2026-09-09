@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import crypto from "node:crypto";
 
 const SALT_ROUNDS = 12;
 
@@ -11,4 +12,8 @@ export const comparePassword = async (
   hashedPassword: string,
 ): Promise<boolean> => {
   return bcrypt.compare(password, hashedPassword);
+};
+
+export const generateTemporaryPassword = (): string => {
+  return crypto.randomBytes(9).toString("base64url");
 };

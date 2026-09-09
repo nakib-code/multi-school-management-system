@@ -1,42 +1,8 @@
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import { generateToken } from "../../utils/jwt.js";
-import { comparePassword, hashPassword } from "../../utils/password.js";
-import type { LoginInput, SignupInput } from "./interface.js";
-
-export const signup = async (payload: SignupInput) => {
-  const { name, email, password, phone } = payload;
-
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  if (existingUser) {
-    throw new AppError(409, "User with this email already exists");
-  }
-
-  const passwordHash = await hashPassword(password);
-
-  const user = await prisma.user.create({
-    data: {
-      name,
-      email,
-      passwordHash,
-      phone,
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      phone: true,
-      role: true,
-      status: true,
-      createdAt: true,
-    },
-  });
-
-  return user;
-};
+import { comparePassword } from "../../utils/password.js";
+import type { LoginInput } from "./interface.js";
 
 
 export const login = async (payload: LoginInput) => {
@@ -44,6 +10,9 @@ export const login = async (payload: LoginInput) => {
 
   const user = await prisma.user.findUnique({
     where: { email },
+    include: {
+      school: true,
+    },
   });
 
   if (!user) {
@@ -52,6 +21,16 @@ export const login = async (payload: LoginInput) => {
 
   if (user.status !== "ACTIVE") {
     throw new AppError(403, "Your account is not active");
+  }
+
+  if (
+    user.role !== "SUPER_ADMIN" &&
+    (!user.school || user.school.status !== "ACTIVE")
+  ) {
+    throw new AppError(
+      403,
+      "Your school is not active",
+    );
   }
 
   const isPasswordMatched = await comparePassword(
@@ -66,6 +45,9 @@ export const login = async (payload: LoginInput) => {
   const token = generateToken({
     userId: user.id,
     role: user.role,
+    ...(user.schoolId !== null && {
+      schoolId: user.schoolId,
+    }),
   });
 
   return {
@@ -76,6 +58,8 @@ export const login = async (payload: LoginInput) => {
       phone: user.phone,
       role: user.role,
       status: user.status,
+      schoolId: user.schoolId,
+      mustChangePassword: user.mustChangePassword,
     },
     token,
   };

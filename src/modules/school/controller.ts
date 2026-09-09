@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import sendResponse from "../../utils/sendResponse.js";
-import { approveSchool, createSchool } from "./service.js";
+import { approveSchool, createSchool, verifyAdminEmail } from "./service.js";
 import AppError from "../../utils/appError.js";
 import type { AuthRequest } from "../../middleware/auth.js";
 
@@ -42,6 +42,24 @@ export const approveSchoolController = async (
     sendResponse(res, {
       statusCode: 200,
       message: "School approved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyAdminEmailController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const result = await verifyAdminEmail(req.body);
+
+    sendResponse(res, {
+      statusCode: 200,
+      message: "Admin email verified successfully",
       data: result,
     });
   } catch (error) {

@@ -12,35 +12,43 @@ export const createSchoolSchema = z.object({
       .min(2, "School code must be at least 2 characters")
       .max(30, "School code is too long"),
 
-    email: z
-      .string()
-      .email("Please provide a valid school email")
-      .optional(),
+    email: z.string().email("Please provide a valid school email").optional(),
 
-    phone: z
-      .string()
-      .optional(),
+    phone: z.string().optional(),
 
-    address: z
-      .string()
-      .optional(),
+    address: z.string().optional(),
 
-    logo: z
-      .string()
-      .url("Logo must be a valid URL")
-      .optional(),
+    logo: z.string().url("Logo must be a valid URL").optional(),
 
     adminName: z
       .string()
       .min(2, "Admin name must be at least 2 characters")
       .max(100, "Admin name is too long"),
 
-    adminEmail: z
+    adminEmail: z.string().email("Please provide a valid admin email"),
+    
+    adminPassword: z
       .string()
-      .email("Please provide a valid admin email"),
+      .min(8, "Admin password must be at least 8 characters")
+      .max(100, "Admin password is too long"),
 
-    adminPhone: z
+    adminPhone: z.string().optional(),
+  }),
+});
+
+
+export const verifyAdminEmailSchema = z.object({
+  body: z.object({
+    email: z
       .string()
-      .optional(),
+      .email("Please provide a valid email"),
+
+    code: z
+      .string()
+      .length(6, "Verification code must be 6 digits")
+      .regex(
+        /^\d+$/,
+        "Verification code must contain only digits",
+      ),
   }),
 });

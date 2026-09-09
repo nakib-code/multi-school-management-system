@@ -2,10 +2,11 @@ import { Router } from "express";
 import {
   createSchoolController,
   approveSchoolController,
+  verifyAdminEmailController,
 } from "./controller.js";
 
 import { validateRequest } from "../../middleware/validateRequest.js";
-import { createSchoolSchema } from "./validation.js";
+import { createSchoolSchema, verifyAdminEmailSchema } from "./validation.js";
 import {
   authenticate,
   authorize,
@@ -28,6 +29,12 @@ router.patch(
   authenticate,
   authorize(UserRole.SUPER_ADMIN),
   approveSchoolController,
+);
+
+router.post(
+  "/verify-admin-email",
+  validateRequest(verifyAdminEmailSchema),
+  verifyAdminEmailController,
 );
 
 export const schoolRoutes = router;
