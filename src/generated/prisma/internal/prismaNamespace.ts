@@ -398,6 +398,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Admission: 'Admission',
+  AdmissionPayment: 'AdmissionPayment',
   Attendance: 'Attendance',
   AuditLog: 'AuditLog',
   SchoolClass: 'SchoolClass',
@@ -409,6 +410,7 @@ export const ModelName = {
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
+  SchoolSetting: 'SchoolSetting',
   Section: 'Section',
   StudentFee: 'StudentFee',
   StudentPayment: 'StudentPayment',
@@ -433,7 +435,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "attendance" | "auditLog" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "result" | "salaryPayment" | "school" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "result" | "salaryPayment" | "school" | "schoolSetting" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -508,6 +510,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AdmissionCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AdmissionCountAggregateOutputType> | number
+        }
+      }
+    }
+    AdmissionPayment: {
+      payload: Prisma.$AdmissionPaymentPayload<ExtArgs>
+      fields: Prisma.AdmissionPaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AdmissionPaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AdmissionPaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.AdmissionPaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AdmissionPaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>
+        }
+        findMany: {
+          args: Prisma.AdmissionPaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>[]
+        }
+        create: {
+          args: Prisma.AdmissionPaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>
+        }
+        createMany: {
+          args: Prisma.AdmissionPaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AdmissionPaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.AdmissionPaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>
+        }
+        update: {
+          args: Prisma.AdmissionPaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.AdmissionPaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AdmissionPaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AdmissionPaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.AdmissionPaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AdmissionPaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.AdmissionPaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAdmissionPayment>
+        }
+        groupBy: {
+          args: Prisma.AdmissionPaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdmissionPaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AdmissionPaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AdmissionPaymentCountAggregateOutputType> | number
         }
       }
     }
@@ -1325,6 +1401,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SchoolSetting: {
+      payload: Prisma.$SchoolSettingPayload<ExtArgs>
+      fields: Prisma.SchoolSettingFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolSettingFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolSettingFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolSettingFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolSettingFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>
+        }
+        findMany: {
+          args: Prisma.SchoolSettingFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>[]
+        }
+        create: {
+          args: Prisma.SchoolSettingCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>
+        }
+        createMany: {
+          args: Prisma.SchoolSettingCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolSettingCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolSettingDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>
+        }
+        update: {
+          args: Prisma.SchoolSettingUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolSettingDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolSettingUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolSettingUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolSettingUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSettingPayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolSettingAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolSetting>
+        }
+        groupBy: {
+          args: Prisma.SchoolSettingGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolSettingGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolSettingCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolSettingCountAggregateOutputType> | number
+        }
+      }
+    }
     Section: {
       payload: Prisma.$SectionPayload<ExtArgs>
       fields: Prisma.SectionFieldRefs
@@ -2055,6 +2205,24 @@ export const AdmissionScalarFieldEnum = {
 export type AdmissionScalarFieldEnum = (typeof AdmissionScalarFieldEnum)[keyof typeof AdmissionScalarFieldEnum]
 
 
+export const AdmissionPaymentScalarFieldEnum = {
+  id: 'id',
+  admissionId: 'admissionId',
+  schoolId: 'schoolId',
+  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  transactionId: 'transactionId',
+  paidAt: 'paidAt',
+  receivedBy: 'receivedBy',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AdmissionPaymentScalarFieldEnum = (typeof AdmissionPaymentScalarFieldEnum)[keyof typeof AdmissionPaymentScalarFieldEnum]
+
+
 export const AttendanceScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -2238,6 +2406,17 @@ export const SchoolScalarFieldEnum = {
 } as const
 
 export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
+
+
+export const SchoolSettingScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  admissionFee: 'admissionFee',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolSettingScalarFieldEnum = (typeof SchoolSettingScalarFieldEnum)[keyof typeof SchoolSettingScalarFieldEnum]
 
 
 export const SectionScalarFieldEnum = {
@@ -2497,6 +2676,48 @@ export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AdmissionPaymentMethod'
+ */
+export type EnumAdmissionPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdmissionPaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'AdmissionPaymentMethod[]'
+ */
+export type ListEnumAdmissionPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdmissionPaymentMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AdmissionPaymentStatus'
+ */
+export type EnumAdmissionPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdmissionPaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AdmissionPaymentStatus[]'
+ */
+export type ListEnumAdmissionPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdmissionPaymentStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'AttendanceStatus'
  */
 export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus'>
@@ -2563,20 +2784,6 @@ export type EnumExamStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'ExamStatus[]'
  */
 export type ListEnumExamStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ExamStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -2899,6 +3106,7 @@ export interface PrismaClientOptionsWithAdapter extends PrismaClientBaseOptions 
 export type PrismaClientOptions = PrismaClientOptionsWithAccelerateUrl | PrismaClientOptionsWithAdapter
 export type GlobalOmitConfig = {
   admission?: Prisma.AdmissionOmit
+  admissionPayment?: Prisma.AdmissionPaymentOmit
   attendance?: Prisma.AttendanceOmit
   auditLog?: Prisma.AuditLogOmit
   schoolClass?: Prisma.SchoolClassOmit
@@ -2910,6 +3118,7 @@ export type GlobalOmitConfig = {
   result?: Prisma.ResultOmit
   salaryPayment?: Prisma.SalaryPaymentOmit
   school?: Prisma.SchoolOmit
+  schoolSetting?: Prisma.SchoolSettingOmit
   section?: Prisma.SectionOmit
   studentFee?: Prisma.StudentFeeOmit
   studentPayment?: Prisma.StudentPaymentOmit

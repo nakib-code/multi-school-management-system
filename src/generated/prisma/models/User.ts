@@ -282,6 +282,7 @@ export type UserWhereInput = {
   teacher?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.TeacherWhereInput> | null
   manager?: Prisma.XOR<Prisma.ManagerNullableScalarRelationFilter, Prisma.ManagerWhereInput> | null
   markedAttendances?: Prisma.AttendanceListRelationFilter
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentListRelationFilter
   receivedStudentPayments?: Prisma.StudentPaymentListRelationFilter
   paidSalaryPayments?: Prisma.SalaryPaymentListRelationFilter
   admissionsReviewed?: Prisma.AdmissionListRelationFilter
@@ -307,6 +308,7 @@ export type UserOrderByWithRelationInput = {
   teacher?: Prisma.TeacherOrderByWithRelationInput
   manager?: Prisma.ManagerOrderByWithRelationInput
   markedAttendances?: Prisma.AttendanceOrderByRelationAggregateInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentOrderByRelationAggregateInput
   receivedStudentPayments?: Prisma.StudentPaymentOrderByRelationAggregateInput
   paidSalaryPayments?: Prisma.SalaryPaymentOrderByRelationAggregateInput
   admissionsReviewed?: Prisma.AdmissionOrderByRelationAggregateInput
@@ -335,6 +337,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   teacher?: Prisma.XOR<Prisma.TeacherNullableScalarRelationFilter, Prisma.TeacherWhereInput> | null
   manager?: Prisma.XOR<Prisma.ManagerNullableScalarRelationFilter, Prisma.ManagerWhereInput> | null
   markedAttendances?: Prisma.AttendanceListRelationFilter
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentListRelationFilter
   receivedStudentPayments?: Prisma.StudentPaymentListRelationFilter
   paidSalaryPayments?: Prisma.SalaryPaymentListRelationFilter
   admissionsReviewed?: Prisma.AdmissionListRelationFilter
@@ -396,6 +399,7 @@ export type UserCreateInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -420,6 +424,7 @@ export type UserUncheckedCreateInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -443,6 +448,7 @@ export type UserUpdateInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -467,6 +473,7 @@ export type UserUncheckedUpdateInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -605,6 +612,22 @@ export type UserUpdateOneWithoutAdmissionsReviewedNestedInput = {
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdmissionsReviewedInput, Prisma.UserUpdateWithoutAdmissionsReviewedInput>, Prisma.UserUncheckedUpdateWithoutAdmissionsReviewedInput>
+}
+
+export type UserCreateNestedOneWithoutReceivedAdmissionPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedAdmissionPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedAdmissionPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutReceivedAdmissionPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReceivedAdmissionPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReceivedAdmissionPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutReceivedAdmissionPaymentsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReceivedAdmissionPaymentsInput, Prisma.UserUpdateWithoutReceivedAdmissionPaymentsInput>, Prisma.UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput>
 }
 
 export type UserCreateNestedOneWithoutMarkedAttendancesInput = {
@@ -792,6 +815,7 @@ export type UserCreateWithoutAdmissionsReviewedInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -815,6 +839,7 @@ export type UserUncheckedCreateWithoutAdmissionsReviewedInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -853,6 +878,7 @@ export type UserUpdateWithoutAdmissionsReviewedInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -876,8 +902,119 @@ export type UserUncheckedUpdateWithoutAdmissionsReviewedInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutReceivedAdmissionPaymentsInput = {
+  name: string
+  email: string
+  passwordHash: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  mustChangePassword?: boolean
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school?: Prisma.SchoolCreateNestedOneWithoutUsersInput
+  guardian?: Prisma.GuardianCreateNestedOneWithoutUserInput
+  student?: Prisma.StudentCreateNestedOneWithoutUserInput
+  teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
+  manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
+  markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
+  paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
+  admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput = {
+  id?: number
+  name: string
+  email: string
+  passwordHash: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  mustChangePassword?: boolean
+  schoolId?: number | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardian?: Prisma.GuardianUncheckedCreateNestedOneWithoutUserInput
+  student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
+  teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
+  manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
+  markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
+  admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReceivedAdmissionPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedAdmissionPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput>
+}
+
+export type UserUpsertWithoutReceivedAdmissionPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReceivedAdmissionPaymentsInput, Prisma.UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReceivedAdmissionPaymentsInput, Prisma.UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReceivedAdmissionPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReceivedAdmissionPaymentsInput, Prisma.UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput>
+}
+
+export type UserUpdateWithoutReceivedAdmissionPaymentsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneWithoutUsersNestedInput
+  guardian?: Prisma.GuardianUpdateOneWithoutUserNestedInput
+  student?: Prisma.StudentUpdateOneWithoutUserNestedInput
+  teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
+  manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
+  markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
+  admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardian?: Prisma.GuardianUncheckedUpdateOneWithoutUserNestedInput
+  student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
+  teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
+  manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
+  markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
+  admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -897,6 +1034,7 @@ export type UserCreateWithoutMarkedAttendancesInput = {
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -920,6 +1058,7 @@ export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -958,6 +1097,7 @@ export type UserUpdateWithoutMarkedAttendancesInput = {
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -981,6 +1121,7 @@ export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1004,6 +1145,7 @@ export type UserCreateWithoutAuditLogsInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -1027,6 +1169,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -1065,6 +1208,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -1088,6 +1232,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1109,6 +1254,7 @@ export type UserCreateWithoutGuardianInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -1132,6 +1278,7 @@ export type UserUncheckedCreateWithoutGuardianInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -1170,6 +1317,7 @@ export type UserUpdateWithoutGuardianInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -1193,6 +1341,7 @@ export type UserUncheckedUpdateWithoutGuardianInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1215,6 +1364,7 @@ export type UserCreateWithoutManagerInput = {
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -1238,6 +1388,7 @@ export type UserUncheckedCreateWithoutManagerInput = {
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -1276,6 +1427,7 @@ export type UserUpdateWithoutManagerInput = {
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -1299,6 +1451,7 @@ export type UserUncheckedUpdateWithoutManagerInput = {
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1322,6 +1475,7 @@ export type UserCreateWithoutPaidSalaryPaymentsInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1345,6 +1499,7 @@ export type UserUncheckedCreateWithoutPaidSalaryPaymentsInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1383,6 +1538,7 @@ export type UserUpdateWithoutPaidSalaryPaymentsInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1406,6 +1562,7 @@ export type UserUncheckedUpdateWithoutPaidSalaryPaymentsInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1427,6 +1584,7 @@ export type UserCreateWithoutSchoolInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -1450,6 +1608,7 @@ export type UserUncheckedCreateWithoutSchoolInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -1517,6 +1676,7 @@ export type UserCreateWithoutReceivedStudentPaymentsInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
@@ -1540,6 +1700,7 @@ export type UserUncheckedCreateWithoutReceivedStudentPaymentsInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
@@ -1578,6 +1739,7 @@ export type UserUpdateWithoutReceivedStudentPaymentsInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
@@ -1601,6 +1763,7 @@ export type UserUncheckedUpdateWithoutReceivedStudentPaymentsInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
@@ -1622,6 +1785,7 @@ export type UserCreateWithoutStudentInput = {
   teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -1645,6 +1809,7 @@ export type UserUncheckedCreateWithoutStudentInput = {
   teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -1683,6 +1848,7 @@ export type UserUpdateWithoutStudentInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -1706,6 +1872,7 @@ export type UserUncheckedUpdateWithoutStudentInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1728,6 +1895,7 @@ export type UserCreateWithoutTeacherInput = {
   student?: Prisma.StudentCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
@@ -1751,6 +1919,7 @@ export type UserUncheckedCreateWithoutTeacherInput = {
   student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
   manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
   markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
   admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
@@ -1789,6 +1958,7 @@ export type UserUpdateWithoutTeacherInput = {
   student?: Prisma.StudentUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -1812,6 +1982,7 @@ export type UserUncheckedUpdateWithoutTeacherInput = {
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1848,6 +2019,7 @@ export type UserUpdateWithoutSchoolInput = {
   teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
@@ -1871,6 +2043,7 @@ export type UserUncheckedUpdateWithoutSchoolInput = {
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
   markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   receivedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
   paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
   admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
@@ -1898,6 +2071,7 @@ export type UserUncheckedUpdateManyWithoutSchoolInput = {
 
 export type UserCountOutputType = {
   markedAttendances: number
+  receivedAdmissionPayments: number
   receivedStudentPayments: number
   paidSalaryPayments: number
   admissionsReviewed: number
@@ -1906,6 +2080,7 @@ export type UserCountOutputType = {
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   markedAttendances?: boolean | UserCountOutputTypeCountMarkedAttendancesArgs
+  receivedAdmissionPayments?: boolean | UserCountOutputTypeCountReceivedAdmissionPaymentsArgs
   receivedStudentPayments?: boolean | UserCountOutputTypeCountReceivedStudentPaymentsArgs
   paidSalaryPayments?: boolean | UserCountOutputTypeCountPaidSalaryPaymentsArgs
   admissionsReviewed?: boolean | UserCountOutputTypeCountAdmissionsReviewedArgs
@@ -1927,6 +2102,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type UserCountOutputTypeCountMarkedAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AttendanceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReceivedAdmissionPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdmissionPaymentWhereInput
 }
 
 /**
@@ -1977,6 +2159,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   teacher?: boolean | Prisma.User$teacherArgs<ExtArgs>
   manager?: boolean | Prisma.User$managerArgs<ExtArgs>
   markedAttendances?: boolean | Prisma.User$markedAttendancesArgs<ExtArgs>
+  receivedAdmissionPayments?: boolean | Prisma.User$receivedAdmissionPaymentsArgs<ExtArgs>
   receivedStudentPayments?: boolean | Prisma.User$receivedStudentPaymentsArgs<ExtArgs>
   paidSalaryPayments?: boolean | Prisma.User$paidSalaryPaymentsArgs<ExtArgs>
   admissionsReviewed?: boolean | Prisma.User$admissionsReviewedArgs<ExtArgs>
@@ -2039,6 +2222,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   teacher?: boolean | Prisma.User$teacherArgs<ExtArgs>
   manager?: boolean | Prisma.User$managerArgs<ExtArgs>
   markedAttendances?: boolean | Prisma.User$markedAttendancesArgs<ExtArgs>
+  receivedAdmissionPayments?: boolean | Prisma.User$receivedAdmissionPaymentsArgs<ExtArgs>
   receivedStudentPayments?: boolean | Prisma.User$receivedStudentPaymentsArgs<ExtArgs>
   paidSalaryPayments?: boolean | Prisma.User$paidSalaryPaymentsArgs<ExtArgs>
   admissionsReviewed?: boolean | Prisma.User$admissionsReviewedArgs<ExtArgs>
@@ -2061,6 +2245,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     teacher: Prisma.$TeacherPayload<ExtArgs> | null
     manager: Prisma.$ManagerPayload<ExtArgs> | null
     markedAttendances: Prisma.$AttendancePayload<ExtArgs>[]
+    receivedAdmissionPayments: Prisma.$AdmissionPaymentPayload<ExtArgs>[]
     receivedStudentPayments: Prisma.$StudentPaymentPayload<ExtArgs>[]
     paidSalaryPayments: Prisma.$SalaryPaymentPayload<ExtArgs>[]
     admissionsReviewed: Prisma.$AdmissionPayload<ExtArgs>[]
@@ -2479,6 +2664,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   teacher<T extends Prisma.User$teacherArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teacherArgs<ExtArgs>>): Prisma.Prisma__TeacherClient<runtime.Types.Result.GetResult<Prisma.$TeacherPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   manager<T extends Prisma.User$managerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$managerArgs<ExtArgs>>): Prisma.Prisma__ManagerClient<runtime.Types.Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   markedAttendances<T extends Prisma.User$markedAttendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$markedAttendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  receivedAdmissionPayments<T extends Prisma.User$receivedAdmissionPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedAdmissionPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   receivedStudentPayments<T extends Prisma.User$receivedStudentPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$receivedStudentPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   paidSalaryPayments<T extends Prisma.User$paidSalaryPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paidSalaryPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalaryPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   admissionsReviewed<T extends Prisma.User$admissionsReviewedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$admissionsReviewedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3041,6 +3227,30 @@ export type User$markedAttendancesArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
+}
+
+/**
+ * User.receivedAdmissionPayments
+ */
+export type User$receivedAdmissionPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdmissionPayment
+   */
+  select?: Prisma.AdmissionPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdmissionPayment
+   */
+  omit?: Prisma.AdmissionPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdmissionPaymentInclude<ExtArgs> | null
+  where?: Prisma.AdmissionPaymentWhereInput
+  orderBy?: Prisma.AdmissionPaymentOrderByWithRelationInput | Prisma.AdmissionPaymentOrderByWithRelationInput[]
+  cursor?: Prisma.AdmissionPaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdmissionPaymentScalarFieldEnum | Prisma.AdmissionPaymentScalarFieldEnum[]
 }
 
 /**

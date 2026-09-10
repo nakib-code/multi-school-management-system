@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Admission: 'Admission',
+  AdmissionPayment: 'AdmissionPayment',
   Attendance: 'Attendance',
   AuditLog: 'AuditLog',
   SchoolClass: 'SchoolClass',
@@ -63,6 +64,7 @@ export const ModelName = {
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
+  SchoolSetting: 'SchoolSetting',
   Section: 'Section',
   StudentFee: 'StudentFee',
   StudentPayment: 'StudentPayment',
@@ -113,6 +115,24 @@ export const AdmissionScalarFieldEnum = {
 } as const
 
 export type AdmissionScalarFieldEnum = (typeof AdmissionScalarFieldEnum)[keyof typeof AdmissionScalarFieldEnum]
+
+
+export const AdmissionPaymentScalarFieldEnum = {
+  id: 'id',
+  admissionId: 'admissionId',
+  schoolId: 'schoolId',
+  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  status: 'status',
+  transactionId: 'transactionId',
+  paidAt: 'paidAt',
+  receivedBy: 'receivedBy',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AdmissionPaymentScalarFieldEnum = (typeof AdmissionPaymentScalarFieldEnum)[keyof typeof AdmissionPaymentScalarFieldEnum]
 
 
 export const AttendanceScalarFieldEnum = {
@@ -298,6 +318,17 @@ export const SchoolScalarFieldEnum = {
 } as const
 
 export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
+
+
+export const SchoolSettingScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  admissionFee: 'admissionFee',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolSettingScalarFieldEnum = (typeof SchoolSettingScalarFieldEnum)[keyof typeof SchoolSettingScalarFieldEnum]
 
 
 export const SectionScalarFieldEnum = {

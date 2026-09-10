@@ -96,9 +96,10 @@ enum UserRole {
 }
 
 enum UserStatus {
+  PENDING
   ACTIVE
+  BLOCKED
   INACTIVE
-  SUSPENDED
 }
 
 enum SchoolStatus {
@@ -106,4 +107,16 @@ enum SchoolStatus {
   ACTIVE
   REJECTED
   BLOCKED
+}
+
+enum AdmissionPaymentMethod {
+  CASH
+  ONLINE
+}
+
+enum AdmissionPaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
 }

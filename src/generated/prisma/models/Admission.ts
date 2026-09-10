@@ -338,6 +338,7 @@ export type AdmissionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  payment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
 }
 
 export type AdmissionOrderByWithRelationInput = {
@@ -362,6 +363,7 @@ export type AdmissionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
   reviewer?: Prisma.UserOrderByWithRelationInput
+  payment?: Prisma.AdmissionPaymentOrderByWithRelationInput
 }
 
 export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
@@ -389,6 +391,7 @@ export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  payment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
 }, "id" | "applicationNo">
 
 export type AdmissionOrderByWithAggregationInput = {
@@ -462,6 +465,7 @@ export type AdmissionCreateInput = {
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
+  payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionUncheckedCreateInput = {
@@ -484,6 +488,7 @@ export type AdmissionUncheckedCreateInput = {
   rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionUpdateInput = {
@@ -505,6 +510,7 @@ export type AdmissionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
+  payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateInput = {
@@ -527,6 +533,7 @@ export type AdmissionUncheckedUpdateInput = {
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionCreateManyInput = {
@@ -670,6 +677,11 @@ export type AdmissionSumOrderByAggregateInput = {
   reviewedBy?: Prisma.SortOrder
 }
 
+export type AdmissionScalarRelationFilter = {
+  is?: Prisma.AdmissionWhereInput
+  isNot?: Prisma.AdmissionWhereInput
+}
+
 export type AdmissionListRelationFilter = {
   every?: Prisma.AdmissionWhereInput
   some?: Prisma.AdmissionWhereInput
@@ -718,6 +730,20 @@ export type NullableIntFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type AdmissionCreateNestedOneWithoutPaymentInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutPaymentInput, Prisma.AdmissionUncheckedCreateWithoutPaymentInput>
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutPaymentInput
+  connect?: Prisma.AdmissionWhereUniqueInput
+}
+
+export type AdmissionUpdateOneRequiredWithoutPaymentNestedInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutPaymentInput, Prisma.AdmissionUncheckedCreateWithoutPaymentInput>
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutPaymentInput
+  upsert?: Prisma.AdmissionUpsertWithoutPaymentInput
+  connect?: Prisma.AdmissionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdmissionUpdateToOneWithWhereWithoutPaymentInput, Prisma.AdmissionUpdateWithoutPaymentInput>, Prisma.AdmissionUncheckedUpdateWithoutPaymentInput>
 }
 
 export type AdmissionCreateNestedManyWithoutSchoolInput = {
@@ -804,6 +830,108 @@ export type AdmissionUncheckedUpdateManyWithoutReviewerNestedInput = {
   deleteMany?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
 }
 
+export type AdmissionCreateWithoutPaymentInput = {
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  guardianName?: string | null
+  guardianPhone?: string | null
+  previousSchool?: string | null
+  address?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
+}
+
+export type AdmissionUncheckedCreateWithoutPaymentInput = {
+  id?: number
+  schoolId: number
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  guardianName?: string | null
+  guardianPhone?: string | null
+  previousSchool?: string | null
+  address?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  reviewedBy?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AdmissionCreateOrConnectWithoutPaymentInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdmissionCreateWithoutPaymentInput, Prisma.AdmissionUncheckedCreateWithoutPaymentInput>
+}
+
+export type AdmissionUpsertWithoutPaymentInput = {
+  update: Prisma.XOR<Prisma.AdmissionUpdateWithoutPaymentInput, Prisma.AdmissionUncheckedUpdateWithoutPaymentInput>
+  create: Prisma.XOR<Prisma.AdmissionCreateWithoutPaymentInput, Prisma.AdmissionUncheckedCreateWithoutPaymentInput>
+  where?: Prisma.AdmissionWhereInput
+}
+
+export type AdmissionUpdateToOneWithWhereWithoutPaymentInput = {
+  where?: Prisma.AdmissionWhereInput
+  data: Prisma.XOR<Prisma.AdmissionUpdateWithoutPaymentInput, Prisma.AdmissionUncheckedUpdateWithoutPaymentInput>
+}
+
+export type AdmissionUpdateWithoutPaymentInput = {
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
+}
+
+export type AdmissionUncheckedUpdateWithoutPaymentInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type AdmissionCreateWithoutSchoolInput = {
   applicationNo: string
   studentName: string
@@ -822,6 +950,7 @@ export type AdmissionCreateWithoutSchoolInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
+  payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionUncheckedCreateWithoutSchoolInput = {
@@ -843,6 +972,7 @@ export type AdmissionUncheckedCreateWithoutSchoolInput = {
   rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionCreateOrConnectWithoutSchoolInput = {
@@ -914,6 +1044,7 @@ export type AdmissionCreateWithoutReviewerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionUncheckedCreateWithoutReviewerInput = {
@@ -935,6 +1066,7 @@ export type AdmissionUncheckedCreateWithoutReviewerInput = {
   rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionCreateOrConnectWithoutReviewerInput = {
@@ -1002,6 +1134,7 @@ export type AdmissionUpdateWithoutSchoolInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
+  payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateWithoutSchoolInput = {
@@ -1023,6 +1156,7 @@ export type AdmissionUncheckedUpdateWithoutSchoolInput = {
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateManyWithoutSchoolInput = {
@@ -1085,6 +1219,7 @@ export type AdmissionUpdateWithoutReviewerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateWithoutReviewerInput = {
@@ -1106,6 +1241,7 @@ export type AdmissionUncheckedUpdateWithoutReviewerInput = {
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateManyWithoutReviewerInput = {
@@ -1153,6 +1289,7 @@ export type AdmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
+  payment?: boolean | Prisma.Admission$paymentArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
 
 export type AdmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1229,6 +1366,7 @@ export type AdmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type AdmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
+  payment?: boolean | Prisma.Admission$paymentArgs<ExtArgs>
 }
 export type AdmissionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -1244,6 +1382,7 @@ export type $AdmissionPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     school: Prisma.$SchoolPayload<ExtArgs>
     reviewer: Prisma.$UserPayload<ExtArgs> | null
+    payment: Prisma.$AdmissionPaymentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1661,6 +1800,7 @@ export interface Prisma__AdmissionClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   reviewer<T extends Prisma.Admission$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  payment<T extends Prisma.Admission$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$paymentArgs<ExtArgs>>): Prisma.Prisma__AdmissionPaymentClient<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2126,6 +2266,25 @@ export type Admission$reviewerArgs<ExtArgs extends runtime.Types.Extensions.Inte
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * Admission.payment
+ */
+export type Admission$paymentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdmissionPayment
+   */
+  select?: Prisma.AdmissionPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdmissionPayment
+   */
+  omit?: Prisma.AdmissionPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdmissionPaymentInclude<ExtArgs> | null
+  where?: Prisma.AdmissionPaymentWhereInput
 }
 
 /**

@@ -337,11 +337,12 @@ export type TeacherOrderByWithRelationInput = {
 export type TeacherWhereUniqueInput = Prisma.AtLeast<{
   id?: number
   userId?: number
-  employeeId?: string
+  schoolId_employeeId?: Prisma.TeacherSchoolIdEmployeeIdCompoundUniqueInput
   AND?: Prisma.TeacherWhereInput | Prisma.TeacherWhereInput[]
   OR?: Prisma.TeacherWhereInput[]
   NOT?: Prisma.TeacherWhereInput | Prisma.TeacherWhereInput[]
   schoolId?: Prisma.IntFilter<"Teacher"> | number
+  employeeId?: Prisma.StringFilter<"Teacher"> | string
   firstName?: Prisma.StringFilter<"Teacher"> | string
   lastName?: Prisma.StringNullableFilter<"Teacher"> | string | null
   phone?: Prisma.StringNullableFilter<"Teacher"> | string | null
@@ -358,7 +359,7 @@ export type TeacherWhereUniqueInput = Prisma.AtLeast<{
   assignments?: Prisma.TeacherAssignmentListRelationFilter
   salaries?: Prisma.TeacherSalaryListRelationFilter
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
-}, "id" | "userId" | "employeeId">
+}, "id" | "userId" | "schoolId_employeeId">
 
 export type TeacherOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -550,6 +551,11 @@ export type TeacherListRelationFilter = {
 
 export type TeacherOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type TeacherSchoolIdEmployeeIdCompoundUniqueInput = {
+  schoolId: number
+  employeeId: string
 }
 
 export type TeacherCountOrderByAggregateInput = {

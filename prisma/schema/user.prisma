@@ -21,11 +21,12 @@ model User {
   teacher  Teacher?
   manager  Manager?
 
-  markedAttendances       Attendance[]
-  receivedStudentPayments StudentPayment[]
-  paidSalaryPayments      SalaryPayment[]
-  admissionsReviewed      Admission[]      @relation("AdmissionReviewer")
-  auditLogs               AuditLog[]
+  markedAttendances         Attendance[]
+  receivedAdmissionPayments AdmissionPayment[]
+  receivedStudentPayments   StudentPayment[]
+  paidSalaryPayments        SalaryPayment[]
+  admissionsReviewed        Admission[]        @relation("AdmissionReviewer")
+  auditLogs                 AuditLog[]
 
   @@index([role])
   @@index([status])

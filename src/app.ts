@@ -5,6 +5,8 @@ import { authRoutes } from "./modules/auth/route.js";
 import { admissionRoutes } from "./modules/admission/route.js";
 import { schoolRoutes } from "./modules/school/route.js";
 import { studentRoutes } from "./modules/student/route.js";
+import { teacherRoutes } from "./modules/teacher/route.js";
+import { schoolSettingRoutes } from "./modules/schoolSetting/route.js";
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api", admissionRoutes);
 app.use("/api/schools", schoolRoutes);
 app.use("/api", studentRoutes);
+app.use("/api", teacherRoutes);
+app.use("/api", schoolSettingRoutes);
 
 
 app.use(notFound);

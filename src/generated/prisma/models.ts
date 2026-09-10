@@ -9,6 +9,7 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Admission.js'
+export type * from './models/AdmissionPayment.js'
 export type * from './models/Attendance.js'
 export type * from './models/AuditLog.js'
 export type * from './models/SchoolClass.js'
@@ -20,6 +21,7 @@ export type * from './models/Manager.js'
 export type * from './models/Result.js'
 export type * from './models/SalaryPayment.js'
 export type * from './models/School.js'
+export type * from './models/SchoolSetting.js'
 export type * from './models/Section.js'
 export type * from './models/StudentFee.js'
 export type * from './models/StudentPayment.js'

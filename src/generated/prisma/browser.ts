@@ -23,6 +23,11 @@ export * from './enums.js';
  */
 export type Admission = Prisma.AdmissionModel
 /**
+ * Model AdmissionPayment
+ * 
+ */
+export type AdmissionPayment = Prisma.AdmissionPaymentModel
+/**
  * Model Attendance
  * 
  */
@@ -77,6 +82,11 @@ export type SalaryPayment = Prisma.SalaryPaymentModel
  * 
  */
 export type School = Prisma.SchoolModel
+/**
+ * Model SchoolSetting
+ * 
+ */
+export type SchoolSetting = Prisma.SchoolSettingModel
 /**
  * Model Section
  * 

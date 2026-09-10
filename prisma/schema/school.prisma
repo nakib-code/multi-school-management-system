@@ -24,6 +24,8 @@ model School {
   updatedAt DateTime @updatedAt
 
   teachers           Teacher[]
+  setting SchoolSetting?
+  admissionPayments  AdmissionPayment[]
   managers           Manager[]
   classes            SchoolClass[]
   sections           Section[]

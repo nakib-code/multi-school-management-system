@@ -153,9 +153,10 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
 export const UserStatus = {
+  PENDING: 'PENDING',
   ACTIVE: 'ACTIVE',
-  INACTIVE: 'INACTIVE',
-  SUSPENDED: 'SUSPENDED'
+  BLOCKED: 'BLOCKED',
+  INACTIVE: 'INACTIVE'
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
@@ -169,6 +170,24 @@ export const SchoolStatus = {
 } as const
 
 export type SchoolStatus = (typeof SchoolStatus)[keyof typeof SchoolStatus]
+
+
+export const AdmissionPaymentMethod = {
+  CASH: 'CASH',
+  ONLINE: 'ONLINE'
+} as const
+
+export type AdmissionPaymentMethod = (typeof AdmissionPaymentMethod)[keyof typeof AdmissionPaymentMethod]
+
+
+export const AdmissionPaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type AdmissionPaymentStatus = (typeof AdmissionPaymentStatus)[keyof typeof AdmissionPaymentStatus]
 
 
 export const PaymentMethod = {

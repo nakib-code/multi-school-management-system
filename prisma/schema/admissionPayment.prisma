@@ -1,0 +1,30 @@
+model AdmissionPayment {
+  id Int @id @default(autoincrement())
+
+  admissionId Int @unique
+  schoolId    Int
+
+  amount Decimal @db.Decimal(10, 2)
+
+  paymentMethod AdmissionPaymentMethod
+  status        AdmissionPaymentStatus @default(PENDING)
+
+  transactionId String? @unique
+
+  paidAt DateTime?
+
+  receivedBy Int?
+  remarks    String?
+
+  admission      Admission @relation(fields: [admissionId], references: [id])
+  school         School    @relation(fields: [schoolId], references: [id])
+  receivedByUser User?     @relation(fields: [receivedBy], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([status])
+  @@index([paymentMethod])
+  @@map("admission_payments")
+}

@@ -1,32 +1,34 @@
 model Teacher {
-  id         Int    @id @default(autoincrement())
-  userId     Int    @unique
-  schoolId   Int
-  employeeId String @unique
+  id Int @id @default(autoincrement())
+
+  userId   Int @unique
+  schoolId Int
+
+  employeeId String
 
   firstName   String
   lastName    String?
   phone       String?
   address     String?
   dateOfBirth DateTime?
-  joiningDate DateTime  @default(now())
 
+  joiningDate   DateTime @default(now())
   designation   String?
   qualification String?
 
-  user   User   @relation(fields: [userId], references: [id])
-  school School @relation(fields: [schoolId], references: [id])
-
   isActive Boolean @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  user   User   @relation(fields: [userId], references: [id])
+  school School @relation(fields: [schoolId], references: [id])
 
   assignments    TeacherAssignment[]
   salaries       TeacherSalary[]
   salaryPayments SalaryPayment[]
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, employeeId])
   @@index([schoolId])
-  @@index([employeeId])
   @@map("teachers")
 }

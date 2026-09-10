@@ -19,21 +19,21 @@ model Admission {
   previousSchool String?
   address        String?
 
-  status          AdmissionStatus @default(PENDING)
-  studentEmailVerified Boolean @default(false)
-  reviewedAt      DateTime?
-  reviewedBy      Int?
-  rejectionReason String?
+  status               AdmissionStatus @default(PENDING)
+  studentEmailVerified Boolean         @default(false)
+  reviewedAt           DateTime?
+  reviewedBy           Int?
+  rejectionReason      String?
 
   reviewer User? @relation("AdmissionReviewer", fields: [reviewedBy], references: [id])
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  payment   AdmissionPayment?
 
   @@index([schoolId])
   @@index([status])
   @@index([studentEmail])
   @@index([guardianPhone])
-
   @@map("admissions")
 }
