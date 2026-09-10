@@ -18,13 +18,9 @@ import type {
   CreateAdmissionInput,
   VerifyStudentEmailInput,
 } from "./interface.js";
-import { sslcommerz } from "../../config/sslcommerz.js";
 import { initiatePayment, validatePayment } from "../payment/service.js";
 import type { PaymentCallbackData } from "../payment/interface.js";
 
-// ======================================================
-// CREATE ADMISSION
-// ======================================================
 export const createAdmission = async (
   payload: CreateAdmissionInput,
 ) => {
@@ -87,6 +83,10 @@ export const createAdmission = async (
     );
   }
 
+  // ----------------------------------------------------
+  // Normalize student email
+  // ----------------------------------------------------
+
   const normalizedEmail = studentEmail
     .trim()
     .toLowerCase();
@@ -148,7 +148,10 @@ export const createAdmission = async (
 
   const result = await prisma.$transaction(
     async (tx) => {
+      // ------------------------------------------------
       // Create admission
+      // ------------------------------------------------
+
       const admission = await tx.admission.create({
         data: {
           schoolId,
@@ -156,19 +159,51 @@ export const createAdmission = async (
           studentName,
           studentEmail: normalizedEmail,
           passwordHash,
-          dateOfBirth: dateOfBirth
-            ? new Date(dateOfBirth)
-            : undefined,
-          gender,
-          guardianName,
-          guardianPhone,
-          previousSchool,
-          address,
+
+          ...(dateOfBirth !== undefined
+            ? {
+                dateOfBirth: new Date(dateOfBirth),
+              }
+            : {}),
+
+          ...(gender !== undefined
+            ? {
+                gender,
+              }
+            : {}),
+
+          ...(guardianName !== undefined
+            ? {
+                guardianName,
+              }
+            : {}),
+
+          ...(guardianPhone !== undefined
+            ? {
+                guardianPhone,
+              }
+            : {}),
+
+          ...(previousSchool !== undefined
+            ? {
+                previousSchool,
+              }
+            : {}),
+
+          ...(address !== undefined
+            ? {
+                address,
+              }
+            : {}),
+
           status: "PENDING",
         },
       });
 
+      // ------------------------------------------------
       // Create admission payment
+      // ------------------------------------------------
+
       const payment =
         await tx.admissionPayment.create({
           data: {
@@ -181,8 +216,6 @@ export const createAdmission = async (
 
             paymentMethod,
 
-            // Both CASH and ONLINE
-            // start as PENDING.
             status: "PENDING",
           },
         });
@@ -194,25 +227,13 @@ export const createAdmission = async (
     },
   );
 
-  // ----------------------------------------------------
-  // Generate verification code
-  // ----------------------------------------------------
-
   const verificationCode =
     generateVerificationCode();
-
-  // ----------------------------------------------------
-  // Save verification code to Redis
-  // ----------------------------------------------------
 
   await saveVerificationCode(
     normalizedEmail,
     verificationCode,
   );
-
-  // ----------------------------------------------------
-  // Send verification email
-  // ----------------------------------------------------
 
   try {
     await sendVerificationEmail(
@@ -225,19 +246,16 @@ export const createAdmission = async (
       error,
     );
 
-    // Delete OTP from Redis
     await deleteVerificationCode(
       normalizedEmail,
     );
 
-    // Delete payment
     await prisma.admissionPayment.delete({
       where: {
         id: result.payment.id,
       },
     });
 
-    // Delete admission
     await prisma.admission.delete({
       where: {
         id: result.admission.id,
@@ -249,10 +267,6 @@ export const createAdmission = async (
       "Failed to send verification email",
     );
   }
-
-  // ----------------------------------------------------
-  // Response
-  // ----------------------------------------------------
 
   return {
     id: result.admission.id,
@@ -292,9 +306,6 @@ export const createAdmission = async (
       result.admission.createdAt,
   };
 };
-// ======================================================
-// VERIFY STUDENT EMAIL
-// ======================================================
 
 export const verifyStudentEmail = async (
   payload: VerifyStudentEmailInput,
@@ -304,17 +315,9 @@ export const verifyStudentEmail = async (
     code,
   } = payload;
 
-  // ----------------------------------------------------
-  // Normalize email
-  // ----------------------------------------------------
-
   const normalizedEmail = email
     .trim()
     .toLowerCase();
-
-  // ----------------------------------------------------
-  // Find pending admission
-  // ----------------------------------------------------
 
   const admission =
     await prisma.admission.findFirst({
@@ -331,20 +334,12 @@ export const verifyStudentEmail = async (
     );
   }
 
-  // ----------------------------------------------------
-  // Check already verified
-  // ----------------------------------------------------
-
   if (admission.studentEmailVerified) {
     throw new AppError(
       400,
       "Student email is already verified",
     );
   }
-
-  // ----------------------------------------------------
-  // Get OTP from Redis
-  // ----------------------------------------------------
 
   const savedCode =
     await getVerificationCode(
@@ -358,9 +353,6 @@ export const verifyStudentEmail = async (
     );
   }
 
-  // ----------------------------------------------------
-  // Compare OTP
-  // ----------------------------------------------------
 
   if (savedCode !== code) {
     throw new AppError(
@@ -368,10 +360,6 @@ export const verifyStudentEmail = async (
       "Invalid verification code",
     );
   }
-
-  // ----------------------------------------------------
-  // Mark email as verified
-  // ----------------------------------------------------
 
   const updatedAdmission =
     await prisma.admission.update({
@@ -384,17 +372,9 @@ export const verifyStudentEmail = async (
       },
     });
 
-  // ----------------------------------------------------
-  // Delete OTP
-  // ----------------------------------------------------
-
   await deleteVerificationCode(
     normalizedEmail,
   );
-
-  // ----------------------------------------------------
-  // Response
-  // ----------------------------------------------------
 
   return {
     admissionId:
@@ -410,10 +390,6 @@ export const verifyStudentEmail = async (
       updatedAdmission.studentEmailVerified,
   };
 };
-
-// ======================================================
-// GET ADMISSION BY ID
-// ======================================================
 
 export const getAdmissionById = async (
   schoolId: number,
@@ -479,26 +455,17 @@ export const getAdmissionById = async (
   return admission;
 };
 
-// ======================================================
-// APPROVE ADMISSION
-// ======================================================
-
 export const approveAdmission = async (
   schoolId: number,
   admissionId: number,
   reviewerId: number,
 ) => {
-  // ----------------------------------------------------
-  // Find admission
-  // ----------------------------------------------------
-
   const admission =
     await prisma.admission.findFirst({
       where: {
         id: admissionId,
         schoolId,
       },
-
       include: {
         payment: true,
       },
@@ -511,20 +478,12 @@ export const approveAdmission = async (
     );
   }
 
-  // ----------------------------------------------------
-  // Must be pending
-  // ----------------------------------------------------
-
   if (admission.status !== "PENDING") {
     throw new AppError(
       400,
       "Only pending admissions can be approved",
     );
   }
-
-  // ----------------------------------------------------
-  // Email must be verified
-  // ----------------------------------------------------
 
   if (!admission.studentEmailVerified) {
     throw new AppError(
@@ -533,20 +492,12 @@ export const approveAdmission = async (
     );
   }
 
-  // ----------------------------------------------------
-  // Payment must exist
-  // ----------------------------------------------------
-
   if (!admission.payment) {
     throw new AppError(
       400,
       "Admission payment not found",
     );
   }
-
-  // ----------------------------------------------------
-  // Payment must be paid
-  // ----------------------------------------------------
 
   if (admission.payment.status !== "PAID") {
     throw new AppError(
@@ -556,7 +507,7 @@ export const approveAdmission = async (
   }
 
   // ----------------------------------------------------
-  // Make sure email is not already used
+  // Check existing user
   // ----------------------------------------------------
 
   const existingUser =
@@ -574,7 +525,7 @@ export const approveAdmission = async (
   }
 
   // ----------------------------------------------------
-  // Generate unique Student ID
+  // Generate student ID
   // ----------------------------------------------------
 
   const studentId = `STU-${schoolId}-${Date.now()}-${Math.floor(
@@ -589,7 +540,8 @@ export const approveAdmission = async (
     .trim()
     .split(/\s+/);
 
-  const firstName = nameParts[0];
+  const firstName =
+    nameParts[0] ?? admission.studentName.trim();
 
   const lastName =
     nameParts.length > 1
@@ -597,7 +549,7 @@ export const approveAdmission = async (
       : null;
 
   // ----------------------------------------------------
-  // Create everything in one transaction
+  // Create User + Student + Update Admission
   // ----------------------------------------------------
 
   const result = await prisma.$transaction(
@@ -608,12 +560,9 @@ export const approveAdmission = async (
           name: admission.studentName,
           email: admission.studentEmail,
           passwordHash: admission.passwordHash,
-
           role: "STUDENT",
           status: "ACTIVE",
-
           mustChangePassword: false,
-
           schoolId,
         },
       });
@@ -624,20 +573,26 @@ export const approveAdmission = async (
           data: {
             userId: user.id,
             schoolId,
-
             studentId,
 
             firstName,
+
             lastName,
 
-            dateOfBirth:
-              admission.dateOfBirth,
+            ...(admission.dateOfBirth !== null
+              ? {
+                  dateOfBirth:
+                    admission.dateOfBirth,
+                }
+              : {}),
 
-            gender:
-              admission.gender,
+            ...(admission.gender !== null
+              ? {
+                  gender: admission.gender,
+                }
+              : {}),
 
-            admissionDate:
-              new Date(),
+            admissionDate: new Date(),
 
             isActive: true,
           },
@@ -649,24 +604,16 @@ export const approveAdmission = async (
           where: {
             id: admission.id,
           },
-
           data: {
             status: "APPROVED",
-
-            reviewedAt:
-              new Date(),
-
-            reviewedBy:
-              reviewerId,
+            reviewedAt: new Date(),
+            reviewedBy: reviewerId,
           },
         });
 
       return {
-        admission:
-          updatedAdmission,
-
+        admission: updatedAdmission,
         user,
-
         student,
       };
     },
@@ -699,10 +646,6 @@ export const approveAdmission = async (
       result.admission.reviewedAt,
   };
 };
-
-// ======================================================
-// REJECT ADMISSION
-// ======================================================
 
 export const rejectAdmission = async (
   schoolId: number,
@@ -791,7 +734,6 @@ export const rejectAdmission = async (
   return updatedAdmission;
 };
 
-
 export const confirmCashPayment = async (
   schoolId: number,
   admissionId: number,
@@ -827,7 +769,10 @@ export const confirmCashPayment = async (
   });
 
   if (!admission) {
-    throw new AppError(404, "Admission not found");
+    throw new AppError(
+      404,
+      "Admission not found",
+    );
   }
 
   // ----------------------------------------------------
@@ -888,31 +833,39 @@ export const confirmCashPayment = async (
   // Confirm cash payment
   // ----------------------------------------------------
 
-  const payment = await prisma.admissionPayment.update({
-    where: {
-      id: admission.payment.id,
-    },
-    data: {
-      status: "PAID",
-      paidAt: new Date(),
-      receivedBy: userId,
-      remarks: input.remarks,
-    },
-    select: {
-      id: true,
-      admissionId: true,
-      schoolId: true,
-      amount: true,
-      paymentMethod: true,
-      status: true,
-      transactionId: true,
-      paidAt: true,
-      receivedBy: true,
-      remarks: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
+  const payment =
+    await prisma.admissionPayment.update({
+      where: {
+        id: admission.payment.id,
+      },
+
+      data: {
+        status: "PAID",
+        paidAt: new Date(),
+        receivedBy: userId,
+
+        ...(input.remarks !== undefined
+          ? {
+              remarks: input.remarks,
+            }
+          : {}),
+      },
+
+      select: {
+        id: true,
+        admissionId: true,
+        schoolId: true,
+        amount: true,
+        paymentMethod: true,
+        status: true,
+        transactionId: true,
+        paidAt: true,
+        receivedBy: true,
+        remarks: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
   // ----------------------------------------------------
   // Return response
@@ -923,7 +876,6 @@ export const confirmCashPayment = async (
     amount: Number(payment.amount),
   };
 };
-
 
 export const initiateOnlinePayment = async (
   schoolId: number,
@@ -1041,7 +993,6 @@ export const initiateOnlinePayment = async (
 
   return payment;
 };
-
 
 export const verifyOnlineAdmissionPayment = async (
   admissionId: number,
