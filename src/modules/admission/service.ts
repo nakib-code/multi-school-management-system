@@ -14,9 +14,13 @@ import {
 import { sendVerificationEmail } from "../../utils/sendEmail.js";
 
 import type {
+  ConfirmCashPaymentInput,
   CreateAdmissionInput,
   VerifyStudentEmailInput,
 } from "./interface.js";
+import { sslcommerz } from "../../config/sslcommerz.js";
+import { initiatePayment, validatePayment } from "../payment/service.js";
+import type { PaymentCallbackData } from "../payment/interface.js";
 
 // ======================================================
 // CREATE ADMISSION
@@ -785,4 +789,447 @@ export const rejectAdmission = async (
     });
 
   return updatedAdmission;
+};
+
+
+export const confirmCashPayment = async (
+  schoolId: number,
+  admissionId: number,
+  userId: number,
+  input: ConfirmCashPaymentInput,
+) => {
+  // ----------------------------------------------------
+  // Check admission
+  // ----------------------------------------------------
+
+  const admission = await prisma.admission.findUnique({
+    where: {
+      id: admissionId,
+    },
+    select: {
+      id: true,
+      schoolId: true,
+      status: true,
+      payment: {
+        select: {
+          id: true,
+          schoolId: true,
+          amount: true,
+          paymentMethod: true,
+          status: true,
+          transactionId: true,
+          paidAt: true,
+          receivedBy: true,
+          remarks: true,
+        },
+      },
+    },
+  });
+
+  if (!admission) {
+    throw new AppError(404, "Admission not found");
+  }
+
+  // ----------------------------------------------------
+  // School isolation
+  // ----------------------------------------------------
+
+  if (admission.schoolId !== schoolId) {
+    throw new AppError(
+      403,
+      "You do not have access to this admission",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Check admission status
+  // ----------------------------------------------------
+
+  if (admission.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Only pending admissions can receive payment confirmation",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Check payment
+  // ----------------------------------------------------
+
+  if (!admission.payment) {
+    throw new AppError(
+      404,
+      "Admission payment not found",
+    );
+  }
+
+  if (admission.payment.paymentMethod !== "CASH") {
+    throw new AppError(
+      400,
+      "This admission is not using cash payment",
+    );
+  }
+
+  if (admission.payment.status === "PAID") {
+    throw new AppError(
+      400,
+      "Cash payment has already been confirmed",
+    );
+  }
+
+  if (admission.payment.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Cash payment cannot be confirmed",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Confirm cash payment
+  // ----------------------------------------------------
+
+  const payment = await prisma.admissionPayment.update({
+    where: {
+      id: admission.payment.id,
+    },
+    data: {
+      status: "PAID",
+      paidAt: new Date(),
+      receivedBy: userId,
+      remarks: input.remarks,
+    },
+    select: {
+      id: true,
+      admissionId: true,
+      schoolId: true,
+      amount: true,
+      paymentMethod: true,
+      status: true,
+      transactionId: true,
+      paidAt: true,
+      receivedBy: true,
+      remarks: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  // ----------------------------------------------------
+  // Return response
+  // ----------------------------------------------------
+
+  return {
+    ...payment,
+    amount: Number(payment.amount),
+  };
+};
+
+
+export const initiateOnlinePayment = async (
+  schoolId: number,
+  admissionId: number,
+) => {
+  const admission = await prisma.admission.findFirst({
+    where: {
+      id: admissionId,
+      schoolId,
+    },
+    include: {
+      payment: true,
+      school: {
+        select: {
+          name: true,
+          email: true,
+          phone: true,
+          address: true,
+        },
+      },
+    },
+  });
+
+  if (!admission) {
+    throw new AppError(404, "Admission not found");
+  }
+
+  if (admission.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Only pending admissions can make payment",
+    );
+  }
+
+  if (!admission.payment) {
+    throw new AppError(
+      404,
+      "Admission payment not found",
+    );
+  }
+
+  if (admission.payment.paymentMethod !== "ONLINE") {
+    throw new AppError(
+      400,
+      "This admission is not using online payment",
+    );
+  }
+
+  if (admission.payment.status === "PAID") {
+    throw new AppError(
+      400,
+      "Admission payment is already completed",
+    );
+  }
+
+  if (admission.payment.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Payment cannot be initiated",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Generate unique transaction ID
+  // ----------------------------------------------------
+
+  const transactionId = `ADM-${admission.id}-${Date.now()}`;
+
+  // ----------------------------------------------------
+  // Save transaction ID
+  // ----------------------------------------------------
+
+  await prisma.admissionPayment.update({
+    where: {
+      id: admission.payment.id,
+    },
+    data: {
+      transactionId,
+    },
+  });
+
+  // ----------------------------------------------------
+  // Initiate reusable payment service
+  // ----------------------------------------------------
+
+ const payment = await initiatePayment({
+  amount: Number(admission.payment.amount),
+  transactionId,
+
+  productName: "Admission Fee",
+  productCategory: "Education",
+
+  customerName: admission.studentName,
+  customerEmail: admission.studentEmail,
+
+  ...(admission.guardianPhone && {
+    customerPhone: admission.guardianPhone,
+  }),
+
+  ...(admission.address && {
+    customerAddress: admission.address,
+  }),
+
+  customerCity: "Dhaka",
+  customerCountry: "Bangladesh",
+
+  successUrl: `${process.env.BACKEND_URL}/api/payments/admission/success`,
+  failUrl: `${process.env.BACKEND_URL}/api/payments/admission/fail`,
+  cancelUrl: `${process.env.BACKEND_URL}/api/payments/admission/cancel`,
+  ipnUrl: `${process.env.BACKEND_URL}/api/payments/admission/ipn`,
+
+  valueA: String(admission.id),
+  valueB: String(schoolId),
+});
+
+  return payment;
+};
+
+
+export const verifyOnlineAdmissionPayment = async (
+  admissionId: number,
+  callbackData: PaymentCallbackData,
+) => {
+  // ----------------------------------------------------
+  // Check callback data
+  // ----------------------------------------------------
+
+  if (!callbackData.val_id) {
+    throw new AppError(
+      400,
+      "SSLCommerz validation ID is missing",
+    );
+  }
+
+  if (!callbackData.tran_id) {
+    throw new AppError(
+      400,
+      "SSLCommerz transaction ID is missing",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Find admission payment
+  // ----------------------------------------------------
+
+  const admission = await prisma.admission.findUnique({
+    where: {
+      id: admissionId,
+    },
+    select: {
+      id: true,
+      schoolId: true,
+      status: true,
+      payment: {
+        select: {
+          id: true,
+          amount: true,
+          paymentMethod: true,
+          status: true,
+          transactionId: true,
+          paidAt: true,
+        },
+      },
+    },
+  });
+
+  if (!admission) {
+    throw new AppError(404, "Admission not found");
+  }
+
+  if (!admission.payment) {
+    throw new AppError(
+      404,
+      "Admission payment not found",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Check payment method
+  // ----------------------------------------------------
+
+  if (admission.payment.paymentMethod !== "ONLINE") {
+    throw new AppError(
+      400,
+      "This admission is not using online payment",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Check transaction ID
+  // ----------------------------------------------------
+
+  if (
+    admission.payment.transactionId !==
+    callbackData.tran_id
+  ) {
+    throw new AppError(
+      400,
+      "Transaction ID does not match",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Validate payment with SSLCommerz
+  // ----------------------------------------------------
+
+  const validation = await validatePayment(
+    callbackData.val_id,
+  );
+
+  // ----------------------------------------------------
+  // Check validation status
+  // ----------------------------------------------------
+
+  if (
+    validation.status !== "VALID" &&
+    validation.status !== "VALIDATED"
+  ) {
+    throw new AppError(
+      400,
+      "SSLCommerz payment validation failed",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Verify transaction ID again
+  // ----------------------------------------------------
+
+  if (validation.tran_id !== admission.payment.transactionId) {
+    throw new AppError(
+      400,
+      "Validated transaction ID does not match",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Verify amount
+  // ----------------------------------------------------
+
+  const expectedAmount = Number(admission.payment.amount);
+  const paidAmount = Number(validation.amount);
+
+  if (
+    !Number.isFinite(paidAmount) ||
+    paidAmount !== expectedAmount
+  ) {
+    throw new AppError(
+      400,
+      "Payment amount does not match",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Already paid
+  // ----------------------------------------------------
+
+  if (admission.payment.status === "PAID") {
+    return {
+      admissionId: admission.id,
+      schoolId: admission.schoolId,
+      transactionId: admission.payment.transactionId,
+      status: "PAID",
+      amount: expectedAmount,
+      paidAt: admission.payment.paidAt,
+    };
+  }
+
+  // ----------------------------------------------------
+  // Check admission status
+  // ----------------------------------------------------
+
+  if (admission.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Only pending admissions can receive payment",
+    );
+  }
+
+  // ----------------------------------------------------
+  // Mark payment as PAID
+  // ----------------------------------------------------
+
+  const payment = await prisma.admissionPayment.update({
+    where: {
+      id: admission.payment.id,
+    },
+    data: {
+      status: "PAID",
+      paidAt: new Date(),
+    },
+    select: {
+      id: true,
+      admissionId: true,
+      schoolId: true,
+      amount: true,
+      paymentMethod: true,
+      status: true,
+      transactionId: true,
+      paidAt: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return {
+    ...payment,
+    amount: Number(payment.amount),
+  };
 };

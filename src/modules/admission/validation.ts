@@ -2,8 +2,6 @@ import { z } from "zod";
 
 export const createAdmissionSchema = z.object({
   body: z.object({
-    schoolId: z.number().int().positive("Invalid school ID"),
-
     studentName: z.string().min(2).max(150),
 
     studentEmail: z.string().email(),
@@ -23,6 +21,12 @@ export const createAdmissionSchema = z.object({
     address: z.string().optional(),
 
     paymentMethod: z.enum(["CASH", "ONLINE"]),
+  }),
+
+  params: z.object({
+    schoolId: z.coerce.number().int().positive(
+      "Invalid school ID",
+    ),
   }),
 });
 
@@ -45,5 +49,24 @@ export const verifyStudentEmailSchema = z.object({
 export const rejectAdmissionSchema = z.object({
   body: z.object({
     rejectionReason: z.string().min(5).max(500),
+  }),
+});
+
+
+export const confirmCashPaymentSchema = z.object({
+  body: z.object({
+    remarks: z.string().max(500).optional(),
+  }),
+
+  params: z.object({
+    schoolId: z.coerce
+      .number()
+      .int()
+      .positive("Invalid school ID"),
+
+    id: z.coerce
+      .number()
+      .int()
+      .positive("Invalid admission ID"),
   }),
 });

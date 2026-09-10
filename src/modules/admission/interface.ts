@@ -22,3 +22,11 @@ export interface CreateAdmissionInput {
 
   paymentMethod: "CASH" | "ONLINE";
 }
+
+export interface ConfirmCashPaymentInput {
+  remarks?: string;
+}
+
+export interface InitiateOnlinePaymentInput {
+  admissionId: number;
+}

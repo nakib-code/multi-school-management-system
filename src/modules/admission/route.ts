@@ -2,8 +2,10 @@ import { Router } from "express";
 
 import {
   approveAdmissionController,
+  confirmCashPaymentController,
   createAdmissionController,
   getAdmissionByIdController,
+  initiateOnlinePaymentController,
   rejectAdmissionController,
   verifyStudentEmailController,
 } from "./controller.js";
@@ -11,6 +13,7 @@ import {
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
+  confirmCashPaymentSchema,
   createAdmissionSchema,
   rejectAdmissionSchema,
   verifyStudentEmailSchema,
@@ -33,7 +36,7 @@ const router = Router();
 // ======================================================
 
 router.post(
-  "/admissions",
+  "/schools/:schoolId/admissions",
   validateRequest(createAdmissionSchema),
   createAdmissionController,
 );
@@ -79,6 +82,24 @@ router.patch(
   validateRequest(rejectAdmissionSchema),
   rejectAdmissionController,
 );
+
+router.patch(
+  "/schools/:schoolId/admissions/:id/payment/confirm-cash",
+  authenticate,
+  authorize(
+    UserRole.ADMIN,
+    UserRole.MANAGER,
+  ),
+  requireSchoolAccess,
+  validateRequest(confirmCashPaymentSchema),
+  confirmCashPaymentController,
+);
+
+router.post(
+  "/schools/:schoolId/admissions/:id/payment/online/initiate",
+  initiateOnlinePaymentController,
+);
+
 
 
 export const admissionRoutes = router;

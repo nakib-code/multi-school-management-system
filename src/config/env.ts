@@ -17,4 +17,8 @@ export default {
   smtp_user: process.env.SMTP_USER as string,
   email_sender: process.env.EMAIL_SENDER as string,
   smtp_password: process.env.SMTP_PASSWORD as string,
+  sslcz_store_id: process.env.SSLCZ_STORE_ID as string,
+  sslcz_store_password: process.env.SSLCZ_STORE_PASSWORD as string,
+  sslcz_is_live: process.env.SSLCZ_IS_LIVE === "true",
+  backend_url: process.env.BACKEND_URL
 };
