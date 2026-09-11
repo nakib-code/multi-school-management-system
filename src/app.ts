@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (_req, res) => {
 	res.status(200).json({
 		success: true,
-		message: "University Management System API is running",
+		message: "Multi-School Management System API API is running",
 	});
 });
 
@@ -29,7 +29,7 @@ app.get("/", (_req, res) => {
 app.get("/api/v1/health", (_req, res) => {
 	res.status(200).json({
 		success: true,
-		message: "University Management System API is running",
+		message: "Multi-School Management System API API is running",
 	});
 });
 
