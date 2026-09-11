@@ -1565,6 +1565,3 @@ Production deployment
 
 The API is designed to demonstrate secure, scalable and maintainable backend development using Node.js, TypeScript, Express.js, PostgreSQL and Prisma.
 
-
-**এইটাই তোমার final documentation content।**  
-তুমি পুরোটা copy করে `University-Management-System-API-Documentation.md` নামে save করলেই হবে।
