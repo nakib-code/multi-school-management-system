@@ -1,27 +1,27 @@
 export interface CreateTeacherInput {
-  schoolId: number;
+	schoolId: number;
 
-  name: string;
-  email: string;
-  password: string;
+	name: string;
+	email: string;
+	password: string;
 
-  employeeId: string;
+	employeeId: string;
 
-  firstName: string;
-  lastName?: string;
+	firstName: string;
+	lastName?: string;
 
-  phone?: string;
-  address?: string;
-  dateOfBirth?: string;
+	phone?: string;
+	address?: string;
+	dateOfBirth?: string;
 
-  joiningDate?: string;
+	joiningDate?: string;
 
-  designation?: string;
-  qualification?: string;
+	designation?: string;
+	qualification?: string;
 }
 
 export interface VerifyTeacherEmailInput {
-  schoolId: number;
-  teacherId: number;
-  code: string;
+	schoolId: number;
+	teacherId: number;
+	code: string;
 }

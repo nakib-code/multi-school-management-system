@@ -4,18 +4,18 @@ import env from "./config/env.js";
 import { connectRedis } from "./lib/redis.js";
 
 const startServer = async () => {
-  try {
-    await connectDatabase();
-    await connectRedis();
+	try {
+		await connectDatabase();
+		await connectRedis();
 
-    app.listen(env.port, () => {
-      console.log(`Server running on port ${env.port}`);
-      console.log(`Environment: ${env.node_env}`);
-    });
-  } catch (error) {
-    console.error("Failed to start server:", error);
-    process.exit(1);
-  }
+		app.listen(env.port, () => {
+			console.log(`Server running on port ${env.port}`);
+			console.log(`Environment: ${env.node_env}`);
+		});
+	} catch (error) {
+		console.error("Failed to start server:", error);
+		process.exit(1);
+	}
 };
 
 startServer();

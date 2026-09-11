@@ -4,63 +4,76 @@ import { generateToken } from "../../utils/jwt.js";
 import { comparePassword } from "../../utils/password.js";
 import type { LoginInput } from "./interface.js";
 
-
 export const login = async (payload: LoginInput) => {
-  const { email, password } = payload;
+	const { email, password } = payload;
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-    include: {
-      school: true,
-    },
-  });
+	const user = await prisma.user.findUnique({
+		where: { email },
 
-  if (!user) {
-    throw new AppError(401, "Invalid email or password");
-  }
+		include: {
+			school: true,
+		},
+	});
 
-  if (user.status !== "ACTIVE") {
-    throw new AppError(403, "Your account is not active");
-  }
+	if (!user) {
+		throw new AppError(401, "Invalid email or password");
+	}
 
-  if (
-    user.role !== "SUPER_ADMIN" &&
-    (!user.school || user.school.status !== "ACTIVE")
-  ) {
-    throw new AppError(
-      403,
-      "Your school is not active",
-    );
-  }
+	if (user.status !== "ACTIVE") {
+		throw new AppError(403, "Your account is not active");
+	}
 
-  const isPasswordMatched = await comparePassword(
-    password,
-    user.passwordHash,
-  );
+	// ----------------------------------------------------
+	// Guardian login is not supported yet
+	// ----------------------------------------------------
 
-  if (!isPasswordMatched) {
-    throw new AppError(401, "Invalid email or password");
-  }
+	if (user.role === "GUARDIAN") {
+		throw new AppError(403, "Guardian login is not available");
+	}
 
-  const token = generateToken({
-    userId: user.id,
-    role: user.role,
-    ...(user.schoolId !== null && {
-      schoolId: user.schoolId,
-    }),
-  });
+	// ----------------------------------------------------
+	// Check school status
+	// ----------------------------------------------------
 
-  return {
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      role: user.role,
-      status: user.status,
-      schoolId: user.schoolId,
-      mustChangePassword: user.mustChangePassword,
-    },
-    token,
-  };
+	if (user.role !== "SUPER_ADMIN" && user.school?.status !== "ACTIVE") {
+		throw new AppError(403, "Your school is not active");
+	}
+
+	// ----------------------------------------------------
+	// Check password
+	// ----------------------------------------------------
+
+	const isPasswordMatched = await comparePassword(password, user.passwordHash);
+
+	if (!isPasswordMatched) {
+		throw new AppError(401, "Invalid email or password");
+	}
+
+	// ----------------------------------------------------
+	// Generate JWT
+	// ----------------------------------------------------
+
+	const token = generateToken({
+		userId: user.id,
+		role: user.role,
+
+		...(user.schoolId !== null && {
+			schoolId: user.schoolId,
+		}),
+	});
+
+	return {
+		user: {
+			id: user.id,
+			name: user.name,
+			email: user.email,
+			phone: user.phone,
+			role: user.role,
+			status: user.status,
+			schoolId: user.schoolId,
+			mustChangePassword: user.mustChangePassword,
+		},
+
+		token,
+	};
 };

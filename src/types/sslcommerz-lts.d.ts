@@ -1,14 +1,10 @@
 declare module "sslcommerz-lts" {
-  class SSLCommerzPayment {
-    constructor(
-      storeId: string,
-      storePassword: string,
-      isLive: boolean,
-    );
+	class SSLCommerzPayment {
+		constructor(storeId: string, storePassword: string, isLive: boolean);
 
-    init(data: Record<string, unknown>): Promise<unknown>;
-    validate(data: Record<string, unknown>): Promise<unknown>;
-  }
+		init(data: Record<string, unknown>): Promise<unknown>;
+		validate(data: Record<string, unknown>): Promise<unknown>;
+	}
 
-  export default SSLCommerzPayment;
+	export default SSLCommerzPayment;
 }
