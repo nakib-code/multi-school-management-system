@@ -1,5 +1,4 @@
-
-# University Management System
+# Multi-School Management System API
 ## API Documentation
 
 **API Version:** v1  
@@ -127,7 +126,7 @@ GET /api/v1/health
 Success Response
 {
   "success": true,
-  "message": "University Management System API is running"
+  "message": "Multi-School Management System API API is running"
 }
 7. Authentication APIs
 7.1 Login
@@ -418,7 +417,7 @@ University-Management-System-API-Documentation.md
 আমি Part 1, Part 2, Part 3 একসাথে দিলাম। Part 1/2/3 লেখা চাইলে পরে remove করে দিতে পারো।
 
 Part 1/3
-# University Management System
+# Multi-School Management System API
 ## API Documentation
 
 **API Version:** v1  
@@ -545,7 +544,7 @@ GET /api/v1/health
 Success Response
 {
   "success": true,
-  "message": "University Management System API is running"
+  "message": "Multi-School Management System API API is running"
 }
 7. Authentication APIs
 7.1 Login
@@ -1540,11 +1539,11 @@ Expected response:
 
 {
   "success": true,
-  "message": "University Management System API is running"
+  "message": "Multi-School Management System API API is running"
 }
 30. Conclusion
 
-The University Management System backend provides a multi-school architecture with:
+The Multi-School Management System API backend provides a multi-school architecture with:
 
 Secure authentication
 Role-based authorization

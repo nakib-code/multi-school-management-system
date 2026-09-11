@@ -1,8 +1,9 @@
 import { Router } from "express";
+
 import { UserRole } from "../../generated/prisma/enums.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
+import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
 	activateStudentController,
@@ -12,6 +13,8 @@ import {
 	getStudentByIdController,
 	updateStudentController,
 } from "./controller.js";
+
+import { updateStudentSchema } from "./validation.js";
 
 const router = Router();
 
@@ -44,6 +47,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	validateRequest(updateStudentSchema),
 	updateStudentController,
 );
 

@@ -1,4 +1,5 @@
-# University Management System API
+
+# Multi-School Management System API
 
 A production-oriented REST API for managing schools, users, admissions, students, teachers, authentication, school settings, and admission payments.
 
