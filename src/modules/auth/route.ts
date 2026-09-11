@@ -13,6 +13,7 @@ const router = Router();
 
 router.post("/login", validateRequest(loginSchema), loginController);
 
+// Google Admin Login
 router.get("/google", (_req, res) => {
 	const authUrl = googleClient.generateAuthUrl({
 		access_type: "offline",
@@ -27,7 +28,9 @@ router.get("/google/callback", async (req, res, next) => {
 		const code = req.query.code;
 
 		if (typeof code !== "string") {
-			return next(new AppError(400, "Google authorization code is missing"));
+			return next(
+				new AppError(400, "Google authorization code is missing"),
+			);
 		}
 
 		const { tokens } = await googleClient.getToken(code);
@@ -35,7 +38,9 @@ router.get("/google/callback", async (req, res, next) => {
 		googleClient.setCredentials(tokens);
 
 		if (!tokens.id_token) {
-			return next(new AppError(400, "Google ID token not received"));
+			return next(
+				new AppError(400, "Google ID token not received"),
+			);
 		}
 
 		const ticket = await googleClient.verifyIdToken({
@@ -45,10 +50,17 @@ router.get("/google/callback", async (req, res, next) => {
 
 		const payload = ticket.getPayload();
 
-		if (!payload?.email) {
-			return next(new AppError(400, "Google account email not found"));
+		// Make sure Google account email exists and is verified
+		if (!payload?.email || payload.email_verified !== true) {
+			return next(
+				new AppError(
+					400,
+					"Google account email is not verified",
+				),
+			);
 		}
 
+		// Only existing ADMIN accounts can login with Google
 		const result = await googleAdminLogin(payload.email);
 
 		return res.status(200).json({
