@@ -21,4 +21,7 @@ export default {
 	sslcz_store_password: process.env.SSLCZ_STORE_PASSWORD as string,
 	sslcz_is_live: process.env.SSLCZ_IS_LIVE === "true",
 	backend_url: process.env.BACKEND_URL,
+	google_client_id: process.env.GOOGLE_CLIENT_ID as string,
+	google_client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
+	google_callback_url: process.env.GOOGLE_CALLBACK_URL as string,
 };
