@@ -28,9 +28,7 @@ router.get("/google/callback", async (req, res, next) => {
 		const code = req.query.code;
 
 		if (typeof code !== "string") {
-			return next(
-				new AppError(400, "Google authorization code is missing"),
-			);
+			return next(new AppError(400, "Google authorization code is missing"));
 		}
 
 		const { tokens } = await googleClient.getToken(code);
@@ -38,9 +36,7 @@ router.get("/google/callback", async (req, res, next) => {
 		googleClient.setCredentials(tokens);
 
 		if (!tokens.id_token) {
-			return next(
-				new AppError(400, "Google ID token not received"),
-			);
+			return next(new AppError(400, "Google ID token not received"));
 		}
 
 		const ticket = await googleClient.verifyIdToken({
@@ -52,12 +48,7 @@ router.get("/google/callback", async (req, res, next) => {
 
 		// Make sure Google account email exists and is verified
 		if (!payload?.email || payload.email_verified !== true) {
-			return next(
-				new AppError(
-					400,
-					"Google account email is not verified",
-				),
-			);
+			return next(new AppError(400, "Google account email is not verified"));
 		}
 
 		// Only existing ADMIN accounts can login with Google
