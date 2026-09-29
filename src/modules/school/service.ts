@@ -11,6 +11,7 @@ import {
 
 import type {
   CreateSchoolInput,
+  GetSchoolUsersQuery,
   RejectSchoolInput,
   VerifyAdminEmailInput,
 } from "./interface.js";
@@ -232,7 +233,6 @@ export const getSchools = async ({
       where,
       skip,
       take: limit,
-
       orderBy: {
         id: "desc",
       },
@@ -258,6 +258,7 @@ export const getSchools = async ({
 /**
  * =========================================================
  * APPROVE SCHOOL
+ * SUPER ADMIN
  * =========================================================
  */
 
@@ -348,11 +349,9 @@ export const approveSchool = async (
           }),
 
           passwordHash: adminPasswordHash,
-
           role: "ADMIN",
           status: "ACTIVE",
           mustChangePassword: false,
-
           schoolId,
         },
       });
@@ -459,6 +458,7 @@ export const verifyAdminEmail = async (
 /**
  * =========================================================
  * BLOCK SCHOOL
+ * SUPER ADMIN
  * =========================================================
  */
 
@@ -509,6 +509,7 @@ export const blockSchool = async (
 /**
  * =========================================================
  * UNBLOCK SCHOOL
+ * SUPER ADMIN
  * =========================================================
  */
 
@@ -559,6 +560,7 @@ export const unblockSchool = async (
 /**
  * =========================================================
  * REJECT SCHOOL
+ * SUPER ADMIN
  * =========================================================
  */
 
@@ -605,6 +607,7 @@ export const rejectSchool = async (
 /**
  * =========================================================
  * DELETE SCHOOL
+ * SUPER ADMIN
  * =========================================================
  */
 
@@ -641,5 +644,216 @@ export const deleteSchool = async (
   return {
     schoolId,
     deleted: true,
+  };
+};
+
+/**
+ * =========================================================
+ * GET SCHOOL USER SUMMARY
+ * SUPER ADMIN
+ * =========================================================
+ */
+
+export const getSchoolUserSummary = async (
+  schoolId: number,
+) => {
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+
+    select: {
+      id: true,
+      name: true,
+      code: true,
+      status: true,
+    },
+  });
+
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
+
+  const [
+    total,
+    admin,
+    manager,
+    teacher,
+    student,
+    guardian,
+  ] = await Promise.all([
+    prisma.user.count({
+      where: {
+        schoolId,
+      },
+    }),
+
+    prisma.user.count({
+      where: {
+        schoolId,
+        role: "ADMIN",
+      },
+    }),
+
+    prisma.user.count({
+      where: {
+        schoolId,
+        role: "MANAGER",
+      },
+    }),
+
+    prisma.user.count({
+      where: {
+        schoolId,
+        role: "TEACHER",
+      },
+    }),
+
+    prisma.user.count({
+      where: {
+        schoolId,
+        role: "STUDENT",
+      },
+    }),
+
+    prisma.user.count({
+      where: {
+        schoolId,
+        role: "GUARDIAN",
+      },
+    }),
+  ]);
+
+  return {
+    school,
+
+    counts: {
+      total,
+      admin,
+      manager,
+      teacher,
+      student,
+      guardian,
+    },
+  };
+};
+
+/**
+ * =========================================================
+ * GET SCHOOL USERS
+ * SUPER ADMIN
+ * =========================================================
+ */
+
+export const getSchoolUsers = async (
+  schoolId: number,
+  query: GetSchoolUsersQuery,
+) => {
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 10;
+  const search = query.search?.trim() || "";
+  const role = query.role;
+  const status = query.status;
+
+  // Check school
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+
+    select: {
+      id: true,
+    },
+  });
+
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
+
+  const skip = (page - 1) * limit;
+
+  const where = {
+    schoolId,
+
+    ...(search
+      ? {
+          OR: [
+            {
+              name: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
+
+            {
+              email: {
+                contains: search,
+                mode: "insensitive" as const,
+              },
+            },
+          ],
+        }
+      : {}),
+
+    ...(role
+      ? {
+          role,
+        }
+      : {}),
+
+    ...(status
+      ? {
+          status,
+        }
+      : {}),
+  };
+
+  const [users, total] = await Promise.all([
+    prisma.user.findMany({
+      where,
+
+      skip,
+
+      take: limit,
+
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        role: true,
+        status: true,
+        schoolId: true,
+        lastLoginAt: true,
+        createdAt: true,
+      },
+
+      orderBy: {
+        createdAt: "desc",
+      },
+    }),
+
+    prisma.user.count({
+      where,
+    }),
+  ]);
+
+  return {
+    users,
+
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(
+        total / limit,
+      ),
+    },
   };
 };

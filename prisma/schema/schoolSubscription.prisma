@@ -1,0 +1,29 @@
+model SchoolSubscription {
+  id Int @id @default(autoincrement())
+
+  schoolId  Int
+  packageId Int
+
+  startDate DateTime
+  endDate   DateTime
+
+  status SubscriptionStatus @default(PENDING)
+
+  price Decimal @db.Decimal(10, 2)
+
+  notes String?
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  package Package @relation(fields: [packageId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([packageId])
+  @@index([status])
+  @@index([startDate])
+  @@index([endDate])
+  @@map("school_subscriptions")
+}

@@ -1,7 +1,4 @@
-import {
-  UserRole,
-  UserStatus,
-} from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import type {
@@ -10,8 +7,9 @@ import type {
 } from "./interface.js";
 
 export const getUsers = async (query: GetUsersQuery) => {
-  const page = query.page ?? 1;
-  const limit = query.limit ?? 10;
+  const page = Number(query.page) || 1;
+  const limit = Number(query.limit) || 10;
+
   const skip = (page - 1) * limit;
 
   const where = {
@@ -36,7 +34,9 @@ export const getUsers = async (query: GetUsersQuery) => {
 
     ...(query.role ? { role: query.role } : {}),
     ...(query.status ? { status: query.status } : {}),
-    ...(query.schoolId ? { schoolId: query.schoolId } : {}),
+    ...(query.schoolId
+      ? { schoolId: Number(query.schoolId) }
+      : {}),
   };
 
   const [users, total] = await Promise.all([
@@ -101,7 +101,6 @@ export const updateUserStatus = async ({
     throw new AppError(404, "User not found");
   }
 
-  // Super Admin can only block/unblock ADMIN users.
   if (user.role !== UserRole.ADMIN) {
     throw new AppError(
       403,

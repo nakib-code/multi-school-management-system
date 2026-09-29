@@ -10,10 +10,13 @@ import {
   createSchool,
   deleteSchool,
   getSchools,
+  getSchoolUsers,
+  getSchoolUserSummary,
   rejectSchool,
   unblockSchool,
   verifyAdminEmail,
 } from "./service.js";
+import type { GetSchoolUsersQuery } from "./interface.js";
 
 export const createSchoolController = async (
   req: Request,
@@ -210,6 +213,103 @@ export const deleteSchoolController = async (
     return sendResponse(res, {
       statusCode: 200,
       message: "School deleted successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const getSchoolUserSummaryController = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const schoolId = Number(req.params.id);
+
+    if (!Number.isInteger(schoolId) || schoolId <= 0) {
+      throw new AppError(400, "Invalid school ID");
+    }
+
+    const result = await getSchoolUserSummary(schoolId);
+
+    return sendResponse(res, {
+      statusCode: 200,
+      message: "School user summary retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getSchoolUsersController = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const schoolId = Number(req.params.id);
+
+    if (!Number.isInteger(schoolId) || schoolId <= 0) {
+      throw new AppError(400, "Invalid school ID");
+    }
+
+    const page = Math.max(
+      Number(req.query.page) || 1,
+      1,
+    );
+
+    const limit = Math.min(
+      Math.max(
+        Number(req.query.limit) || 10,
+        1,
+      ),
+      100,
+    );
+
+    const search =
+      typeof req.query.search === "string"
+        ? req.query.search.trim()
+        : undefined;
+
+    const role =
+      typeof req.query.role === "string"
+        ? (req.query.role as GetSchoolUsersQuery["role"])
+        : undefined;
+
+    const status =
+      typeof req.query.status === "string"
+        ? (req.query.status as GetSchoolUsersQuery["status"])
+        : undefined;
+
+    const query: GetSchoolUsersQuery = {
+      page,
+      limit,
+
+      ...(search !== undefined && {
+        search,
+      }),
+
+      ...(role !== undefined && {
+        role,
+      }),
+
+      ...(status !== undefined && {
+        status,
+      }),
+    };
+
+    const result = await getSchoolUsers(
+      schoolId,
+      query,
+    );
+
+    return sendResponse(res, {
+      statusCode: 200,
+      message: "School users retrieved successfully",
       data: result,
     });
   } catch (error) {

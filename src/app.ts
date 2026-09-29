@@ -15,6 +15,9 @@ import cookieParser from "cookie-parser";
 import { dashboardRoutes } from "./modules/dashboard/route.js";
 import env from "./config/env.js";
 import { userRoutes } from "./modules/user/route.js";
+import { packageRouter } from "./modules/package/package.route.js";
+import { subscriptionRouter } from "./modules/subscription/subscription.route.js";
+import { customPackageRequestRouter } from "./modules/customPackageRequest/customPackageRequest.route.js";
 
 const app = express();
 
@@ -60,6 +63,9 @@ app.use("/api/v1", schoolSettingRoutes);
 app.use("/api/v1", paymentRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/packages", packageRouter);
+app.use("/api/v1/subscriptions",subscriptionRouter);
+app.use("/api/v1/custom-package-requests",customPackageRequestRouter);
 
 // 404
 

@@ -276,7 +276,7 @@ export type SchoolSettingCreateInput = {
   admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Date | string
   updatedAt?: Date | string
-  school: Prisma.SchoolCreateNestedOneWithoutSettingInput
+  school: Prisma.SchoolCreateNestedOneWithoutSchoolSettingInput
 }
 
 export type SchoolSettingUncheckedCreateInput = {
@@ -291,7 +291,7 @@ export type SchoolSettingUpdateInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  school?: Prisma.SchoolUpdateOneRequiredWithoutSettingNestedInput
+  school?: Prisma.SchoolUpdateOneRequiredWithoutSchoolSettingNestedInput
 }
 
 export type SchoolSettingUncheckedUpdateInput = {

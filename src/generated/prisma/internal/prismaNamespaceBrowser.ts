@@ -56,15 +56,20 @@ export const ModelName = {
   Attendance: 'Attendance',
   AuditLog: 'AuditLog',
   SchoolClass: 'SchoolClass',
+  CustomPackageRequest: 'CustomPackageRequest',
+  CustomPackageRequestFeature: 'CustomPackageRequestFeature',
   Enrollment: 'Enrollment',
   Exam: 'Exam',
   Guardian: 'Guardian',
   GuardianStudent: 'GuardianStudent',
   Manager: 'Manager',
+  Package: 'Package',
+  PackageFeatureConfig: 'PackageFeatureConfig',
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
   SchoolSetting: 'SchoolSetting',
+  SchoolSubscription: 'SchoolSubscription',
   Section: 'Section',
   StudentFee: 'StudentFee',
   StudentPayment: 'StudentPayment',
@@ -181,6 +186,35 @@ export const SchoolClassScalarFieldEnum = {
 export type SchoolClassScalarFieldEnum = (typeof SchoolClassScalarFieldEnum)[keyof typeof SchoolClassScalarFieldEnum]
 
 
+export const CustomPackageRequestScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  requestedStudentLimit: 'requestedStudentLimit',
+  requestedPrice: 'requestedPrice',
+  billingCycle: 'billingCycle',
+  description: 'description',
+  status: 'status',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  reviewNote: 'reviewNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomPackageRequestScalarFieldEnum = (typeof CustomPackageRequestScalarFieldEnum)[keyof typeof CustomPackageRequestScalarFieldEnum]
+
+
+export const CustomPackageRequestFeatureScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  feature: 'feature',
+  enabled: 'enabled',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomPackageRequestFeatureScalarFieldEnum = (typeof CustomPackageRequestFeatureScalarFieldEnum)[keyof typeof CustomPackageRequestFeatureScalarFieldEnum]
+
+
 export const EnrollmentScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -260,6 +294,34 @@ export const ManagerScalarFieldEnum = {
 export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
 
 
+export const PackageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  billingCycle: 'billingCycle',
+  studentLimit: 'studentLimit',
+  isCustom: 'isCustom',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PackageScalarFieldEnum = (typeof PackageScalarFieldEnum)[keyof typeof PackageScalarFieldEnum]
+
+
+export const PackageFeatureConfigScalarFieldEnum = {
+  id: 'id',
+  packageId: 'packageId',
+  feature: 'feature',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PackageFeatureConfigScalarFieldEnum = (typeof PackageFeatureConfigScalarFieldEnum)[keyof typeof PackageFeatureConfigScalarFieldEnum]
+
+
 export const ResultScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -312,7 +374,6 @@ export const SchoolScalarFieldEnum = {
   adminPhone: 'adminPhone',
   adminPasswordHash: 'adminPasswordHash',
   adminEmailVerified: 'adminEmailVerified',
-  rejectionReason: 'rejectionReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -329,6 +390,22 @@ export const SchoolSettingScalarFieldEnum = {
 } as const
 
 export type SchoolSettingScalarFieldEnum = (typeof SchoolSettingScalarFieldEnum)[keyof typeof SchoolSettingScalarFieldEnum]
+
+
+export const SchoolSubscriptionScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  packageId: 'packageId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  price: 'price',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolSubscriptionScalarFieldEnum = (typeof SchoolSubscriptionScalarFieldEnum)[keyof typeof SchoolSubscriptionScalarFieldEnum]
 
 
 export const SectionScalarFieldEnum = {

@@ -48,7 +48,6 @@ export type SchoolMinAggregateOutputType = {
   adminPhone: string | null
   adminPasswordHash: string | null
   adminEmailVerified: boolean | null
-  rejectionReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,7 +66,6 @@ export type SchoolMaxAggregateOutputType = {
   adminPhone: string | null
   adminPasswordHash: string | null
   adminEmailVerified: boolean | null
-  rejectionReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -86,7 +84,6 @@ export type SchoolCountAggregateOutputType = {
   adminPhone: number
   adminPasswordHash: number
   adminEmailVerified: number
-  rejectionReason: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -115,7 +112,6 @@ export type SchoolMinAggregateInputType = {
   adminPhone?: true
   adminPasswordHash?: true
   adminEmailVerified?: true
-  rejectionReason?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -134,7 +130,6 @@ export type SchoolMaxAggregateInputType = {
   adminPhone?: true
   adminPasswordHash?: true
   adminEmailVerified?: true
-  rejectionReason?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -153,7 +148,6 @@ export type SchoolCountAggregateInputType = {
   adminPhone?: true
   adminPasswordHash?: true
   adminEmailVerified?: true
-  rejectionReason?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -259,7 +253,6 @@ export type SchoolGroupByOutputType = {
   adminPhone: string | null
   adminPasswordHash: string | null
   adminEmailVerified: boolean
-  rejectionReason: string | null
   createdAt: Date
   updatedAt: Date
   _count: SchoolCountAggregateOutputType | null
@@ -301,18 +294,15 @@ export type SchoolWhereInput = {
   adminPhone?: Prisma.StringNullableFilter<"School"> | string | null
   adminPasswordHash?: Prisma.StringNullableFilter<"School"> | string | null
   adminEmailVerified?: Prisma.BoolFilter<"School"> | boolean
-  rejectionReason?: Prisma.StringNullableFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionListRelationFilter
   guardians?: Prisma.GuardianListRelationFilter
   teachers?: Prisma.TeacherListRelationFilter
-  setting?: Prisma.XOR<Prisma.SchoolSettingNullableScalarRelationFilter, Prisma.SchoolSettingWhereInput> | null
-  admissionPayments?: Prisma.AdmissionPaymentListRelationFilter
   managers?: Prisma.ManagerListRelationFilter
   classes?: Prisma.SchoolClassListRelationFilter
   sections?: Prisma.SectionListRelationFilter
   subjects?: Prisma.SubjectListRelationFilter
-  teacherAssignments?: Prisma.TeacherAssignmentListRelationFilter
   enrollments?: Prisma.EnrollmentListRelationFilter
   attendances?: Prisma.AttendanceListRelationFilter
   exams?: Prisma.ExamListRelationFilter
@@ -324,6 +314,10 @@ export type SchoolWhereInput = {
   admissions?: Prisma.AdmissionListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   users?: Prisma.UserListRelationFilter
+  customPackageRequests?: Prisma.CustomPackageRequestListRelationFilter
+  admissionPayments?: Prisma.AdmissionPaymentListRelationFilter
+  schoolSetting?: Prisma.XOR<Prisma.SchoolSettingNullableScalarRelationFilter, Prisma.SchoolSettingWhereInput> | null
+  teacherAssignments?: Prisma.TeacherAssignmentListRelationFilter
 }
 
 export type SchoolOrderByWithRelationInput = {
@@ -340,18 +334,15 @@ export type SchoolOrderByWithRelationInput = {
   adminPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   adminPasswordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   adminEmailVerified?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  subscriptions?: Prisma.SchoolSubscriptionOrderByRelationAggregateInput
   guardians?: Prisma.GuardianOrderByRelationAggregateInput
   teachers?: Prisma.TeacherOrderByRelationAggregateInput
-  setting?: Prisma.SchoolSettingOrderByWithRelationInput
-  admissionPayments?: Prisma.AdmissionPaymentOrderByRelationAggregateInput
   managers?: Prisma.ManagerOrderByRelationAggregateInput
   classes?: Prisma.SchoolClassOrderByRelationAggregateInput
   sections?: Prisma.SectionOrderByRelationAggregateInput
   subjects?: Prisma.SubjectOrderByRelationAggregateInput
-  teacherAssignments?: Prisma.TeacherAssignmentOrderByRelationAggregateInput
   enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput
   attendances?: Prisma.AttendanceOrderByRelationAggregateInput
   exams?: Prisma.ExamOrderByRelationAggregateInput
@@ -363,6 +354,10 @@ export type SchoolOrderByWithRelationInput = {
   admissions?: Prisma.AdmissionOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   users?: Prisma.UserOrderByRelationAggregateInput
+  customPackageRequests?: Prisma.CustomPackageRequestOrderByRelationAggregateInput
+  admissionPayments?: Prisma.AdmissionPaymentOrderByRelationAggregateInput
+  schoolSetting?: Prisma.SchoolSettingOrderByWithRelationInput
+  teacherAssignments?: Prisma.TeacherAssignmentOrderByRelationAggregateInput
 }
 
 export type SchoolWhereUniqueInput = Prisma.AtLeast<{
@@ -382,18 +377,15 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   adminPhone?: Prisma.StringNullableFilter<"School"> | string | null
   adminPasswordHash?: Prisma.StringNullableFilter<"School"> | string | null
   adminEmailVerified?: Prisma.BoolFilter<"School"> | boolean
-  rejectionReason?: Prisma.StringNullableFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"School"> | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionListRelationFilter
   guardians?: Prisma.GuardianListRelationFilter
   teachers?: Prisma.TeacherListRelationFilter
-  setting?: Prisma.XOR<Prisma.SchoolSettingNullableScalarRelationFilter, Prisma.SchoolSettingWhereInput> | null
-  admissionPayments?: Prisma.AdmissionPaymentListRelationFilter
   managers?: Prisma.ManagerListRelationFilter
   classes?: Prisma.SchoolClassListRelationFilter
   sections?: Prisma.SectionListRelationFilter
   subjects?: Prisma.SubjectListRelationFilter
-  teacherAssignments?: Prisma.TeacherAssignmentListRelationFilter
   enrollments?: Prisma.EnrollmentListRelationFilter
   attendances?: Prisma.AttendanceListRelationFilter
   exams?: Prisma.ExamListRelationFilter
@@ -405,6 +397,10 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   admissions?: Prisma.AdmissionListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   users?: Prisma.UserListRelationFilter
+  customPackageRequests?: Prisma.CustomPackageRequestListRelationFilter
+  admissionPayments?: Prisma.AdmissionPaymentListRelationFilter
+  schoolSetting?: Prisma.XOR<Prisma.SchoolSettingNullableScalarRelationFilter, Prisma.SchoolSettingWhereInput> | null
+  teacherAssignments?: Prisma.TeacherAssignmentListRelationFilter
 }, "id" | "code">
 
 export type SchoolOrderByWithAggregationInput = {
@@ -421,7 +417,6 @@ export type SchoolOrderByWithAggregationInput = {
   adminPhone?: Prisma.SortOrderInput | Prisma.SortOrder
   adminPasswordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   adminEmailVerified?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolCountOrderByAggregateInput
@@ -448,7 +443,6 @@ export type SchoolScalarWhereWithAggregatesInput = {
   adminPhone?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   adminPasswordHash?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   adminEmailVerified?: Prisma.BoolWithAggregatesFilter<"School"> | boolean
-  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"School"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"School"> | Date | string
 }
@@ -466,18 +460,15 @@ export type SchoolCreateInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -489,6 +480,10 @@ export type SchoolCreateInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateInput = {
@@ -505,18 +500,15 @@ export type SchoolUncheckedCreateInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -528,6 +520,10 @@ export type SchoolUncheckedCreateInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUpdateInput = {
@@ -543,18 +539,15 @@ export type SchoolUpdateInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -566,6 +559,10 @@ export type SchoolUpdateInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateInput = {
@@ -582,18 +579,15 @@ export type SchoolUncheckedUpdateInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -605,6 +599,10 @@ export type SchoolUncheckedUpdateInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateManyInput = {
@@ -621,7 +619,6 @@ export type SchoolCreateManyInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -639,7 +636,6 @@ export type SchoolUpdateManyMutationInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -658,7 +654,6 @@ export type SchoolUncheckedUpdateManyInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -682,7 +677,6 @@ export type SchoolCountOrderByAggregateInput = {
   adminPhone?: Prisma.SortOrder
   adminPasswordHash?: Prisma.SortOrder
   adminEmailVerified?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -705,7 +699,6 @@ export type SchoolMaxOrderByAggregateInput = {
   adminPhone?: Prisma.SortOrder
   adminPasswordHash?: Prisma.SortOrder
   adminEmailVerified?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -724,7 +717,6 @@ export type SchoolMinOrderByAggregateInput = {
   adminPhone?: Prisma.SortOrder
   adminPasswordHash?: Prisma.SortOrder
   adminEmailVerified?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -806,6 +798,20 @@ export type SchoolUpdateOneRequiredWithoutClassesNestedInput = {
   upsert?: Prisma.SchoolUpsertWithoutClassesInput
   connect?: Prisma.SchoolWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutClassesInput, Prisma.SchoolUpdateWithoutClassesInput>, Prisma.SchoolUncheckedUpdateWithoutClassesInput>
+}
+
+export type SchoolCreateNestedOneWithoutCustomPackageRequestsInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutCustomPackageRequestsInput, Prisma.SchoolUncheckedCreateWithoutCustomPackageRequestsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutCustomPackageRequestsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutCustomPackageRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutCustomPackageRequestsInput, Prisma.SchoolUncheckedCreateWithoutCustomPackageRequestsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutCustomPackageRequestsInput
+  upsert?: Prisma.SchoolUpsertWithoutCustomPackageRequestsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutCustomPackageRequestsInput, Prisma.SchoolUpdateWithoutCustomPackageRequestsInput>, Prisma.SchoolUncheckedUpdateWithoutCustomPackageRequestsInput>
 }
 
 export type SchoolCreateNestedOneWithoutEnrollmentsInput = {
@@ -896,18 +902,32 @@ export type EnumSchoolStatusFieldUpdateOperationsInput = {
   set?: $Enums.SchoolStatus
 }
 
-export type SchoolCreateNestedOneWithoutSettingInput = {
-  create?: Prisma.XOR<Prisma.SchoolCreateWithoutSettingInput, Prisma.SchoolUncheckedCreateWithoutSettingInput>
-  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSettingInput
+export type SchoolCreateNestedOneWithoutSchoolSettingInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutSchoolSettingInput, Prisma.SchoolUncheckedCreateWithoutSchoolSettingInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSchoolSettingInput
   connect?: Prisma.SchoolWhereUniqueInput
 }
 
-export type SchoolUpdateOneRequiredWithoutSettingNestedInput = {
-  create?: Prisma.XOR<Prisma.SchoolCreateWithoutSettingInput, Prisma.SchoolUncheckedCreateWithoutSettingInput>
-  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSettingInput
-  upsert?: Prisma.SchoolUpsertWithoutSettingInput
+export type SchoolUpdateOneRequiredWithoutSchoolSettingNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutSchoolSettingInput, Prisma.SchoolUncheckedCreateWithoutSchoolSettingInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSchoolSettingInput
+  upsert?: Prisma.SchoolUpsertWithoutSchoolSettingInput
   connect?: Prisma.SchoolWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutSettingInput, Prisma.SchoolUpdateWithoutSettingInput>, Prisma.SchoolUncheckedUpdateWithoutSettingInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutSchoolSettingInput, Prisma.SchoolUpdateWithoutSchoolSettingInput>, Prisma.SchoolUncheckedUpdateWithoutSchoolSettingInput>
+}
+
+export type SchoolCreateNestedOneWithoutSubscriptionsInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutSubscriptionsInput, Prisma.SchoolUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSubscriptionsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutSubscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutSubscriptionsInput, Prisma.SchoolUncheckedCreateWithoutSubscriptionsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutSubscriptionsInput
+  upsert?: Prisma.SchoolUpsertWithoutSubscriptionsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.SchoolUpdateWithoutSubscriptionsInput>, Prisma.SchoolUncheckedUpdateWithoutSubscriptionsInput>
 }
 
 export type SchoolCreateNestedOneWithoutSectionsInput = {
@@ -1037,18 +1057,15 @@ export type SchoolCreateWithoutAdmissionsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -1059,6 +1076,10 @@ export type SchoolCreateWithoutAdmissionsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAdmissionsInput = {
@@ -1075,18 +1096,15 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -1097,6 +1115,10 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAdmissionsInput = {
@@ -1128,18 +1150,15 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -1150,6 +1169,10 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
@@ -1166,18 +1189,15 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1188,6 +1208,10 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutAdmissionPaymentsInput = {
@@ -1203,17 +1227,15 @@ export type SchoolCreateWithoutAdmissionPaymentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -1225,6 +1247,9 @@ export type SchoolCreateWithoutAdmissionPaymentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAdmissionPaymentsInput = {
@@ -1241,17 +1266,15 @@ export type SchoolUncheckedCreateWithoutAdmissionPaymentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -1263,6 +1286,9 @@ export type SchoolUncheckedCreateWithoutAdmissionPaymentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAdmissionPaymentsInput = {
@@ -1294,17 +1320,15 @@ export type SchoolUpdateWithoutAdmissionPaymentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -1316,6 +1340,9 @@ export type SchoolUpdateWithoutAdmissionPaymentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAdmissionPaymentsInput = {
@@ -1332,17 +1359,15 @@ export type SchoolUncheckedUpdateWithoutAdmissionPaymentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1354,6 +1379,9 @@ export type SchoolUncheckedUpdateWithoutAdmissionPaymentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutAttendancesInput = {
@@ -1369,18 +1397,15 @@ export type SchoolCreateWithoutAttendancesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
   results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
@@ -1391,6 +1416,10 @@ export type SchoolCreateWithoutAttendancesInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAttendancesInput = {
@@ -1407,18 +1436,15 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
@@ -1429,6 +1455,10 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAttendancesInput = {
@@ -1460,18 +1490,15 @@ export type SchoolUpdateWithoutAttendancesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
   results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
@@ -1482,6 +1509,10 @@ export type SchoolUpdateWithoutAttendancesInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAttendancesInput = {
@@ -1498,18 +1529,15 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1520,6 +1548,10 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutAuditLogsInput = {
@@ -1535,18 +1567,15 @@ export type SchoolCreateWithoutAuditLogsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -1557,6 +1586,10 @@ export type SchoolCreateWithoutAuditLogsInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutAuditLogsInput = {
@@ -1573,18 +1606,15 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -1595,6 +1625,10 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutAuditLogsInput = {
@@ -1626,18 +1660,15 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -1648,6 +1679,10 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
@@ -1664,18 +1699,15 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1686,6 +1718,10 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutClassesInput = {
@@ -1701,17 +1737,14 @@ export type SchoolCreateWithoutClassesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -1723,6 +1756,10 @@ export type SchoolCreateWithoutClassesInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutClassesInput = {
@@ -1739,17 +1776,14 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -1761,6 +1795,10 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutClassesInput = {
@@ -1792,17 +1830,14 @@ export type SchoolUpdateWithoutClassesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -1814,6 +1849,10 @@ export type SchoolUpdateWithoutClassesInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutClassesInput = {
@@ -1830,17 +1869,14 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1852,6 +1888,180 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutCustomPackageRequestsInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutCustomPackageRequestsInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutCustomPackageRequestsInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutCustomPackageRequestsInput, Prisma.SchoolUncheckedCreateWithoutCustomPackageRequestsInput>
+}
+
+export type SchoolUpsertWithoutCustomPackageRequestsInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutCustomPackageRequestsInput, Prisma.SchoolUncheckedUpdateWithoutCustomPackageRequestsInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutCustomPackageRequestsInput, Prisma.SchoolUncheckedCreateWithoutCustomPackageRequestsInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutCustomPackageRequestsInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutCustomPackageRequestsInput, Prisma.SchoolUncheckedUpdateWithoutCustomPackageRequestsInput>
+}
+
+export type SchoolUpdateWithoutCustomPackageRequestsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutCustomPackageRequestsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutEnrollmentsInput = {
@@ -1867,18 +2077,15 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
   results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
@@ -1889,6 +2096,10 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
@@ -1905,18 +2116,15 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
@@ -1927,6 +2135,10 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutEnrollmentsInput = {
@@ -1958,18 +2170,15 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
   results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
@@ -1980,6 +2189,10 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
@@ -1996,18 +2209,15 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2018,6 +2228,10 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutExamsInput = {
@@ -2033,18 +2247,15 @@ export type SchoolCreateWithoutExamsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
@@ -2055,6 +2266,10 @@ export type SchoolCreateWithoutExamsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutExamsInput = {
@@ -2071,18 +2286,15 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
@@ -2093,6 +2305,10 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutExamsInput = {
@@ -2124,18 +2340,15 @@ export type SchoolUpdateWithoutExamsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
@@ -2146,6 +2359,10 @@ export type SchoolUpdateWithoutExamsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutExamsInput = {
@@ -2162,18 +2379,15 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2184,6 +2398,10 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutGuardiansInput = {
@@ -2199,17 +2417,14 @@ export type SchoolCreateWithoutGuardiansInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -2221,6 +2436,10 @@ export type SchoolCreateWithoutGuardiansInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutGuardiansInput = {
@@ -2237,17 +2456,14 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -2259,6 +2475,10 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutGuardiansInput = {
@@ -2290,17 +2510,14 @@ export type SchoolUpdateWithoutGuardiansInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -2312,6 +2529,10 @@ export type SchoolUpdateWithoutGuardiansInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutGuardiansInput = {
@@ -2328,17 +2549,14 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2350,6 +2568,10 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutManagersInput = {
@@ -2365,17 +2587,14 @@ export type SchoolCreateWithoutManagersInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -2387,6 +2606,10 @@ export type SchoolCreateWithoutManagersInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutManagersInput = {
@@ -2403,17 +2626,14 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -2425,6 +2645,10 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutManagersInput = {
@@ -2456,17 +2680,14 @@ export type SchoolUpdateWithoutManagersInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -2478,6 +2699,10 @@ export type SchoolUpdateWithoutManagersInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutManagersInput = {
@@ -2494,17 +2719,14 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2516,6 +2738,10 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutResultsInput = {
@@ -2531,18 +2757,15 @@ export type SchoolCreateWithoutResultsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -2553,6 +2776,10 @@ export type SchoolCreateWithoutResultsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutResultsInput = {
@@ -2569,18 +2796,15 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -2591,6 +2815,10 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutResultsInput = {
@@ -2622,18 +2850,15 @@ export type SchoolUpdateWithoutResultsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -2644,6 +2869,10 @@ export type SchoolUpdateWithoutResultsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutResultsInput = {
@@ -2660,18 +2889,15 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2682,6 +2908,10 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSalaryPaymentsInput = {
@@ -2697,18 +2927,15 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -2719,6 +2946,10 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
@@ -2735,18 +2966,15 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -2757,6 +2985,10 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSalaryPaymentsInput = {
@@ -2788,18 +3020,15 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -2810,6 +3039,10 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
@@ -2826,18 +3059,15 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2848,9 +3078,13 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
-export type SchoolCreateWithoutSettingInput = {
+export type SchoolCreateWithoutSchoolSettingInput = {
   name: string
   code: string
   email?: string | null
@@ -2863,17 +3097,15 @@ export type SchoolCreateWithoutSettingInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -2885,9 +3117,12 @@ export type SchoolCreateWithoutSettingInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
-export type SchoolUncheckedCreateWithoutSettingInput = {
+export type SchoolUncheckedCreateWithoutSchoolSettingInput = {
   id?: number
   name: string
   code: string
@@ -2901,17 +3136,15 @@ export type SchoolUncheckedCreateWithoutSettingInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -2923,25 +3156,28 @@ export type SchoolUncheckedCreateWithoutSettingInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
-export type SchoolCreateOrConnectWithoutSettingInput = {
+export type SchoolCreateOrConnectWithoutSchoolSettingInput = {
   where: Prisma.SchoolWhereUniqueInput
-  create: Prisma.XOR<Prisma.SchoolCreateWithoutSettingInput, Prisma.SchoolUncheckedCreateWithoutSettingInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutSchoolSettingInput, Prisma.SchoolUncheckedCreateWithoutSchoolSettingInput>
 }
 
-export type SchoolUpsertWithoutSettingInput = {
-  update: Prisma.XOR<Prisma.SchoolUpdateWithoutSettingInput, Prisma.SchoolUncheckedUpdateWithoutSettingInput>
-  create: Prisma.XOR<Prisma.SchoolCreateWithoutSettingInput, Prisma.SchoolUncheckedCreateWithoutSettingInput>
+export type SchoolUpsertWithoutSchoolSettingInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutSchoolSettingInput, Prisma.SchoolUncheckedUpdateWithoutSchoolSettingInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutSchoolSettingInput, Prisma.SchoolUncheckedCreateWithoutSchoolSettingInput>
   where?: Prisma.SchoolWhereInput
 }
 
-export type SchoolUpdateToOneWithWhereWithoutSettingInput = {
+export type SchoolUpdateToOneWithWhereWithoutSchoolSettingInput = {
   where?: Prisma.SchoolWhereInput
-  data: Prisma.XOR<Prisma.SchoolUpdateWithoutSettingInput, Prisma.SchoolUncheckedUpdateWithoutSettingInput>
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutSchoolSettingInput, Prisma.SchoolUncheckedUpdateWithoutSchoolSettingInput>
 }
 
-export type SchoolUpdateWithoutSettingInput = {
+export type SchoolUpdateWithoutSchoolSettingInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2954,17 +3190,15 @@ export type SchoolUpdateWithoutSettingInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -2976,9 +3210,12 @@ export type SchoolUpdateWithoutSettingInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
-export type SchoolUncheckedUpdateWithoutSettingInput = {
+export type SchoolUncheckedUpdateWithoutSchoolSettingInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2992,17 +3229,15 @@ export type SchoolUncheckedUpdateWithoutSettingInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3014,6 +3249,179 @@ export type SchoolUncheckedUpdateWithoutSettingInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutSubscriptionsInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutSubscriptionsInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutSubscriptionsInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutSubscriptionsInput, Prisma.SchoolUncheckedCreateWithoutSubscriptionsInput>
+}
+
+export type SchoolUpsertWithoutSubscriptionsInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutSubscriptionsInput, Prisma.SchoolUncheckedUpdateWithoutSubscriptionsInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutSubscriptionsInput, Prisma.SchoolUncheckedCreateWithoutSubscriptionsInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutSubscriptionsInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutSubscriptionsInput, Prisma.SchoolUncheckedUpdateWithoutSubscriptionsInput>
+}
+
+export type SchoolUpdateWithoutSubscriptionsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutSubscriptionsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSectionsInput = {
@@ -3029,17 +3437,14 @@ export type SchoolCreateWithoutSectionsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -3051,6 +3456,10 @@ export type SchoolCreateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSectionsInput = {
@@ -3067,17 +3476,14 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -3089,6 +3495,10 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSectionsInput = {
@@ -3120,17 +3530,14 @@ export type SchoolUpdateWithoutSectionsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -3142,6 +3549,10 @@ export type SchoolUpdateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSectionsInput = {
@@ -3158,17 +3569,14 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3180,6 +3588,10 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutStudentFeesInput = {
@@ -3195,18 +3607,15 @@ export type SchoolCreateWithoutStudentFeesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -3217,6 +3626,10 @@ export type SchoolCreateWithoutStudentFeesInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutStudentFeesInput = {
@@ -3233,18 +3646,15 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -3255,6 +3665,10 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutStudentFeesInput = {
@@ -3286,18 +3700,15 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -3308,6 +3719,10 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
@@ -3324,18 +3739,15 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3346,6 +3758,10 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutStudentPaymentsInput = {
@@ -3361,18 +3777,15 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -3383,6 +3796,10 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
@@ -3399,18 +3816,15 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -3421,6 +3835,10 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutStudentPaymentsInput = {
@@ -3452,18 +3870,15 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -3474,6 +3889,10 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
@@ -3490,18 +3909,15 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3512,6 +3928,10 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutSubjectsInput = {
@@ -3527,17 +3947,14 @@ export type SchoolCreateWithoutSubjectsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -3549,6 +3966,10 @@ export type SchoolCreateWithoutSubjectsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutSubjectsInput = {
@@ -3565,17 +3986,14 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -3587,6 +4005,10 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutSubjectsInput = {
@@ -3618,17 +4040,14 @@ export type SchoolUpdateWithoutSubjectsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -3640,6 +4059,10 @@ export type SchoolUpdateWithoutSubjectsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutSubjectsInput = {
@@ -3656,17 +4079,14 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3678,6 +4098,10 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTeacherAssignmentsInput = {
@@ -3693,13 +4117,11 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
@@ -3715,6 +4137,9 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
@@ -3731,13 +4156,11 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
@@ -3753,6 +4176,9 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTeacherAssignmentsInput = {
@@ -3784,13 +4210,11 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
@@ -3806,6 +4230,9 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
@@ -3822,13 +4249,11 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3844,6 +4269,9 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTeacherSalariesInput = {
@@ -3859,18 +4287,15 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -3881,6 +4306,10 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
@@ -3897,18 +4326,15 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -3919,6 +4345,10 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTeacherSalariesInput = {
@@ -3950,18 +4380,15 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -3972,6 +4399,10 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
@@ -3988,18 +4419,15 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4010,6 +4438,10 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutTeachersInput = {
@@ -4025,17 +4457,14 @@ export type SchoolCreateWithoutTeachersInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -4047,6 +4476,10 @@ export type SchoolCreateWithoutTeachersInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutTeachersInput = {
@@ -4063,17 +4496,14 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -4085,6 +4515,10 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
   users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutTeachersInput = {
@@ -4116,17 +4550,14 @@ export type SchoolUpdateWithoutTeachersInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -4138,6 +4569,10 @@ export type SchoolUpdateWithoutTeachersInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutTeachersInput = {
@@ -4154,17 +4589,14 @@ export type SchoolUncheckedUpdateWithoutTeachersInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4176,6 +4608,10 @@ export type SchoolUncheckedUpdateWithoutTeachersInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutUsersInput = {
@@ -4191,18 +4627,15 @@ export type SchoolCreateWithoutUsersInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
@@ -4213,6 +4646,10 @@ export type SchoolCreateWithoutUsersInput = {
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolUncheckedCreateWithoutUsersInput = {
@@ -4229,18 +4666,15 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   adminPhone?: string | null
   adminPasswordHash?: string | null
   adminEmailVerified?: boolean
-  rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
   guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
   teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
-  setting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
   classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
   sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
   subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
@@ -4251,6 +4685,10 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
 }
 
 export type SchoolCreateOrConnectWithoutUsersInput = {
@@ -4282,18 +4720,15 @@ export type SchoolUpdateWithoutUsersInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
@@ -4304,6 +4739,10 @@ export type SchoolUpdateWithoutUsersInput = {
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolUncheckedUpdateWithoutUsersInput = {
@@ -4320,18 +4759,15 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
   guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
   teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
-  setting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
-  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
   classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
   sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
   subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
-  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4342,6 +4778,10 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 
@@ -4350,14 +4790,13 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
  */
 
 export type SchoolCountOutputType = {
+  subscriptions: number
   guardians: number
   teachers: number
-  admissionPayments: number
   managers: number
   classes: number
   sections: number
   subjects: number
-  teacherAssignments: number
   enrollments: number
   attendances: number
   exams: number
@@ -4369,17 +4808,19 @@ export type SchoolCountOutputType = {
   admissions: number
   auditLogs: number
   users: number
+  customPackageRequests: number
+  admissionPayments: number
+  teacherAssignments: number
 }
 
 export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subscriptions?: boolean | SchoolCountOutputTypeCountSubscriptionsArgs
   guardians?: boolean | SchoolCountOutputTypeCountGuardiansArgs
   teachers?: boolean | SchoolCountOutputTypeCountTeachersArgs
-  admissionPayments?: boolean | SchoolCountOutputTypeCountAdmissionPaymentsArgs
   managers?: boolean | SchoolCountOutputTypeCountManagersArgs
   classes?: boolean | SchoolCountOutputTypeCountClassesArgs
   sections?: boolean | SchoolCountOutputTypeCountSectionsArgs
   subjects?: boolean | SchoolCountOutputTypeCountSubjectsArgs
-  teacherAssignments?: boolean | SchoolCountOutputTypeCountTeacherAssignmentsArgs
   enrollments?: boolean | SchoolCountOutputTypeCountEnrollmentsArgs
   attendances?: boolean | SchoolCountOutputTypeCountAttendancesArgs
   exams?: boolean | SchoolCountOutputTypeCountExamsArgs
@@ -4391,6 +4832,9 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   admissions?: boolean | SchoolCountOutputTypeCountAdmissionsArgs
   auditLogs?: boolean | SchoolCountOutputTypeCountAuditLogsArgs
   users?: boolean | SchoolCountOutputTypeCountUsersArgs
+  customPackageRequests?: boolean | SchoolCountOutputTypeCountCustomPackageRequestsArgs
+  admissionPayments?: boolean | SchoolCountOutputTypeCountAdmissionPaymentsArgs
+  teacherAssignments?: boolean | SchoolCountOutputTypeCountTeacherAssignmentsArgs
 }
 
 /**
@@ -4406,6 +4850,13 @@ export type SchoolCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * SchoolCountOutputType without action
  */
+export type SchoolCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SchoolSubscriptionWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
 export type SchoolCountOutputTypeCountGuardiansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.GuardianWhereInput
 }
@@ -4415,13 +4866,6 @@ export type SchoolCountOutputTypeCountGuardiansArgs<ExtArgs extends runtime.Type
  */
 export type SchoolCountOutputTypeCountTeachersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TeacherWhereInput
-}
-
-/**
- * SchoolCountOutputType without action
- */
-export type SchoolCountOutputTypeCountAdmissionPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AdmissionPaymentWhereInput
 }
 
 /**
@@ -4450,13 +4894,6 @@ export type SchoolCountOutputTypeCountSectionsArgs<ExtArgs extends runtime.Types
  */
 export type SchoolCountOutputTypeCountSubjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SubjectWhereInput
-}
-
-/**
- * SchoolCountOutputType without action
- */
-export type SchoolCountOutputTypeCountTeacherAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeacherAssignmentWhereInput
 }
 
 /**
@@ -4536,6 +4973,27 @@ export type SchoolCountOutputTypeCountUsersArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.UserWhereInput
 }
 
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountCustomPackageRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CustomPackageRequestWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountAdmissionPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdmissionPaymentWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountTeacherAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeacherAssignmentWhereInput
+}
+
 
 export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4551,18 +5009,15 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   adminPhone?: boolean
   adminPasswordHash?: boolean
   adminEmailVerified?: boolean
-  rejectionReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  subscriptions?: boolean | Prisma.School$subscriptionsArgs<ExtArgs>
   guardians?: boolean | Prisma.School$guardiansArgs<ExtArgs>
   teachers?: boolean | Prisma.School$teachersArgs<ExtArgs>
-  setting?: boolean | Prisma.School$settingArgs<ExtArgs>
-  admissionPayments?: boolean | Prisma.School$admissionPaymentsArgs<ExtArgs>
   managers?: boolean | Prisma.School$managersArgs<ExtArgs>
   classes?: boolean | Prisma.School$classesArgs<ExtArgs>
   sections?: boolean | Prisma.School$sectionsArgs<ExtArgs>
   subjects?: boolean | Prisma.School$subjectsArgs<ExtArgs>
-  teacherAssignments?: boolean | Prisma.School$teacherAssignmentsArgs<ExtArgs>
   enrollments?: boolean | Prisma.School$enrollmentsArgs<ExtArgs>
   attendances?: boolean | Prisma.School$attendancesArgs<ExtArgs>
   exams?: boolean | Prisma.School$examsArgs<ExtArgs>
@@ -4574,6 +5029,10 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   admissions?: boolean | Prisma.School$admissionsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.School$auditLogsArgs<ExtArgs>
   users?: boolean | Prisma.School$usersArgs<ExtArgs>
+  customPackageRequests?: boolean | Prisma.School$customPackageRequestsArgs<ExtArgs>
+  admissionPayments?: boolean | Prisma.School$admissionPaymentsArgs<ExtArgs>
+  schoolSetting?: boolean | Prisma.School$schoolSettingArgs<ExtArgs>
+  teacherAssignments?: boolean | Prisma.School$teacherAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["school"]>
 
@@ -4591,7 +5050,6 @@ export type SchoolSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   adminPhone?: boolean
   adminPasswordHash?: boolean
   adminEmailVerified?: boolean
-  rejectionReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["school"]>
@@ -4610,7 +5068,6 @@ export type SchoolSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   adminPhone?: boolean
   adminPasswordHash?: boolean
   adminEmailVerified?: boolean
-  rejectionReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["school"]>
@@ -4629,22 +5086,19 @@ export type SchoolSelectScalar = {
   adminPhone?: boolean
   adminPasswordHash?: boolean
   adminEmailVerified?: boolean
-  rejectionReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "email" | "phone" | "address" | "logo" | "status" | "adminName" | "adminEmail" | "adminPhone" | "adminPasswordHash" | "adminEmailVerified" | "rejectionReason" | "createdAt" | "updatedAt", ExtArgs["result"]["school"]>
+export type SchoolOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "code" | "email" | "phone" | "address" | "logo" | "status" | "adminName" | "adminEmail" | "adminPhone" | "adminPasswordHash" | "adminEmailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["school"]>
 export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  subscriptions?: boolean | Prisma.School$subscriptionsArgs<ExtArgs>
   guardians?: boolean | Prisma.School$guardiansArgs<ExtArgs>
   teachers?: boolean | Prisma.School$teachersArgs<ExtArgs>
-  setting?: boolean | Prisma.School$settingArgs<ExtArgs>
-  admissionPayments?: boolean | Prisma.School$admissionPaymentsArgs<ExtArgs>
   managers?: boolean | Prisma.School$managersArgs<ExtArgs>
   classes?: boolean | Prisma.School$classesArgs<ExtArgs>
   sections?: boolean | Prisma.School$sectionsArgs<ExtArgs>
   subjects?: boolean | Prisma.School$subjectsArgs<ExtArgs>
-  teacherAssignments?: boolean | Prisma.School$teacherAssignmentsArgs<ExtArgs>
   enrollments?: boolean | Prisma.School$enrollmentsArgs<ExtArgs>
   attendances?: boolean | Prisma.School$attendancesArgs<ExtArgs>
   exams?: boolean | Prisma.School$examsArgs<ExtArgs>
@@ -4656,6 +5110,10 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   admissions?: boolean | Prisma.School$admissionsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.School$auditLogsArgs<ExtArgs>
   users?: boolean | Prisma.School$usersArgs<ExtArgs>
+  customPackageRequests?: boolean | Prisma.School$customPackageRequestsArgs<ExtArgs>
+  admissionPayments?: boolean | Prisma.School$admissionPaymentsArgs<ExtArgs>
+  schoolSetting?: boolean | Prisma.School$schoolSettingArgs<ExtArgs>
+  teacherAssignments?: boolean | Prisma.School$teacherAssignmentsArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SchoolIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -4664,15 +5122,13 @@ export type SchoolIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "School"
   objects: {
+    subscriptions: Prisma.$SchoolSubscriptionPayload<ExtArgs>[]
     guardians: Prisma.$GuardianPayload<ExtArgs>[]
     teachers: Prisma.$TeacherPayload<ExtArgs>[]
-    setting: Prisma.$SchoolSettingPayload<ExtArgs> | null
-    admissionPayments: Prisma.$AdmissionPaymentPayload<ExtArgs>[]
     managers: Prisma.$ManagerPayload<ExtArgs>[]
     classes: Prisma.$SchoolClassPayload<ExtArgs>[]
     sections: Prisma.$SectionPayload<ExtArgs>[]
     subjects: Prisma.$SubjectPayload<ExtArgs>[]
-    teacherAssignments: Prisma.$TeacherAssignmentPayload<ExtArgs>[]
     enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
     attendances: Prisma.$AttendancePayload<ExtArgs>[]
     exams: Prisma.$ExamPayload<ExtArgs>[]
@@ -4684,6 +5140,10 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     admissions: Prisma.$AdmissionPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     users: Prisma.$UserPayload<ExtArgs>[]
+    customPackageRequests: Prisma.$CustomPackageRequestPayload<ExtArgs>[]
+    admissionPayments: Prisma.$AdmissionPaymentPayload<ExtArgs>[]
+    schoolSetting: Prisma.$SchoolSettingPayload<ExtArgs> | null
+    teacherAssignments: Prisma.$TeacherAssignmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -4699,7 +5159,6 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     adminPhone: string | null
     adminPasswordHash: string | null
     adminEmailVerified: boolean
-    rejectionReason: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["school"]>
@@ -5096,15 +5555,13 @@ readonly fields: SchoolFieldRefs;
  */
 export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  subscriptions<T extends Prisma.School$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   guardians<T extends Prisma.School$guardiansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$guardiansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuardianPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teachers<T extends Prisma.School$teachersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$teachersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  setting<T extends Prisma.School$settingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$settingArgs<ExtArgs>>): Prisma.Prisma__SchoolSettingClient<runtime.Types.Result.GetResult<Prisma.$SchoolSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  admissionPayments<T extends Prisma.School$admissionPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$admissionPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   managers<T extends Prisma.School$managersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$managersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ManagerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   classes<T extends Prisma.School$classesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$classesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolClassPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sections<T extends Prisma.School$sectionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$sectionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subjects<T extends Prisma.School$subjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$subjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  teacherAssignments<T extends Prisma.School$teacherAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$teacherAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   enrollments<T extends Prisma.School$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attendances<T extends Prisma.School$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   exams<T extends Prisma.School$examsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$examsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5116,6 +5573,10 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   admissions<T extends Prisma.School$admissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.School$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   users<T extends Prisma.School$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  customPackageRequests<T extends Prisma.School$customPackageRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$customPackageRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomPackageRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  admissionPayments<T extends Prisma.School$admissionPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$admissionPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  schoolSetting<T extends Prisma.School$schoolSettingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$schoolSettingArgs<ExtArgs>>): Prisma.Prisma__SchoolSettingClient<runtime.Types.Result.GetResult<Prisma.$SchoolSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  teacherAssignments<T extends Prisma.School$teacherAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$teacherAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5158,7 +5619,6 @@ export interface SchoolFieldRefs {
   readonly adminPhone: Prisma.FieldRef<"School", 'String'>
   readonly adminPasswordHash: Prisma.FieldRef<"School", 'String'>
   readonly adminEmailVerified: Prisma.FieldRef<"School", 'Boolean'>
-  readonly rejectionReason: Prisma.FieldRef<"School", 'String'>
   readonly createdAt: Prisma.FieldRef<"School", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"School", 'DateTime'>
 }
@@ -5554,6 +6014,30 @@ export type SchoolDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
+ * School.subscriptions
+ */
+export type School$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SchoolSubscription
+   */
+  select?: Prisma.SchoolSubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SchoolSubscription
+   */
+  omit?: Prisma.SchoolSubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolSubscriptionInclude<ExtArgs> | null
+  where?: Prisma.SchoolSubscriptionWhereInput
+  orderBy?: Prisma.SchoolSubscriptionOrderByWithRelationInput | Prisma.SchoolSubscriptionOrderByWithRelationInput[]
+  cursor?: Prisma.SchoolSubscriptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SchoolSubscriptionScalarFieldEnum | Prisma.SchoolSubscriptionScalarFieldEnum[]
+}
+
+/**
  * School.guardians
  */
 export type School$guardiansArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5599,49 +6083,6 @@ export type School$teachersArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.TeacherScalarFieldEnum | Prisma.TeacherScalarFieldEnum[]
-}
-
-/**
- * School.setting
- */
-export type School$settingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the SchoolSetting
-   */
-  select?: Prisma.SchoolSettingSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the SchoolSetting
-   */
-  omit?: Prisma.SchoolSettingOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.SchoolSettingInclude<ExtArgs> | null
-  where?: Prisma.SchoolSettingWhereInput
-}
-
-/**
- * School.admissionPayments
- */
-export type School$admissionPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the AdmissionPayment
-   */
-  select?: Prisma.AdmissionPaymentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the AdmissionPayment
-   */
-  omit?: Prisma.AdmissionPaymentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.AdmissionPaymentInclude<ExtArgs> | null
-  where?: Prisma.AdmissionPaymentWhereInput
-  orderBy?: Prisma.AdmissionPaymentOrderByWithRelationInput | Prisma.AdmissionPaymentOrderByWithRelationInput[]
-  cursor?: Prisma.AdmissionPaymentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AdmissionPaymentScalarFieldEnum | Prisma.AdmissionPaymentScalarFieldEnum[]
 }
 
 /**
@@ -5738,30 +6179,6 @@ export type School$subjectsArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.SubjectScalarFieldEnum | Prisma.SubjectScalarFieldEnum[]
-}
-
-/**
- * School.teacherAssignments
- */
-export type School$teacherAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TeacherAssignment
-   */
-  select?: Prisma.TeacherAssignmentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TeacherAssignment
-   */
-  omit?: Prisma.TeacherAssignmentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TeacherAssignmentInclude<ExtArgs> | null
-  where?: Prisma.TeacherAssignmentWhereInput
-  orderBy?: Prisma.TeacherAssignmentOrderByWithRelationInput | Prisma.TeacherAssignmentOrderByWithRelationInput[]
-  cursor?: Prisma.TeacherAssignmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TeacherAssignmentScalarFieldEnum | Prisma.TeacherAssignmentScalarFieldEnum[]
 }
 
 /**
@@ -6026,6 +6443,97 @@ export type School$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.UserScalarFieldEnum | Prisma.UserScalarFieldEnum[]
+}
+
+/**
+ * School.customPackageRequests
+ */
+export type School$customPackageRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CustomPackageRequest
+   */
+  select?: Prisma.CustomPackageRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CustomPackageRequest
+   */
+  omit?: Prisma.CustomPackageRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CustomPackageRequestInclude<ExtArgs> | null
+  where?: Prisma.CustomPackageRequestWhereInput
+  orderBy?: Prisma.CustomPackageRequestOrderByWithRelationInput | Prisma.CustomPackageRequestOrderByWithRelationInput[]
+  cursor?: Prisma.CustomPackageRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CustomPackageRequestScalarFieldEnum | Prisma.CustomPackageRequestScalarFieldEnum[]
+}
+
+/**
+ * School.admissionPayments
+ */
+export type School$admissionPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AdmissionPayment
+   */
+  select?: Prisma.AdmissionPaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AdmissionPayment
+   */
+  omit?: Prisma.AdmissionPaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdmissionPaymentInclude<ExtArgs> | null
+  where?: Prisma.AdmissionPaymentWhereInput
+  orderBy?: Prisma.AdmissionPaymentOrderByWithRelationInput | Prisma.AdmissionPaymentOrderByWithRelationInput[]
+  cursor?: Prisma.AdmissionPaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdmissionPaymentScalarFieldEnum | Prisma.AdmissionPaymentScalarFieldEnum[]
+}
+
+/**
+ * School.schoolSetting
+ */
+export type School$schoolSettingArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SchoolSetting
+   */
+  select?: Prisma.SchoolSettingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SchoolSetting
+   */
+  omit?: Prisma.SchoolSettingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolSettingInclude<ExtArgs> | null
+  where?: Prisma.SchoolSettingWhereInput
+}
+
+/**
+ * School.teacherAssignments
+ */
+export type School$teacherAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeacherAssignment
+   */
+  select?: Prisma.TeacherAssignmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeacherAssignment
+   */
+  omit?: Prisma.TeacherAssignmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeacherAssignmentInclude<ExtArgs> | null
+  where?: Prisma.TeacherAssignmentWhereInput
+  orderBy?: Prisma.TeacherAssignmentOrderByWithRelationInput | Prisma.TeacherAssignmentOrderByWithRelationInput[]
+  cursor?: Prisma.TeacherAssignmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeacherAssignmentScalarFieldEnum | Prisma.TeacherAssignmentScalarFieldEnum[]
 }
 
 /**

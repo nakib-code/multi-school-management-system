@@ -1,0 +1,23 @@
+model Package {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+
+  price        Decimal      @db.Decimal(10, 2)
+  billingCycle BillingCycle @default(MONTHLY)
+
+  studentLimit Int
+
+  isCustom Boolean @default(false)
+  isActive Boolean @default(true)
+
+  features      PackageFeatureConfig[]
+  subscriptions SchoolSubscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([isCustom])
+  @@map("packages")
+}

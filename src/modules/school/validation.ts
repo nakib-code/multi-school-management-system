@@ -55,3 +55,54 @@ export const rejectSchoolSchema = z.object({
 			.max(500, "Rejection reason is too long"),
 	}),
 });
+
+export const schoolIdParamsSchema = z.object({
+  params: z.object({
+    id: z.coerce
+      .number()
+      .int()
+      .positive("School ID must be a positive number"),
+  }),
+});
+
+export const getSchoolUsersSchema = z.object({
+  params: z.object({
+    id: z.coerce
+      .number()
+      .int()
+      .positive("School ID must be a positive number"),
+  }),
+
+  query: z.object({
+    page: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .optional()
+      .default(1),
+
+    limit: z.coerce
+      .number()
+      .int()
+      .min(1)
+      .max(100)
+      .optional()
+      .default(10),
+
+    search: z.string().trim().optional(),
+
+    role: z
+      .enum([
+        "ADMIN",
+        "MANAGER",
+        "TEACHER",
+        "STUDENT",
+        "GUARDIAN",
+      ])
+      .optional(),
+
+    status: z
+      .enum(["ACTIVE", "INACTIVE"])
+      .optional(),
+  }),
+});

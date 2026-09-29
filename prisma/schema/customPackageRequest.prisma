@@ -1,0 +1,52 @@
+model CustomPackageRequest {
+  id Int @id @default(autoincrement())
+
+  schoolId Int
+
+  requestedStudentLimit Int
+
+  requestedPrice Decimal @db.Decimal(10, 2)
+
+  billingCycle BillingCycle @default(CUSTOM)
+
+  description String?
+
+  status CustomPackageRequestStatus @default(PENDING)
+
+  reviewedBy Int?
+
+  reviewedAt DateTime?
+
+  reviewNote String?
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  features CustomPackageRequestFeature[]
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("custom_package_requests")
+}
+
+model CustomPackageRequestFeature {
+  id Int @id @default(autoincrement())
+
+  requestId Int
+
+  feature PackageFeature
+
+  enabled Boolean @default(true)
+
+  request CustomPackageRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([requestId, feature])
+  @@index([requestId])
+  @@map("custom_package_request_features")
+}

@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
@@ -10,6 +9,8 @@ import {
   createSchoolController,
   deleteSchoolController,
   getSchoolsController,
+  getSchoolUserSummaryController,
+  getSchoolUsersController,
   rejectSchoolController,
   unblockSchoolController,
   verifyAdminEmailController,
@@ -17,26 +18,26 @@ import {
 
 import {
   createSchoolSchema,
+  getSchoolUsersSchema,
   rejectSchoolSchema,
+  schoolIdParamsSchema,
   verifyAdminEmailSchema,
 } from "./validation.js";
 
 const router = Router();
 
 /**
- * PUBLIC
- * School registration
+ * =========================================================
+ * SCHOOL REGISTRATION
+ * =========================================================
  */
+
 router.post(
   "/register",
   validateRequest(createSchoolSchema),
   createSchoolController,
 );
 
-/**
- * PUBLIC
- * Verify admin email
- */
 router.post(
   "/verify-admin-email",
   validateRequest(verifyAdminEmailSchema),
@@ -44,14 +45,11 @@ router.post(
 );
 
 /**
- * SUPER ADMIN
- * Get all schools
- *
- * GET /api/v1/schools
- * GET /api/v1/schools?page=1&limit=10
- * GET /api/v1/schools?search=abc
- * GET /api/v1/schools?status=PENDING
+ * =========================================================
+ * SUPER ADMIN - SCHOOLS
+ * =========================================================
  */
+
 router.get(
   "/",
   authenticate,
@@ -60,9 +58,52 @@ router.get(
 );
 
 /**
- * SUPER ADMIN
- * Approve school
+ * =========================================================
+ * SUPER ADMIN - SCHOOL USERS
+ * =========================================================
  */
+
+/**
+ * Get user summary for a specific school
+ *
+ * GET /api/v1/schools/:id/users/summary
+ */
+router.get(
+  "/:id/users/summary",
+  authenticate,
+  authorize(UserRole.SUPER_ADMIN),
+  validateRequest(schoolIdParamsSchema),
+  getSchoolUserSummaryController,
+);
+
+/**
+ * Get users of a specific school
+ *
+ * GET /api/v1/schools/:id/users
+ *
+ * Examples:
+ * ?role=ADMIN
+ * ?role=MANAGER
+ * ?role=TEACHER
+ * ?role=STUDENT
+ * ?role=GUARDIAN
+ * ?status=ACTIVE
+ * ?search=rahim
+ */
+router.get(
+  "/:id/users",
+  authenticate,
+  authorize(UserRole.SUPER_ADMIN),
+  validateRequest(getSchoolUsersSchema),
+  getSchoolUsersController,
+);
+
+/**
+ * =========================================================
+ * SUPER ADMIN - SCHOOL ACTIONS
+ * =========================================================
+ */
+
 router.patch(
   "/:id/approve",
   authenticate,
@@ -70,10 +111,6 @@ router.patch(
   approveSchoolController,
 );
 
-/**
- * SUPER ADMIN
- * Block school
- */
 router.patch(
   "/:id/block",
   authenticate,
@@ -81,10 +118,6 @@ router.patch(
   blockSchoolController,
 );
 
-/**
- * SUPER ADMIN
- * Unblock school
- */
 router.patch(
   "/:id/unblock",
   authenticate,
@@ -92,10 +125,6 @@ router.patch(
   unblockSchoolController,
 );
 
-/**
- * SUPER ADMIN
- * Reject school
- */
 router.patch(
   "/:id/reject",
   authenticate,
@@ -104,10 +133,6 @@ router.patch(
   rejectSchoolController,
 );
 
-/**
- * SUPER ADMIN
- * Delete rejected school
- */
 router.delete(
   "/:id",
   authenticate,

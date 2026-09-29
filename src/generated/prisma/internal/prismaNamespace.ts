@@ -402,15 +402,20 @@ export const ModelName = {
   Attendance: 'Attendance',
   AuditLog: 'AuditLog',
   SchoolClass: 'SchoolClass',
+  CustomPackageRequest: 'CustomPackageRequest',
+  CustomPackageRequestFeature: 'CustomPackageRequestFeature',
   Enrollment: 'Enrollment',
   Exam: 'Exam',
   Guardian: 'Guardian',
   GuardianStudent: 'GuardianStudent',
   Manager: 'Manager',
+  Package: 'Package',
+  PackageFeatureConfig: 'PackageFeatureConfig',
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
   SchoolSetting: 'SchoolSetting',
+  SchoolSubscription: 'SchoolSubscription',
   Section: 'Section',
   StudentFee: 'StudentFee',
   StudentPayment: 'StudentPayment',
@@ -435,7 +440,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "result" | "salaryPayment" | "school" | "schoolSetting" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "customPackageRequest" | "customPackageRequestFeature" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "package" | "packageFeatureConfig" | "result" | "salaryPayment" | "school" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -809,6 +814,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CustomPackageRequest: {
+      payload: Prisma.$CustomPackageRequestPayload<ExtArgs>
+      fields: Prisma.CustomPackageRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomPackageRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomPackageRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomPackageRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomPackageRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>
+        }
+        findMany: {
+          args: Prisma.CustomPackageRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>[]
+        }
+        create: {
+          args: Prisma.CustomPackageRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>
+        }
+        createMany: {
+          args: Prisma.CustomPackageRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomPackageRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomPackageRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>
+        }
+        update: {
+          args: Prisma.CustomPackageRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomPackageRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomPackageRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomPackageRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomPackageRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomPackageRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomPackageRequest>
+        }
+        groupBy: {
+          args: Prisma.CustomPackageRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomPackageRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomPackageRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomPackageRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomPackageRequestFeature: {
+      payload: Prisma.$CustomPackageRequestFeaturePayload<ExtArgs>
+      fields: Prisma.CustomPackageRequestFeatureFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomPackageRequestFeatureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomPackageRequestFeatureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>
+        }
+        findFirst: {
+          args: Prisma.CustomPackageRequestFeatureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomPackageRequestFeatureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>
+        }
+        findMany: {
+          args: Prisma.CustomPackageRequestFeatureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>[]
+        }
+        create: {
+          args: Prisma.CustomPackageRequestFeatureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>
+        }
+        createMany: {
+          args: Prisma.CustomPackageRequestFeatureCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomPackageRequestFeatureCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>[]
+        }
+        delete: {
+          args: Prisma.CustomPackageRequestFeatureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>
+        }
+        update: {
+          args: Prisma.CustomPackageRequestFeatureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomPackageRequestFeatureDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomPackageRequestFeatureUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomPackageRequestFeatureUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomPackageRequestFeatureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomPackageRequestFeaturePayload>
+        }
+        aggregate: {
+          args: Prisma.CustomPackageRequestFeatureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomPackageRequestFeature>
+        }
+        groupBy: {
+          args: Prisma.CustomPackageRequestFeatureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomPackageRequestFeatureGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomPackageRequestFeatureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomPackageRequestFeatureCountAggregateOutputType> | number
+        }
+      }
+    }
     Enrollment: {
       payload: Prisma.$EnrollmentPayload<ExtArgs>
       fields: Prisma.EnrollmentFieldRefs
@@ -1179,6 +1332,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Package: {
+      payload: Prisma.$PackagePayload<ExtArgs>
+      fields: Prisma.PackageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PackageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PackageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>
+        }
+        findFirst: {
+          args: Prisma.PackageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PackageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>
+        }
+        findMany: {
+          args: Prisma.PackageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>[]
+        }
+        create: {
+          args: Prisma.PackageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>
+        }
+        createMany: {
+          args: Prisma.PackageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PackageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>[]
+        }
+        delete: {
+          args: Prisma.PackageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>
+        }
+        update: {
+          args: Prisma.PackageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>
+        }
+        deleteMany: {
+          args: Prisma.PackageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PackageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PackageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>[]
+        }
+        upsert: {
+          args: Prisma.PackageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackagePayload>
+        }
+        aggregate: {
+          args: Prisma.PackageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePackage>
+        }
+        groupBy: {
+          args: Prisma.PackageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PackageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PackageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PackageCountAggregateOutputType> | number
+        }
+      }
+    }
+    PackageFeatureConfig: {
+      payload: Prisma.$PackageFeatureConfigPayload<ExtArgs>
+      fields: Prisma.PackageFeatureConfigFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PackageFeatureConfigFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PackageFeatureConfigFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>
+        }
+        findFirst: {
+          args: Prisma.PackageFeatureConfigFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PackageFeatureConfigFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>
+        }
+        findMany: {
+          args: Prisma.PackageFeatureConfigFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>[]
+        }
+        create: {
+          args: Prisma.PackageFeatureConfigCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>
+        }
+        createMany: {
+          args: Prisma.PackageFeatureConfigCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PackageFeatureConfigCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>[]
+        }
+        delete: {
+          args: Prisma.PackageFeatureConfigDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>
+        }
+        update: {
+          args: Prisma.PackageFeatureConfigUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>
+        }
+        deleteMany: {
+          args: Prisma.PackageFeatureConfigDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PackageFeatureConfigUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PackageFeatureConfigUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>[]
+        }
+        upsert: {
+          args: Prisma.PackageFeatureConfigUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PackageFeatureConfigPayload>
+        }
+        aggregate: {
+          args: Prisma.PackageFeatureConfigAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePackageFeatureConfig>
+        }
+        groupBy: {
+          args: Prisma.PackageFeatureConfigGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PackageFeatureConfigGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PackageFeatureConfigCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PackageFeatureConfigCountAggregateOutputType> | number
+        }
+      }
+    }
     Result: {
       payload: Prisma.$ResultPayload<ExtArgs>
       fields: Prisma.ResultFieldRefs
@@ -1472,6 +1773,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SchoolSettingCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SchoolSettingCountAggregateOutputType> | number
+        }
+      }
+    }
+    SchoolSubscription: {
+      payload: Prisma.$SchoolSubscriptionPayload<ExtArgs>
+      fields: Prisma.SchoolSubscriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolSubscriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolSubscriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolSubscriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolSubscriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>
+        }
+        findMany: {
+          args: Prisma.SchoolSubscriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>[]
+        }
+        create: {
+          args: Prisma.SchoolSubscriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>
+        }
+        createMany: {
+          args: Prisma.SchoolSubscriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolSubscriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolSubscriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>
+        }
+        update: {
+          args: Prisma.SchoolSubscriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolSubscriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolSubscriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolSubscriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolSubscriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolSubscriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolSubscriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolSubscription>
+        }
+        groupBy: {
+          args: Prisma.SchoolSubscriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolSubscriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolSubscriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolSubscriptionCountAggregateOutputType> | number
         }
       }
     }
@@ -2269,6 +2644,35 @@ export const SchoolClassScalarFieldEnum = {
 export type SchoolClassScalarFieldEnum = (typeof SchoolClassScalarFieldEnum)[keyof typeof SchoolClassScalarFieldEnum]
 
 
+export const CustomPackageRequestScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  requestedStudentLimit: 'requestedStudentLimit',
+  requestedPrice: 'requestedPrice',
+  billingCycle: 'billingCycle',
+  description: 'description',
+  status: 'status',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  reviewNote: 'reviewNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomPackageRequestScalarFieldEnum = (typeof CustomPackageRequestScalarFieldEnum)[keyof typeof CustomPackageRequestScalarFieldEnum]
+
+
+export const CustomPackageRequestFeatureScalarFieldEnum = {
+  id: 'id',
+  requestId: 'requestId',
+  feature: 'feature',
+  enabled: 'enabled',
+  createdAt: 'createdAt'
+} as const
+
+export type CustomPackageRequestFeatureScalarFieldEnum = (typeof CustomPackageRequestFeatureScalarFieldEnum)[keyof typeof CustomPackageRequestFeatureScalarFieldEnum]
+
+
 export const EnrollmentScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -2348,6 +2752,34 @@ export const ManagerScalarFieldEnum = {
 export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
 
 
+export const PackageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  price: 'price',
+  billingCycle: 'billingCycle',
+  studentLimit: 'studentLimit',
+  isCustom: 'isCustom',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PackageScalarFieldEnum = (typeof PackageScalarFieldEnum)[keyof typeof PackageScalarFieldEnum]
+
+
+export const PackageFeatureConfigScalarFieldEnum = {
+  id: 'id',
+  packageId: 'packageId',
+  feature: 'feature',
+  enabled: 'enabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PackageFeatureConfigScalarFieldEnum = (typeof PackageFeatureConfigScalarFieldEnum)[keyof typeof PackageFeatureConfigScalarFieldEnum]
+
+
 export const ResultScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -2400,7 +2832,6 @@ export const SchoolScalarFieldEnum = {
   adminPhone: 'adminPhone',
   adminPasswordHash: 'adminPasswordHash',
   adminEmailVerified: 'adminEmailVerified',
-  rejectionReason: 'rejectionReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2417,6 +2848,22 @@ export const SchoolSettingScalarFieldEnum = {
 } as const
 
 export type SchoolSettingScalarFieldEnum = (typeof SchoolSettingScalarFieldEnum)[keyof typeof SchoolSettingScalarFieldEnum]
+
+
+export const SchoolSubscriptionScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  packageId: 'packageId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  status: 'status',
+  price: 'price',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolSubscriptionScalarFieldEnum = (typeof SchoolSubscriptionScalarFieldEnum)[keyof typeof SchoolSubscriptionScalarFieldEnum]
 
 
 export const SectionScalarFieldEnum = {
@@ -2746,6 +3193,48 @@ export type ListEnumAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'BillingCycle'
+ */
+export type EnumBillingCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingCycle'>
+    
+
+
+/**
+ * Reference to a field of type 'BillingCycle[]'
+ */
+export type ListEnumBillingCycleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BillingCycle[]'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomPackageRequestStatus'
+ */
+export type EnumCustomPackageRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomPackageRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomPackageRequestStatus[]'
+ */
+export type ListEnumCustomPackageRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomPackageRequestStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PackageFeature'
+ */
+export type EnumPackageFeatureFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PackageFeature'>
+    
+
+
+/**
+ * Reference to a field of type 'PackageFeature[]'
+ */
+export type ListEnumPackageFeatureFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PackageFeature[]'>
+    
+
+
+/**
  * Reference to a field of type 'EnrollmentStatus'
  */
 export type EnumEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnrollmentStatus'>
@@ -2840,6 +3329,20 @@ export type EnumSchoolStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'SchoolStatus[]'
  */
 export type ListEnumSchoolStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SchoolStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionStatus'
+ */
+export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionStatus[]'
+ */
+export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
     
 
 
@@ -3110,15 +3613,20 @@ export type GlobalOmitConfig = {
   attendance?: Prisma.AttendanceOmit
   auditLog?: Prisma.AuditLogOmit
   schoolClass?: Prisma.SchoolClassOmit
+  customPackageRequest?: Prisma.CustomPackageRequestOmit
+  customPackageRequestFeature?: Prisma.CustomPackageRequestFeatureOmit
   enrollment?: Prisma.EnrollmentOmit
   exam?: Prisma.ExamOmit
   guardian?: Prisma.GuardianOmit
   guardianStudent?: Prisma.GuardianStudentOmit
   manager?: Prisma.ManagerOmit
+  package?: Prisma.PackageOmit
+  packageFeatureConfig?: Prisma.PackageFeatureConfigOmit
   result?: Prisma.ResultOmit
   salaryPayment?: Prisma.SalaryPaymentOmit
   school?: Prisma.SchoolOmit
   schoolSetting?: Prisma.SchoolSettingOmit
+  schoolSubscription?: Prisma.SchoolSubscriptionOmit
   section?: Prisma.SectionOmit
   studentFee?: Prisma.StudentFeeOmit
   studentPayment?: Prisma.StudentPaymentOmit

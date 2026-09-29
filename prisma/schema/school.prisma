@@ -16,32 +16,32 @@ model School {
   adminPasswordHash  String?
   adminEmailVerified Boolean @default(false)
 
-  rejectionReason String?
+  subscriptions SchoolSubscription[]
 
-  guardians Guardian[]
+  guardians             Guardian[]
+  teachers              Teacher[]
+  managers              Manager[]
+  classes               SchoolClass[]
+  sections              Section[]
+  subjects              Subject[]
+  enrollments           Enrollment[]
+  attendances           Attendance[]
+  exams                 Exam[]
+  results               Result[]
+  studentFees           StudentFee[]
+  studentPayments       StudentPayment[]
+  teacherSalaries       TeacherSalary[]
+  salaryPayments        SalaryPayment[]
+  admissions            Admission[]
+  auditLogs             AuditLog[]
+  users                 User[]
+  customPackageRequests CustomPackageRequest[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  teachers           Teacher[]
-  setting SchoolSetting?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
   admissionPayments  AdmissionPayment[]
-  managers           Manager[]
-  classes            SchoolClass[]
-  sections           Section[]
-  subjects           Subject[]
+  schoolSetting      SchoolSetting?
   teacherAssignments TeacherAssignment[]
-  enrollments        Enrollment[]
-  attendances        Attendance[]
-  exams              Exam[]
-  results            Result[]
-  studentFees        StudentFee[]
-  studentPayments    StudentPayment[]
-  teacherSalaries    TeacherSalary[]
-  salaryPayments     SalaryPayment[]
-  admissions         Admission[]
-  auditLogs          AuditLog[]
-  users              User[]
 
   @@index([name])
   @@map("schools")

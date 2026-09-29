@@ -3,10 +3,7 @@ import type { NextFunction, Response } from "express";
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
-import type {
-  GetUsersQuery,
-  UpdateUserStatusParams,
-} from "./interface.js";
+import type { UpdateUserStatusParams } from "./interface.js";
 import {
   getUsers,
   updateUserStatus,
@@ -18,9 +15,7 @@ export const getUsersController = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await getUsers(
-      req.query as unknown as GetUsersQuery,
-    );
+    const result = await getUsers(req.query);
 
     return sendResponse(res, {
       statusCode: 200,

@@ -1,0 +1,16 @@
+model PackageFeatureConfig {
+  id Int @id @default(autoincrement())
+
+  packageId Int
+  feature   PackageFeature
+  enabled   Boolean        @default(true)
+
+  package Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([packageId, feature])
+  @@index([packageId])
+  @@map("package_feature_configs")
+}

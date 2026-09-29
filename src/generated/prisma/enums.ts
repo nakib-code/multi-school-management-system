@@ -190,6 +190,57 @@ export const AdmissionPaymentStatus = {
 export type AdmissionPaymentStatus = (typeof AdmissionPaymentStatus)[keyof typeof AdmissionPaymentStatus]
 
 
+export const BillingCycle = {
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type BillingCycle = (typeof BillingCycle)[keyof typeof BillingCycle]
+
+
+export const SubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED',
+  PENDING: 'PENDING'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
+export const PackageFeature = {
+  SCHOOL_MANAGEMENT: 'SCHOOL_MANAGEMENT',
+  USER_MANAGEMENT: 'USER_MANAGEMENT',
+  STUDENT_MANAGEMENT: 'STUDENT_MANAGEMENT',
+  TEACHER_MANAGEMENT: 'TEACHER_MANAGEMENT',
+  GUARDIAN_MANAGEMENT: 'GUARDIAN_MANAGEMENT',
+  ADMISSION: 'ADMISSION',
+  ATTENDANCE: 'ATTENDANCE',
+  CLASS_MANAGEMENT: 'CLASS_MANAGEMENT',
+  SUBJECT_MANAGEMENT: 'SUBJECT_MANAGEMENT',
+  EXAM_MANAGEMENT: 'EXAM_MANAGEMENT',
+  RESULT_MANAGEMENT: 'RESULT_MANAGEMENT',
+  FEES_MANAGEMENT: 'FEES_MANAGEMENT',
+  PAYMENT_MANAGEMENT: 'PAYMENT_MANAGEMENT',
+  TEACHER_SALARY: 'TEACHER_SALARY',
+  REPORTS: 'REPORTS',
+  NOTIFICATIONS: 'NOTIFICATIONS'
+} as const
+
+export type PackageFeature = (typeof PackageFeature)[keyof typeof PackageFeature]
+
+
+export const CustomPackageRequestStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type CustomPackageRequestStatus = (typeof CustomPackageRequestStatus)[keyof typeof CustomPackageRequestStatus]
+
+
 export const PaymentMethod = {
   CASH: 'CASH',
   BANK: 'BANK',

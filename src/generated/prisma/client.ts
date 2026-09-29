@@ -67,6 +67,16 @@ export type AuditLog = Prisma.AuditLogModel
  */
 export type SchoolClass = Prisma.SchoolClassModel
 /**
+ * Model CustomPackageRequest
+ * 
+ */
+export type CustomPackageRequest = Prisma.CustomPackageRequestModel
+/**
+ * Model CustomPackageRequestFeature
+ * 
+ */
+export type CustomPackageRequestFeature = Prisma.CustomPackageRequestFeatureModel
+/**
  * Model Enrollment
  * 
  */
@@ -92,6 +102,16 @@ export type GuardianStudent = Prisma.GuardianStudentModel
  */
 export type Manager = Prisma.ManagerModel
 /**
+ * Model Package
+ * 
+ */
+export type Package = Prisma.PackageModel
+/**
+ * Model PackageFeatureConfig
+ * 
+ */
+export type PackageFeatureConfig = Prisma.PackageFeatureConfigModel
+/**
  * Model Result
  * 
  */
@@ -111,6 +131,11 @@ export type School = Prisma.SchoolModel
  * 
  */
 export type SchoolSetting = Prisma.SchoolSettingModel
+/**
+ * Model SchoolSubscription
+ * 
+ */
+export type SchoolSubscription = Prisma.SchoolSubscriptionModel
 /**
  * Model Section
  * 
