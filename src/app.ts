@@ -14,6 +14,7 @@ import { teacherRoutes } from "./modules/teacher/route.js";
 import cookieParser from "cookie-parser";
 import { dashboardRoutes } from "./modules/dashboard/route.js";
 import env from "./config/env.js";
+import { userRoutes } from "./modules/user/route.js";
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use("/api/v1", teacherRoutes);
 app.use("/api/v1", schoolSettingRoutes);
 app.use("/api/v1", paymentRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/users", userRoutes);
 
 // 404
 

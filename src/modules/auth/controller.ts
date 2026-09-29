@@ -1,14 +1,19 @@
 import type { NextFunction, Request, Response } from "express";
 
 import type { AuthRequest } from "../../middleware/auth.js";
+
 import AppError from "../../utils/appError.js";
+
 import sendResponse from "../../utils/sendResponse.js";
+
 import { getMe, login } from "./service.js";
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const cookieOptions = {
   httpOnly: true,
-  secure: false,
-  sameSite: "lax" as const,
+  secure: isProduction,
+  sameSite: isProduction ? ("none" as const) : ("lax" as const),
   maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
@@ -60,8 +65,8 @@ export const logoutController = (
 ) => {
   res.clearCookie("accessToken", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: isProduction,
+    sameSite: isProduction ? ("none" as const) : ("lax" as const),
   });
 
   return sendResponse(res, {
