@@ -13,6 +13,7 @@ import { studentRoutes } from "./modules/student/route.js";
 import { teacherRoutes } from "./modules/teacher/route.js";
 import cookieParser from "cookie-parser";
 import { dashboardRoutes } from "./modules/dashboard/route.js";
+import env from "./config/env.js";
 
 const app = express();
 
@@ -20,7 +21,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: env.frontend_url,
     credentials: true,
   }),
 );
