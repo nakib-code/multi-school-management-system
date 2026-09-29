@@ -3,469 +3,643 @@ import AppError from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
 import { sendVerificationEmail } from "../../utils/sendEmail.js";
 import {
-	deleteVerificationCode,
-	generateVerificationCode,
-	getVerificationCode,
-	saveVerificationCode,
+  deleteVerificationCode,
+  generateVerificationCode,
+  getVerificationCode,
+  saveVerificationCode,
 } from "../../utils/verificationCode.js";
+
 import type {
-	CreateSchoolInput,
-	RejectSchoolInput,
-	VerifyAdminEmailInput,
+  CreateSchoolInput,
+  RejectSchoolInput,
+  VerifyAdminEmailInput,
 } from "./interface.js";
 
-export const createSchool = async (payload: CreateSchoolInput) => {
-	const {
-		name,
-		code,
-		email,
-		phone,
-		address,
-		logo,
-		adminName,
-		adminEmail,
-		adminPhone,
-		adminPassword,
-	} = payload;
+/**
+ * =========================================================
+ * CREATE SCHOOL
+ * =========================================================
+ */
 
-	// ----------------------------------------------------
-	// Check school code
-	// ----------------------------------------------------
+export const createSchool = async (
+  payload: CreateSchoolInput,
+) => {
+  const {
+    name,
+    code,
+    email,
+    phone,
+    address,
+    logo,
+    adminName,
+    adminEmail,
+    adminPhone,
+    adminPassword,
+  } = payload;
 
-	const existingSchool = await prisma.school.findUnique({
-		where: {
-			code,
-		},
-	});
+  // Check school code
+  const existingSchool = await prisma.school.findUnique({
+    where: {
+      code,
+    },
+  });
 
-	if (existingSchool) {
-		throw new AppError(409, "A school with this code already exists");
-	}
+  if (existingSchool) {
+    throw new AppError(
+      409,
+      "A school with this code already exists",
+    );
+  }
 
-	// ----------------------------------------------------
-	// Check admin email
-	// ----------------------------------------------------
+  // Check admin email
+  const existingAdmin = await prisma.user.findUnique({
+    where: {
+      email: adminEmail,
+    },
+  });
 
-	const existingAdmin = await prisma.user.findUnique({
-		where: {
-			email: adminEmail,
-		},
-	});
+  if (existingAdmin) {
+    throw new AppError(
+      409,
+      "A user with this admin email already exists",
+    );
+  }
 
-	if (existingAdmin) {
-		throw new AppError(409, "A user with this admin email already exists");
-	}
+  // Hash admin password
+  const adminPasswordHash =
+    await hashPassword(adminPassword);
 
-	// ----------------------------------------------------
-	// Hash admin password
-	// ----------------------------------------------------
+  // Generate verification code
+  const verificationCode =
+    generateVerificationCode();
 
-	const adminPasswordHash = await hashPassword(adminPassword);
+  // Save verification code in Redis
+  await saveVerificationCode(
+    adminEmail,
+    verificationCode,
+  );
 
-	// ----------------------------------------------------
-	// Generate email verification code
-	// ----------------------------------------------------
+  // Create school as PENDING
+  const school = await prisma.school.create({
+    data: {
+      name,
+      code,
 
-	const verificationCode = generateVerificationCode();
+      ...(email !== undefined && {
+        email,
+      }),
 
-	// ----------------------------------------------------
-	// Save verification code in Redis
-	// ----------------------------------------------------
+      ...(phone !== undefined && {
+        phone,
+      }),
 
-	await saveVerificationCode(adminEmail, verificationCode);
+      ...(address !== undefined && {
+        address,
+      }),
 
-	// ----------------------------------------------------
-	// Create school as PENDING
-	// ----------------------------------------------------
+      ...(logo !== undefined && {
+        logo,
+      }),
 
-	const school = await prisma.school.create({
-		data: {
-			name,
-			code,
+      status: "PENDING",
 
-			...(email !== undefined
-				? {
-						email,
-					}
-				: {}),
+      adminName,
+      adminEmail,
 
-			...(phone !== undefined
-				? {
-						phone,
-					}
-				: {}),
+      ...(adminPhone !== undefined && {
+        adminPhone,
+      }),
 
-			...(address !== undefined
-				? {
-						address,
-					}
-				: {}),
+      adminPasswordHash,
+      adminEmailVerified: false,
+    },
+  });
 
-			...(logo !== undefined
-				? {
-						logo,
-					}
-				: {}),
+  // Send verification email
+  try {
+    await sendVerificationEmail(
+      adminEmail,
+      verificationCode,
+    );
+  } catch (error) {
+    // Remove Redis verification code
+    await deleteVerificationCode(adminEmail);
 
-			status: "PENDING",
+    // Remove created school
+    await prisma.school.delete({
+      where: {
+        id: school.id,
+      },
+    });
 
-			adminName,
+    console.error(
+      "Failed to send verification email:",
+      error,
+    );
 
-			adminEmail,
+    throw new AppError(
+      500,
+      "Failed to send verification email",
+    );
+  }
 
-			...(adminPhone !== undefined
-				? {
-						adminPhone,
-					}
-				: {}),
+  return {
+    school: {
+      id: school.id,
+      name: school.name,
+      code: school.code,
+      email: school.email,
+      phone: school.phone,
+      address: school.address,
+      logo: school.logo,
+      status: school.status,
+    },
 
-			adminPasswordHash,
+    admin: {
+      name: school.adminName,
+      email: school.adminEmail,
+      phone: school.adminPhone,
+      emailVerified:
+        school.adminEmailVerified,
+    },
 
-			adminEmailVerified: false,
-		},
-	});
-
-	// ----------------------------------------------------
-	// Send verification email
-	// ----------------------------------------------------
-
-	try {
-		await sendVerificationEmail(adminEmail, verificationCode);
-	} catch (error) {
-		// Remove Redis code if email sending fails
-		await deleteVerificationCode(adminEmail);
-
-		// Remove created school
-		await prisma.school.delete({
-			where: {
-				id: school.id,
-			},
-		});
-
-		console.error("Failed to send verification email:", error);
-
-		throw new AppError(500, "Failed to send verification email");
-	}
-
-	// ----------------------------------------------------
-	// Return response
-	// ----------------------------------------------------
-
-	return {
-		school: {
-			id: school.id,
-			name: school.name,
-			code: school.code,
-			email: school.email,
-			phone: school.phone,
-			address: school.address,
-			logo: school.logo,
-			status: school.status,
-		},
-
-		admin: {
-			name: school.adminName,
-			email: school.adminEmail,
-			phone: school.adminPhone,
-			emailVerified: school.adminEmailVerified,
-		},
-
-		message: "School registration submitted. Please verify the admin email.",
-	};
-};
-export const approveSchool = async (schoolId: number) => {
-	const school = await prisma.school.findUnique({
-		where: {
-			id: schoolId,
-		},
-	});
-
-	if (!school) {
-		throw new AppError(404, "School not found");
-	}
-
-	// ----------------------------------------------------
-	// Check school status
-	// ----------------------------------------------------
-
-	if (school.status !== "PENDING") {
-		throw new AppError(
-			400,
-			`School cannot be approved from ${school.status} status`,
-		);
-	}
-
-	// ----------------------------------------------------
-	// Check admin information
-	// ----------------------------------------------------
-
-	if (!school.adminEmail || !school.adminName || !school.adminPasswordHash) {
-		throw new AppError(400, "School admin information is incomplete");
-	}
-
-	// ----------------------------------------------------
-	// Admin email must be verified
-	// ----------------------------------------------------
-
-	if (!school.adminEmailVerified) {
-		throw new AppError(
-			400,
-			"Admin email must be verified before school approval",
-		);
-	}
-
-	// ----------------------------------------------------
-	// Store non-null values
-	// ----------------------------------------------------
-
-	const adminName = school.adminName;
-	const adminEmail = school.adminEmail;
-	const adminPasswordHash = school.adminPasswordHash;
-
-	// ----------------------------------------------------
-	// Check if admin already exists
-	// ----------------------------------------------------
-
-	const existingAdmin = await prisma.user.findUnique({
-		where: {
-			email: adminEmail,
-		},
-	});
-
-	if (existingAdmin) {
-		throw new AppError(409, "A user with this admin email already exists");
-	}
-
-	// ----------------------------------------------------
-	// Activate school + create admin
-	// ----------------------------------------------------
-
-	const result = await prisma.$transaction(async (tx) => {
-		// Activate school
-		const updatedSchool = await tx.school.update({
-			where: {
-				id: schoolId,
-			},
-			data: {
-				status: "ACTIVE",
-			},
-		});
-
-		// Create Admin using registration password
-		const admin = await tx.user.create({
-			data: {
-				name: adminName,
-				email: adminEmail,
-
-				...(school.adminPhone !== null
-					? {
-							phone: school.adminPhone,
-						}
-					: {}),
-
-				passwordHash: adminPasswordHash,
-
-				role: "ADMIN",
-
-				status: "ACTIVE",
-
-				mustChangePassword: false,
-
-				schoolId,
-			},
-		});
-
-		return {
-			school: updatedSchool,
-			admin,
-		};
-	});
-
-	// ----------------------------------------------------
-	// Response
-	// ----------------------------------------------------
-
-	return {
-		school: result.school,
-
-		admin: {
-			id: result.admin.id,
-			name: result.admin.name,
-			email: result.admin.email,
-			phone: result.admin.phone,
-			role: result.admin.role,
-			schoolId: result.admin.schoolId,
-			mustChangePassword: result.admin.mustChangePassword,
-		},
-	};
+    message:
+      "School registration submitted. Please verify the admin email.",
+  };
 };
 
-export const verifyAdminEmail = async (payload: VerifyAdminEmailInput) => {
-	const { email, code } = payload;
+/**
+ * =========================================================
+ * GET SCHOOLS
+ * SUPER ADMIN
+ * =========================================================
+ */
 
-	// Find school by admin email
-	const school = await prisma.school.findFirst({
-		where: {
-			adminEmail: email,
-			status: "PENDING",
-		},
-	});
+export const getSchools = async ({
+  page = 1,
+  limit = 10,
+  search = "",
+  status,
+}: {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?:
+    | "PENDING"
+    | "ACTIVE"
+    | "BLOCKED"
+    | "REJECTED";
+}) => {
+  const skip = (page - 1) * limit;
 
-	if (!school) {
-		throw new AppError(404, "Pending school registration not found");
-	}
+  const where = {
+    ...(status && {
+      status,
+    }),
 
-	// Already verified
-	if (school.adminEmailVerified) {
-		throw new AppError(400, "Admin email is already verified");
-	}
+    ...(search && {
+      OR: [
+        {
+          name: {
+            contains: search,
+            mode: "insensitive" as const,
+          },
+        },
+        {
+          code: {
+            contains: search,
+            mode: "insensitive" as const,
+          },
+        },
+        {
+          email: {
+            contains: search,
+            mode: "insensitive" as const,
+          },
+        },
+        {
+          adminEmail: {
+            contains: search,
+            mode: "insensitive" as const,
+          },
+        },
+      ],
+    }),
+  };
 
-	// Get OTP from Redis
-	const savedCode = await getVerificationCode(email);
+  const [schools, total] = await Promise.all([
+    prisma.school.findMany({
+      where,
+      skip,
+      take: limit,
 
-	if (!savedCode) {
-		throw new AppError(400, "Verification code has expired or is invalid");
-	}
+      orderBy: {
+        id: "desc",
+      },
+    }),
 
-	// Compare OTP
-	if (savedCode !== code) {
-		throw new AppError(400, "Invalid verification code");
-	}
+    prisma.school.count({
+      where,
+    }),
+  ]);
 
-	// Mark email as verified
-	const updatedSchool = await prisma.school.update({
-		where: {
-			id: school.id,
-		},
-		data: {
-			adminEmailVerified: true,
-		},
-	});
+  return {
+    schools,
 
-	// Delete OTP from Redis
-	await deleteVerificationCode(email);
-
-	return {
-		schoolId: updatedSchool.id,
-		adminEmail: updatedSchool.adminEmail,
-		emailVerified: updatedSchool.adminEmailVerified,
-	};
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
 
-export const blockSchool = async (schoolId: number) => {
-	const school = await prisma.school.findUnique({
-		where: { id: schoolId },
-	});
+/**
+ * =========================================================
+ * APPROVE SCHOOL
+ * =========================================================
+ */
 
-	if (!school) {
-		throw new AppError(404, "School not found");
-	}
+export const approveSchool = async (
+  schoolId: number,
+) => {
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+  });
 
-	if (school.status === "BLOCKED") {
-		throw new AppError(400, "School is already blocked");
-	}
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
 
-	if (school.status !== "ACTIVE") {
-		throw new AppError(
-			400,
-			`School cannot be blocked from ${school.status} status`,
-		);
-	}
+  // School must be pending
+  if (school.status !== "PENDING") {
+    throw new AppError(
+      400,
+      `School cannot be approved from ${school.status} status`,
+    );
+  }
 
-	const updatedSchool = await prisma.school.update({
-		where: { id: schoolId },
-		data: {
-			status: "BLOCKED",
-		},
-	});
+  // Check admin information
+  if (
+    !school.adminEmail ||
+    !school.adminName ||
+    !school.adminPasswordHash
+  ) {
+    throw new AppError(
+      400,
+      "School admin information is incomplete",
+    );
+  }
 
-	return updatedSchool;
+  // Admin email must be verified
+  if (!school.adminEmailVerified) {
+    throw new AppError(
+      400,
+      "Admin email must be verified before school approval",
+    );
+  }
+
+  const adminName = school.adminName;
+  const adminEmail = school.adminEmail;
+  const adminPasswordHash =
+    school.adminPasswordHash;
+
+  // Check if admin already exists
+  const existingAdmin = await prisma.user.findUnique({
+    where: {
+      email: adminEmail,
+    },
+  });
+
+  if (existingAdmin) {
+    throw new AppError(
+      409,
+      "A user with this admin email already exists",
+    );
+  }
+
+  // Activate school + create admin
+  const result = await prisma.$transaction(
+    async (tx) => {
+      const updatedSchool =
+        await tx.school.update({
+          where: {
+            id: schoolId,
+          },
+
+          data: {
+            status: "ACTIVE",
+          },
+        });
+
+      const admin = await tx.user.create({
+        data: {
+          name: adminName,
+          email: adminEmail,
+
+          ...(school.adminPhone !== null && {
+            phone: school.adminPhone,
+          }),
+
+          passwordHash: adminPasswordHash,
+
+          role: "ADMIN",
+          status: "ACTIVE",
+          mustChangePassword: false,
+
+          schoolId,
+        },
+      });
+
+      return {
+        school: updatedSchool,
+        admin,
+      };
+    },
+  );
+
+  return {
+    school: result.school,
+
+    admin: {
+      id: result.admin.id,
+      name: result.admin.name,
+      email: result.admin.email,
+      phone: result.admin.phone,
+      role: result.admin.role,
+      schoolId: result.admin.schoolId,
+      mustChangePassword:
+        result.admin.mustChangePassword,
+    },
+  };
 };
 
-export const unblockSchool = async (schoolId: number) => {
-	const school = await prisma.school.findUnique({
-		where: { id: schoolId },
-	});
+/**
+ * =========================================================
+ * VERIFY ADMIN EMAIL
+ * =========================================================
+ */
 
-	if (!school) {
-		throw new AppError(404, "School not found");
-	}
+export const verifyAdminEmail = async (
+  payload: VerifyAdminEmailInput,
+) => {
+  const { email, code } = payload;
 
-	if (school.status === "ACTIVE") {
-		throw new AppError(400, "School is already active");
-	}
+  // Find pending school
+  const school = await prisma.school.findFirst({
+    where: {
+      adminEmail: email,
+      status: "PENDING",
+    },
+  });
 
-	if (school.status !== "BLOCKED") {
-		throw new AppError(
-			400,
-			`School cannot be unblocked from ${school.status} status`,
-		);
-	}
+  if (!school) {
+    throw new AppError(
+      404,
+      "Pending school registration not found",
+    );
+  }
 
-	const updatedSchool = await prisma.school.update({
-		where: { id: schoolId },
-		data: {
-			status: "ACTIVE",
-		},
-	});
+  // Already verified
+  if (school.adminEmailVerified) {
+    throw new AppError(
+      400,
+      "Admin email is already verified",
+    );
+  }
 
-	return updatedSchool;
+  // Get OTP from Redis
+  const savedCode =
+    await getVerificationCode(email);
+
+  if (!savedCode) {
+    throw new AppError(
+      400,
+      "Verification code has expired or is invalid",
+    );
+  }
+
+  // Compare OTP
+  if (savedCode !== code) {
+    throw new AppError(
+      400,
+      "Invalid verification code",
+    );
+  }
+
+  // Mark email as verified
+  const updatedSchool =
+    await prisma.school.update({
+      where: {
+        id: school.id,
+      },
+
+      data: {
+        adminEmailVerified: true,
+      },
+    });
+
+  // Delete OTP
+  await deleteVerificationCode(email);
+
+  return {
+    schoolId: updatedSchool.id,
+    adminEmail: updatedSchool.adminEmail,
+    emailVerified:
+      updatedSchool.adminEmailVerified,
+  };
 };
+
+/**
+ * =========================================================
+ * BLOCK SCHOOL
+ * =========================================================
+ */
+
+export const blockSchool = async (
+  schoolId: number,
+) => {
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+  });
+
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
+
+  if (school.status === "BLOCKED") {
+    throw new AppError(
+      400,
+      "School is already blocked",
+    );
+  }
+
+  if (school.status !== "ACTIVE") {
+    throw new AppError(
+      400,
+      `School cannot be blocked from ${school.status} status`,
+    );
+  }
+
+  const updatedSchool =
+    await prisma.school.update({
+      where: {
+        id: schoolId,
+      },
+
+      data: {
+        status: "BLOCKED",
+      },
+    });
+
+  return updatedSchool;
+};
+
+/**
+ * =========================================================
+ * UNBLOCK SCHOOL
+ * =========================================================
+ */
+
+export const unblockSchool = async (
+  schoolId: number,
+) => {
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+  });
+
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
+
+  if (school.status === "ACTIVE") {
+    throw new AppError(
+      400,
+      "School is already active",
+    );
+  }
+
+  if (school.status !== "BLOCKED") {
+    throw new AppError(
+      400,
+      `School cannot be unblocked from ${school.status} status`,
+    );
+  }
+
+  const updatedSchool =
+    await prisma.school.update({
+      where: {
+        id: schoolId,
+      },
+
+      data: {
+        status: "ACTIVE",
+      },
+    });
+
+  return updatedSchool;
+};
+
+/**
+ * =========================================================
+ * REJECT SCHOOL
+ * =========================================================
+ */
 
 export const rejectSchool = async (
-	schoolId: number,
-	payload: RejectSchoolInput,
+  schoolId: number,
+  payload: RejectSchoolInput,
 ) => {
-	const school = await prisma.school.findUnique({
-		where: { id: schoolId },
-	});
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+  });
 
-	if (!school) {
-		throw new AppError(404, "School not found");
-	}
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
 
-	if (school.status !== "PENDING") {
-		throw new AppError(
-			400,
-			`School cannot be rejected from ${school.status} status`,
-		);
-	}
+  if (school.status !== "PENDING") {
+    throw new AppError(
+      400,
+      `School cannot be rejected from ${school.status} status`,
+    );
+  }
 
-	const updatedSchool = await prisma.school.update({
-		where: { id: schoolId },
-		data: {
-			status: "REJECTED",
-			rejectionReason: payload.rejectionReason,
-		},
-	});
+  const updatedSchool =
+    await prisma.school.update({
+      where: {
+        id: schoolId,
+      },
 
-	return updatedSchool;
+      data: {
+        status: "REJECTED",
+        rejectionReason:
+          payload.rejectionReason,
+      },
+    });
+
+  return updatedSchool;
 };
 
-export const deleteSchool = async (schoolId: number) => {
-	const school = await prisma.school.findUnique({
-		where: { id: schoolId },
-	});
+/**
+ * =========================================================
+ * DELETE SCHOOL
+ * =========================================================
+ */
 
-	if (!school) {
-		throw new AppError(404, "School not found");
-	}
+export const deleteSchool = async (
+  schoolId: number,
+) => {
+  const school = await prisma.school.findUnique({
+    where: {
+      id: schoolId,
+    },
+  });
 
-	if (school.status !== "REJECTED") {
-		throw new AppError(
-			400,
-			`Only rejected schools can be deleted. Current status: ${school.status}`,
-		);
-	}
+  if (!school) {
+    throw new AppError(
+      404,
+      "School not found",
+    );
+  }
 
-	await prisma.school.delete({
-		where: {
-			id: schoolId,
-		},
-	});
+  // Only rejected schools can be deleted
+  if (school.status !== "REJECTED") {
+    throw new AppError(
+      400,
+      `Only rejected schools can be deleted. Current status: ${school.status}`,
+    );
+  }
 
-	return {
-		schoolId,
-		deleted: true,
-	};
+  await prisma.school.delete({
+    where: {
+      id: schoolId,
+    },
+  });
+
+  return {
+    schoolId,
+    deleted: true,
+  };
 };

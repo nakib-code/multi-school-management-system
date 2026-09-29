@@ -1,21 +1,72 @@
 import type { NextFunction, Request, Response } from "express";
+
+import type { AuthRequest } from "../../middleware/auth.js";
+import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
-import { login } from "./service.js";
+import { getMe, login } from "./service.js";
+
+const cookieOptions = {
+  httpOnly: true,
+  secure: false,
+  sameSite: "lax" as const,
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+};
 
 export const loginController = async (
-	req: Request,
-	res: Response,
-	next: NextFunction,
+  req: Request,
+  res: Response,
+  next: NextFunction,
 ) => {
-	try {
-		const result = await login(req.body);
+  try {
+    const result = await login(req.body);
 
-		sendResponse(res, {
-			statusCode: 200,
-			message: "Login successful",
-			data: result,
-		});
-	} catch (error) {
-		next(error);
-	}
+    res.cookie("accessToken", result.token, cookieOptions);
+
+    return sendResponse(res, {
+      statusCode: 200,
+      message: "Login successful",
+      data: result.user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getMeController = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    if (!req.user) {
+      throw new AppError(401, "Authentication required");
+    }
+
+    const result = await getMe(req.user.userId);
+
+    return sendResponse(res, {
+      statusCode: 200,
+      message: "User information retrieved successfully",
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logoutController = (
+  _req: Request,
+  res: Response,
+) => {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: false,
+    sameSite: "lax",
+  });
+
+  return sendResponse(res, {
+    statusCode: 200,
+    message: "Logout successful",
+    data: null,
+  });
 };

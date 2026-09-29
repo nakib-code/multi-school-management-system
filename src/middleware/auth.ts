@@ -13,38 +13,41 @@ export interface AuthRequest extends Request {
 }
 
 export const authenticate = (
-	req: AuthRequest,
-	_res: Response,
-	next: NextFunction,
+  req: AuthRequest,
+  _res: Response,
+  next: NextFunction,
 ) => {
-	const authHeader = req.headers.authorization;
+  const cookieToken = req.cookies?.accessToken;
 
-	if (!authHeader?.startsWith("Bearer ")) {
-		return next(new AppError(401, "Authentication required"));
-	}
+  const authHeader = req.headers.authorization;
 
-	const token = authHeader.split(" ")[1];
+  const headerToken = authHeader?.startsWith("Bearer ")
+    ? authHeader.split(" ")[1]
+    : undefined;
 
-	if (!token) {
-		return next(new AppError(401, "Authentication required"));
-	}
+  const token = cookieToken || headerToken;
 
-	try {
-		const decoded = verifyToken(token);
+  if (!token) {
+    return next(new AppError(401, "Authentication required"));
+  }
 
-		req.user = {
-			userId: decoded.userId,
-			role: decoded.role,
-			...(decoded.schoolId !== undefined && {
-				schoolId: decoded.schoolId,
-			}),
-		};
+  try {
+    const decoded = verifyToken(token);
 
-		next();
-	} catch {
-		return next(new AppError(401, "Invalid or expired token"));
-	}
+    req.user = {
+      userId: decoded.userId,
+      role: decoded.role,
+      ...(decoded.schoolId !== undefined && {
+        schoolId: decoded.schoolId,
+      }),
+    };
+
+    next();
+  } catch {
+    return next(new AppError(401, "Invalid or expired token"));
+  }
 };
+
 
 export const authorize = (...allowedRoles: UserRole[]) => {
 	return (req: AuthRequest, _res: Response, next: NextFunction) => {
