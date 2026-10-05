@@ -57,52 +57,27 @@ export const rejectSchoolSchema = z.object({
 });
 
 export const schoolIdParamsSchema = z.object({
-  params: z.object({
-    id: z.coerce
-      .number()
-      .int()
-      .positive("School ID must be a positive number"),
-  }),
+	params: z.object({
+		id: z.coerce.number().int().positive("School ID must be a positive number"),
+	}),
 });
 
 export const getSchoolUsersSchema = z.object({
-  params: z.object({
-    id: z.coerce
-      .number()
-      .int()
-      .positive("School ID must be a positive number"),
-  }),
+	params: z.object({
+		id: z.coerce.number().int().positive("School ID must be a positive number"),
+	}),
 
-  query: z.object({
-    page: z.coerce
-      .number()
-      .int()
-      .min(1)
-      .optional()
-      .default(1),
+	query: z.object({
+		page: z.coerce.number().int().min(1).optional().default(1),
 
-    limit: z.coerce
-      .number()
-      .int()
-      .min(1)
-      .max(100)
-      .optional()
-      .default(10),
+		limit: z.coerce.number().int().min(1).max(100).optional().default(10),
 
-    search: z.string().trim().optional(),
+		search: z.string().trim().optional(),
 
-    role: z
-      .enum([
-        "ADMIN",
-        "MANAGER",
-        "TEACHER",
-        "STUDENT",
-        "GUARDIAN",
-      ])
-      .optional(),
+		role: z
+			.enum(["ADMIN", "MANAGER", "TEACHER", "STUDENT", "GUARDIAN"])
+			.optional(),
 
-    status: z
-      .enum(["ACTIVE", "INACTIVE"])
-      .optional(),
-  }),
+		status: z.enum(["ACTIVE", "INACTIVE"]).optional(),
+	}),
 });

@@ -6,10 +6,6 @@ import { getDashboardController } from "./controller.js";
 
 const router = Router();
 
-router.get(
-  "/",
-  authenticate,
-  getDashboardController,
-);
+router.get("/", authenticate, getDashboardController);
 
 export const dashboardRoutes = router;

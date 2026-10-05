@@ -5,176 +5,195 @@ import { comparePassword } from "../../utils/password.js";
 import type { LoginInput } from "./interface.js";
 
 export const login = async (payload: LoginInput) => {
-  const { email, password } = payload;
+	const { email, password } = payload;
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-    include: {
-      school: true,
-    },
-  });
+	const user = await prisma.user.findUnique({
+		where: { email },
+		include: {
+			school: true,
+		},
+	});
 
-  if (!user) {
-    throw new AppError(401, "Invalid email or password");
-  }
+	if (!user) {
+		throw new AppError(401, "Invalid email or password");
+	}
 
-  if (user.status !== "ACTIVE") {
-    throw new AppError(403, "Your account is not active");
-  }
+	if (user.status !== "ACTIVE") {
+		throw new AppError(403, "Your account is not active");
+	}
 
-  if (user.role === "GUARDIAN") {
-    throw new AppError(403, "Guardian login is not available");
-  }
+	if (user.role === "GUARDIAN") {
+		throw new AppError(403, "Guardian login is not available");
+	}
 
-  if (
-    user.role !== "SUPER_ADMIN" &&
-    user.school?.status !== "ACTIVE"
-  ) {
-    throw new AppError(403, "Your school is not active");
-  }
+	// SUPER_ADMIN does not need a school.
+	// All other dashboard users must be associated
+	// with a school.
+	if (user.role !== "SUPER_ADMIN" && user.schoolId === null) {
+		throw new AppError(403, "Your account is not associated with any school");
+	}
 
-  const isPasswordMatched = await comparePassword(
-    password,
-    user.passwordHash,
-  );
+	if (user.role !== "SUPER_ADMIN" && user.school?.status !== "ACTIVE") {
+		throw new AppError(403, "Your school is not active");
+	}
 
-  if (!isPasswordMatched) {
-    throw new AppError(401, "Invalid email or password");
-  }
+	const isPasswordMatched = await comparePassword(password, user.passwordHash);
 
-  const token = generateToken({
-    userId: user.id,
-    role: user.role,
-    ...(user.schoolId !== null && {
-      schoolId: user.schoolId,
-    }),
-  });
+	if (!isPasswordMatched) {
+		throw new AppError(401, "Invalid email or password");
+	}
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      lastLoginAt: new Date(),
-    },
-  });
+	const tokenPayload: {
+		userId: number;
+		role: typeof user.role;
+		schoolId?: number;
+	} = {
+		userId: user.id,
+		role: user.role,
+	};
 
-  return {
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      phone: user.phone,
-      role: user.role,
-      status: user.status,
-      schoolId: user.schoolId,
-      mustChangePassword: user.mustChangePassword,
-    },
-    token,
-  };
+	if (user.schoolId !== null) {
+		tokenPayload.schoolId = user.schoolId;
+	}
+
+	const token = generateToken(tokenPayload);
+
+	await prisma.user.update({
+		where: {
+			id: user.id,
+		},
+		data: {
+			lastLoginAt: new Date(),
+		},
+	});
+
+	return {
+		user: {
+			id: user.id,
+			name: user.name,
+			email: user.email,
+			phone: user.phone,
+			role: user.role,
+			status: user.status,
+			schoolId: user.schoolId,
+			mustChangePassword: user.mustChangePassword,
+		},
+		token,
+	};
 };
+
+// ====================================================
+// GOOGLE ADMIN LOGIN
+// ====================================================
 
 export const googleAdminLogin = async (email: string) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-    include: {
-      school: true,
-    },
-  });
+	const user = await prisma.user.findUnique({
+		where: {
+			email,
+		},
+		include: {
+			school: true,
+		},
+	});
 
-  if (!user) {
-    throw new AppError(
-      404,
-      "No account found with this Google email",
-    );
-  }
+	if (!user) {
+		throw new AppError(404, "No account found with this Google email");
+	}
 
-  if (user.role !== "ADMIN") {
-    throw new AppError(
-      403,
-      "Google login is available only for ADMIN accounts",
-    );
-  }
+	if (user.role !== "ADMIN") {
+		throw new AppError(
+			403,
+			"Google login is available only for ADMIN accounts",
+		);
+	}
 
-  if (user.status !== "ACTIVE") {
-    throw new AppError(403, "Your account is not active");
-  }
+	if (user.status !== "ACTIVE") {
+		throw new AppError(403, "Your account is not active");
+	}
 
-  if (!user.school) {
-    throw new AppError(
-      403,
-      "Your account is not associated with a school",
-    );
-  }
+	if (!user.school) {
+		throw new AppError(403, "Your account is not associated with a school");
+	}
 
-  if (user.school.status !== "ACTIVE") {
-    throw new AppError(403, "Your school is not active");
-  }
+	if (user.school.status !== "ACTIVE") {
+		throw new AppError(403, "Your school is not active");
+	}
 
-  const token = generateToken({
-    userId: user.id,
-    role: "ADMIN",
-    schoolId: user.schoolId!,
-  });
+	// At this point schoolId is guaranteed to exist
+	// because user.school exists.
+	const schoolId = user.schoolId;
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      lastLoginAt: new Date(),
-    },
-  });
+	if (schoolId === null) {
+		throw new AppError(403, "Your account is not associated with a school");
+	}
 
-  return {
-    token,
-    user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-      schoolId: user.schoolId,
-      mustChangePassword: user.mustChangePassword,
-    },
-  };
+	const token = generateToken({
+		userId: user.id,
+		role: "ADMIN",
+		schoolId,
+	});
+
+	await prisma.user.update({
+		where: {
+			id: user.id,
+		},
+		data: {
+			lastLoginAt: new Date(),
+		},
+	});
+
+	return {
+		token,
+		user: {
+			id: user.id,
+			name: user.name,
+			email: user.email,
+			role: user.role,
+			status: user.status,
+			schoolId: user.schoolId,
+			mustChangePassword: user.mustChangePassword,
+		},
+	};
 };
 
+// ====================================================
+// GET CURRENT USER
+// ====================================================
+
 export const getMe = async (userId: number) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-    include: {
-      school: true,
-    },
-  });
+	const user = await prisma.user.findUnique({
+		where: {
+			id: userId,
+		},
+		include: {
+			school: true,
+		},
+	});
 
-  if (!user) {
-    throw new AppError(404, "User not found");
-  }
+	if (!user) {
+		throw new AppError(404, "User not found");
+	}
 
-  if (user.status !== "ACTIVE") {
-    throw new AppError(403, "Your account is not active");
-  }
+	if (user.status !== "ACTIVE") {
+		throw new AppError(403, "Your account is not active");
+	}
 
-  if (
-    user.role !== "SUPER_ADMIN" &&
-    user.school?.status !== "ACTIVE"
-  ) {
-    throw new AppError(403, "Your school is not active");
-  }
+	if (user.role !== "SUPER_ADMIN" && user.schoolId === null) {
+		throw new AppError(403, "Your account is not associated with any school");
+	}
 
-  return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    phone: user.phone,
-    role: user.role,
-    status: user.status,
-    schoolId: user.schoolId,
-    mustChangePassword: user.mustChangePassword,
-  };
+	if (user.role !== "SUPER_ADMIN" && user.school?.status !== "ACTIVE") {
+		throw new AppError(403, "Your school is not active");
+	}
+
+	return {
+		id: user.id,
+		name: user.name,
+		email: user.email,
+		phone: user.phone,
+		role: user.role,
+		status: user.status,
+		schoolId: user.schoolId,
+		mustChangePassword: user.mustChangePassword,
+	};
 };

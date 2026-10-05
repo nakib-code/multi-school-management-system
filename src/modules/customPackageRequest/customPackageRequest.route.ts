@@ -1,15 +1,8 @@
 import { Router } from "express";
-
-import {
-  authenticate,
-  authorize,
-} from "../../middleware/auth.js";
-
 import { UserRole } from "../../generated/prisma/client.js";
+import { authenticate, authorize } from "../../middleware/auth.js";
 
-import {
-  customPackageRequestController,
-} from "./customPackageRequest.controller.js";
+import { customPackageRequestController } from "./customPackageRequest.controller.js";
 
 const router = Router();
 
@@ -19,26 +12,26 @@ const router = Router();
 
 // Create custom package request
 router.post(
-  "/",
-  authenticate,
-  authorize(UserRole.ADMIN),
-  customPackageRequestController.create,
+	"/",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	customPackageRequestController.create,
 );
 
 // Get my school's requests
 router.get(
-  "/my",
-  authenticate,
-  authorize(UserRole.ADMIN),
-  customPackageRequestController.getMyRequests,
+	"/my",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	customPackageRequestController.getMyRequests,
 );
 
 // Cancel my school's pending request
 router.patch(
-  "/:id/cancel",
-  authenticate,
-  authorize(UserRole.ADMIN),
-  customPackageRequestController.cancel,
+	"/:id/cancel",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	customPackageRequestController.cancel,
 );
 
 // ====================================================
@@ -47,27 +40,26 @@ router.patch(
 
 // Get all custom package requests
 router.get(
-  "/",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  customPackageRequestController.getAll,
+	"/",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	customPackageRequestController.getAll,
 );
 
 // Get request details
 router.get(
-  "/:id",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  customPackageRequestController.getById,
+	"/:id",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	customPackageRequestController.getById,
 );
 
 // Approve / Reject request
 router.patch(
-  "/:id/review",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  customPackageRequestController.review,
+	"/:id/review",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	customPackageRequestController.review,
 );
 
-export const customPackageRequestRouter =
-  router;
+export const customPackageRequestRouter = router;

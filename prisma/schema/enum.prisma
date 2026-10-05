@@ -159,3 +159,15 @@ enum CustomPackageRequestStatus {
   REJECTED
   CANCELLED
 }
+
+enum SubscriptionPaymentMethod {
+  ONLINE
+  CASH
+}
+
+enum SubscriptionPaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+}

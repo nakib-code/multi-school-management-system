@@ -75,6 +75,7 @@ export const ModelName = {
   StudentPayment: 'StudentPayment',
   Student: 'Student',
   Subject: 'Subject',
+  SubscriptionPayment: 'SubscriptionPayment',
   TeacherAssignment: 'TeacherAssignment',
   TeacherSalary: 'TeacherSalary',
   Teacher: 'Teacher',
@@ -374,6 +375,7 @@ export const SchoolScalarFieldEnum = {
   adminPhone: 'adminPhone',
   adminPasswordHash: 'adminPasswordHash',
   adminEmailVerified: 'adminEmailVerified',
+  selectedPackageId: 'selectedPackageId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -495,6 +497,27 @@ export const SubjectScalarFieldEnum = {
 } as const
 
 export type SubjectScalarFieldEnum = (typeof SubjectScalarFieldEnum)[keyof typeof SubjectScalarFieldEnum]
+
+
+export const SubscriptionPaymentScalarFieldEnum = {
+  id: 'id',
+  subscriptionId: 'subscriptionId',
+  schoolId: 'schoolId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  transactionId: 'transactionId',
+  validationId: 'validationId',
+  gatewayAmount: 'gatewayAmount',
+  gatewayCurrency: 'gatewayCurrency',
+  paidAt: 'paidAt',
+  remarks: 'remarks',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SubscriptionPaymentScalarFieldEnum = (typeof SubscriptionPaymentScalarFieldEnum)[keyof typeof SubscriptionPaymentScalarFieldEnum]
 
 
 export const TeacherAssignmentScalarFieldEnum = {

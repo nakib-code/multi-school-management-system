@@ -1,138 +1,117 @@
 import type { NextFunction, Response } from "express";
 import type { PackageFeature } from "../generated/prisma/client.js";
-import type { AuthRequest } from "./auth.js";
 import { prisma } from "../lib/prisma.js";
 import AppError from "../utils/appError.js";
+import type { AuthRequest } from "./auth.js";
 
-export const requirePackageFeature = (
-  feature: PackageFeature,
-) => {
-  return async (
-    req: AuthRequest,
-    _res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      // ----------------------------------------------
-      // Authentication check
-      // ----------------------------------------------
+export const requirePackageFeature = (feature: PackageFeature) => {
+	return async (req: AuthRequest, _res: Response, next: NextFunction) => {
+		try {
+			// ----------------------------------------------
+			// Authentication check
+			// ----------------------------------------------
 
-      if (!req.user) {
-        return next(
-          new AppError(
-            401,
-            "Authentication required",
-          ),
-        );
-      }
+			if (!req.user) {
+				return next(new AppError(401, "Authentication required"));
+			}
 
-      // ----------------------------------------------
-      // Super Admin does not need package restriction
-      // ----------------------------------------------
+			// ----------------------------------------------
+			// Super Admin does not need package restriction
+			// ----------------------------------------------
 
-      if (req.user.role === "SUPER_ADMIN") {
-        return next();
-      }
+			if (req.user.role === "SUPER_ADMIN") {
+				return next();
+			}
 
-      // ----------------------------------------------
-      // School ID required
-      // ----------------------------------------------
+			// ----------------------------------------------
+			// School ID required
+			// ----------------------------------------------
 
-      if (!req.user.schoolId) {
-        return next(
-          new AppError(
-            403,
-            "School information is missing",
-          ),
-        );
-      }
+			if (!req.user.schoolId) {
+				return next(new AppError(403, "School information is missing"));
+			}
 
-      const schoolId = req.user.schoolId;
+			const schoolId = req.user.schoolId;
 
-      // ----------------------------------------------
-      // Find active subscription
-      // ----------------------------------------------
+			// ----------------------------------------------
+			// Find active subscription
+			// ----------------------------------------------
 
-      const now = new Date();
+			const now = new Date();
 
-      const subscription =
-        await prisma.schoolSubscription.findFirst({
-          where: {
-            schoolId,
-            status: "ACTIVE",
+			const subscription = await prisma.schoolSubscription.findFirst({
+				where: {
+					schoolId,
+					status: "ACTIVE",
 
-            startDate: {
-              lte: now,
-            },
+					startDate: {
+						lte: now,
+					},
 
-            endDate: {
-              gte: now,
-            },
+					endDate: {
+						gte: now,
+					},
 
-            package: {
-              isActive: true,
-            },
-          },
+					package: {
+						isActive: true,
+					},
+				},
 
-          include: {
-            package: {
-              include: {
-                features: {
-                  where: {
-                    feature,
-                    enabled: true,
-                  },
+				include: {
+					package: {
+						include: {
+							features: {
+								where: {
+									feature,
+									enabled: true,
+								},
 
-                  select: {
-                    feature: true,
-                    enabled: true,
-                  },
-                },
-              },
-            },
-          },
+								select: {
+									feature: true,
+									enabled: true,
+								},
+							},
+						},
+					},
+				},
 
-          orderBy: {
-            startDate: "desc",
-          },
-        });
+				orderBy: {
+					startDate: "desc",
+				},
+			});
 
-      // ----------------------------------------------
-      // No active subscription
-      // ----------------------------------------------
+			// ----------------------------------------------
+			// No active subscription
+			// ----------------------------------------------
 
-      if (!subscription) {
-        return next(
-          new AppError(
-            403,
-            "Your school does not have an active subscription",
-          ),
-        );
-      }
+			if (!subscription) {
+				return next(
+					new AppError(403, "Your school does not have an active subscription"),
+				);
+			}
 
-      // ----------------------------------------------
-      // Feature access check
-      // ----------------------------------------------
+			// ----------------------------------------------
+			// Feature access check
+			// ----------------------------------------------
 
-      const hasFeature =
-        subscription.package.features.length > 0;
+			const hasFeature = subscription.package.features.length > 0;
 
-      if (!hasFeature) {
-        return next(
-          new AppError(
-            403,
-            `Your current ${subscription.package.name} package does not include this feature`,
-          ),
-        );
-      }
+			if (!hasFeature) {
+				return next(
+					new AppError(
+						403,
+						`Your current ${subscription.package.name} package does not include this feature`,
+					),
+				);
+			}
 
-      // ----------------------------------------------
-      // Feature allowed
-      // ----------------------------------------------
+			// ----------------------------------------------
+			// Feature allowed
+			// ----------------------------------------------
 
-      next();
-    } catch (error) {
-      next(error);
-    }
-  };
+			next();
+		} catch (error) {
+			next(error);
+		}
+	};
 };

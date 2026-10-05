@@ -138,6 +138,11 @@ export type Student = Prisma.StudentModel
  */
 export type Subject = Prisma.SubjectModel
 /**
+ * Model SubscriptionPayment
+ * 
+ */
+export type SubscriptionPayment = Prisma.SubscriptionPaymentModel
+/**
  * Model TeacherAssignment
  * 
  */

@@ -13,6 +13,8 @@ model SchoolSubscription {
 
   notes String?
 
+  payments SubscriptionPayment[]
+
   school School @relation(fields: [schoolId], references: [id])
 
   package Package @relation(fields: [packageId], references: [id])

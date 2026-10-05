@@ -11,8 +11,9 @@ model Package {
   isCustom Boolean @default(false)
   isActive Boolean @default(true)
 
-  features      PackageFeatureConfig[]
-  subscriptions SchoolSubscription[]
+  features        PackageFeatureConfig[]
+  subscriptions   SchoolSubscription[]
+  selectedSchools School[]               @relation("SchoolSelectedPackage")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

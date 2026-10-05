@@ -241,6 +241,24 @@ export const CustomPackageRequestStatus = {
 export type CustomPackageRequestStatus = (typeof CustomPackageRequestStatus)[keyof typeof CustomPackageRequestStatus]
 
 
+export const SubscriptionPaymentMethod = {
+  ONLINE: 'ONLINE',
+  CASH: 'CASH'
+} as const
+
+export type SubscriptionPaymentMethod = (typeof SubscriptionPaymentMethod)[keyof typeof SubscriptionPaymentMethod]
+
+
+export const SubscriptionPaymentStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type SubscriptionPaymentStatus = (typeof SubscriptionPaymentStatus)[keyof typeof SubscriptionPaymentStatus]
+
+
 export const PaymentMethod = {
   CASH: 'CASH',
   BANK: 'BANK',

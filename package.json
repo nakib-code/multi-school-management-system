@@ -14,7 +14,7 @@
 		"lint:check": "npx @biomejs/biome lint ./src",
 		"lint:fix": "npx @biomejs/biome lint ./src --fix",
 		"check": "npx @biomejs/biome check .",
-		"check:fix": "npx @biomejs/biome check . --write"
+		"fix": "npx @biomejs/biome check . --write"
 	},
 	"keywords": [],
 	"author": "",

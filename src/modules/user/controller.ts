@@ -4,57 +4,54 @@ import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { UpdateUserStatusParams } from "./interface.js";
-import {
-  getUsers,
-  updateUserStatus,
-} from "./service.js";
+import { getUsers, updateUserStatus } from "./service.js";
 
 export const getUsersController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction,
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
 ) => {
-  try {
-    const result = await getUsers(req.query);
+	try {
+		const result = await getUsers(req.query);
 
-    return sendResponse(res, {
-      statusCode: 200,
-      message: "Users retrieved successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Users retrieved successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
 };
 
 export const updateUserStatusController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction,
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
 ) => {
-  try {
-    const userId = Number(req.params.id);
+	try {
+		const userId = Number(req.params.id);
 
-    if (!Number.isInteger(userId) || userId <= 0) {
-      throw new AppError(400, "Invalid user ID");
-    }
+		if (!Number.isInteger(userId) || userId <= 0) {
+			throw new AppError(400, "Invalid user ID");
+		}
 
-    const { status } = req.body as UpdateUserStatusParams;
+		const { status } = req.body as UpdateUserStatusParams;
 
-    const result = await updateUserStatus({
-      id: userId,
-      status,
-    });
+		const result = await updateUserStatus({
+			id: userId,
+			status,
+		});
 
-    return sendResponse(res, {
-      statusCode: 200,
-      message:
-        status === "ACTIVE"
-          ? "Admin unblocked successfully"
-          : "Admin blocked successfully",
-      data: result,
-    });
-  } catch (error) {
-    next(error);
-  }
+		return sendResponse(res, {
+			statusCode: 200,
+			message:
+				status === "ACTIVE"
+					? "Admin unblocked successfully"
+					: "Admin blocked successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
 };

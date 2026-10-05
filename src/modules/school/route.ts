@@ -4,24 +4,24 @@ import { authenticate, authorize } from "../../middleware/auth.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
-  approveSchoolController,
-  blockSchoolController,
-  createSchoolController,
-  deleteSchoolController,
-  getSchoolsController,
-  getSchoolUserSummaryController,
-  getSchoolUsersController,
-  rejectSchoolController,
-  unblockSchoolController,
-  verifyAdminEmailController,
+	approveSchoolController,
+	blockSchoolController,
+	createSchoolController,
+	deleteSchoolController,
+	getSchoolsController,
+	getSchoolUserSummaryController,
+	getSchoolUsersController,
+	rejectSchoolController,
+	unblockSchoolController,
+	verifyAdminEmailController,
 } from "./controller.js";
 
 import {
-  createSchoolSchema,
-  getSchoolUsersSchema,
-  rejectSchoolSchema,
-  schoolIdParamsSchema,
-  verifyAdminEmailSchema,
+	createSchoolSchema,
+	getSchoolUsersSchema,
+	rejectSchoolSchema,
+	schoolIdParamsSchema,
+	verifyAdminEmailSchema,
 } from "./validation.js";
 
 const router = Router();
@@ -33,15 +33,15 @@ const router = Router();
  */
 
 router.post(
-  "/register",
-  validateRequest(createSchoolSchema),
-  createSchoolController,
+	"/register",
+	validateRequest(createSchoolSchema),
+	createSchoolController,
 );
 
 router.post(
-  "/verify-admin-email",
-  validateRequest(verifyAdminEmailSchema),
-  verifyAdminEmailController,
+	"/verify-admin-email",
+	validateRequest(verifyAdminEmailSchema),
+	verifyAdminEmailController,
 );
 
 /**
@@ -51,10 +51,10 @@ router.post(
  */
 
 router.get(
-  "/",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  getSchoolsController,
+	"/",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	getSchoolsController,
 );
 
 /**
@@ -69,11 +69,11 @@ router.get(
  * GET /api/v1/schools/:id/users/summary
  */
 router.get(
-  "/:id/users/summary",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  validateRequest(schoolIdParamsSchema),
-  getSchoolUserSummaryController,
+	"/:id/users/summary",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	validateRequest(schoolIdParamsSchema),
+	getSchoolUserSummaryController,
 );
 
 /**
@@ -91,11 +91,11 @@ router.get(
  * ?search=rahim
  */
 router.get(
-  "/:id/users",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  validateRequest(getSchoolUsersSchema),
-  getSchoolUsersController,
+	"/:id/users",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	validateRequest(getSchoolUsersSchema),
+	getSchoolUsersController,
 );
 
 /**
@@ -105,39 +105,39 @@ router.get(
  */
 
 router.patch(
-  "/:id/approve",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  approveSchoolController,
+	"/:id/approve",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	approveSchoolController,
 );
 
 router.patch(
-  "/:id/block",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  blockSchoolController,
+	"/:id/block",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	blockSchoolController,
 );
 
 router.patch(
-  "/:id/unblock",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  unblockSchoolController,
+	"/:id/unblock",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	unblockSchoolController,
 );
 
 router.patch(
-  "/:id/reject",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  validateRequest(rejectSchoolSchema),
-  rejectSchoolController,
+	"/:id/reject",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	validateRequest(rejectSchoolSchema),
+	rejectSchoolController,
 );
 
 router.delete(
-  "/:id",
-  authenticate,
-  authorize(UserRole.SUPER_ADMIN),
-  deleteSchoolController,
+	"/:id",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	deleteSchoolController,
 );
 
 export const schoolRoutes = router;
