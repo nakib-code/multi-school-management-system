@@ -29,28 +29,46 @@ export type AggregateAdmission = {
 export type AdmissionAvgAggregateOutputType = {
   id: number | null
   schoolId: number | null
+  classId: number | null
+  sectionId: number | null
   reviewedBy: number | null
 }
 
 export type AdmissionSumAggregateOutputType = {
   id: number | null
   schoolId: number | null
+  classId: number | null
+  sectionId: number | null
   reviewedBy: number | null
 }
 
 export type AdmissionMinAggregateOutputType = {
   id: number | null
   schoolId: number | null
+  classId: number | null
+  sectionId: number | null
   applicationNo: string | null
   studentName: string | null
   studentEmail: string | null
   passwordHash: string | null
   dateOfBirth: Date | null
   gender: string | null
-  guardianName: string | null
-  guardianPhone: string | null
+  bloodGroup: string | null
   previousSchool: string | null
+  previousClass: string | null
+  guardianName: string | null
+  guardianEmail: string | null
+  guardianPhone: string | null
+  guardianRelationship: string | null
+  guardianNid: string | null
+  guardianOccupation: string | null
   address: string | null
+  academicYear: string | null
+  shift: string | null
+  group: string | null
+  studentPhotoUrl: string | null
+  birthCertificateUrl: string | null
+  previousCertificateUrl: string | null
   status: $Enums.AdmissionStatus | null
   studentEmailVerified: boolean | null
   reviewedAt: Date | null
@@ -63,16 +81,30 @@ export type AdmissionMinAggregateOutputType = {
 export type AdmissionMaxAggregateOutputType = {
   id: number | null
   schoolId: number | null
+  classId: number | null
+  sectionId: number | null
   applicationNo: string | null
   studentName: string | null
   studentEmail: string | null
   passwordHash: string | null
   dateOfBirth: Date | null
   gender: string | null
-  guardianName: string | null
-  guardianPhone: string | null
+  bloodGroup: string | null
   previousSchool: string | null
+  previousClass: string | null
+  guardianName: string | null
+  guardianEmail: string | null
+  guardianPhone: string | null
+  guardianRelationship: string | null
+  guardianNid: string | null
+  guardianOccupation: string | null
   address: string | null
+  academicYear: string | null
+  shift: string | null
+  group: string | null
+  studentPhotoUrl: string | null
+  birthCertificateUrl: string | null
+  previousCertificateUrl: string | null
   status: $Enums.AdmissionStatus | null
   studentEmailVerified: boolean | null
   reviewedAt: Date | null
@@ -85,16 +117,30 @@ export type AdmissionMaxAggregateOutputType = {
 export type AdmissionCountAggregateOutputType = {
   id: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: number
   studentName: number
   studentEmail: number
   passwordHash: number
   dateOfBirth: number
   gender: number
-  guardianName: number
-  guardianPhone: number
+  bloodGroup: number
   previousSchool: number
+  previousClass: number
+  guardianName: number
+  guardianEmail: number
+  guardianPhone: number
+  guardianRelationship: number
+  guardianNid: number
+  guardianOccupation: number
   address: number
+  academicYear: number
+  shift: number
+  group: number
+  studentPhotoUrl: number
+  birthCertificateUrl: number
+  previousCertificateUrl: number
   status: number
   studentEmailVerified: number
   reviewedAt: number
@@ -109,28 +155,46 @@ export type AdmissionCountAggregateOutputType = {
 export type AdmissionAvgAggregateInputType = {
   id?: true
   schoolId?: true
+  classId?: true
+  sectionId?: true
   reviewedBy?: true
 }
 
 export type AdmissionSumAggregateInputType = {
   id?: true
   schoolId?: true
+  classId?: true
+  sectionId?: true
   reviewedBy?: true
 }
 
 export type AdmissionMinAggregateInputType = {
   id?: true
   schoolId?: true
+  classId?: true
+  sectionId?: true
   applicationNo?: true
   studentName?: true
   studentEmail?: true
   passwordHash?: true
   dateOfBirth?: true
   gender?: true
-  guardianName?: true
-  guardianPhone?: true
+  bloodGroup?: true
   previousSchool?: true
+  previousClass?: true
+  guardianName?: true
+  guardianEmail?: true
+  guardianPhone?: true
+  guardianRelationship?: true
+  guardianNid?: true
+  guardianOccupation?: true
   address?: true
+  academicYear?: true
+  shift?: true
+  group?: true
+  studentPhotoUrl?: true
+  birthCertificateUrl?: true
+  previousCertificateUrl?: true
   status?: true
   studentEmailVerified?: true
   reviewedAt?: true
@@ -143,16 +207,30 @@ export type AdmissionMinAggregateInputType = {
 export type AdmissionMaxAggregateInputType = {
   id?: true
   schoolId?: true
+  classId?: true
+  sectionId?: true
   applicationNo?: true
   studentName?: true
   studentEmail?: true
   passwordHash?: true
   dateOfBirth?: true
   gender?: true
-  guardianName?: true
-  guardianPhone?: true
+  bloodGroup?: true
   previousSchool?: true
+  previousClass?: true
+  guardianName?: true
+  guardianEmail?: true
+  guardianPhone?: true
+  guardianRelationship?: true
+  guardianNid?: true
+  guardianOccupation?: true
   address?: true
+  academicYear?: true
+  shift?: true
+  group?: true
+  studentPhotoUrl?: true
+  birthCertificateUrl?: true
+  previousCertificateUrl?: true
   status?: true
   studentEmailVerified?: true
   reviewedAt?: true
@@ -165,16 +243,30 @@ export type AdmissionMaxAggregateInputType = {
 export type AdmissionCountAggregateInputType = {
   id?: true
   schoolId?: true
+  classId?: true
+  sectionId?: true
   applicationNo?: true
   studentName?: true
   studentEmail?: true
   passwordHash?: true
   dateOfBirth?: true
   gender?: true
-  guardianName?: true
-  guardianPhone?: true
+  bloodGroup?: true
   previousSchool?: true
+  previousClass?: true
+  guardianName?: true
+  guardianEmail?: true
+  guardianPhone?: true
+  guardianRelationship?: true
+  guardianNid?: true
+  guardianOccupation?: true
   address?: true
+  academicYear?: true
+  shift?: true
+  group?: true
+  studentPhotoUrl?: true
+  birthCertificateUrl?: true
+  previousCertificateUrl?: true
   status?: true
   studentEmailVerified?: true
   reviewedAt?: true
@@ -274,16 +366,30 @@ export type AdmissionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type AdmissionGroupByOutputType = {
   id: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth: Date | null
   gender: string | null
-  guardianName: string | null
-  guardianPhone: string | null
+  bloodGroup: string | null
   previousSchool: string | null
+  previousClass: string | null
+  guardianName: string | null
+  guardianEmail: string | null
+  guardianPhone: string | null
+  guardianRelationship: string | null
+  guardianNid: string | null
+  guardianOccupation: string | null
   address: string | null
+  academicYear: string
+  shift: string | null
+  group: string | null
+  studentPhotoUrl: string | null
+  birthCertificateUrl: string | null
+  previousCertificateUrl: string | null
   status: $Enums.AdmissionStatus
   studentEmailVerified: boolean
   reviewedAt: Date | null
@@ -319,16 +425,30 @@ export type AdmissionWhereInput = {
   NOT?: Prisma.AdmissionWhereInput | Prisma.AdmissionWhereInput[]
   id?: Prisma.IntFilter<"Admission"> | number
   schoolId?: Prisma.IntFilter<"Admission"> | number
+  classId?: Prisma.IntFilter<"Admission"> | number
+  sectionId?: Prisma.IntFilter<"Admission"> | number
   applicationNo?: Prisma.StringFilter<"Admission"> | string
   studentName?: Prisma.StringFilter<"Admission"> | string
   studentEmail?: Prisma.StringFilter<"Admission"> | string
   passwordHash?: Prisma.StringFilter<"Admission"> | string
   dateOfBirth?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
   gender?: Prisma.StringNullableFilter<"Admission"> | string | null
-  guardianName?: Prisma.StringNullableFilter<"Admission"> | string | null
-  guardianPhone?: Prisma.StringNullableFilter<"Admission"> | string | null
+  bloodGroup?: Prisma.StringNullableFilter<"Admission"> | string | null
   previousSchool?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousClass?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianName?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianEmail?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianPhone?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianRelationship?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianNid?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianOccupation?: Prisma.StringNullableFilter<"Admission"> | string | null
   address?: Prisma.StringNullableFilter<"Admission"> | string | null
+  academicYear?: Prisma.StringFilter<"Admission"> | string
+  shift?: Prisma.StringNullableFilter<"Admission"> | string | null
+  group?: Prisma.StringNullableFilter<"Admission"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousCertificateUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
   status?: Prisma.EnumAdmissionStatusFilter<"Admission"> | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFilter<"Admission"> | boolean
   reviewedAt?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
@@ -337,6 +457,8 @@ export type AdmissionWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
+  class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
+  section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
 }
@@ -344,16 +466,30 @@ export type AdmissionWhereInput = {
 export type AdmissionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
-  guardianName?: Prisma.SortOrderInput | Prisma.SortOrder
-  guardianPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrderInput | Prisma.SortOrder
   previousSchool?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousClass?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianName?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianRelationship?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianOccupation?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  shift?: Prisma.SortOrderInput | Prisma.SortOrder
+  group?: Prisma.SortOrderInput | Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousCertificateUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   studentEmailVerified?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -362,6 +498,8 @@ export type AdmissionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
+  class?: Prisma.SchoolClassOrderByWithRelationInput
+  section?: Prisma.SectionOrderByWithRelationInput
   reviewer?: Prisma.UserOrderByWithRelationInput
   payment?: Prisma.AdmissionPaymentOrderByWithRelationInput
 }
@@ -373,15 +511,29 @@ export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AdmissionWhereInput[]
   NOT?: Prisma.AdmissionWhereInput | Prisma.AdmissionWhereInput[]
   schoolId?: Prisma.IntFilter<"Admission"> | number
+  classId?: Prisma.IntFilter<"Admission"> | number
+  sectionId?: Prisma.IntFilter<"Admission"> | number
   studentName?: Prisma.StringFilter<"Admission"> | string
   studentEmail?: Prisma.StringFilter<"Admission"> | string
   passwordHash?: Prisma.StringFilter<"Admission"> | string
   dateOfBirth?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
   gender?: Prisma.StringNullableFilter<"Admission"> | string | null
-  guardianName?: Prisma.StringNullableFilter<"Admission"> | string | null
-  guardianPhone?: Prisma.StringNullableFilter<"Admission"> | string | null
+  bloodGroup?: Prisma.StringNullableFilter<"Admission"> | string | null
   previousSchool?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousClass?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianName?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianEmail?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianPhone?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianRelationship?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianNid?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianOccupation?: Prisma.StringNullableFilter<"Admission"> | string | null
   address?: Prisma.StringNullableFilter<"Admission"> | string | null
+  academicYear?: Prisma.StringFilter<"Admission"> | string
+  shift?: Prisma.StringNullableFilter<"Admission"> | string | null
+  group?: Prisma.StringNullableFilter<"Admission"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousCertificateUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
   status?: Prisma.EnumAdmissionStatusFilter<"Admission"> | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFilter<"Admission"> | boolean
   reviewedAt?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
@@ -390,6 +542,8 @@ export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
+  class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
+  section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
 }, "id" | "applicationNo">
@@ -397,16 +551,30 @@ export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
 export type AdmissionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
-  guardianName?: Prisma.SortOrderInput | Prisma.SortOrder
-  guardianPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrderInput | Prisma.SortOrder
   previousSchool?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousClass?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianName?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianRelationship?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianOccupation?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  shift?: Prisma.SortOrderInput | Prisma.SortOrder
+  group?: Prisma.SortOrderInput | Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousCertificateUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   studentEmailVerified?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -427,16 +595,30 @@ export type AdmissionScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AdmissionScalarWhereWithAggregatesInput | Prisma.AdmissionScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Admission"> | number
   schoolId?: Prisma.IntWithAggregatesFilter<"Admission"> | number
+  classId?: Prisma.IntWithAggregatesFilter<"Admission"> | number
+  sectionId?: Prisma.IntWithAggregatesFilter<"Admission"> | number
   applicationNo?: Prisma.StringWithAggregatesFilter<"Admission"> | string
   studentName?: Prisma.StringWithAggregatesFilter<"Admission"> | string
   studentEmail?: Prisma.StringWithAggregatesFilter<"Admission"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"Admission"> | string
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"Admission"> | Date | string | null
   gender?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
-  guardianName?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
-  guardianPhone?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  bloodGroup?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
   previousSchool?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  previousClass?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  guardianName?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  guardianEmail?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  guardianPhone?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  guardianRelationship?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  guardianNid?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  guardianOccupation?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  academicYear?: Prisma.StringWithAggregatesFilter<"Admission"> | string
+  shift?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  group?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
+  previousCertificateUrl?: Prisma.StringNullableWithAggregatesFilter<"Admission"> | string | null
   status?: Prisma.EnumAdmissionStatusWithAggregatesFilter<"Admission"> | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolWithAggregatesFilter<"Admission"> | boolean
   reviewedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Admission"> | Date | string | null
@@ -453,10 +635,22 @@ export type AdmissionCreateInput = {
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -464,6 +658,8 @@ export type AdmissionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
+  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
@@ -471,16 +667,30 @@ export type AdmissionCreateInput = {
 export type AdmissionUncheckedCreateInput = {
   id?: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -498,10 +708,22 @@ export type AdmissionUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -509,6 +731,8 @@ export type AdmissionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
@@ -516,16 +740,30 @@ export type AdmissionUpdateInput = {
 export type AdmissionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -539,16 +777,30 @@ export type AdmissionUncheckedUpdateInput = {
 export type AdmissionCreateManyInput = {
   id?: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -565,10 +817,22 @@ export type AdmissionUpdateManyMutationInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -580,16 +844,30 @@ export type AdmissionUpdateManyMutationInput = {
 export type AdmissionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -602,16 +880,30 @@ export type AdmissionUncheckedUpdateManyInput = {
 export type AdmissionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  guardianName?: Prisma.SortOrder
-  guardianPhone?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
   previousSchool?: Prisma.SortOrder
+  previousClass?: Prisma.SortOrder
+  guardianName?: Prisma.SortOrder
+  guardianEmail?: Prisma.SortOrder
+  guardianPhone?: Prisma.SortOrder
+  guardianRelationship?: Prisma.SortOrder
+  guardianNid?: Prisma.SortOrder
+  guardianOccupation?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  group?: Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrder
+  previousCertificateUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentEmailVerified?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
@@ -624,22 +916,38 @@ export type AdmissionCountOrderByAggregateInput = {
 export type AdmissionAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
 }
 
 export type AdmissionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  guardianName?: Prisma.SortOrder
-  guardianPhone?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
   previousSchool?: Prisma.SortOrder
+  previousClass?: Prisma.SortOrder
+  guardianName?: Prisma.SortOrder
+  guardianEmail?: Prisma.SortOrder
+  guardianPhone?: Prisma.SortOrder
+  guardianRelationship?: Prisma.SortOrder
+  guardianNid?: Prisma.SortOrder
+  guardianOccupation?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  group?: Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrder
+  previousCertificateUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentEmailVerified?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
@@ -652,16 +960,30 @@ export type AdmissionMaxOrderByAggregateInput = {
 export type AdmissionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   gender?: Prisma.SortOrder
-  guardianName?: Prisma.SortOrder
-  guardianPhone?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
   previousSchool?: Prisma.SortOrder
+  previousClass?: Prisma.SortOrder
+  guardianName?: Prisma.SortOrder
+  guardianEmail?: Prisma.SortOrder
+  guardianPhone?: Prisma.SortOrder
+  guardianRelationship?: Prisma.SortOrder
+  guardianNid?: Prisma.SortOrder
+  guardianOccupation?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  group?: Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrder
+  previousCertificateUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentEmailVerified?: Prisma.SortOrder
   reviewedAt?: Prisma.SortOrder
@@ -674,6 +996,8 @@ export type AdmissionMinOrderByAggregateInput = {
 export type AdmissionSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  classId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrder
   reviewedBy?: Prisma.SortOrder
 }
 
@@ -746,6 +1070,48 @@ export type AdmissionUpdateOneRequiredWithoutPaymentNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdmissionUpdateToOneWithWhereWithoutPaymentInput, Prisma.AdmissionUpdateWithoutPaymentInput>, Prisma.AdmissionUncheckedUpdateWithoutPaymentInput>
 }
 
+export type AdmissionCreateNestedManyWithoutClassInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutClassInput, Prisma.AdmissionUncheckedCreateWithoutClassInput> | Prisma.AdmissionCreateWithoutClassInput[] | Prisma.AdmissionUncheckedCreateWithoutClassInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutClassInput | Prisma.AdmissionCreateOrConnectWithoutClassInput[]
+  createMany?: Prisma.AdmissionCreateManyClassInputEnvelope
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+}
+
+export type AdmissionUncheckedCreateNestedManyWithoutClassInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutClassInput, Prisma.AdmissionUncheckedCreateWithoutClassInput> | Prisma.AdmissionCreateWithoutClassInput[] | Prisma.AdmissionUncheckedCreateWithoutClassInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutClassInput | Prisma.AdmissionCreateOrConnectWithoutClassInput[]
+  createMany?: Prisma.AdmissionCreateManyClassInputEnvelope
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+}
+
+export type AdmissionUpdateManyWithoutClassNestedInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutClassInput, Prisma.AdmissionUncheckedCreateWithoutClassInput> | Prisma.AdmissionCreateWithoutClassInput[] | Prisma.AdmissionUncheckedCreateWithoutClassInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutClassInput | Prisma.AdmissionCreateOrConnectWithoutClassInput[]
+  upsert?: Prisma.AdmissionUpsertWithWhereUniqueWithoutClassInput | Prisma.AdmissionUpsertWithWhereUniqueWithoutClassInput[]
+  createMany?: Prisma.AdmissionCreateManyClassInputEnvelope
+  set?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  disconnect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  delete?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  update?: Prisma.AdmissionUpdateWithWhereUniqueWithoutClassInput | Prisma.AdmissionUpdateWithWhereUniqueWithoutClassInput[]
+  updateMany?: Prisma.AdmissionUpdateManyWithWhereWithoutClassInput | Prisma.AdmissionUpdateManyWithWhereWithoutClassInput[]
+  deleteMany?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
+}
+
+export type AdmissionUncheckedUpdateManyWithoutClassNestedInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutClassInput, Prisma.AdmissionUncheckedCreateWithoutClassInput> | Prisma.AdmissionCreateWithoutClassInput[] | Prisma.AdmissionUncheckedCreateWithoutClassInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutClassInput | Prisma.AdmissionCreateOrConnectWithoutClassInput[]
+  upsert?: Prisma.AdmissionUpsertWithWhereUniqueWithoutClassInput | Prisma.AdmissionUpsertWithWhereUniqueWithoutClassInput[]
+  createMany?: Prisma.AdmissionCreateManyClassInputEnvelope
+  set?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  disconnect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  delete?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  update?: Prisma.AdmissionUpdateWithWhereUniqueWithoutClassInput | Prisma.AdmissionUpdateWithWhereUniqueWithoutClassInput[]
+  updateMany?: Prisma.AdmissionUpdateManyWithWhereWithoutClassInput | Prisma.AdmissionUpdateManyWithWhereWithoutClassInput[]
+  deleteMany?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
+}
+
 export type AdmissionCreateNestedManyWithoutSchoolInput = {
   create?: Prisma.XOR<Prisma.AdmissionCreateWithoutSchoolInput, Prisma.AdmissionUncheckedCreateWithoutSchoolInput> | Prisma.AdmissionCreateWithoutSchoolInput[] | Prisma.AdmissionUncheckedCreateWithoutSchoolInput[]
   connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutSchoolInput | Prisma.AdmissionCreateOrConnectWithoutSchoolInput[]
@@ -785,6 +1151,48 @@ export type AdmissionUncheckedUpdateManyWithoutSchoolNestedInput = {
   connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
   update?: Prisma.AdmissionUpdateWithWhereUniqueWithoutSchoolInput | Prisma.AdmissionUpdateWithWhereUniqueWithoutSchoolInput[]
   updateMany?: Prisma.AdmissionUpdateManyWithWhereWithoutSchoolInput | Prisma.AdmissionUpdateManyWithWhereWithoutSchoolInput[]
+  deleteMany?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
+}
+
+export type AdmissionCreateNestedManyWithoutSectionInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutSectionInput, Prisma.AdmissionUncheckedCreateWithoutSectionInput> | Prisma.AdmissionCreateWithoutSectionInput[] | Prisma.AdmissionUncheckedCreateWithoutSectionInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutSectionInput | Prisma.AdmissionCreateOrConnectWithoutSectionInput[]
+  createMany?: Prisma.AdmissionCreateManySectionInputEnvelope
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+}
+
+export type AdmissionUncheckedCreateNestedManyWithoutSectionInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutSectionInput, Prisma.AdmissionUncheckedCreateWithoutSectionInput> | Prisma.AdmissionCreateWithoutSectionInput[] | Prisma.AdmissionUncheckedCreateWithoutSectionInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutSectionInput | Prisma.AdmissionCreateOrConnectWithoutSectionInput[]
+  createMany?: Prisma.AdmissionCreateManySectionInputEnvelope
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+}
+
+export type AdmissionUpdateManyWithoutSectionNestedInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutSectionInput, Prisma.AdmissionUncheckedCreateWithoutSectionInput> | Prisma.AdmissionCreateWithoutSectionInput[] | Prisma.AdmissionUncheckedCreateWithoutSectionInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutSectionInput | Prisma.AdmissionCreateOrConnectWithoutSectionInput[]
+  upsert?: Prisma.AdmissionUpsertWithWhereUniqueWithoutSectionInput | Prisma.AdmissionUpsertWithWhereUniqueWithoutSectionInput[]
+  createMany?: Prisma.AdmissionCreateManySectionInputEnvelope
+  set?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  disconnect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  delete?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  update?: Prisma.AdmissionUpdateWithWhereUniqueWithoutSectionInput | Prisma.AdmissionUpdateWithWhereUniqueWithoutSectionInput[]
+  updateMany?: Prisma.AdmissionUpdateManyWithWhereWithoutSectionInput | Prisma.AdmissionUpdateManyWithWhereWithoutSectionInput[]
+  deleteMany?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
+}
+
+export type AdmissionUncheckedUpdateManyWithoutSectionNestedInput = {
+  create?: Prisma.XOR<Prisma.AdmissionCreateWithoutSectionInput, Prisma.AdmissionUncheckedCreateWithoutSectionInput> | Prisma.AdmissionCreateWithoutSectionInput[] | Prisma.AdmissionUncheckedCreateWithoutSectionInput[]
+  connectOrCreate?: Prisma.AdmissionCreateOrConnectWithoutSectionInput | Prisma.AdmissionCreateOrConnectWithoutSectionInput[]
+  upsert?: Prisma.AdmissionUpsertWithWhereUniqueWithoutSectionInput | Prisma.AdmissionUpsertWithWhereUniqueWithoutSectionInput[]
+  createMany?: Prisma.AdmissionCreateManySectionInputEnvelope
+  set?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  disconnect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  delete?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  connect?: Prisma.AdmissionWhereUniqueInput | Prisma.AdmissionWhereUniqueInput[]
+  update?: Prisma.AdmissionUpdateWithWhereUniqueWithoutSectionInput | Prisma.AdmissionUpdateWithWhereUniqueWithoutSectionInput[]
+  updateMany?: Prisma.AdmissionUpdateManyWithWhereWithoutSectionInput | Prisma.AdmissionUpdateManyWithWhereWithoutSectionInput[]
   deleteMany?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
 }
 
@@ -837,10 +1245,22 @@ export type AdmissionCreateWithoutPaymentInput = {
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -848,22 +1268,38 @@ export type AdmissionCreateWithoutPaymentInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
+  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
 }
 
 export type AdmissionUncheckedCreateWithoutPaymentInput = {
   id?: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -896,10 +1332,22 @@ export type AdmissionUpdateWithoutPaymentInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -907,22 +1355,38 @@ export type AdmissionUpdateWithoutPaymentInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
 }
 
 export type AdmissionUncheckedUpdateWithoutPaymentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -932,6 +1396,142 @@ export type AdmissionUncheckedUpdateWithoutPaymentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type AdmissionCreateWithoutClassInput = {
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  bloodGroup?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
+  address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
+  payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
+}
+
+export type AdmissionUncheckedCreateWithoutClassInput = {
+  id?: number
+  schoolId: number
+  sectionId: number
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  bloodGroup?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
+  address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  reviewedBy?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedCreateNestedOneWithoutAdmissionInput
+}
+
+export type AdmissionCreateOrConnectWithoutClassInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdmissionCreateWithoutClassInput, Prisma.AdmissionUncheckedCreateWithoutClassInput>
+}
+
+export type AdmissionCreateManyClassInputEnvelope = {
+  data: Prisma.AdmissionCreateManyClassInput | Prisma.AdmissionCreateManyClassInput[]
+  skipDuplicates?: boolean
+}
+
+export type AdmissionUpsertWithWhereUniqueWithoutClassInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  update: Prisma.XOR<Prisma.AdmissionUpdateWithoutClassInput, Prisma.AdmissionUncheckedUpdateWithoutClassInput>
+  create: Prisma.XOR<Prisma.AdmissionCreateWithoutClassInput, Prisma.AdmissionUncheckedCreateWithoutClassInput>
+}
+
+export type AdmissionUpdateWithWhereUniqueWithoutClassInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  data: Prisma.XOR<Prisma.AdmissionUpdateWithoutClassInput, Prisma.AdmissionUncheckedUpdateWithoutClassInput>
+}
+
+export type AdmissionUpdateManyWithWhereWithoutClassInput = {
+  where: Prisma.AdmissionScalarWhereInput
+  data: Prisma.XOR<Prisma.AdmissionUpdateManyMutationInput, Prisma.AdmissionUncheckedUpdateManyWithoutClassInput>
+}
+
+export type AdmissionScalarWhereInput = {
+  AND?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
+  OR?: Prisma.AdmissionScalarWhereInput[]
+  NOT?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
+  id?: Prisma.IntFilter<"Admission"> | number
+  schoolId?: Prisma.IntFilter<"Admission"> | number
+  classId?: Prisma.IntFilter<"Admission"> | number
+  sectionId?: Prisma.IntFilter<"Admission"> | number
+  applicationNo?: Prisma.StringFilter<"Admission"> | string
+  studentName?: Prisma.StringFilter<"Admission"> | string
+  studentEmail?: Prisma.StringFilter<"Admission"> | string
+  passwordHash?: Prisma.StringFilter<"Admission"> | string
+  dateOfBirth?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
+  gender?: Prisma.StringNullableFilter<"Admission"> | string | null
+  bloodGroup?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousSchool?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousClass?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianName?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianEmail?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianPhone?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianRelationship?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianNid?: Prisma.StringNullableFilter<"Admission"> | string | null
+  guardianOccupation?: Prisma.StringNullableFilter<"Admission"> | string | null
+  address?: Prisma.StringNullableFilter<"Admission"> | string | null
+  academicYear?: Prisma.StringFilter<"Admission"> | string
+  shift?: Prisma.StringNullableFilter<"Admission"> | string | null
+  group?: Prisma.StringNullableFilter<"Admission"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  previousCertificateUrl?: Prisma.StringNullableFilter<"Admission"> | string | null
+  status?: Prisma.EnumAdmissionStatusFilter<"Admission"> | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFilter<"Admission"> | boolean
+  reviewedAt?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
+  reviewedBy?: Prisma.IntNullableFilter<"Admission"> | number | null
+  rejectionReason?: Prisma.StringNullableFilter<"Admission"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
+}
+
 export type AdmissionCreateWithoutSchoolInput = {
   applicationNo: string
   studentName: string
@@ -939,32 +1539,60 @@ export type AdmissionCreateWithoutSchoolInput = {
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
   rejectionReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
+  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionUncheckedCreateWithoutSchoolInput = {
   id?: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -1001,29 +1629,101 @@ export type AdmissionUpdateManyWithWhereWithoutSchoolInput = {
   data: Prisma.XOR<Prisma.AdmissionUpdateManyMutationInput, Prisma.AdmissionUncheckedUpdateManyWithoutSchoolInput>
 }
 
-export type AdmissionScalarWhereInput = {
-  AND?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
-  OR?: Prisma.AdmissionScalarWhereInput[]
-  NOT?: Prisma.AdmissionScalarWhereInput | Prisma.AdmissionScalarWhereInput[]
-  id?: Prisma.IntFilter<"Admission"> | number
-  schoolId?: Prisma.IntFilter<"Admission"> | number
-  applicationNo?: Prisma.StringFilter<"Admission"> | string
-  studentName?: Prisma.StringFilter<"Admission"> | string
-  studentEmail?: Prisma.StringFilter<"Admission"> | string
-  passwordHash?: Prisma.StringFilter<"Admission"> | string
-  dateOfBirth?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
-  gender?: Prisma.StringNullableFilter<"Admission"> | string | null
-  guardianName?: Prisma.StringNullableFilter<"Admission"> | string | null
-  guardianPhone?: Prisma.StringNullableFilter<"Admission"> | string | null
-  previousSchool?: Prisma.StringNullableFilter<"Admission"> | string | null
-  address?: Prisma.StringNullableFilter<"Admission"> | string | null
-  status?: Prisma.EnumAdmissionStatusFilter<"Admission"> | $Enums.AdmissionStatus
-  studentEmailVerified?: Prisma.BoolFilter<"Admission"> | boolean
-  reviewedAt?: Prisma.DateTimeNullableFilter<"Admission"> | Date | string | null
-  reviewedBy?: Prisma.IntNullableFilter<"Admission"> | number | null
-  rejectionReason?: Prisma.StringNullableFilter<"Admission"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
+export type AdmissionCreateWithoutSectionInput = {
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  bloodGroup?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
+  address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
+  reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
+  payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
+}
+
+export type AdmissionUncheckedCreateWithoutSectionInput = {
+  id?: number
+  schoolId: number
+  classId: number
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  bloodGroup?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
+  address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  reviewedBy?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedCreateNestedOneWithoutAdmissionInput
+}
+
+export type AdmissionCreateOrConnectWithoutSectionInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdmissionCreateWithoutSectionInput, Prisma.AdmissionUncheckedCreateWithoutSectionInput>
+}
+
+export type AdmissionCreateManySectionInputEnvelope = {
+  data: Prisma.AdmissionCreateManySectionInput | Prisma.AdmissionCreateManySectionInput[]
+  skipDuplicates?: boolean
+}
+
+export type AdmissionUpsertWithWhereUniqueWithoutSectionInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  update: Prisma.XOR<Prisma.AdmissionUpdateWithoutSectionInput, Prisma.AdmissionUncheckedUpdateWithoutSectionInput>
+  create: Prisma.XOR<Prisma.AdmissionCreateWithoutSectionInput, Prisma.AdmissionUncheckedCreateWithoutSectionInput>
+}
+
+export type AdmissionUpdateWithWhereUniqueWithoutSectionInput = {
+  where: Prisma.AdmissionWhereUniqueInput
+  data: Prisma.XOR<Prisma.AdmissionUpdateWithoutSectionInput, Prisma.AdmissionUncheckedUpdateWithoutSectionInput>
+}
+
+export type AdmissionUpdateManyWithWhereWithoutSectionInput = {
+  where: Prisma.AdmissionScalarWhereInput
+  data: Prisma.XOR<Prisma.AdmissionUpdateManyMutationInput, Prisma.AdmissionUncheckedUpdateManyWithoutSectionInput>
 }
 
 export type AdmissionCreateWithoutReviewerInput = {
@@ -1033,10 +1733,22 @@ export type AdmissionCreateWithoutReviewerInput = {
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -1044,22 +1756,38 @@ export type AdmissionCreateWithoutReviewerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
+  class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
+  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
 
 export type AdmissionUncheckedCreateWithoutReviewerInput = {
   id?: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -1095,18 +1823,173 @@ export type AdmissionUpdateManyWithWhereWithoutReviewerInput = {
   data: Prisma.XOR<Prisma.AdmissionUpdateManyMutationInput, Prisma.AdmissionUncheckedUpdateManyWithoutReviewerInput>
 }
 
-export type AdmissionCreateManySchoolInput = {
+export type AdmissionCreateManyClassInput = {
   id?: number
+  schoolId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  reviewedBy?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AdmissionUpdateWithoutClassInput = {
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
+  payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
+}
+
+export type AdmissionUncheckedUpdateWithoutClassInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedUpdateOneWithoutAdmissionNestedInput
+}
+
+export type AdmissionUncheckedUpdateManyWithoutClassInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AdmissionCreateManySchoolInput = {
+  id?: number
+  classId: number
+  sectionId: number
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  bloodGroup?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
+  address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -1123,32 +2006,60 @@ export type AdmissionUpdateWithoutSchoolInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1161,16 +2072,171 @@ export type AdmissionUncheckedUpdateWithoutSchoolInput = {
 
 export type AdmissionUncheckedUpdateManyWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AdmissionCreateManySectionInput = {
+  id?: number
+  schoolId: number
+  classId: number
+  applicationNo: string
+  studentName: string
+  studentEmail: string
+  passwordHash: string
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  bloodGroup?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
+  address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
+  status?: $Enums.AdmissionStatus
+  studentEmailVerified?: boolean
+  reviewedAt?: Date | string | null
+  reviewedBy?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AdmissionUpdateWithoutSectionInput = {
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
+  reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
+  payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
+}
+
+export type AdmissionUncheckedUpdateWithoutSectionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
+  studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payment?: Prisma.AdmissionPaymentUncheckedUpdateOneWithoutAdmissionNestedInput
+}
+
+export type AdmissionUncheckedUpdateManyWithoutSectionInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
+  studentName?: Prisma.StringFieldUpdateOperationsInput | string
+  studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1183,16 +2249,30 @@ export type AdmissionUncheckedUpdateManyWithoutSchoolInput = {
 export type AdmissionCreateManyReviewerInput = {
   id?: number
   schoolId: number
+  classId: number
+  sectionId: number
   applicationNo: string
   studentName: string
   studentEmail: string
   passwordHash: string
   dateOfBirth?: Date | string | null
   gender?: string | null
-  guardianName?: string | null
-  guardianPhone?: string | null
+  bloodGroup?: string | null
   previousSchool?: string | null
+  previousClass?: string | null
+  guardianName?: string | null
+  guardianEmail?: string | null
+  guardianPhone?: string | null
+  guardianRelationship?: string | null
+  guardianNid?: string | null
+  guardianOccupation?: string | null
   address?: string | null
+  academicYear: string
+  shift?: string | null
+  group?: string | null
+  studentPhotoUrl?: string | null
+  birthCertificateUrl?: string | null
+  previousCertificateUrl?: string | null
   status?: $Enums.AdmissionStatus
   studentEmailVerified?: boolean
   reviewedAt?: Date | string | null
@@ -1208,10 +2288,22 @@ export type AdmissionUpdateWithoutReviewerInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1219,22 +2311,38 @@ export type AdmissionUpdateWithoutReviewerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
+  class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
 
 export type AdmissionUncheckedUpdateWithoutReviewerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1247,16 +2355,30 @@ export type AdmissionUncheckedUpdateWithoutReviewerInput = {
 export type AdmissionUncheckedUpdateManyWithoutReviewerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianRelationship?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumAdmissionStatusFieldUpdateOperationsInput | $Enums.AdmissionStatus
   studentEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   reviewedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1270,16 +2392,30 @@ export type AdmissionUncheckedUpdateManyWithoutReviewerInput = {
 export type AdmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   schoolId?: boolean
+  classId?: boolean
+  sectionId?: boolean
   applicationNo?: boolean
   studentName?: boolean
   studentEmail?: boolean
   passwordHash?: boolean
   dateOfBirth?: boolean
   gender?: boolean
-  guardianName?: boolean
-  guardianPhone?: boolean
+  bloodGroup?: boolean
   previousSchool?: boolean
+  previousClass?: boolean
+  guardianName?: boolean
+  guardianEmail?: boolean
+  guardianPhone?: boolean
+  guardianRelationship?: boolean
+  guardianNid?: boolean
+  guardianOccupation?: boolean
   address?: boolean
+  academicYear?: boolean
+  shift?: boolean
+  group?: boolean
+  studentPhotoUrl?: boolean
+  birthCertificateUrl?: boolean
+  previousCertificateUrl?: boolean
   status?: boolean
   studentEmailVerified?: boolean
   reviewedAt?: boolean
@@ -1288,6 +2424,8 @@ export type AdmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
   payment?: boolean | Prisma.Admission$paymentArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
@@ -1295,16 +2433,30 @@ export type AdmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type AdmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   schoolId?: boolean
+  classId?: boolean
+  sectionId?: boolean
   applicationNo?: boolean
   studentName?: boolean
   studentEmail?: boolean
   passwordHash?: boolean
   dateOfBirth?: boolean
   gender?: boolean
-  guardianName?: boolean
-  guardianPhone?: boolean
+  bloodGroup?: boolean
   previousSchool?: boolean
+  previousClass?: boolean
+  guardianName?: boolean
+  guardianEmail?: boolean
+  guardianPhone?: boolean
+  guardianRelationship?: boolean
+  guardianNid?: boolean
+  guardianOccupation?: boolean
   address?: boolean
+  academicYear?: boolean
+  shift?: boolean
+  group?: boolean
+  studentPhotoUrl?: boolean
+  birthCertificateUrl?: boolean
+  previousCertificateUrl?: boolean
   status?: boolean
   studentEmailVerified?: boolean
   reviewedAt?: boolean
@@ -1313,22 +2465,38 @@ export type AdmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
 
 export type AdmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   schoolId?: boolean
+  classId?: boolean
+  sectionId?: boolean
   applicationNo?: boolean
   studentName?: boolean
   studentEmail?: boolean
   passwordHash?: boolean
   dateOfBirth?: boolean
   gender?: boolean
-  guardianName?: boolean
-  guardianPhone?: boolean
+  bloodGroup?: boolean
   previousSchool?: boolean
+  previousClass?: boolean
+  guardianName?: boolean
+  guardianEmail?: boolean
+  guardianPhone?: boolean
+  guardianRelationship?: boolean
+  guardianNid?: boolean
+  guardianOccupation?: boolean
   address?: boolean
+  academicYear?: boolean
+  shift?: boolean
+  group?: boolean
+  studentPhotoUrl?: boolean
+  birthCertificateUrl?: boolean
+  previousCertificateUrl?: boolean
   status?: boolean
   studentEmailVerified?: boolean
   reviewedAt?: boolean
@@ -1337,22 +2505,38 @@ export type AdmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
 
 export type AdmissionSelectScalar = {
   id?: boolean
   schoolId?: boolean
+  classId?: boolean
+  sectionId?: boolean
   applicationNo?: boolean
   studentName?: boolean
   studentEmail?: boolean
   passwordHash?: boolean
   dateOfBirth?: boolean
   gender?: boolean
-  guardianName?: boolean
-  guardianPhone?: boolean
+  bloodGroup?: boolean
   previousSchool?: boolean
+  previousClass?: boolean
+  guardianName?: boolean
+  guardianEmail?: boolean
+  guardianPhone?: boolean
+  guardianRelationship?: boolean
+  guardianNid?: boolean
+  guardianOccupation?: boolean
   address?: boolean
+  academicYear?: boolean
+  shift?: boolean
+  group?: boolean
+  studentPhotoUrl?: boolean
+  birthCertificateUrl?: boolean
+  previousCertificateUrl?: boolean
   status?: boolean
   studentEmailVerified?: boolean
   reviewedAt?: boolean
@@ -1362,18 +2546,24 @@ export type AdmissionSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AdmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "applicationNo" | "studentName" | "studentEmail" | "passwordHash" | "dateOfBirth" | "gender" | "guardianName" | "guardianPhone" | "previousSchool" | "address" | "status" | "studentEmailVerified" | "reviewedAt" | "reviewedBy" | "rejectionReason" | "createdAt" | "updatedAt", ExtArgs["result"]["admission"]>
+export type AdmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "classId" | "sectionId" | "applicationNo" | "studentName" | "studentEmail" | "passwordHash" | "dateOfBirth" | "gender" | "bloodGroup" | "previousSchool" | "previousClass" | "guardianName" | "guardianEmail" | "guardianPhone" | "guardianRelationship" | "guardianNid" | "guardianOccupation" | "address" | "academicYear" | "shift" | "group" | "studentPhotoUrl" | "birthCertificateUrl" | "previousCertificateUrl" | "status" | "studentEmailVerified" | "reviewedAt" | "reviewedBy" | "rejectionReason" | "createdAt" | "updatedAt", ExtArgs["result"]["admission"]>
 export type AdmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
   payment?: boolean | Prisma.Admission$paymentArgs<ExtArgs>
 }
 export type AdmissionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }
 export type AdmissionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
+  class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }
 
@@ -1381,22 +2571,38 @@ export type $AdmissionPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   name: "Admission"
   objects: {
     school: Prisma.$SchoolPayload<ExtArgs>
+    class: Prisma.$SchoolClassPayload<ExtArgs>
+    section: Prisma.$SectionPayload<ExtArgs>
     reviewer: Prisma.$UserPayload<ExtArgs> | null
     payment: Prisma.$AdmissionPaymentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     schoolId: number
+    classId: number
+    sectionId: number
     applicationNo: string
     studentName: string
     studentEmail: string
     passwordHash: string
     dateOfBirth: Date | null
     gender: string | null
-    guardianName: string | null
-    guardianPhone: string | null
+    bloodGroup: string | null
     previousSchool: string | null
+    previousClass: string | null
+    guardianName: string | null
+    guardianEmail: string | null
+    guardianPhone: string | null
+    guardianRelationship: string | null
+    guardianNid: string | null
+    guardianOccupation: string | null
     address: string | null
+    academicYear: string
+    shift: string | null
+    group: string | null
+    studentPhotoUrl: string | null
+    birthCertificateUrl: string | null
+    previousCertificateUrl: string | null
     status: $Enums.AdmissionStatus
     studentEmailVerified: boolean
     reviewedAt: Date | null
@@ -1799,6 +3005,8 @@ readonly fields: AdmissionFieldRefs;
 export interface Prisma__AdmissionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  class<T extends Prisma.SchoolClassDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClassDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClassClient<runtime.Types.Result.GetResult<Prisma.$SchoolClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  section<T extends Prisma.SectionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SectionDefaultArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   reviewer<T extends Prisma.Admission$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.Admission$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$paymentArgs<ExtArgs>>): Prisma.Prisma__AdmissionPaymentClient<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1832,16 +3040,30 @@ export interface Prisma__AdmissionClient<T, Null = never, ExtArgs extends runtim
 export interface AdmissionFieldRefs {
   readonly id: Prisma.FieldRef<"Admission", 'Int'>
   readonly schoolId: Prisma.FieldRef<"Admission", 'Int'>
+  readonly classId: Prisma.FieldRef<"Admission", 'Int'>
+  readonly sectionId: Prisma.FieldRef<"Admission", 'Int'>
   readonly applicationNo: Prisma.FieldRef<"Admission", 'String'>
   readonly studentName: Prisma.FieldRef<"Admission", 'String'>
   readonly studentEmail: Prisma.FieldRef<"Admission", 'String'>
   readonly passwordHash: Prisma.FieldRef<"Admission", 'String'>
   readonly dateOfBirth: Prisma.FieldRef<"Admission", 'DateTime'>
   readonly gender: Prisma.FieldRef<"Admission", 'String'>
-  readonly guardianName: Prisma.FieldRef<"Admission", 'String'>
-  readonly guardianPhone: Prisma.FieldRef<"Admission", 'String'>
+  readonly bloodGroup: Prisma.FieldRef<"Admission", 'String'>
   readonly previousSchool: Prisma.FieldRef<"Admission", 'String'>
+  readonly previousClass: Prisma.FieldRef<"Admission", 'String'>
+  readonly guardianName: Prisma.FieldRef<"Admission", 'String'>
+  readonly guardianEmail: Prisma.FieldRef<"Admission", 'String'>
+  readonly guardianPhone: Prisma.FieldRef<"Admission", 'String'>
+  readonly guardianRelationship: Prisma.FieldRef<"Admission", 'String'>
+  readonly guardianNid: Prisma.FieldRef<"Admission", 'String'>
+  readonly guardianOccupation: Prisma.FieldRef<"Admission", 'String'>
   readonly address: Prisma.FieldRef<"Admission", 'String'>
+  readonly academicYear: Prisma.FieldRef<"Admission", 'String'>
+  readonly shift: Prisma.FieldRef<"Admission", 'String'>
+  readonly group: Prisma.FieldRef<"Admission", 'String'>
+  readonly studentPhotoUrl: Prisma.FieldRef<"Admission", 'String'>
+  readonly birthCertificateUrl: Prisma.FieldRef<"Admission", 'String'>
+  readonly previousCertificateUrl: Prisma.FieldRef<"Admission", 'String'>
   readonly status: Prisma.FieldRef<"Admission", 'AdmissionStatus'>
   readonly studentEmailVerified: Prisma.FieldRef<"Admission", 'Boolean'>
   readonly reviewedAt: Prisma.FieldRef<"Admission", 'DateTime'>

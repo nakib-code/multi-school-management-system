@@ -9,6 +9,8 @@ import { validateRequest } from "../../middleware/validateRequest.js";
 import {
 	approveCashSubscriptionPaymentController,
 	getPendingCashPaymentsController,
+	getSubscriptionPaymentHistoryController,
+	getSubscriptionPaymentSummaryController,
 	initiateSubscriptionPaymentController,
 	rejectCashSubscriptionPaymentController,
 	requestCashSubscriptionPaymentController,
@@ -93,4 +95,22 @@ router.patch(
 	rejectCashSubscriptionPaymentController,
 );
 
+
+// ====================================================
+// SUPER ADMIN - PAYMENT OVERVIEW
+// ====================================================
+
+router.get(
+        "/payments/subscription/summary",
+        authenticate,
+        authorize(UserRole.SUPER_ADMIN),
+        getSubscriptionPaymentSummaryController,
+);
+
+router.get(
+        "/payments/subscription/history",
+        authenticate,
+        authorize(UserRole.SUPER_ADMIN),
+        getSubscriptionPaymentHistoryController,
+);
 export const subscriptionPaymentRoutes = router;

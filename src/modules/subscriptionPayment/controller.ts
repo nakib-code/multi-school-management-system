@@ -10,6 +10,8 @@ import {
     approveCashSubscriptionPayment,
     getPendingCashPayments,
     getSubscriptionPaymentCallbackData,
+    getSubscriptionPaymentHistory,
+    getSubscriptionPaymentSummary,
     initiateSubscriptionPayment,
     processCancelledSubscriptionPayment,
     processFailedSubscriptionPayment,
@@ -319,4 +321,48 @@ export const rejectCashSubscriptionPaymentController = async (
             remarks: result.remarks,
         },
     });
+};
+
+
+
+// ====================================================
+// SUPER ADMIN - PAYMENT SUMMARY
+// ====================================================
+
+export const getSubscriptionPaymentSummaryController = async (
+        req: AuthRequest,
+        res: Response,
+) => {
+        if (!req.user) {
+                throw new AppError(401, "Authentication required");
+        }
+
+        const summary = await getSubscriptionPaymentSummary();
+
+        return sendResponse(res, {
+                statusCode: 200,
+                message: "Payment summary retrieved successfully",
+                data: summary,
+        });
+};
+
+// ====================================================
+// SUPER ADMIN - PAYMENT HISTORY
+// ====================================================
+
+export const getSubscriptionPaymentHistoryController = async (
+        req: AuthRequest,
+        res: Response,
+) => {
+        if (!req.user) {
+                throw new AppError(401, "Authentication required");
+        }
+
+        const history = await getSubscriptionPaymentHistory();
+
+        return sendResponse(res, {
+                statusCode: 200,
+                message: "Payment history retrieved successfully",
+                data: history,
+        });
 };

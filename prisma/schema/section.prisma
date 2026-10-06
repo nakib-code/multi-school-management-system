@@ -18,6 +18,7 @@ model Section {
   teacherAssignments TeacherAssignment[]
   enrollments        Enrollment[]
   exams              Exam[]
+  admissions         Admission[]
 
   @@unique([classId, code])
   @@index([schoolId])

@@ -1,0 +1,14 @@
+model GuardianStudent {
+  guardianId Int
+  studentId  Int
+  isPrimary  Boolean @default(false)
+
+  guardian Guardian @relation(fields: [guardianId], references: [id], onDelete: Cascade)
+  student  Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@id([guardianId, studentId])
+  @@index([studentId])
+  @@map("guardian_students")
+}

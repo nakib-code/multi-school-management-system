@@ -1,39 +1,68 @@
 model Admission {
-  id Int @id @default(autoincrement())
+  id        Int @id @default(autoincrement())
+  schoolId  Int
+  classId   Int
+  sectionId Int
 
-  schoolId Int
-  school   School @relation(fields: [schoolId], references: [id])
+  school  School      @relation(fields: [schoolId], references: [id])
+  class   SchoolClass @relation(fields: [classId], references: [id])
+  section Section     @relation(fields: [sectionId], references: [id])
 
   applicationNo String @unique
 
-  studentName  String
-  studentEmail String
-  passwordHash String
-
-  dateOfBirth DateTime?
-  gender      String?
-
-  guardianName  String?
-  guardianPhone String?
-
+  // Student Information
+  studentName    String
+  studentEmail   String
+  passwordHash   String
+  dateOfBirth    DateTime?
+  gender         String?
+  bloodGroup     String?
   previousSchool String?
-  address        String?
+  previousClass  String?
 
+  // Guardian Information
+  guardianName         String?
+  guardianEmail        String?
+  guardianPhone        String?
+  guardianRelationship String?
+  guardianNid          String?
+  guardianOccupation   String?
+
+  // Address
+  address String?
+
+  // Application Information
+  academicYear String
+  shift        String?
+  group        String?
+
+  // Documents
+  studentPhotoUrl        String?
+  birthCertificateUrl    String?
+  previousCertificateUrl String?
+
+  // Admission Status
   status               AdmissionStatus @default(PENDING)
   studentEmailVerified Boolean         @default(false)
-  reviewedAt           DateTime?
-  reviewedBy           Int?
-  rejectionReason      String?
+
+  // Review
+  reviewedAt      DateTime?
+  reviewedBy      Int?
+  rejectionReason String?
 
   reviewer User? @relation("AdmissionReviewer", fields: [reviewedBy], references: [id])
 
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-  payment   AdmissionPayment?
+  payment AdmissionPayment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([schoolId])
+  @@index([classId])
+  @@index([sectionId])
   @@index([status])
   @@index([studentEmail])
   @@index([guardianPhone])
+  @@index([academicYear])
   @@map("admissions")
 }

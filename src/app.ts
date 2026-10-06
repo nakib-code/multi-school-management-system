@@ -17,6 +17,7 @@ import { subscriptionRouter } from "./modules/subscription/subscription.route.js
 import { subscriptionPaymentRoutes } from "./modules/subscriptionPayment/route.js";
 import { teacherRoutes } from "./modules/teacher/route.js";
 import { userRoutes } from "./modules/user/route.js";
+import { reportRoutes } from "./modules/report/route.js";
 
 const app = express();
 
@@ -66,6 +67,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/packages", packageRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/custom-package-requests", customPackageRequestRouter);
+app.use("/api/v1/reports", reportRoutes);
 
 // 404
 

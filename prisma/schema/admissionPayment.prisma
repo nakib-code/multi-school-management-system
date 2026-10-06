@@ -1,24 +1,23 @@
 model AdmissionPayment {
-  id Int @id @default(autoincrement())
-
+  id          Int @id @default(autoincrement())
   admissionId Int @unique
   schoolId    Int
 
-  amount Decimal @db.Decimal(10, 2)
-
+  amount        Decimal                @db.Decimal(10, 2)
   paymentMethod AdmissionPaymentMethod
   status        AdmissionPaymentStatus @default(PENDING)
 
   transactionId String? @unique
 
-  paidAt DateTime?
-
+  paidAt     DateTime?
   receivedBy Int?
   remarks    String?
 
-  admission      Admission @relation(fields: [admissionId], references: [id])
-  school         School    @relation(fields: [schoolId], references: [id])
-  receivedByUser User?     @relation(fields: [receivedBy], references: [id])
+  admission Admission @relation(fields: [admissionId], references: [id])
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  receivedByUser User? @relation(fields: [receivedBy], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

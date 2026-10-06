@@ -882,3 +882,151 @@ export const rejectCashSubscriptionPayment = async (
 		},
 	});
 };
+
+
+// ====================================================
+// SUPER ADMIN - PAYMENT SUMMARY
+// ====================================================
+
+export const getSubscriptionPaymentSummary = async () => {
+        const payments = await prisma.subscriptionPayment.findMany({
+                select: {
+                        amount: true,
+                        status: true,
+                        paymentMethod: true,
+                },
+        });
+
+        let totalRevenue = 0;
+        let onlineRevenue = 0;
+        let cashRevenue = 0;
+        let pendingCashAmount = 0;
+
+        let paidPayments = 0;
+        let pendingPayments = 0;
+        let failedPayments = 0;
+        let cancelledPayments = 0;
+
+        for (const payment of payments) {
+                const amount = Number(payment.amount);
+
+                if (!Number.isFinite(amount)) {
+                        continue;
+                }
+
+                if (payment.status === "PAID") {
+                        totalRevenue += amount;
+                        paidPayments++;
+
+                        if (payment.paymentMethod === "ONLINE") {
+                                onlineRevenue += amount;
+                        }
+
+                        if (payment.paymentMethod === "CASH") {
+                                cashRevenue += amount;
+                        }
+                }
+
+                if (payment.status === "PENDING") {
+                        pendingPayments++;
+
+                        if (payment.paymentMethod === "CASH") {
+                                pendingCashAmount += amount;
+                        }
+                }
+
+                if (payment.status === "FAILED") {
+                        failedPayments++;
+                }
+
+                if (payment.status === "CANCELLED") {
+                        cancelledPayments++;
+                }
+        }
+
+        return {
+                totalRevenue,
+                onlineRevenue,
+                cashRevenue,
+                pendingCashAmount,
+
+                totalPayments: payments.length,
+                paidPayments,
+                pendingPayments,
+                failedPayments,
+                cancelledPayments,
+        };
+};
+
+// ====================================================
+// SUPER ADMIN - PAYMENT HISTORY
+// ====================================================
+
+export const getSubscriptionPaymentHistory = async () => {
+        const payments = await prisma.subscriptionPayment.findMany({
+                include: {
+                        school: {
+                                select: {
+                                        id: true,
+                                        name: true,
+                                        code: true,
+                                },
+                        },
+
+                        subscription: {
+                                select: {
+                                        id: true,
+                                        status: true,
+
+                                        package: {
+                                                select: {
+                                                        id: true,
+                                                        name: true,
+                                                        price: true,
+                                                        billingCycle: true,
+                                                },
+                                        },
+                                },
+                        },
+                },
+
+                orderBy: {
+                        createdAt: "desc",
+                },
+        });
+
+        return payments.map((payment) => ({
+                id: payment.id,
+                subscriptionId: payment.subscriptionId,
+                schoolId: payment.schoolId,
+
+                amount: Number(payment.amount),
+                currency: payment.currency,
+
+                status: payment.status,
+                paymentMethod: payment.paymentMethod,
+
+                transactionId: payment.transactionId,
+                validationId: payment.validationId,
+
+                paidAt: payment.paidAt,
+                createdAt: payment.createdAt,
+
+                school: payment.school,
+
+                subscription: {
+                        id: payment.subscription.id,
+                        status: payment.subscription.status,
+
+                        package: {
+                                id: payment.subscription.package.id,
+                                name: payment.subscription.package.name,
+                                price: Number(
+                                        payment.subscription.package.price,
+                                ),
+                                billingCycle:
+                                        payment.subscription.package.billingCycle,
+                        },
+                },
+        }));
+};
