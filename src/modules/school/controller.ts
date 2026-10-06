@@ -15,6 +15,7 @@ import {
 	rejectSchool,
 	unblockSchool,
 	verifyAdminEmail,
+	getPublicSchoolById,
 } from "./service.js";
 
 export const createSchoolController = async (
@@ -301,4 +302,29 @@ export const getSchoolUsersController = async (
 	} catch (error) {
 		next(error);
 	}
+};
+
+
+// ============================================
+// Public - School Details
+// ============================================
+
+export const getPublicSchoolByIdController = async (
+        req: Request,
+        res: Response,
+) => {
+        const schoolId = Number(req.params.id);
+
+        if (!Number.isInteger(schoolId) || schoolId <= 0) {
+                throw new AppError(400, "Invalid school ID");
+        }
+
+        const result = await getPublicSchoolById(schoolId);
+
+        return sendResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "School fetched successfully",
+                data: result,
+        });
 };

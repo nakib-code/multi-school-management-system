@@ -14,6 +14,7 @@ import {
 	rejectSchoolController,
 	unblockSchoolController,
 	verifyAdminEmailController,
+	getPublicSchoolByIdController,
 } from "./controller.js";
 
 import {
@@ -138,6 +139,21 @@ router.delete(
 	authenticate,
 	authorize(UserRole.SUPER_ADMIN),
 	deleteSchoolController,
+);
+
+
+/**
+ * =========================================================
+ * PUBLIC - SCHOOL DETAILS
+ * =========================================================
+ *
+ * GET /api/v1/schools/:id/public
+ */
+
+router.get(
+        "/:id/public",
+        validateRequest(schoolIdParamsSchema),
+        getPublicSchoolByIdController,
 );
 
 export const schoolRoutes = router;

@@ -723,3 +723,33 @@ export const getSchoolUsers = async (
 		},
 	};
 };
+
+
+// ============================================
+// Public - School Details
+// ============================================
+
+export const getPublicSchoolById = async (schoolId: number) => {
+        const school = await prisma.school.findFirst({
+                where: {
+                        id: schoolId,
+                        status: "ACTIVE",
+                },
+                select: {
+                        id: true,
+                        name: true,
+                        code: true,
+                        email: true,
+                        phone: true,
+                        address: true,
+                        logo: true,
+                        status: true,
+                },
+        });
+
+        if (!school) {
+                throw new AppError(404, "School not found");
+        }
+
+        return school;
+};
