@@ -171,3 +171,10 @@ enum SubscriptionPaymentStatus {
   FAILED
   CANCELLED
 }
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  TRANSFERRED
+  DROPPED
+}

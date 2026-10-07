@@ -55,10 +55,6 @@ export const createAdmissionSchema = z.object({
       .int()
       .positive("Invalid class ID"),
 
-    sectionId: z.coerce
-      .number()
-      .int()
-      .positive("Invalid section ID"),
 
     academicYear: z
       .string()
@@ -145,4 +141,22 @@ export const confirmCashPaymentSchema = z.object({
       .int()
       .positive("Invalid admission ID"),
   }),
+});
+
+export const trackAdmissionSchema = z.object({
+  applicationNo: z
+    .string()
+    .trim()
+    .min(
+      1,
+      "Application number is required",
+    )
+    .max(100),
+
+  studentEmail: z
+    .string()
+    .trim()
+    .email(
+      "Please enter a valid student email",
+    ),
 });

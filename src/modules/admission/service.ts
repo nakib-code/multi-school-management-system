@@ -14,13 +14,16 @@ import { initiatePayment, validatePayment } from "../payment/service.js";
 import type {
   ConfirmCashPaymentInput,
   CreateAdmissionInput,
+  TrackAdmissionInput,
   VerifyStudentEmailInput,
 } from "./interface.js";
 
 /**
  * Create Admission
  */
-export const createAdmission = async (payload: CreateAdmissionInput) => {
+export const createAdmission = async (
+  payload: CreateAdmissionInput,
+) => {
   const {
     schoolId,
 
@@ -47,7 +50,6 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 
     // Application
     classId,
-    sectionId,
     academicYear,
     shift,
     group,
@@ -112,53 +114,6 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
   }
 
   // ----------------------------------------------------
-  // Check section
-  // ----------------------------------------------------
-
-  const section = await prisma.section.findFirst({
-    where: {
-      id: sectionId,
-      schoolId,
-      classId,
-      isActive: true,
-    },
-    select: {
-      id: true,
-      name: true,
-      code: true,
-      capacity: true,
-    },
-  });
-
-  if (!section) {
-    throw new AppError(
-      404,
-      "Selected section was not found or is inactive",
-    );
-  }
-
-  // ----------------------------------------------------
-  // Check section capacity
-  // ----------------------------------------------------
-
-  if (section.capacity !== null) {
-    const activeEnrollmentCount = await prisma.enrollment.count({
-      where: {
-        sectionId,
-        academicYear,
-        status: "ACTIVE",
-      },
-    });
-
-    if (activeEnrollmentCount >= section.capacity) {
-      throw new AppError(
-        400,
-        "Selected section is already full",
-      );
-    }
-  }
-
-  // ----------------------------------------------------
   // Get admission fee
   // ----------------------------------------------------
 
@@ -182,7 +137,9 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
   // Normalize student email
   // ----------------------------------------------------
 
-  const normalizedEmail = studentEmail.trim().toLowerCase();
+  const normalizedEmail = studentEmail
+    .trim()
+    .toLowerCase();
 
   // ----------------------------------------------------
   // Check existing user
@@ -208,16 +165,17 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
   // Check existing pending admission
   // ----------------------------------------------------
 
-  const existingAdmission = await prisma.admission.findFirst({
-    where: {
-      schoolId,
-      studentEmail: normalizedEmail,
-      status: "PENDING",
-    },
-    select: {
-      id: true,
-    },
-  });
+  const existingAdmission =
+    await prisma.admission.findFirst({
+      where: {
+        schoolId,
+        studentEmail: normalizedEmail,
+        status: "PENDING",
+      },
+      select: {
+        id: true,
+      },
+    });
 
   if (existingAdmission) {
     throw new AppError(
@@ -249,8 +207,6 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
       data: {
         schoolId,
         classId,
-        sectionId,
-
         applicationNo,
 
         // Student
@@ -297,7 +253,8 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 
         ...(guardianEmail
           ? {
-              guardianEmail: guardianEmail.trim().toLowerCase(),
+              guardianEmail:
+                guardianEmail.trim().toLowerCase(),
             }
           : {}),
 
@@ -309,7 +266,8 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 
         ...(guardianRelationship
           ? {
-              guardianRelationship: guardianRelationship.trim(),
+              guardianRelationship:
+                guardianRelationship.trim(),
             }
           : {}),
 
@@ -321,7 +279,8 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 
         ...(guardianOccupation
           ? {
-              guardianOccupation: guardianOccupation.trim(),
+              guardianOccupation:
+                guardianOccupation.trim(),
             }
           : {}),
 
@@ -370,15 +329,16 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
       },
     });
 
-    const payment = await tx.admissionPayment.create({
-      data: {
-        admissionId: admission.id,
-        schoolId,
-        amount: setting.admissionFee,
-        paymentMethod,
-        status: "PENDING",
-      },
-    });
+    const payment =
+      await tx.admissionPayment.create({
+        data: {
+          admissionId: admission.id,
+          schoolId,
+          amount: setting.admissionFee,
+          paymentMethod,
+          status: "PENDING",
+        },
+      });
 
     return {
       admission,
@@ -390,7 +350,8 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
   // Send verification email
   // ----------------------------------------------------
 
-  const verificationCode = generateVerificationCode();
+  const verificationCode =
+    generateVerificationCode();
 
   await saveVerificationCode(
     normalizedEmail,
@@ -408,7 +369,9 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
       error,
     );
 
-    await deleteVerificationCode(normalizedEmail);
+    await deleteVerificationCode(
+      normalizedEmail,
+    );
 
     await prisma.admissionPayment.delete({
       where: {
@@ -431,29 +394,29 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
   return {
     id: result.admission.id,
     schoolId: result.admission.schoolId,
-
-    applicationNo: result.admission.applicationNo,
-
-    studentName: result.admission.studentName,
-    studentEmail: result.admission.studentEmail,
-
-    classId: result.admission.classId,
-    sectionId: result.admission.sectionId,
-    academicYear: result.admission.academicYear,
-
-    status: result.admission.status,
-
+    applicationNo:
+      result.admission.applicationNo,
+    studentName:
+      result.admission.studentName,
+    studentEmail:
+      result.admission.studentEmail,
+    classId:
+      result.admission.classId,
+    academicYear:
+      result.admission.academicYear,
+    status:
+      result.admission.status,
     emailVerified:
       result.admission.studentEmailVerified,
-
     payment: {
       id: result.payment.id,
       amount: Number(result.payment.amount),
-      paymentMethod: result.payment.paymentMethod,
+      paymentMethod:
+        result.payment.paymentMethod,
       status: result.payment.status,
     },
-
-    createdAt: result.admission.createdAt,
+    createdAt:
+      result.admission.createdAt,
   };
 };
 
@@ -465,20 +428,23 @@ export const verifyStudentEmail = async (
 ) => {
   const { email, code } = payload;
 
-  const normalizedEmail = email.trim().toLowerCase();
+  const normalizedEmail = email
+    .trim()
+    .toLowerCase();
 
-  const admission = await prisma.admission.findFirst({
-    where: {
-      studentEmail: normalizedEmail,
-      status: "PENDING",
-    },
-    select: {
-      id: true,
-      applicationNo: true,
-      studentEmail: true,
-      studentEmailVerified: true,
-    },
-  });
+  const admission =
+    await prisma.admission.findFirst({
+      where: {
+        studentEmail: normalizedEmail,
+        status: "PENDING",
+      },
+      select: {
+        id: true,
+        applicationNo: true,
+        studentEmail: true,
+        studentEmailVerified: true,
+      },
+    });
 
   if (!admission) {
     throw new AppError(
@@ -494,9 +460,10 @@ export const verifyStudentEmail = async (
     );
   }
 
-  const savedCode = await getVerificationCode(
-    normalizedEmail,
-  );
+  const savedCode =
+    await getVerificationCode(
+      normalizedEmail,
+    );
 
   if (!savedCode) {
     throw new AppError(
@@ -528,12 +495,16 @@ export const verifyStudentEmail = async (
       },
     });
 
-  await deleteVerificationCode(normalizedEmail);
+  await deleteVerificationCode(
+    normalizedEmail,
+  );
 
   return {
     admissionId: updatedAdmission.id,
-    applicationNo: updatedAdmission.applicationNo,
-    studentEmail: updatedAdmission.studentEmail,
+    applicationNo:
+      updatedAdmission.applicationNo,
+    studentEmail:
+      updatedAdmission.studentEmail,
     emailVerified:
       updatedAdmission.studentEmailVerified,
   };
@@ -546,91 +517,88 @@ export const getAdmissionById = async (
   schoolId: number,
   admissionId: number,
 ) => {
-  const admission = await prisma.admission.findFirst({
-    where: {
-      id: admissionId,
-      schoolId,
-    },
-
-    select: {
-      id: true,
-      schoolId: true,
-
-      applicationNo: true,
-
-      // Student
-      studentName: true,
-      studentEmail: true,
-      dateOfBirth: true,
-      gender: true,
-      bloodGroup: true,
-      previousSchool: true,
-      previousClass: true,
-
-      // Guardian
-      guardianName: true,
-      guardianEmail: true,
-      guardianPhone: true,
-      guardianRelationship: true,
-      guardianNid: true,
-      guardianOccupation: true,
-
-      // Address
-      address: true,
-
-      // Application
-      classId: true,
-      sectionId: true,
-      academicYear: true,
-      shift: true,
-      group: true,
-
-      // Documents
-      studentPhotoUrl: true,
-      birthCertificateUrl: true,
-      previousCertificateUrl: true,
-
-      studentEmailVerified: true,
-
-      status: true,
-
-      reviewedAt: true,
-      reviewedBy: true,
-      rejectionReason: true,
-
-      class: {
-        select: {
-          id: true,
-          name: true,
-          code: true,
-        },
+  const admission =
+    await prisma.admission.findFirst({
+      where: {
+        id: admissionId,
+        schoolId,
       },
+      select: {
+        id: true,
+        schoolId: true,
+        applicationNo: true,
 
-      section: {
-        select: {
-          id: true,
-          name: true,
-          code: true,
+        // Student
+        studentName: true,
+        studentEmail: true,
+        dateOfBirth: true,
+        gender: true,
+        bloodGroup: true,
+        previousSchool: true,
+        previousClass: true,
+
+        // Guardian
+        guardianName: true,
+        guardianEmail: true,
+        guardianPhone: true,
+        guardianRelationship: true,
+        guardianNid: true,
+        guardianOccupation: true,
+
+        // Address
+        address: true,
+
+        // Application
+        classId: true,
+        sectionId: true,
+        academicYear: true,
+        shift: true,
+        group: true,
+
+        // Documents
+        studentPhotoUrl: true,
+        birthCertificateUrl: true,
+        previousCertificateUrl: true,
+
+        studentEmailVerified: true,
+        status: true,
+        reviewedAt: true,
+        reviewedBy: true,
+        rejectionReason: true,
+
+        class: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
         },
-      },
 
-      payment: {
-        select: {
-          id: true,
-          amount: true,
-          paymentMethod: true,
-          status: true,
-          transactionId: true,
-          paidAt: true,
-          receivedBy: true,
-          remarks: true,
+        section: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
         },
-      },
 
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
+        payment: {
+          select: {
+            id: true,
+            amount: true,
+            paymentMethod: true,
+            status: true,
+            transactionId: true,
+            paidAt: true,
+            receivedBy: true,
+            remarks: true,
+          },
+        },
+
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
 
   if (!admission) {
     throw new AppError(
@@ -641,12 +609,180 @@ export const getAdmissionById = async (
 
   return {
     ...admission,
+
     payment: admission.payment
       ? {
           ...admission.payment,
-          amount: Number(admission.payment.amount),
+          amount: Number(
+            admission.payment.amount,
+          ),
         }
       : null,
+  };
+};
+
+/**
+ * Track Admission
+ *
+ * Public admission tracking.
+ * Requires both application number and student email.
+ */
+export const trackAdmission = async ({
+  applicationNo,
+  studentEmail,
+}: TrackAdmissionInput) => {
+  const normalizedApplicationNo =
+    applicationNo
+      .trim()
+      .toUpperCase();
+
+  const normalizedEmail =
+    studentEmail
+      .trim()
+      .toLowerCase();
+
+  if (!normalizedApplicationNo) {
+    throw new AppError(
+      400,
+      "Application number is required",
+    );
+  }
+
+  if (!normalizedEmail) {
+    throw new AppError(
+      400,
+      "Student email is required",
+    );
+  }
+
+  const admission =
+    await prisma.admission.findFirst({
+      where: {
+        applicationNo:
+          normalizedApplicationNo,
+        studentEmail:
+          normalizedEmail,
+      },
+
+      select: {
+        id: true,
+        schoolId: true,
+        applicationNo: true,
+        studentName: true,
+        studentEmail: true,
+        academicYear: true,
+        shift: true,
+        group: true,
+        studentEmailVerified: true,
+        status: true,
+        rejectionReason: true,
+        reviewedAt: true,
+
+        class: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+
+        // Section can be null before admin assigns it.
+        section: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+
+        school: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+
+        payment: {
+          select: {
+            id: true,
+            amount: true,
+            paymentMethod: true,
+            status: true,
+            transactionId: true,
+            paidAt: true,
+            remarks: true,
+          },
+        },
+
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+  if (!admission) {
+    throw new AppError(
+      404,
+      "Admission application not found",
+    );
+  }
+
+  return {
+    admissionId: admission.id,
+
+    applicationNo:
+      admission.applicationNo,
+
+    student: {
+      name: admission.studentName,
+      email: admission.studentEmail,
+      emailVerified:
+        admission.studentEmailVerified,
+    },
+
+    school: admission.school,
+
+    academic: {
+      year: admission.academicYear,
+      class: admission.class,
+      section: admission.section,
+      shift: admission.shift,
+      group: admission.group,
+    },
+
+    status: admission.status,
+
+    rejectionReason:
+      admission.rejectionReason,
+
+    reviewedAt:
+      admission.reviewedAt,
+
+    payment: admission.payment
+      ? {
+          id: admission.payment.id,
+          amount:
+            Number(
+              admission.payment.amount,
+            ),
+          paymentMethod:
+            admission.payment.paymentMethod,
+          status:
+            admission.payment.status,
+          transactionId:
+            admission.payment.transactionId,
+          paidAt:
+            admission.payment.paidAt,
+          remarks:
+            admission.payment.remarks,
+        }
+      : null,
+
+    createdAt:
+      admission.createdAt,
+
+    updatedAt:
+      admission.updatedAt,
   };
 };
 
@@ -662,18 +798,18 @@ export const approveAdmission = async (
   // Get admission
   // ----------------------------------------------------
 
-  const admission = await prisma.admission.findFirst({
-    where: {
-      id: admissionId,
-      schoolId,
-    },
-
-    include: {
-      payment: true,
-      class: true,
-      section: true,
-    },
-  });
+  const admission =
+    await prisma.admission.findFirst({
+      where: {
+        id: admissionId,
+        schoolId,
+      },
+      include: {
+        payment: true,
+        class: true,
+        section: true,
+      },
+    });
 
   if (!admission) {
     throw new AppError(
@@ -726,14 +862,15 @@ export const approveAdmission = async (
   // Check existing user
   // ----------------------------------------------------
 
-  const existingUser = await prisma.user.findUnique({
-    where: {
-      email: admission.studentEmail,
-    },
-    select: {
-      id: true,
-    },
-  });
+  const existingUser =
+    await prisma.user.findUnique({
+      where: {
+        email: admission.studentEmail,
+      },
+      select: {
+        id: true,
+      },
+    });
 
   if (existingUser) {
     throw new AppError(
@@ -746,12 +883,14 @@ export const approveAdmission = async (
   // Split student name
   // ----------------------------------------------------
 
-  const nameParts = admission.studentName
-    .trim()
-    .split(/\s+/);
+  const nameParts =
+    admission.studentName
+      .trim()
+      .split(/\s+/);
 
   const firstName =
-    nameParts[0] ?? admission.studentName.trim();
+    nameParts[0] ??
+    admission.studentName.trim();
 
   const lastName =
     nameParts.length > 1
@@ -762,242 +901,250 @@ export const approveAdmission = async (
   // Generate student ID
   // ----------------------------------------------------
 
-  const studentId = `STU-${schoolId}-${Date.now()}-${Math.floor(
-    1000 + Math.random() * 9000,
-  )}`;
+  const studentId =
+    `STU-${schoolId}-${Date.now()}-${Math.floor(
+      1000 + Math.random() * 9000,
+    )}`;
 
   // ----------------------------------------------------
   // Transaction
   // ----------------------------------------------------
 
-  const result = await prisma.$transaction(
-    async (tx) => {
-      const now = new Date();
+  const result =
+    await prisma.$transaction(
+      async (tx) => {
+        const now = new Date();
 
-      // -----------------------------------------------
-      // Check subscription
-      // -----------------------------------------------
+        // -----------------------------------------------
+        // Check subscription
+        // -----------------------------------------------
 
-      const activeSubscription =
-        await tx.schoolSubscription.findFirst({
-          where: {
-            schoolId,
-            status: "ACTIVE",
-
-            startDate: {
-              lte: now,
-            },
-
-            endDate: {
-              gte: now,
-            },
-
-            package: {
-              isActive: true,
-            },
-          },
-
-          include: {
-            package: {
-              select: {
-                id: true,
-                name: true,
-                studentLimit: true,
+        const activeSubscription =
+          await tx.schoolSubscription.findFirst({
+            where: {
+              schoolId,
+              status: "ACTIVE",
+              startDate: {
+                lte: now,
+              },
+              endDate: {
+                gte: now,
+              },
+              package: {
+                isActive: true,
               },
             },
-          },
+            include: {
+              package: {
+                select: {
+                  id: true,
+                  name: true,
+                  studentLimit: true,
+                },
+              },
+            },
+            orderBy: {
+              startDate: "desc",
+            },
+          });
 
-          orderBy: {
-            startDate: "desc",
-          },
-        });
+        if (!activeSubscription) {
+          throw new AppError(
+            403,
+            "School does not have an active subscription",
+          );
+        }
 
-      if (!activeSubscription) {
-        throw new AppError(
-          403,
-          "School does not have an active subscription",
-        );
-      }
+        // -----------------------------------------------
+        // Count students
+        // -----------------------------------------------
 
-      // -----------------------------------------------
-      // Count students
-      // -----------------------------------------------
+        const currentStudentCount =
+          await tx.student.count({
+            where: {
+              schoolId,
+              isActive: true,
+            },
+          });
 
-      const currentStudentCount =
-        await tx.student.count({
-          where: {
-            schoolId,
-            isActive: true,
-          },
-        });
+        if (
+          currentStudentCount >=
+          activeSubscription.package
+            .studentLimit
+        ) {
+          throw new AppError(
+            403,
+            `Student limit reached for ${activeSubscription.package.name} package. Maximum allowed students: ${activeSubscription.package.studentLimit}`,
+          );
+        }
 
-      if (
-        currentStudentCount >=
-        activeSubscription.package.studentLimit
-      ) {
-        throw new AppError(
-          403,
-          `Student limit reached for ${activeSubscription.package.name} package. Maximum allowed students: ${activeSubscription.package.studentLimit}`,
-        );
-      }
+        // -----------------------------------------------
+        // Re-check section capacity
+        //
+        // Section is optional during admission.
+        // If admin already assigned one, check capacity.
+        // -----------------------------------------------
 
-      // -----------------------------------------------
-      // Re-check section capacity
-      // -----------------------------------------------
+        if (
+          admission.sectionId &&
+          admission.section
+        ) {
+          const activeEnrollmentCount =
+            await tx.enrollment.count({
+              where: {
+                sectionId:
+                  admission.sectionId,
+                academicYear:
+                  admission.academicYear,
+                status: "ACTIVE",
+              },
+            });
 
-      const activeEnrollmentCount =
-        await tx.enrollment.count({
-          where: {
-            sectionId: admission.sectionId,
-            academicYear: admission.academicYear,
-            status: "ACTIVE",
-          },
-        });
+          if (
+            admission.section.capacity !==
+              null &&
+            activeEnrollmentCount >=
+              admission.section.capacity
+          ) {
+            throw new AppError(
+              400,
+              "Selected section is already full",
+            );
+          }
+        }
 
-      if (
-        admission.section.capacity !== null &&
-        activeEnrollmentCount >=
-          admission.section.capacity
-      ) {
-        throw new AppError(
-          400,
-          "Selected section is already full",
-        );
-      }
+        // -----------------------------------------------
+        // Create User
+        // -----------------------------------------------
 
-      // -----------------------------------------------
-      // Create User
-      // -----------------------------------------------
+        const user =
+          await tx.user.create({
+            data: {
+              name:
+                admission.studentName,
+              email:
+                admission.studentEmail,
+              passwordHash:
+                admission.passwordHash,
+              role: "STUDENT",
+              status: "ACTIVE",
+              mustChangePassword: false,
+              schoolId,
+            },
+          });
 
-      const user = await tx.user.create({
-        data: {
-          name: admission.studentName,
-          email: admission.studentEmail,
-          passwordHash: admission.passwordHash,
+        // -----------------------------------------------
+        // Create Student
+        // -----------------------------------------------
 
-          role: "STUDENT",
-          status: "ACTIVE",
+        const student =
+          await tx.student.create({
+            data: {
+              userId: user.id,
+              schoolId,
+              studentId,
+              firstName,
+              lastName,
 
-          mustChangePassword: false,
+              ...(admission.dateOfBirth
+                ? {
+                    dateOfBirth:
+                      admission.dateOfBirth,
+                  }
+                : {}),
 
-          schoolId,
-        },
-      });
+              ...(admission.gender
+                ? {
+                    gender:
+                      admission.gender,
+                  }
+                : {}),
 
-      // -----------------------------------------------
-      // Create Student
-      // -----------------------------------------------
+              ...(admission.guardianPhone
+                ? {
+                    phone:
+                      admission.guardianPhone,
+                  }
+                : {}),
 
-      const student = await tx.student.create({
-        data: {
-          userId: user.id,
-          schoolId,
+              ...(admission.address
+                ? {
+                    address:
+                      admission.address,
+                  }
+                : {}),
 
-          studentId,
+              admissionDate: now,
+              isActive: true,
+            },
+          });
 
-          firstName,
-          lastName,
+        // -----------------------------------------------
+        // Create Enrollment
+        // -----------------------------------------------
 
-          ...(admission.dateOfBirth
-            ? {
-                dateOfBirth:
-                  admission.dateOfBirth,
-              }
-            : {}),
+        const enrollment =
+          await tx.enrollment.create({
+            data: {
+              schoolId,
+              studentId: student.id,
+              classId:
+                admission.classId,
 
-          ...(admission.gender
-            ? {
-                gender: admission.gender,
-              }
-            : {}),
+              // Section is optional.
+              sectionId:
+                admission.sectionId ??
+                null,
 
-          ...(admission.guardianPhone
-            ? {
-                phone:
-                  admission.guardianPhone,
-              }
-            : {}),
+              academicYear:
+                admission.academicYear,
 
-          ...(admission.address
-            ? {
-                address:
-                  admission.address,
-              }
-            : {}),
+              status: "ACTIVE",
+            },
+          });
 
-          admissionDate: now,
+        // -----------------------------------------------
+        // Update Admission
+        // -----------------------------------------------
 
-          isActive: true,
-        },
-      });
+        const updatedAdmission =
+          await tx.admission.update({
+            where: {
+              id: admission.id,
+            },
+            data: {
+              status: "APPROVED",
+              reviewedAt: now,
+              reviewedBy: reviewerId,
+            },
+          });
 
-      // -----------------------------------------------
-      // Create Enrollment
-      // -----------------------------------------------
-
-      const enrollment =
-        await tx.enrollment.create({
-          data: {
-            schoolId,
-
-            studentId: student.id,
-
-            classId: admission.classId,
-
-            sectionId: admission.sectionId,
-
-            academicYear:
-              admission.academicYear,
-
-            status: "ACTIVE",
-          },
-        });
-
-      // -----------------------------------------------
-      // Update Admission
-      // -----------------------------------------------
-
-      const updatedAdmission =
-        await tx.admission.update({
-          where: {
-            id: admission.id,
-          },
-
-          data: {
-            status: "APPROVED",
-
-            reviewedAt: now,
-
-            reviewedBy: reviewerId,
-          },
-        });
-
-      return {
-        admission: updatedAdmission,
-        user,
-        student,
-        enrollment,
-
-        package:
-          activeSubscription.package,
-
-        previousStudentCount:
-          currentStudentCount,
-      };
-    },
-
-    {
-      isolationLevel:
-        Prisma.TransactionIsolationLevel.Serializable,
-    },
-  );
+        return {
+          admission:
+            updatedAdmission,
+          user,
+          student,
+          enrollment,
+          package:
+            activeSubscription.package,
+          previousStudentCount:
+            currentStudentCount,
+        };
+      },
+      {
+        isolationLevel:
+          Prisma.TransactionIsolationLevel
+            .Serializable,
+      },
+    );
 
   // ----------------------------------------------------
   // Response
   // ----------------------------------------------------
 
   return {
-    admissionId: result.admission.id,
+    admissionId:
+      result.admission.id,
 
     applicationNo:
       result.admission.applicationNo,
@@ -1057,12 +1204,13 @@ export const rejectAdmission = async (
   reviewerId: number,
   rejectionReason: string,
 ) => {
-  const admission = await prisma.admission.findFirst({
-    where: {
-      id: admissionId,
-      schoolId,
-    },
-  });
+  const admission =
+    await prisma.admission.findFirst({
+      where: {
+        id: admissionId,
+        schoolId,
+      },
+    });
 
   if (!admission) {
     throw new AppError(
@@ -1090,18 +1238,13 @@ export const rejectAdmission = async (
       where: {
         id: admissionId,
       },
-
       data: {
         status: "REJECTED",
-
         rejectionReason:
           rejectionReason.trim(),
-
         reviewedAt: new Date(),
-
         reviewedBy: reviewerId,
       },
-
       select: {
         id: true,
         applicationNo: true,
@@ -1120,276 +1263,294 @@ export const rejectAdmission = async (
 /**
  * Confirm Cash Payment
  */
-export const confirmCashPayment = async (
-  schoolId: number,
-  admissionId: number,
-  userId: number,
-  input: ConfirmCashPaymentInput,
-) => {
-  const admission =
-    await prisma.admission.findUnique({
-      where: {
-        id: admissionId,
-      },
+export const confirmCashPayment =
+  async (
+    schoolId: number,
+    admissionId: number,
+    userId: number,
+    input: ConfirmCashPaymentInput,
+  ) => {
+    const admission =
+      await prisma.admission.findUnique({
+        where: {
+          id: admissionId,
+        },
+        select: {
+          id: true,
+          schoolId: true,
+          status: true,
 
-      select: {
-        id: true,
-        schoolId: true,
-        status: true,
-
-        payment: {
-          select: {
-            id: true,
-            schoolId: true,
-            amount: true,
-            paymentMethod: true,
-            status: true,
-            transactionId: true,
-            paidAt: true,
-            receivedBy: true,
-            remarks: true,
+          payment: {
+            select: {
+              id: true,
+              schoolId: true,
+              amount: true,
+              paymentMethod: true,
+              status: true,
+              transactionId: true,
+              paidAt: true,
+              receivedBy: true,
+              remarks: true,
+            },
           },
         },
-      },
-    });
+      });
 
-  if (!admission) {
-    throw new AppError(
-      404,
-      "Admission not found",
-    );
-  }
+    if (!admission) {
+      throw new AppError(
+        404,
+        "Admission not found",
+      );
+    }
 
-  if (admission.schoolId !== schoolId) {
-    throw new AppError(
-      403,
-      "You do not have access to this admission",
-    );
-  }
+    if (admission.schoolId !== schoolId) {
+      throw new AppError(
+        403,
+        "You do not have access to this admission",
+      );
+    }
 
-  if (admission.status !== "PENDING") {
-    throw new AppError(
-      400,
-      "Only pending admissions can receive payment confirmation",
-    );
-  }
+    if (admission.status !== "PENDING") {
+      throw new AppError(
+        400,
+        "Only pending admissions can receive payment confirmation",
+      );
+    }
 
-  if (!admission.payment) {
-    throw new AppError(
-      404,
-      "Admission payment not found",
-    );
-  }
+    if (!admission.payment) {
+      throw new AppError(
+        404,
+        "Admission payment not found",
+      );
+    }
 
-  if (admission.payment.paymentMethod !== "CASH") {
-    throw new AppError(
-      400,
-      "This admission is not using cash payment",
-    );
-  }
+    if (
+      admission.payment.paymentMethod !==
+      "CASH"
+    ) {
+      throw new AppError(
+        400,
+        "This admission is not using cash payment",
+      );
+    }
 
-  if (admission.payment.status === "PAID") {
-    throw new AppError(
-      400,
-      "Cash payment has already been confirmed",
-    );
-  }
+    if (
+      admission.payment.status === "PAID"
+    ) {
+      throw new AppError(
+        400,
+        "Cash payment has already been confirmed",
+      );
+    }
 
-  if (admission.payment.status !== "PENDING") {
-    throw new AppError(
-      400,
-      "Cash payment cannot be confirmed",
-    );
-  }
+    if (
+      admission.payment.status !== "PENDING"
+    ) {
+      throw new AppError(
+        400,
+        "Cash payment cannot be confirmed",
+      );
+    }
 
-  const payment =
-    await prisma.admissionPayment.update({
-      where: {
-        id: admission.payment.id,
-      },
+    const payment =
+      await prisma.admissionPayment.update({
+        where: {
+          id: admission.payment.id,
+        },
+        data: {
+          status: "PAID",
+          paidAt: new Date(),
+          receivedBy: userId,
 
-      data: {
-        status: "PAID",
+          ...(input.remarks !== undefined
+            ? {
+                remarks:
+                  input.remarks.trim(),
+              }
+            : {}),
+        },
+        select: {
+          id: true,
+          admissionId: true,
+          schoolId: true,
+          amount: true,
+          paymentMethod: true,
+          status: true,
+          transactionId: true,
+          paidAt: true,
+          receivedBy: true,
+          remarks: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
 
-        paidAt: new Date(),
-
-        receivedBy: userId,
-
-        ...(input.remarks !== undefined
-          ? {
-              remarks: input.remarks.trim(),
-            }
-          : {}),
-      },
-
-      select: {
-        id: true,
-        admissionId: true,
-        schoolId: true,
-        amount: true,
-        paymentMethod: true,
-        status: true,
-        transactionId: true,
-        paidAt: true,
-        receivedBy: true,
-        remarks: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-
-  return {
-    ...payment,
-    amount: Number(payment.amount),
+    return {
+      ...payment,
+      amount: Number(payment.amount),
+    };
   };
-};
 
 /**
  * Initiate Online Admission Payment
  */
-export const initiateOnlinePayment = async (
-  schoolId: number,
-  admissionId: number,
-) => {
-  const admission =
-    await prisma.admission.findFirst({
-      where: {
-        id: admissionId,
-        schoolId,
-      },
+export const initiateOnlinePayment =
+  async (
+    schoolId: number,
+    admissionId: number,
+  ) => {
+    const admission =
+      await prisma.admission.findFirst({
+        where: {
+          id: admissionId,
+          schoolId,
+        },
+        include: {
+          payment: true,
 
-      include: {
-        payment: true,
-
-        school: {
-          select: {
-            name: true,
-            email: true,
-            phone: true,
-            address: true,
+          school: {
+            select: {
+              name: true,
+              email: true,
+              phone: true,
+              address: true,
+            },
           },
         },
+      });
+
+    if (!admission) {
+      throw new AppError(
+        404,
+        "Admission not found",
+      );
+    }
+
+    if (admission.status !== "PENDING") {
+      throw new AppError(
+        400,
+        "Only pending admissions can make payment",
+      );
+    }
+
+    if (!admission.payment) {
+      throw new AppError(
+        404,
+        "Admission payment not found",
+      );
+    }
+
+    if (
+      admission.payment.paymentMethod !==
+      "ONLINE"
+    ) {
+      throw new AppError(
+        400,
+        "This admission is not using online payment",
+      );
+    }
+
+    if (
+      admission.payment.status === "PAID"
+    ) {
+      throw new AppError(
+        400,
+        "Admission payment is already completed",
+      );
+    }
+
+    if (
+      admission.payment.status !==
+      "PENDING"
+    ) {
+      throw new AppError(
+        400,
+        "Payment cannot be initiated",
+      );
+    }
+
+    // ----------------------------------------------------
+    // Generate transaction ID
+    // ----------------------------------------------------
+
+    const transactionId =
+      `ADM-${admission.id}-${Date.now()}`;
+
+    // ----------------------------------------------------
+    // Save transaction ID
+    // ----------------------------------------------------
+
+    await prisma.admissionPayment.update({
+      where: {
+        id: admission.payment.id,
+      },
+      data: {
+        transactionId,
       },
     });
 
-  if (!admission) {
-    throw new AppError(
-      404,
-      "Admission not found",
-    );
-  }
+    // ----------------------------------------------------
+    // Initiate SSLCommerz
+    // ----------------------------------------------------
 
-  if (admission.status !== "PENDING") {
-    throw new AppError(
-      400,
-      "Only pending admissions can make payment",
-    );
-  }
+    const payment =
+      await initiatePayment({
+        amount:
+          Number(
+            admission.payment.amount,
+          ),
 
-  if (!admission.payment) {
-    throw new AppError(
-      404,
-      "Admission payment not found",
-    );
-  }
+        transactionId,
 
-  if (admission.payment.paymentMethod !== "ONLINE") {
-    throw new AppError(
-      400,
-      "This admission is not using online payment",
-    );
-  }
+        productName: "Admission Fee",
 
-  if (admission.payment.status === "PAID") {
-    throw new AppError(
-      400,
-      "Admission payment is already completed",
-    );
-  }
+        productCategory:
+          "Education",
 
-  if (admission.payment.status !== "PENDING") {
-    throw new AppError(
-      400,
-      "Payment cannot be initiated",
-    );
-  }
+        customerName:
+          admission.studentName,
 
-  // ----------------------------------------------------
-  // Generate transaction ID
-  // ----------------------------------------------------
+        customerEmail:
+          admission.studentEmail,
 
-  const transactionId = `ADM-${admission.id}-${Date.now()}`;
+        ...(admission.guardianPhone
+          ? {
+              customerPhone:
+                admission.guardianPhone,
+            }
+          : {}),
 
-  // ----------------------------------------------------
-  // Save transaction ID
-  // ----------------------------------------------------
+        ...(admission.address
+          ? {
+              customerAddress:
+                admission.address,
+            }
+          : {}),
 
-  await prisma.admissionPayment.update({
-    where: {
-      id: admission.payment.id,
-    },
+        customerCity: "Dhaka",
 
-    data: {
-      transactionId,
-    },
-  });
+        customerCountry:
+          "Bangladesh",
 
-  // ----------------------------------------------------
-  // Initiate SSLCommerz
-  // ----------------------------------------------------
+        successUrl:
+          `${process.env.BACKEND_URL}/api/payments/admission/success`,
 
-  const payment = await initiatePayment({
-    amount: Number(admission.payment.amount),
+        failUrl:
+          `${process.env.BACKEND_URL}/api/payments/admission/fail`,
 
-    transactionId,
+        cancelUrl:
+          `${process.env.BACKEND_URL}/api/payments/admission/cancel`,
 
-    productName: "Admission Fee",
+        ipnUrl:
+          `${process.env.BACKEND_URL}/api/payments/admission/ipn`,
 
-    productCategory: "Education",
+        valueA: String(admission.id),
 
-    customerName:
-      admission.studentName,
+        valueB: String(schoolId),
+      });
 
-    customerEmail:
-      admission.studentEmail,
-
-    ...(admission.guardianPhone
-      ? {
-          customerPhone:
-            admission.guardianPhone,
-        }
-      : {}),
-
-    ...(admission.address
-      ? {
-          customerAddress:
-            admission.address,
-        }
-      : {}),
-
-    customerCity: "Dhaka",
-
-    customerCountry: "Bangladesh",
-
-    successUrl:
-      `${process.env.BACKEND_URL}/api/payments/admission/success`,
-
-    failUrl:
-      `${process.env.BACKEND_URL}/api/payments/admission/fail`,
-
-    cancelUrl:
-      `${process.env.BACKEND_URL}/api/payments/admission/cancel`,
-
-    ipnUrl:
-      `${process.env.BACKEND_URL}/api/payments/admission/ipn`,
-
-    valueA: String(admission.id),
-
-    valueB: String(schoolId),
-  });
-
-  return payment;
-};
+    return payment;
+  };
 
 /**
  * Verify Online Admission Payment
@@ -1418,7 +1579,6 @@ export const verifyOnlineAdmissionPayment =
         where: {
           id: admissionId,
         },
-
         select: {
           id: true,
           schoolId: true,
@@ -1525,21 +1685,23 @@ export const verifyOnlineAdmissionPayment =
     // ----------------------------------------------------
 
     if (
-      admission.payment.status ===
-      "PAID"
+      admission.payment.status === "PAID"
     ) {
       return {
-        admissionId: admission.id,
+        admissionId:
+          admission.id,
 
         schoolId:
           admission.schoolId,
 
         transactionId:
-          admission.payment.transactionId,
+          admission.payment
+            .transactionId,
 
         status: "PAID",
 
-        amount: expectedAmount,
+        amount:
+          expectedAmount,
 
         paidAt:
           admission.payment.paidAt,
@@ -1566,12 +1728,10 @@ export const verifyOnlineAdmissionPayment =
         where: {
           id: admission.payment.id,
         },
-
         data: {
           status: "PAID",
           paidAt: new Date(),
         },
-
         select: {
           id: true,
           admissionId: true,

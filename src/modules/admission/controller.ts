@@ -13,6 +13,7 @@ import {
   getAdmissionById,
   initiateOnlinePayment,
   rejectAdmission,
+  trackAdmission,
   verifyOnlineAdmissionPayment,
   verifyStudentEmail,
 } from "./service.js";
@@ -398,4 +399,29 @@ export const paymentCancelController = async (req: Request, res: Response) => {
     303,
     `${frontendUrl}/admissions/payment/cancel?${params.toString()}`,
   );
+};
+
+// ==================================================
+// Track Admission
+// ==================================================
+
+export const trackAdmissionController = async (
+  req: Request,
+  res: Response,
+) => {
+  const result = await trackAdmission({
+    applicationNo:
+      String(req.body.applicationNo ?? ""),
+
+    studentEmail:
+      String(req.body.studentEmail ?? ""),
+  });
+
+  return sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message:
+      "Admission application fetched successfully",
+    data: result,
+  });
 };

@@ -454,9 +454,9 @@ export type SectionUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type SectionScalarRelationFilter = {
-  is?: Prisma.SectionWhereInput
-  isNot?: Prisma.SectionWhereInput
+export type SectionNullableScalarRelationFilter = {
+  is?: Prisma.SectionWhereInput | null
+  isNot?: Prisma.SectionWhereInput | null
 }
 
 export type SectionListRelationFilter = {
@@ -467,11 +467,6 @@ export type SectionListRelationFilter = {
 
 export type SectionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type SectionNullableScalarRelationFilter = {
-  is?: Prisma.SectionWhereInput | null
-  isNot?: Prisma.SectionWhereInput | null
 }
 
 export type SectionClassIdCodeCompoundUniqueInput = {
@@ -532,16 +527,23 @@ export type SectionSumOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
 }
 
+export type SectionScalarRelationFilter = {
+  is?: Prisma.SectionWhereInput
+  isNot?: Prisma.SectionWhereInput
+}
+
 export type SectionCreateNestedOneWithoutAdmissionsInput = {
   create?: Prisma.XOR<Prisma.SectionCreateWithoutAdmissionsInput, Prisma.SectionUncheckedCreateWithoutAdmissionsInput>
   connectOrCreate?: Prisma.SectionCreateOrConnectWithoutAdmissionsInput
   connect?: Prisma.SectionWhereUniqueInput
 }
 
-export type SectionUpdateOneRequiredWithoutAdmissionsNestedInput = {
+export type SectionUpdateOneWithoutAdmissionsNestedInput = {
   create?: Prisma.XOR<Prisma.SectionCreateWithoutAdmissionsInput, Prisma.SectionUncheckedCreateWithoutAdmissionsInput>
   connectOrCreate?: Prisma.SectionCreateOrConnectWithoutAdmissionsInput
   upsert?: Prisma.SectionUpsertWithoutAdmissionsInput
+  disconnect?: Prisma.SectionWhereInput | boolean
+  delete?: Prisma.SectionWhereInput | boolean
   connect?: Prisma.SectionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SectionUpdateToOneWithWhereWithoutAdmissionsInput, Prisma.SectionUpdateWithoutAdmissionsInput>, Prisma.SectionUncheckedUpdateWithoutAdmissionsInput>
 }
@@ -594,10 +596,12 @@ export type SectionCreateNestedOneWithoutEnrollmentsInput = {
   connect?: Prisma.SectionWhereUniqueInput
 }
 
-export type SectionUpdateOneRequiredWithoutEnrollmentsNestedInput = {
+export type SectionUpdateOneWithoutEnrollmentsNestedInput = {
   create?: Prisma.XOR<Prisma.SectionCreateWithoutEnrollmentsInput, Prisma.SectionUncheckedCreateWithoutEnrollmentsInput>
   connectOrCreate?: Prisma.SectionCreateOrConnectWithoutEnrollmentsInput
   upsert?: Prisma.SectionUpsertWithoutEnrollmentsInput
+  disconnect?: Prisma.SectionWhereInput | boolean
+  delete?: Prisma.SectionWhereInput | boolean
   connect?: Prisma.SectionWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SectionUpdateToOneWithWhereWithoutEnrollmentsInput, Prisma.SectionUpdateWithoutEnrollmentsInput>, Prisma.SectionUncheckedUpdateWithoutEnrollmentsInput>
 }

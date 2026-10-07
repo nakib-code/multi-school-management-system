@@ -367,7 +367,7 @@ export type AdmissionGroupByOutputType = {
   id: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -426,7 +426,7 @@ export type AdmissionWhereInput = {
   id?: Prisma.IntFilter<"Admission"> | number
   schoolId?: Prisma.IntFilter<"Admission"> | number
   classId?: Prisma.IntFilter<"Admission"> | number
-  sectionId?: Prisma.IntFilter<"Admission"> | number
+  sectionId?: Prisma.IntNullableFilter<"Admission"> | number | null
   applicationNo?: Prisma.StringFilter<"Admission"> | string
   studentName?: Prisma.StringFilter<"Admission"> | string
   studentEmail?: Prisma.StringFilter<"Admission"> | string
@@ -458,7 +458,7 @@ export type AdmissionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
-  section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
+  section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
 }
@@ -467,7 +467,7 @@ export type AdmissionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   classId?: Prisma.SortOrder
-  sectionId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrderInput | Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
@@ -512,7 +512,7 @@ export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.AdmissionWhereInput | Prisma.AdmissionWhereInput[]
   schoolId?: Prisma.IntFilter<"Admission"> | number
   classId?: Prisma.IntFilter<"Admission"> | number
-  sectionId?: Prisma.IntFilter<"Admission"> | number
+  sectionId?: Prisma.IntNullableFilter<"Admission"> | number | null
   studentName?: Prisma.StringFilter<"Admission"> | string
   studentEmail?: Prisma.StringFilter<"Admission"> | string
   passwordHash?: Prisma.StringFilter<"Admission"> | string
@@ -543,7 +543,7 @@ export type AdmissionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Admission"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
-  section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
+  section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   reviewer?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
 }, "id" | "applicationNo">
@@ -552,7 +552,7 @@ export type AdmissionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   classId?: Prisma.SortOrder
-  sectionId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrderInput | Prisma.SortOrder
   applicationNo?: Prisma.SortOrder
   studentName?: Prisma.SortOrder
   studentEmail?: Prisma.SortOrder
@@ -596,7 +596,7 @@ export type AdmissionScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Admission"> | number
   schoolId?: Prisma.IntWithAggregatesFilter<"Admission"> | number
   classId?: Prisma.IntWithAggregatesFilter<"Admission"> | number
-  sectionId?: Prisma.IntWithAggregatesFilter<"Admission"> | number
+  sectionId?: Prisma.IntNullableWithAggregatesFilter<"Admission"> | number | null
   applicationNo?: Prisma.StringWithAggregatesFilter<"Admission"> | string
   studentName?: Prisma.StringWithAggregatesFilter<"Admission"> | string
   studentEmail?: Prisma.StringWithAggregatesFilter<"Admission"> | string
@@ -659,7 +659,7 @@ export type AdmissionCreateInput = {
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
-  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
+  section?: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
@@ -668,7 +668,7 @@ export type AdmissionUncheckedCreateInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -732,7 +732,7 @@ export type AdmissionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
@@ -741,7 +741,7 @@ export type AdmissionUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -778,7 +778,7 @@ export type AdmissionCreateManyInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -845,7 +845,7 @@ export type AdmissionUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1269,7 +1269,7 @@ export type AdmissionCreateWithoutPaymentInput = {
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
-  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
+  section?: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
 }
 
@@ -1277,7 +1277,7 @@ export type AdmissionUncheckedCreateWithoutPaymentInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -1356,7 +1356,7 @@ export type AdmissionUpdateWithoutPaymentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
 }
 
@@ -1364,7 +1364,7 @@ export type AdmissionUncheckedUpdateWithoutPaymentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1426,7 +1426,7 @@ export type AdmissionCreateWithoutClassInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
-  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
+  section?: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
@@ -1434,7 +1434,7 @@ export type AdmissionCreateWithoutClassInput = {
 export type AdmissionUncheckedCreateWithoutClassInput = {
   id?: number
   schoolId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -1500,7 +1500,7 @@ export type AdmissionScalarWhereInput = {
   id?: Prisma.IntFilter<"Admission"> | number
   schoolId?: Prisma.IntFilter<"Admission"> | number
   classId?: Prisma.IntFilter<"Admission"> | number
-  sectionId?: Prisma.IntFilter<"Admission"> | number
+  sectionId?: Prisma.IntNullableFilter<"Admission"> | number | null
   applicationNo?: Prisma.StringFilter<"Admission"> | string
   studentName?: Prisma.StringFilter<"Admission"> | string
   studentEmail?: Prisma.StringFilter<"Admission"> | string
@@ -1562,7 +1562,7 @@ export type AdmissionCreateWithoutSchoolInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
-  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
+  section?: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   reviewer?: Prisma.UserCreateNestedOneWithoutAdmissionsReviewedInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
@@ -1570,7 +1570,7 @@ export type AdmissionCreateWithoutSchoolInput = {
 export type AdmissionUncheckedCreateWithoutSchoolInput = {
   id?: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -1757,7 +1757,7 @@ export type AdmissionCreateWithoutReviewerInput = {
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutAdmissionsInput
-  section: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
+  section?: Prisma.SectionCreateNestedOneWithoutAdmissionsInput
   payment?: Prisma.AdmissionPaymentCreateNestedOneWithoutAdmissionInput
 }
 
@@ -1765,7 +1765,7 @@ export type AdmissionUncheckedCreateWithoutReviewerInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -1826,7 +1826,7 @@ export type AdmissionUpdateManyWithWhereWithoutReviewerInput = {
 export type AdmissionCreateManyClassInput = {
   id?: number
   schoolId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -1888,7 +1888,7 @@ export type AdmissionUpdateWithoutClassInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
@@ -1896,7 +1896,7 @@ export type AdmissionUpdateWithoutClassInput = {
 export type AdmissionUncheckedUpdateWithoutClassInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1932,7 +1932,7 @@ export type AdmissionUncheckedUpdateWithoutClassInput = {
 export type AdmissionUncheckedUpdateManyWithoutClassInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1967,7 +1967,7 @@ export type AdmissionUncheckedUpdateManyWithoutClassInput = {
 export type AdmissionCreateManySchoolInput = {
   id?: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -2029,7 +2029,7 @@ export type AdmissionUpdateWithoutSchoolInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutAdmissionsNestedInput
   reviewer?: Prisma.UserUpdateOneWithoutAdmissionsReviewedNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
@@ -2037,7 +2037,7 @@ export type AdmissionUpdateWithoutSchoolInput = {
 export type AdmissionUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2073,7 +2073,7 @@ export type AdmissionUncheckedUpdateWithoutSchoolInput = {
 export type AdmissionUncheckedUpdateManyWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2250,7 +2250,7 @@ export type AdmissionCreateManyReviewerInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   applicationNo: string
   studentName: string
   studentEmail: string
@@ -2312,7 +2312,7 @@ export type AdmissionUpdateWithoutReviewerInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutAdmissionsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutAdmissionsNestedInput
   payment?: Prisma.AdmissionPaymentUpdateOneWithoutAdmissionNestedInput
 }
 
@@ -2320,7 +2320,7 @@ export type AdmissionUncheckedUpdateWithoutReviewerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2356,7 +2356,7 @@ export type AdmissionUncheckedUpdateManyWithoutReviewerInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   applicationNo?: Prisma.StringFieldUpdateOperationsInput | string
   studentName?: Prisma.StringFieldUpdateOperationsInput | string
   studentEmail?: Prisma.StringFieldUpdateOperationsInput | string
@@ -2425,7 +2425,7 @@ export type AdmissionSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Admission$sectionArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
   payment?: boolean | Prisma.Admission$paymentArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
@@ -2466,7 +2466,7 @@ export type AdmissionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Admission$sectionArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
 
@@ -2506,7 +2506,7 @@ export type AdmissionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Admission$sectionArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }, ExtArgs["result"]["admission"]>
 
@@ -2550,20 +2550,20 @@ export type AdmissionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 export type AdmissionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Admission$sectionArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
   payment?: boolean | Prisma.Admission$paymentArgs<ExtArgs>
 }
 export type AdmissionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Admission$sectionArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }
 export type AdmissionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Admission$sectionArgs<ExtArgs>
   reviewer?: boolean | Prisma.Admission$reviewerArgs<ExtArgs>
 }
 
@@ -2572,7 +2572,7 @@ export type $AdmissionPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   objects: {
     school: Prisma.$SchoolPayload<ExtArgs>
     class: Prisma.$SchoolClassPayload<ExtArgs>
-    section: Prisma.$SectionPayload<ExtArgs>
+    section: Prisma.$SectionPayload<ExtArgs> | null
     reviewer: Prisma.$UserPayload<ExtArgs> | null
     payment: Prisma.$AdmissionPaymentPayload<ExtArgs> | null
   }
@@ -2580,7 +2580,7 @@ export type $AdmissionPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: number
     schoolId: number
     classId: number
-    sectionId: number
+    sectionId: number | null
     applicationNo: string
     studentName: string
     studentEmail: string
@@ -3006,7 +3006,7 @@ export interface Prisma__AdmissionClient<T, Null = never, ExtArgs extends runtim
   readonly [Symbol.toStringTag]: "PrismaPromise"
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   class<T extends Prisma.SchoolClassDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClassDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClassClient<runtime.Types.Result.GetResult<Prisma.$SchoolClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  section<T extends Prisma.SectionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SectionDefaultArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  section<T extends Prisma.Admission$sectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$sectionArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   reviewer<T extends Prisma.Admission$reviewerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$reviewerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payment<T extends Prisma.Admission$paymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Admission$paymentArgs<ExtArgs>>): Prisma.Prisma__AdmissionPaymentClient<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -3469,6 +3469,25 @@ export type AdmissionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Admissions to delete.
    */
   limit?: number
+}
+
+/**
+ * Admission.section
+ */
+export type Admission$sectionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Section
+   */
+  select?: Prisma.SectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Section
+   */
+  omit?: Prisma.SectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SectionInclude<ExtArgs> | null
+  where?: Prisma.SectionWhereInput
 }
 
 /**

@@ -19,6 +19,7 @@ import {
   paymentIpnController,
   paymentSuccessController,
   rejectAdmissionController,
+  trackAdmissionController,
   verifyStudentEmailController,
 } from "./controller.js";
 
@@ -26,6 +27,7 @@ import {
   confirmCashPaymentSchema,
   createAdmissionSchema,
   rejectAdmissionSchema,
+  trackAdmissionSchema,
   verifyStudentEmailSchema,
 } from "./validation.js";
 
@@ -108,6 +110,16 @@ router.patch(
 router.post(
   "/schools/:schoolId/admissions/:id/payment/online/initiate",
   initiateOnlinePaymentController,
+);
+
+// ====================================================
+// Public Admission Tracking
+// ====================================================
+
+router.post(
+  "/admissions/track",
+  validateRequest(trackAdmissionSchema),
+  trackAdmissionController,
 );
 
 // ====================================================

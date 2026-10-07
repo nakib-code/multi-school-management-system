@@ -1,16 +1,9 @@
-enum EnrollmentStatus {
-  ACTIVE
-  COMPLETED
-  TRANSFERRED
-  DROPPED
-}
-
 model Enrollment {
   id        Int @id @default(autoincrement())
   schoolId  Int
   studentId Int
   classId   Int
-  sectionId Int
+  sectionId Int?
 
   academicYear String
   rollNumber   Int?
@@ -19,7 +12,7 @@ model Enrollment {
   school  School      @relation(fields: [schoolId], references: [id])
   student Student     @relation(fields: [studentId], references: [id])
   class   SchoolClass @relation(fields: [classId], references: [id])
-  section Section     @relation(fields: [sectionId], references: [id])
+  section Section?    @relation(fields: [sectionId], references: [id])
 
   enrolledAt DateTime @default(now())
   createdAt  DateTime @default(now())
@@ -31,10 +24,12 @@ model Enrollment {
 
   @@unique([studentId, academicYear])
   @@unique([sectionId, rollNumber, academicYear])
+
   @@index([schoolId])
   @@index([studentId])
   @@index([classId])
   @@index([sectionId])
   @@index([academicYear])
+
   @@map("enrollments")
 }

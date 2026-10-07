@@ -240,7 +240,7 @@ export type EnrollmentGroupByOutputType = {
   schoolId: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId: number | null
   academicYear: string
   rollNumber: number | null
   status: $Enums.EnrollmentStatus
@@ -277,7 +277,7 @@ export type EnrollmentWhereInput = {
   schoolId?: Prisma.IntFilter<"Enrollment"> | number
   studentId?: Prisma.IntFilter<"Enrollment"> | number
   classId?: Prisma.IntFilter<"Enrollment"> | number
-  sectionId?: Prisma.IntFilter<"Enrollment"> | number
+  sectionId?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   status?: Prisma.EnumEnrollmentStatusFilter<"Enrollment"> | $Enums.EnrollmentStatus
@@ -287,7 +287,7 @@ export type EnrollmentWhereInput = {
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
-  section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
+  section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   attendances?: Prisma.AttendanceListRelationFilter
   results?: Prisma.ResultListRelationFilter
   fees?: Prisma.StudentFeeListRelationFilter
@@ -298,7 +298,7 @@ export type EnrollmentOrderByWithRelationInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   classId?: Prisma.SortOrder
-  sectionId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrderInput | Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -324,7 +324,7 @@ export type EnrollmentWhereUniqueInput = Prisma.AtLeast<{
   schoolId?: Prisma.IntFilter<"Enrollment"> | number
   studentId?: Prisma.IntFilter<"Enrollment"> | number
   classId?: Prisma.IntFilter<"Enrollment"> | number
-  sectionId?: Prisma.IntFilter<"Enrollment"> | number
+  sectionId?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   status?: Prisma.EnumEnrollmentStatusFilter<"Enrollment"> | $Enums.EnrollmentStatus
@@ -334,7 +334,7 @@ export type EnrollmentWhereUniqueInput = Prisma.AtLeast<{
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
-  section?: Prisma.XOR<Prisma.SectionScalarRelationFilter, Prisma.SectionWhereInput>
+  section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   attendances?: Prisma.AttendanceListRelationFilter
   results?: Prisma.ResultListRelationFilter
   fees?: Prisma.StudentFeeListRelationFilter
@@ -345,7 +345,7 @@ export type EnrollmentOrderByWithAggregationInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   classId?: Prisma.SortOrder
-  sectionId?: Prisma.SortOrder
+  sectionId?: Prisma.SortOrderInput | Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -367,7 +367,7 @@ export type EnrollmentScalarWhereWithAggregatesInput = {
   schoolId?: Prisma.IntWithAggregatesFilter<"Enrollment"> | number
   studentId?: Prisma.IntWithAggregatesFilter<"Enrollment"> | number
   classId?: Prisma.IntWithAggregatesFilter<"Enrollment"> | number
-  sectionId?: Prisma.IntWithAggregatesFilter<"Enrollment"> | number
+  sectionId?: Prisma.IntNullableWithAggregatesFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringWithAggregatesFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableWithAggregatesFilter<"Enrollment"> | number | null
   status?: Prisma.EnumEnrollmentStatusWithAggregatesFilter<"Enrollment"> | $Enums.EnrollmentStatus
@@ -386,7 +386,7 @@ export type EnrollmentCreateInput = {
   school: Prisma.SchoolCreateNestedOneWithoutEnrollmentsInput
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutEnrollmentInput
   results?: Prisma.ResultCreateNestedManyWithoutEnrollmentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutEnrollmentInput
@@ -397,7 +397,7 @@ export type EnrollmentUncheckedCreateInput = {
   schoolId: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -419,7 +419,7 @@ export type EnrollmentUpdateInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutEnrollmentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutEnrollmentNestedInput
   results?: Prisma.ResultUpdateManyWithoutEnrollmentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutEnrollmentNestedInput
@@ -430,7 +430,7 @@ export type EnrollmentUncheckedUpdateInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -447,7 +447,7 @@ export type EnrollmentCreateManyInput = {
   schoolId: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -470,7 +470,7 @@ export type EnrollmentUncheckedUpdateManyInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -789,7 +789,7 @@ export type EnrollmentCreateWithoutAttendancesInput = {
   school: Prisma.SchoolCreateNestedOneWithoutEnrollmentsInput
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   results?: Prisma.ResultCreateNestedManyWithoutEnrollmentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutEnrollmentInput
 }
@@ -799,7 +799,7 @@ export type EnrollmentUncheckedCreateWithoutAttendancesInput = {
   schoolId: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -836,7 +836,7 @@ export type EnrollmentUpdateWithoutAttendancesInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutEnrollmentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   results?: Prisma.ResultUpdateManyWithoutEnrollmentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutEnrollmentNestedInput
 }
@@ -846,7 +846,7 @@ export type EnrollmentUncheckedUpdateWithoutAttendancesInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -866,7 +866,7 @@ export type EnrollmentCreateWithoutClassInput = {
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutEnrollmentsInput
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutEnrollmentInput
   results?: Prisma.ResultCreateNestedManyWithoutEnrollmentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutEnrollmentInput
@@ -876,7 +876,7 @@ export type EnrollmentUncheckedCreateWithoutClassInput = {
   id?: number
   schoolId: number
   studentId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -922,7 +922,7 @@ export type EnrollmentScalarWhereInput = {
   schoolId?: Prisma.IntFilter<"Enrollment"> | number
   studentId?: Prisma.IntFilter<"Enrollment"> | number
   classId?: Prisma.IntFilter<"Enrollment"> | number
-  sectionId?: Prisma.IntFilter<"Enrollment"> | number
+  sectionId?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   status?: Prisma.EnumEnrollmentStatusFilter<"Enrollment"> | $Enums.EnrollmentStatus
@@ -941,7 +941,7 @@ export type EnrollmentCreateWithoutResultsInput = {
   school: Prisma.SchoolCreateNestedOneWithoutEnrollmentsInput
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutEnrollmentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutEnrollmentInput
 }
@@ -951,7 +951,7 @@ export type EnrollmentUncheckedCreateWithoutResultsInput = {
   schoolId: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -988,7 +988,7 @@ export type EnrollmentUpdateWithoutResultsInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutEnrollmentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutEnrollmentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutEnrollmentNestedInput
 }
@@ -998,7 +998,7 @@ export type EnrollmentUncheckedUpdateWithoutResultsInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1018,7 +1018,7 @@ export type EnrollmentCreateWithoutSchoolInput = {
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutEnrollmentInput
   results?: Prisma.ResultCreateNestedManyWithoutEnrollmentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutEnrollmentInput
@@ -1028,7 +1028,7 @@ export type EnrollmentUncheckedCreateWithoutSchoolInput = {
   id?: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -1133,7 +1133,7 @@ export type EnrollmentCreateWithoutFeesInput = {
   school: Prisma.SchoolCreateNestedOneWithoutEnrollmentsInput
   student: Prisma.StudentCreateNestedOneWithoutEnrollmentsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutEnrollmentInput
   results?: Prisma.ResultCreateNestedManyWithoutEnrollmentInput
 }
@@ -1143,7 +1143,7 @@ export type EnrollmentUncheckedCreateWithoutFeesInput = {
   schoolId: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -1180,7 +1180,7 @@ export type EnrollmentUpdateWithoutFeesInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutEnrollmentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutEnrollmentNestedInput
   results?: Prisma.ResultUpdateManyWithoutEnrollmentNestedInput
 }
@@ -1190,7 +1190,7 @@ export type EnrollmentUncheckedUpdateWithoutFeesInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1210,7 +1210,7 @@ export type EnrollmentCreateWithoutStudentInput = {
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutEnrollmentsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutEnrollmentsInput
-  section: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
+  section?: Prisma.SectionCreateNestedOneWithoutEnrollmentsInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutEnrollmentInput
   results?: Prisma.ResultCreateNestedManyWithoutEnrollmentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutEnrollmentInput
@@ -1220,7 +1220,7 @@ export type EnrollmentUncheckedCreateWithoutStudentInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -1262,7 +1262,7 @@ export type EnrollmentCreateManyClassInput = {
   id?: number
   schoolId: number
   studentId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -1280,7 +1280,7 @@ export type EnrollmentUpdateWithoutClassInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutEnrollmentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutEnrollmentNestedInput
   results?: Prisma.ResultUpdateManyWithoutEnrollmentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutEnrollmentNestedInput
@@ -1290,7 +1290,7 @@ export type EnrollmentUncheckedUpdateWithoutClassInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1306,7 +1306,7 @@ export type EnrollmentUncheckedUpdateManyWithoutClassInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1319,7 +1319,7 @@ export type EnrollmentCreateManySchoolInput = {
   id?: number
   studentId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -1337,7 +1337,7 @@ export type EnrollmentUpdateWithoutSchoolInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutEnrollmentsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutEnrollmentNestedInput
   results?: Prisma.ResultUpdateManyWithoutEnrollmentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutEnrollmentNestedInput
@@ -1347,7 +1347,7 @@ export type EnrollmentUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1363,7 +1363,7 @@ export type EnrollmentUncheckedUpdateManyWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1433,7 +1433,7 @@ export type EnrollmentCreateManyStudentInput = {
   id?: number
   schoolId: number
   classId: number
-  sectionId: number
+  sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
   status?: $Enums.EnrollmentStatus
@@ -1451,7 +1451,7 @@ export type EnrollmentUpdateWithoutStudentInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutEnrollmentsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutEnrollmentsNestedInput
-  section?: Prisma.SectionUpdateOneRequiredWithoutEnrollmentsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutEnrollmentsNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutEnrollmentNestedInput
   results?: Prisma.ResultUpdateManyWithoutEnrollmentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutEnrollmentNestedInput
@@ -1461,7 +1461,7 @@ export type EnrollmentUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1477,7 +1477,7 @@ export type EnrollmentUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   classId?: Prisma.IntFieldUpdateOperationsInput | number
-  sectionId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
@@ -1550,7 +1550,7 @@ export type EnrollmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Enrollment$sectionArgs<ExtArgs>
   attendances?: boolean | Prisma.Enrollment$attendancesArgs<ExtArgs>
   results?: boolean | Prisma.Enrollment$resultsArgs<ExtArgs>
   fees?: boolean | Prisma.Enrollment$feesArgs<ExtArgs>
@@ -1572,7 +1572,7 @@ export type EnrollmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Enrollment$sectionArgs<ExtArgs>
 }, ExtArgs["result"]["enrollment"]>
 
 export type EnrollmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1590,7 +1590,7 @@ export type EnrollmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Enrollment$sectionArgs<ExtArgs>
 }, ExtArgs["result"]["enrollment"]>
 
 export type EnrollmentSelectScalar = {
@@ -1612,7 +1612,7 @@ export type EnrollmentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Enrollment$sectionArgs<ExtArgs>
   attendances?: boolean | Prisma.Enrollment$attendancesArgs<ExtArgs>
   results?: boolean | Prisma.Enrollment$resultsArgs<ExtArgs>
   fees?: boolean | Prisma.Enrollment$feesArgs<ExtArgs>
@@ -1622,13 +1622,13 @@ export type EnrollmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.E
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Enrollment$sectionArgs<ExtArgs>
 }
 export type EnrollmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
-  section?: boolean | Prisma.SectionDefaultArgs<ExtArgs>
+  section?: boolean | Prisma.Enrollment$sectionArgs<ExtArgs>
 }
 
 export type $EnrollmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1637,7 +1637,7 @@ export type $EnrollmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     school: Prisma.$SchoolPayload<ExtArgs>
     student: Prisma.$StudentPayload<ExtArgs>
     class: Prisma.$SchoolClassPayload<ExtArgs>
-    section: Prisma.$SectionPayload<ExtArgs>
+    section: Prisma.$SectionPayload<ExtArgs> | null
     attendances: Prisma.$AttendancePayload<ExtArgs>[]
     results: Prisma.$ResultPayload<ExtArgs>[]
     fees: Prisma.$StudentFeePayload<ExtArgs>[]
@@ -1647,7 +1647,7 @@ export type $EnrollmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     schoolId: number
     studentId: number
     classId: number
-    sectionId: number
+    sectionId: number | null
     academicYear: string
     rollNumber: number | null
     status: $Enums.EnrollmentStatus
@@ -2051,7 +2051,7 @@ export interface Prisma__EnrollmentClient<T, Null = never, ExtArgs extends runti
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   student<T extends Prisma.StudentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   class<T extends Prisma.SchoolClassDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClassDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClassClient<runtime.Types.Result.GetResult<Prisma.$SchoolClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  section<T extends Prisma.SectionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SectionDefaultArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  section<T extends Prisma.Enrollment$sectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$sectionArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   attendances<T extends Prisma.Enrollment$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   results<T extends Prisma.Enrollment$resultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fees<T extends Prisma.Enrollment$feesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Enrollment$feesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2493,6 +2493,25 @@ export type EnrollmentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Enrollments to delete.
    */
   limit?: number
+}
+
+/**
+ * Enrollment.section
+ */
+export type Enrollment$sectionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Section
+   */
+  select?: Prisma.SectionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Section
+   */
+  omit?: Prisma.SectionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SectionInclude<ExtArgs> | null
+  where?: Prisma.SectionWhereInput
 }
 
 /**

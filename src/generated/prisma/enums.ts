@@ -9,16 +9,6 @@
 * 🟢 You can import this file directly.
 */
 
-export const EnrollmentStatus = {
-  ACTIVE: 'ACTIVE',
-  COMPLETED: 'COMPLETED',
-  TRANSFERRED: 'TRANSFERRED',
-  DROPPED: 'DROPPED'
-} as const
-
-export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof EnrollmentStatus]
-
-
 export const AdmissionStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
@@ -257,6 +247,16 @@ export const SubscriptionPaymentStatus = {
 } as const
 
 export type SubscriptionPaymentStatus = (typeof SubscriptionPaymentStatus)[keyof typeof SubscriptionPaymentStatus]
+
+
+export const EnrollmentStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  TRANSFERRED: 'TRANSFERRED',
+  DROPPED: 'DROPPED'
+} as const
+
+export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof EnrollmentStatus]
 
 
 export const PaymentMethod = {

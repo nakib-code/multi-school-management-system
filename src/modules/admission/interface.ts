@@ -24,7 +24,6 @@ export interface CreateAdmissionInput {
 
   // Application Information
   classId: number;
-  sectionId: number;
   academicYear: string;
   shift?: string;
   group?: string;

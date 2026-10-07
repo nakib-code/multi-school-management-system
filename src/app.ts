@@ -18,6 +18,9 @@ import { subscriptionPaymentRoutes } from "./modules/subscriptionPayment/route.j
 import { teacherRoutes } from "./modules/teacher/route.js";
 import { userRoutes } from "./modules/user/route.js";
 import { reportRoutes } from "./modules/report/route.js";
+import { classRoutes } from "./modules/class/route.js";
+import { sectionRoutes } from "./modules/section/route.js";
+import { publicRoutes } from "./modules/public/route.js";
 
 const app = express();
 
@@ -68,6 +71,9 @@ app.use("/api/v1/packages", packageRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/custom-package-requests", customPackageRequestRouter);
 app.use("/api/v1/reports", reportRoutes);
+app.use("/api/v1", classRoutes);
+app.use("/api/v1", sectionRoutes);
+app.use("/api/v1/public", publicRoutes);
 
 // 404
 

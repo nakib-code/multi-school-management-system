@@ -1,12 +1,13 @@
 model Admission {
-  id        Int @id @default(autoincrement())
-  schoolId  Int
-  classId   Int
-  sectionId Int
+  id       Int @id @default(autoincrement())
+
+  schoolId Int
+  classId  Int
+  sectionId Int?
 
   school  School      @relation(fields: [schoolId], references: [id])
   class   SchoolClass @relation(fields: [classId], references: [id])
-  section Section     @relation(fields: [sectionId], references: [id])
+  section Section?    @relation(fields: [sectionId], references: [id])
 
   applicationNo String @unique
 
@@ -50,7 +51,7 @@ model Admission {
   reviewedBy      Int?
   rejectionReason String?
 
-  reviewer User? @relation("AdmissionReviewer", fields: [reviewedBy], references: [id])
+  reviewer User? @relation("AdmissionReviewer",fields: [reviewedBy],references: [id])
 
   payment AdmissionPayment?
 
@@ -64,5 +65,6 @@ model Admission {
   @@index([studentEmail])
   @@index([guardianPhone])
   @@index([academicYear])
+
   @@map("admissions")
 }
