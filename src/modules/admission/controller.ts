@@ -3,7 +3,7 @@ import type { Request, Response } from "express";
 import { prisma } from "../../lib/prisma.js";
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
-
+import sendResponse from "../../utils/sendResponse.js";
 import { getPaymentCallbackData } from "../payment/service.js";
 
 import {
@@ -16,7 +16,6 @@ import {
   verifyOnlineAdmissionPayment,
   verifyStudentEmail,
 } from "./service.js";
-import sendResponse from "../../utils/sendResponse.js";
 
 // ==================================================
 // Create Admission
@@ -82,10 +81,7 @@ export const getAdmissionByIdController = async (
     throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await getAdmissionById(
-    schoolId,
-    admissionId,
-  );
+  const result = await getAdmissionById(schoolId, admissionId);
 
   return sendResponse(res, {
     statusCode: 200,
@@ -118,11 +114,7 @@ export const approveAdmissionController = async (
     throw new AppError(401, "Unauthorized");
   }
 
-  const result = await approveAdmission(
-    schoolId,
-    admissionId,
-    req.user.userId,
-  );
+  const result = await approveAdmission(schoolId, admissionId, req.user.userId);
 
   return sendResponse(res, {
     statusCode: 200,
@@ -227,10 +219,7 @@ export const initiateOnlinePaymentController = async (
     throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await initiateOnlinePayment(
-    schoolId,
-    admissionId,
-  );
+  const result = await initiateOnlinePayment(schoolId, admissionId);
 
   return sendResponse(res, {
     statusCode: 200,
@@ -244,104 +233,74 @@ export const initiateOnlinePaymentController = async (
 // SSLCommerz Success
 // ==================================================
 
-export const paymentSuccessController = async (
-  req: Request,
-  res: Response,
-) => {
+export const paymentSuccessController = async (req: Request, res: Response) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.val_id) {
-    throw new AppError(
-      400,
-      "SSLCommerz validation ID is missing",
-    );
+    throw new AppError(400, "SSLCommerz validation ID is missing");
   }
 
   if (!callbackData.tran_id) {
-    throw new AppError(
-      400,
-      "SSLCommerz transaction ID is missing",
-    );
+    throw new AppError(400, "SSLCommerz transaction ID is missing");
   }
 
   if (!callbackData.value_a) {
-    throw new AppError(
-      400,
-      "Admission ID is missing",
-    );
+    throw new AppError(400, "Admission ID is missing");
   }
 
   const admissionId = Number(callbackData.value_a);
 
-  if (
-    !Number.isInteger(admissionId) ||
-    admissionId <= 0
-  ) {
-    throw new AppError(
-      400,
-      "Invalid admission ID",
-    );
+  if (!Number.isInteger(admissionId) || admissionId <= 0) {
+    throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await verifyOnlineAdmissionPayment(
-    admissionId,
-    callbackData,
-  );
+  // Verify payment before redirecting
+  const result = await verifyOnlineAdmissionPayment(admissionId, callbackData);
 
-  return sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "Admission payment verified successfully",
-    data: result,
+  const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
+
+  const params = new URLSearchParams({
+    admissionId: String(result.admissionId),
   });
+
+  if (result.transactionId) {
+    params.set("transactionId", result.transactionId);
+  }
+
+  return res.redirect(
+    303,
+    `${frontendUrl}/admissions/payment/success?${params.toString()}`,
+  );
 };
 
 // ==================================================
 // SSLCommerz IPN
 // ==================================================
 
-export const paymentIpnController = async (
-  req: Request,
-  res: Response,
-) => {
+export const paymentIpnController = async (req: Request, res: Response) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.tran_id) {
-    throw new AppError(
-      400,
-      "SSLCommerz transaction ID is missing",
-    );
+    throw new AppError(400, "SSLCommerz transaction ID is missing");
   }
 
   if (!callbackData.value_a) {
-    throw new AppError(
-      400,
-      "Admission ID is missing",
-    );
+    throw new AppError(400, "Admission ID is missing");
   }
 
   const admissionId = Number(callbackData.value_a);
 
-  if (
-    !Number.isInteger(admissionId) ||
-    admissionId <= 0
-  ) {
-    throw new AppError(
-      400,
-      "Invalid admission ID",
-    );
+  if (!Number.isInteger(admissionId) || admissionId <= 0) {
+    throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await verifyOnlineAdmissionPayment(
-    admissionId,
-    callbackData,
-  );
+  const result = await verifyOnlineAdmissionPayment(admissionId, callbackData);
 
   return sendResponse(res, {
     statusCode: 200,
@@ -355,20 +314,14 @@ export const paymentIpnController = async (
 // SSLCommerz Fail
 // ==================================================
 
-export const paymentFailController = async (
-  req: Request,
-  res: Response,
-) => {
+export const paymentFailController = async (req: Request, res: Response) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.tran_id) {
-    throw new AppError(
-      400,
-      "SSLCommerz transaction ID is missing",
-    );
+    throw new AppError(400, "SSLCommerz transaction ID is missing");
   }
 
   const payment = await prisma.admissionPayment.findFirst({
@@ -390,32 +343,30 @@ export const paymentFailController = async (
     });
   }
 
-  return sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "Admission payment failed",
-    data: null,
+  const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
+
+  const params = new URLSearchParams({
+    transactionId: callbackData.tran_id,
   });
+
+  return res.redirect(
+    303,
+    `${frontendUrl}/admissions/payment/fail?${params.toString()}`,
+  );
 };
 
 // ==================================================
 // SSLCommerz Cancel
 // ==================================================
 
-export const paymentCancelController = async (
-  req: Request,
-  res: Response,
-) => {
+export const paymentCancelController = async (req: Request, res: Response) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.tran_id) {
-    throw new AppError(
-      400,
-      "SSLCommerz transaction ID is missing",
-    );
+    throw new AppError(400, "SSLCommerz transaction ID is missing");
   }
 
   const payment = await prisma.admissionPayment.findFirst({
@@ -437,10 +388,14 @@ export const paymentCancelController = async (
     });
   }
 
-  return sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "Admission payment cancelled",
-    data: null,
+  const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
+
+  const params = new URLSearchParams({
+    transactionId: callbackData.tran_id,
   });
+
+  return res.redirect(
+    303,
+    `${frontendUrl}/admissions/payment/cancel?${params.toString()}`,
+  );
 };

@@ -15,6 +15,7 @@ import {
 	unblockSchoolController,
 	verifyAdminEmailController,
 	getPublicSchoolByIdController,
+	getPublicSchoolsController,
 } from "./controller.js";
 
 import {
@@ -154,6 +155,19 @@ router.get(
         "/:id/public",
         validateRequest(schoolIdParamsSchema),
         getPublicSchoolByIdController,
+);
+
+/**
+ * =========================================================
+ * PUBLIC - SCHOOL LIST
+ * =========================================================
+ *
+ * GET /api/v1/schools/public
+ */
+
+router.get(
+        "/public",
+        getPublicSchoolsController,
 );
 
 export const schoolRoutes = router;

@@ -753,3 +753,82 @@ export const getPublicSchoolById = async (schoolId: number) => {
 
         return school;
 };
+
+
+// ============================================
+// Public - School List
+// ============================================
+
+export const getPublicSchools = async ({
+	page = 1,
+	limit = 10,
+	search = "",
+}: {
+	page?: number;
+	limit?: number;
+	search?: string;
+}) => {
+	const skip = (page - 1) * limit;
+
+	const where = {
+		status: "ACTIVE" as const,
+
+		...(search && {
+			OR: [
+				{
+					name: {
+						contains: search,
+						mode: "insensitive" as const,
+					},
+				},
+				{
+					code: {
+						contains: search,
+						mode: "insensitive" as const,
+					},
+				},
+				{
+					address: {
+						contains: search,
+						mode: "insensitive" as const,
+					},
+				},
+			],
+		}),
+	};
+
+	const [schools, total] = await Promise.all([
+		prisma.school.findMany({
+			where,
+			select: {
+				id: true,
+				name: true,
+				code: true,
+				email: true,
+				phone: true,
+				address: true,
+				logo: true,
+				status: true,
+			},
+			orderBy: {
+				name: "asc",
+			},
+			skip,
+			take: limit,
+		}),
+
+		prisma.school.count({
+			where,
+		}),
+	]);
+
+	return {
+		schools,
+		meta: {
+			page,
+			limit,
+			total,
+			totalPages: Math.ceil(total / limit),
+		},
+	};
+};
