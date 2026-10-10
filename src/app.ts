@@ -21,6 +21,8 @@ import { reportRoutes } from "./modules/report/route.js";
 import { classRoutes } from "./modules/class/route.js";
 import { sectionRoutes } from "./modules/section/route.js";
 import { publicRoutes } from "./modules/public/route.js";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
 
 const app = express();
 
@@ -46,6 +48,11 @@ app.get("/", (_req, res) => {
 	});
 });
 
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec),
+);
 // Health check
 
 app.get("/api/v1/health", (_req, res) => {
