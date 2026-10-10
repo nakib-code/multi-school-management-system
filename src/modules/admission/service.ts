@@ -1,4 +1,4 @@
-import { Prisma } from "../../generated/prisma/client.js";
+import { AdmissionPaymentStatus, AdmissionStatus, Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
@@ -11,12 +11,8 @@ import {
 } from "../../utils/verificationCode.js";
 import type { PaymentCallbackData } from "../payment/interface.js";
 import { initiatePayment, validatePayment } from "../payment/service.js";
-import type {
-  ConfirmCashPaymentInput,
-  CreateAdmissionInput,
-  TrackAdmissionInput,
-  VerifyStudentEmailInput,
-} from "./interface.js";
+import type { ConfirmCashPaymentInput, CreateAdmissionInput, GetAdmissionsQuery, TrackAdmissionInput, VerifyStudentEmailInput } from "./interface.js";
+
 
 /**
  * Create Admission
@@ -511,8 +507,136 @@ export const verifyStudentEmail = async (
 };
 
 /**
- * Get Admission
+ * Get Admissions
  */
+export const getAdmissions = async (
+  schoolId: number,
+  query: GetAdmissionsQuery = {},
+) => {
+  const page = Math.max(1, query.page ?? 1);
+  const limit = Math.min(100, Math.max(1, query.limit ?? 10));
+  const skip = (page - 1) * limit;
+
+  const where: Prisma.AdmissionWhereInput = {
+    schoolId,
+  };
+
+  // Search
+  if (query.search?.trim()) {
+    const search = query.search.trim();
+
+    where.OR = [
+      {
+        applicationNo: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        studentName: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        studentEmail: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+      {
+        guardianPhone: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    ];
+  }
+
+  // Admission status filter
+  // Admission status filter
+if (query.status) {
+  where.status = query.status as AdmissionStatus;
+}
+
+// Payment status filter
+if (query.paymentStatus) {
+  where.payment = {
+    is: {
+      status: query.paymentStatus as AdmissionPaymentStatus,
+    },
+  };
+}
+
+  const [admissions, total] = await prisma.$transaction([
+    prisma.admission.findMany({
+      where,
+      skip,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        applicationNo: true,
+        studentName: true,
+        studentEmail: true,
+        guardianName: true,
+        guardianPhone: true,
+        academicYear: true,
+        shift: true,
+        group: true,
+        status: true,
+        studentEmailVerified: true,
+        createdAt: true,
+        updatedAt: true,
+
+        class: {
+          select: {
+            id: true,
+            name: true,
+            code: true,
+          },
+        },
+
+        payment: {
+          select: {
+            id: true,
+            amount: true,
+            paymentMethod: true,
+            status: true,
+            transactionId: true,
+            paidAt: true,
+          },
+        },
+      },
+    }),
+
+    prisma.admission.count({
+      where,
+    }),
+  ]);
+
+  return {
+    admissions: admissions.map((admission) => ({
+      ...admission,
+      payment: admission.payment
+        ? {
+            ...admission.payment,
+            amount: Number(admission.payment.amount),
+          }
+        : null,
+    })),
+
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+};
+
 export const getAdmissionById = async (
   schoolId: number,
   admissionId: number,
@@ -1391,170 +1515,169 @@ export const confirmCashPayment =
     };
   };
 
-/**
- * Initiate Online Admission Payment
- */
-export const initiateOnlinePayment =
-  async (
-    schoolId: number,
-    admissionId: number,
-  ) => {
-    const admission =
-      await prisma.admission.findFirst({
-        where: {
-          id: admissionId,
-          schoolId,
+export const initiateOnlinePayment = async (
+  schoolId: number,
+  admissionId: number,
+) => {
+  const admission = await prisma.admission.findFirst({
+    where: {
+      id: admissionId,
+      schoolId,
+    },
+    include: {
+      payment: true,
+      school: {
+        select: {
+          name: true,
+          email: true,
+          phone: true,
+          address: true,
         },
-        include: {
-          payment: true,
+      },
+    },
+  });
 
-          school: {
-            select: {
-              name: true,
-              email: true,
-              phone: true,
-              address: true,
-            },
-          },
-        },
-      });
+  if (!admission) {
+    throw new AppError(404, "Admission not found");
+  }
 
-    if (!admission) {
-      throw new AppError(
-        404,
-        "Admission not found",
-      );
-    }
+  // Check admission status
+  if (admission.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Only pending admissions can make payment",
+    );
+  }
 
-    if (admission.status !== "PENDING") {
-      throw new AppError(
-        400,
-        "Only pending admissions can make payment",
-      );
-    }
+  // Verify student email before payment
+  if (!admission.studentEmailVerified) {
+    throw new AppError(
+      403,
+      "Please verify your student email before making payment",
+    );
+  }
 
-    if (!admission.payment) {
-      throw new AppError(
-        404,
-        "Admission payment not found",
-      );
-    }
+  // Check payment record
+  if (!admission.payment) {
+    throw new AppError(
+      404,
+      "Admission payment not found",
+    );
+  }
 
-    if (
-      admission.payment.paymentMethod !==
-      "ONLINE"
-    ) {
-      throw new AppError(
-        400,
-        "This admission is not using online payment",
-      );
-    }
+  // Check payment method
+  if (admission.payment.paymentMethod !== "ONLINE") {
+    throw new AppError(
+      400,
+      "This admission is not using online payment",
+    );
+  }
 
-    if (
-      admission.payment.status === "PAID"
-    ) {
-      throw new AppError(
-        400,
-        "Admission payment is already completed",
-      );
-    }
+  // Prevent duplicate payment
+  if (admission.payment.status === "PAID") {
+    throw new AppError(
+      400,
+      "Admission payment is already completed",
+    );
+  }
 
-    if (
-      admission.payment.status !==
-      "PENDING"
-    ) {
-      throw new AppError(
-        400,
-        "Payment cannot be initiated",
-      );
-    }
+  if (admission.payment.status !== "PENDING") {
+    throw new AppError(
+      400,
+      "Payment cannot be initiated",
+    );
+  }
 
-    // ----------------------------------------------------
-    // Generate transaction ID
-    // ----------------------------------------------------
+  const amount = Number(admission.payment.amount);
 
-    const transactionId =
-      `ADM-${admission.id}-${Date.now()}`;
+  if (!Number.isFinite(amount) || amount <= 0) {
+    throw new AppError(
+      400,
+      "Invalid admission payment amount",
+    );
+  }
 
-    // ----------------------------------------------------
-    // Save transaction ID
-    // ----------------------------------------------------
+  const backendUrl = process.env.BACKEND_URL;
 
+  if (!backendUrl) {
+    throw new AppError(
+      500,
+      "Backend URL is not configured",
+    );
+  }
+
+  // Generate transaction ID
+  const transactionId =
+    `ADM-${admission.id}-${Date.now()}`;
+
+  // Save transaction ID
+  await prisma.admissionPayment.update({
+    where: {
+      id: admission.payment.id,
+    },
+    data: {
+      transactionId,
+    },
+  });
+
+  // Initiate SSLCommerz
+  try {
+    const payment = await initiatePayment({
+      amount,
+      transactionId,
+      productName: "Admission Fee",
+      productCategory: "Education",
+
+      customerName: admission.studentName,
+      customerEmail: admission.studentEmail,
+
+      ...(admission.guardianPhone
+        ? {
+            customerPhone: admission.guardianPhone,
+          }
+        : {}),
+
+      ...(admission.address
+        ? {
+            customerAddress: admission.address,
+          }
+        : {}),
+
+      customerCity: "Dhaka",
+      customerCountry: "Bangladesh",
+
+      successUrl:
+        `${backendUrl}/api/payments/admission/success`,
+
+      failUrl:
+        `${backendUrl}/api/payments/admission/fail`,
+
+      cancelUrl:
+        `${backendUrl}/api/payments/admission/cancel`,
+
+      ipnUrl:
+        `${backendUrl}/api/payments/admission/ipn`,
+
+      valueA: String(admission.id),
+      valueB: String(schoolId),
+    });
+
+    return payment;
+  } catch (error) {
+    // Clear the transaction ID if initiation fails
     await prisma.admissionPayment.update({
       where: {
         id: admission.payment.id,
       },
       data: {
-        transactionId,
+        transactionId: null,
       },
-    });
+    }).catch(() => undefined);
 
-    // ----------------------------------------------------
-    // Initiate SSLCommerz
-    // ----------------------------------------------------
+    throw error;
+  }
+};
 
-    const payment =
-      await initiatePayment({
-        amount:
-          Number(
-            admission.payment.amount,
-          ),
-
-        transactionId,
-
-        productName: "Admission Fee",
-
-        productCategory:
-          "Education",
-
-        customerName:
-          admission.studentName,
-
-        customerEmail:
-          admission.studentEmail,
-
-        ...(admission.guardianPhone
-          ? {
-              customerPhone:
-                admission.guardianPhone,
-            }
-          : {}),
-
-        ...(admission.address
-          ? {
-              customerAddress:
-                admission.address,
-            }
-          : {}),
-
-        customerCity: "Dhaka",
-
-        customerCountry:
-          "Bangladesh",
-
-        successUrl:
-          `${process.env.BACKEND_URL}/api/payments/admission/success`,
-
-        failUrl:
-          `${process.env.BACKEND_URL}/api/payments/admission/fail`,
-
-        cancelUrl:
-          `${process.env.BACKEND_URL}/api/payments/admission/cancel`,
-
-        ipnUrl:
-          `${process.env.BACKEND_URL}/api/payments/admission/ipn`,
-
-        valueA: String(admission.id),
-
-        valueB: String(schoolId),
-      });
-
-    return payment;
-  };
-
-/**
- * Verify Online Admission Payment
- */
 export const verifyOnlineAdmissionPayment =
   async (
     admissionId: number,

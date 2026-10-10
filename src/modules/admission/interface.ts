@@ -54,3 +54,12 @@ export interface TrackAdmissionInput {
   applicationNo: string;
   studentEmail: string;
 }
+
+
+export interface GetAdmissionsQuery {
+  page?: number;
+  limit?: number;
+  search?: string;
+  status?: string;
+  paymentStatus?: string;
+}

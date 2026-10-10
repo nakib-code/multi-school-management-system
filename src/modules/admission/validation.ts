@@ -21,16 +21,36 @@ export const createAdmissionSchema = z.object({
 
     dateOfBirth: z.string().optional(),
 
-    gender: z.string().trim().max(30).optional(),
+    gender: z
+      .string()
+      .trim()
+      .max(30)
+      .optional(),
 
-    bloodGroup: z.string().trim().max(10).optional(),
+    bloodGroup: z
+      .string()
+      .trim()
+      .max(10)
+      .optional(),
 
-    previousSchool: z.string().trim().max(200).optional(),
+    previousSchool: z
+      .string()
+      .trim()
+      .max(200)
+      .optional(),
 
-    previousClass: z.string().trim().max(100).optional(),
+    previousClass: z
+      .string()
+      .trim()
+      .max(100)
+      .optional(),
 
     // Guardian Information
-    guardianName: z.string().trim().max(150).optional(),
+    guardianName: z
+      .string()
+      .trim()
+      .max(150)
+      .optional(),
 
     guardianEmail: z
       .string()
@@ -38,16 +58,36 @@ export const createAdmissionSchema = z.object({
       .email("Please provide a valid guardian email")
       .optional(),
 
-    guardianPhone: z.string().trim().max(30).optional(),
+    guardianPhone: z
+      .string()
+      .trim()
+      .max(30)
+      .optional(),
 
-    guardianRelationship: z.string().trim().max(50).optional(),
+    guardianRelationship: z
+      .string()
+      .trim()
+      .max(50)
+      .optional(),
 
-    guardianNid: z.string().trim().max(50).optional(),
+    guardianNid: z
+      .string()
+      .trim()
+      .max(50)
+      .optional(),
 
-    guardianOccupation: z.string().trim().max(100).optional(),
+    guardianOccupation: z
+      .string()
+      .trim()
+      .max(100)
+      .optional(),
 
     // Address
-    address: z.string().trim().max(500).optional(),
+    address: z
+      .string()
+      .trim()
+      .max(500)
+      .optional(),
 
     // Application Information
     classId: z.coerce
@@ -55,23 +95,39 @@ export const createAdmissionSchema = z.object({
       .int()
       .positive("Invalid class ID"),
 
-
     academicYear: z
       .string()
       .trim()
       .min(4, "Academic year is required")
       .max(20),
 
-    shift: z.string().trim().max(50).optional(),
+    shift: z
+      .string()
+      .trim()
+      .max(50)
+      .optional(),
 
-    group: z.string().trim().max(50).optional(),
+    group: z
+      .string()
+      .trim()
+      .max(50)
+      .optional(),
 
     // Documents
-    studentPhotoUrl: z.string().url().optional(),
+    studentPhotoUrl: z
+      .string()
+      .url()
+      .optional(),
 
-    birthCertificateUrl: z.string().url().optional(),
+    birthCertificateUrl: z
+      .string()
+      .url()
+      .optional(),
 
-    previousCertificateUrl: z.string().url().optional(),
+    previousCertificateUrl: z
+      .string()
+      .url()
+      .optional(),
 
     // Payment
     paymentMethod: z.enum(["CASH", "ONLINE"]),
@@ -94,8 +150,14 @@ export const verifyStudentEmailSchema = z.object({
 
     code: z
       .string()
-      .length(6, "Verification code must be 6 digits")
-      .regex(/^\d+$/, "Verification code must contain only numbers"),
+      .length(
+        6,
+        "Verification code must be 6 digits",
+      )
+      .regex(
+        /^\d+$/,
+        "Verification code must contain only numbers",
+      ),
   }),
 });
 
@@ -104,7 +166,10 @@ export const rejectAdmissionSchema = z.object({
     rejectionReason: z
       .string()
       .trim()
-      .min(5, "Rejection reason must be at least 5 characters")
+      .min(
+        5,
+        "Rejection reason must be at least 5 characters",
+      )
       .max(500),
   }),
 
@@ -143,6 +208,58 @@ export const confirmCashPaymentSchema = z.object({
   }),
 });
 
+/**
+ * Get Admissions
+ *
+ * Admin / Manager admission list filters.
+ */
+export const getAdmissionsSchema = z.object({
+  query: z.object({
+    page: z.coerce
+      .number()
+      .int()
+      .positive()
+      .optional(),
+
+    limit: z.coerce
+      .number()
+      .int()
+      .positive()
+      .max(100)
+      .optional(),
+
+    search: z
+      .string()
+      .trim()
+      .max(100)
+      .optional(),
+
+    status: z
+      .enum([
+        "PENDING",
+        "APPROVED",
+        "REJECTED",
+      ])
+      .optional(),
+
+    paymentStatus: z
+      .enum([
+        "PENDING",
+        "PAID",
+        "FAILED",
+        "CANCELLED",
+      ])
+      .optional(),
+  }),
+
+  params: z.object({
+    schoolId: z.coerce
+      .number()
+      .int()
+      .positive("Invalid school ID"),
+  }),
+});
+
 export const trackAdmissionSchema = z.object({
   applicationNo: z
     .string()
@@ -157,6 +274,6 @@ export const trackAdmissionSchema = z.object({
     .string()
     .trim()
     .email(
-      "Please enter a valid student email",
+      "Please provide a valid student email",
     ),
 });

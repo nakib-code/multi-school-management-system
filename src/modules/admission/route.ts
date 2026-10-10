@@ -1,11 +1,14 @@
 import { Router } from "express";
 
 import { UserRole } from "../../generated/prisma/enums.js";
+
 import {
   authenticate,
   authorize,
 } from "../../middleware/auth.js";
+
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
+
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
@@ -13,6 +16,7 @@ import {
   confirmCashPaymentController,
   createAdmissionController,
   getAdmissionByIdController,
+  getAdmissionsController,
   initiateOnlinePaymentController,
   paymentCancelController,
   paymentFailController,
@@ -26,6 +30,7 @@ import {
 import {
   confirmCashPaymentSchema,
   createAdmissionSchema,
+  getAdmissionsSchema,
   rejectAdmissionSchema,
   trackAdmissionSchema,
   verifyStudentEmailSchema,
@@ -53,6 +58,20 @@ router.post(
 // School Admission Management
 // ====================================================
 
+// Get Admissions
+router.get(
+  "/schools/:schoolId/admissions",
+  authenticate,
+  authorize(
+    UserRole.ADMIN,
+    UserRole.MANAGER,
+  ),
+  requireSchoolAccess,
+  validateRequest(getAdmissionsSchema),
+  getAdmissionsController,
+);
+
+// Get Admission By ID
 router.get(
   "/schools/:schoolId/admissions/:id",
   authenticate,
@@ -64,6 +83,7 @@ router.get(
   getAdmissionByIdController,
 );
 
+// Approve Admission
 router.patch(
   "/schools/:schoolId/admissions/:id/approve",
   authenticate,
@@ -75,6 +95,7 @@ router.patch(
   approveAdmissionController,
 );
 
+// Reject Admission
 router.patch(
   "/schools/:schoolId/admissions/:id/reject",
   authenticate,

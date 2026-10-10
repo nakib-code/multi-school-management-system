@@ -5,12 +5,12 @@ import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { getPaymentCallbackData } from "../payment/service.js";
-
 import {
   approveAdmission,
   confirmCashPayment,
   createAdmission,
   getAdmissionById,
+  getAdmissions,
   initiateOnlinePayment,
   rejectAdmission,
   trackAdmission,
@@ -64,6 +64,55 @@ export const verifyStudentEmailController = async (
 };
 
 // ==================================================
+// Get Admissions
+// ==================================================
+
+
+export const getAdmissionsController = async (
+  req: AuthRequest,
+  res: Response,
+) => {
+  const schoolId = Number(req.params.schoolId);
+
+  if (!Number.isInteger(schoolId) || schoolId <= 0) {
+    throw new AppError(400, "Invalid school ID");
+  }
+
+  const query = {
+    ...(req.query.page
+      ? { page: Number(req.query.page) }
+      : {}),
+
+    ...(req.query.limit
+      ? { limit: Number(req.query.limit) }
+      : {}),
+
+    ...(typeof req.query.search === "string"
+      ? { search: req.query.search }
+      : {}),
+
+    ...(typeof req.query.status === "string"
+      ? { status: req.query.status }
+      : {}),
+
+    ...(typeof req.query.paymentStatus === "string"
+      ? { paymentStatus: req.query.paymentStatus }
+      : {}),
+  };
+
+  const result = await getAdmissions(
+    schoolId,
+    query,
+  );
+
+  return sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Admissions fetched successfully",
+    data: result,
+  });
+};
+// ==================================================
 // Get Admission By ID
 // ==================================================
 
@@ -82,7 +131,10 @@ export const getAdmissionByIdController = async (
     throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await getAdmissionById(schoolId, admissionId);
+  const result = await getAdmissionById(
+    schoolId,
+    admissionId,
+  );
 
   return sendResponse(res, {
     statusCode: 200,
@@ -115,7 +167,11 @@ export const approveAdmissionController = async (
     throw new AppError(401, "Unauthorized");
   }
 
-  const result = await approveAdmission(schoolId, admissionId, req.user.userId);
+  const result = await approveAdmission(
+    schoolId,
+    admissionId,
+    req.user.userId,
+  );
 
   return sendResponse(res, {
     statusCode: 200,
@@ -220,7 +276,10 @@ export const initiateOnlinePaymentController = async (
     throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await initiateOnlinePayment(schoolId, admissionId);
+  const result = await initiateOnlinePayment(
+    schoolId,
+    admissionId,
+  );
 
   return sendResponse(res, {
     statusCode: 200,
@@ -234,18 +293,27 @@ export const initiateOnlinePaymentController = async (
 // SSLCommerz Success
 // ==================================================
 
-export const paymentSuccessController = async (req: Request, res: Response) => {
+export const paymentSuccessController = async (
+  req: Request,
+  res: Response,
+) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.val_id) {
-    throw new AppError(400, "SSLCommerz validation ID is missing");
+    throw new AppError(
+      400,
+      "SSLCommerz validation ID is missing",
+    );
   }
 
   if (!callbackData.tran_id) {
-    throw new AppError(400, "SSLCommerz transaction ID is missing");
+    throw new AppError(
+      400,
+      "SSLCommerz transaction ID is missing",
+    );
   }
 
   if (!callbackData.value_a) {
@@ -259,16 +327,24 @@ export const paymentSuccessController = async (req: Request, res: Response) => {
   }
 
   // Verify payment before redirecting
-  const result = await verifyOnlineAdmissionPayment(admissionId, callbackData);
+  const result = await verifyOnlineAdmissionPayment(
+    admissionId,
+    callbackData,
+  );
 
-  const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
+  const frontendUrl =
+    process.env.FRONTEND_URL ??
+    "http://localhost:3000";
 
   const params = new URLSearchParams({
     admissionId: String(result.admissionId),
   });
 
   if (result.transactionId) {
-    params.set("transactionId", result.transactionId);
+    params.set(
+      "transactionId",
+      result.transactionId,
+    );
   }
 
   return res.redirect(
@@ -281,14 +357,20 @@ export const paymentSuccessController = async (req: Request, res: Response) => {
 // SSLCommerz IPN
 // ==================================================
 
-export const paymentIpnController = async (req: Request, res: Response) => {
+export const paymentIpnController = async (
+  req: Request,
+  res: Response,
+) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.tran_id) {
-    throw new AppError(400, "SSLCommerz transaction ID is missing");
+    throw new AppError(
+      400,
+      "SSLCommerz transaction ID is missing",
+    );
   }
 
   if (!callbackData.value_a) {
@@ -301,7 +383,10 @@ export const paymentIpnController = async (req: Request, res: Response) => {
     throw new AppError(400, "Invalid admission ID");
   }
 
-  const result = await verifyOnlineAdmissionPayment(admissionId, callbackData);
+  const result = await verifyOnlineAdmissionPayment(
+    admissionId,
+    callbackData,
+  );
 
   return sendResponse(res, {
     statusCode: 200,
@@ -315,22 +400,29 @@ export const paymentIpnController = async (req: Request, res: Response) => {
 // SSLCommerz Fail
 // ==================================================
 
-export const paymentFailController = async (req: Request, res: Response) => {
+export const paymentFailController = async (
+  req: Request,
+  res: Response,
+) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.tran_id) {
-    throw new AppError(400, "SSLCommerz transaction ID is missing");
+    throw new AppError(
+      400,
+      "SSLCommerz transaction ID is missing",
+    );
   }
 
-  const payment = await prisma.admissionPayment.findFirst({
-    where: {
-      transactionId: callbackData.tran_id,
-      status: "PENDING",
-    },
-  });
+  const payment =
+    await prisma.admissionPayment.findFirst({
+      where: {
+        transactionId: callbackData.tran_id,
+        status: "PENDING",
+      },
+    });
 
   if (payment) {
     await prisma.admissionPayment.update({
@@ -344,7 +436,9 @@ export const paymentFailController = async (req: Request, res: Response) => {
     });
   }
 
-  const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
+  const frontendUrl =
+    process.env.FRONTEND_URL ??
+    "http://localhost:3000";
 
   const params = new URLSearchParams({
     transactionId: callbackData.tran_id,
@@ -360,22 +454,29 @@ export const paymentFailController = async (req: Request, res: Response) => {
 // SSLCommerz Cancel
 // ==================================================
 
-export const paymentCancelController = async (req: Request, res: Response) => {
+export const paymentCancelController = async (
+  req: Request,
+  res: Response,
+) => {
   const callbackData = getPaymentCallbackData({
     ...req.body,
     ...req.query,
   });
 
   if (!callbackData.tran_id) {
-    throw new AppError(400, "SSLCommerz transaction ID is missing");
+    throw new AppError(
+      400,
+      "SSLCommerz transaction ID is missing",
+    );
   }
 
-  const payment = await prisma.admissionPayment.findFirst({
-    where: {
-      transactionId: callbackData.tran_id,
-      status: "PENDING",
-    },
-  });
+  const payment =
+    await prisma.admissionPayment.findFirst({
+      where: {
+        transactionId: callbackData.tran_id,
+        status: "PENDING",
+      },
+    });
 
   if (payment) {
     await prisma.admissionPayment.update({
@@ -389,7 +490,9 @@ export const paymentCancelController = async (req: Request, res: Response) => {
     });
   }
 
-  const frontendUrl = process.env.FRONTEND_URL ?? "http://localhost:3000";
+  const frontendUrl =
+    process.env.FRONTEND_URL ??
+    "http://localhost:3000";
 
   const params = new URLSearchParams({
     transactionId: callbackData.tran_id,
@@ -410,11 +513,12 @@ export const trackAdmissionController = async (
   res: Response,
 ) => {
   const result = await trackAdmission({
-    applicationNo:
-      String(req.body.applicationNo ?? ""),
-
-    studentEmail:
-      String(req.body.studentEmail ?? ""),
+    applicationNo: String(
+      req.body.applicationNo ?? "",
+    ),
+    studentEmail: String(
+      req.body.studentEmail ?? "",
+    ),
   });
 
   return sendResponse(res, {
