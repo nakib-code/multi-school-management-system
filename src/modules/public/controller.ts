@@ -1,8 +1,7 @@
-// src/modules/public/controller.ts
-import { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse.js";
 import AppError from "../../utils/appError.js";
 import * as PublicService from "./service.js";
+import type { Request, Response } from "express";
 
 /* ---------- Helpers ---------- */
 const parseSchoolId = (value: unknown): number => {
