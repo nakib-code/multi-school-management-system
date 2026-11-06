@@ -1,0 +1,19 @@
+model SchoolPageContent {
+  id       Int    @id @default(autoincrement())
+  schoolId Int
+  slug     String  // "about", "mission", "admission-info", "principal-message"
+  title    String
+  content  String  @db.Text  // rich text/HTML
+
+  isPublished Boolean @default(true)
+  sortOrder   Int     @default(0)
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, slug])
+  @@index([schoolId, isPublished])
+  @@map("school_page_contents")
+}

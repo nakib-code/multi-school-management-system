@@ -1,0 +1,21 @@
+model SchoolNotice {
+  id       Int    @id @default(autoincrement())
+  schoolId Int
+
+  title       String
+  content     String  @db.Text
+  category    String? // "admission", "exam", "general", "holiday"
+  isPinned    Boolean @default(false)
+  isPublic    Boolean @default(true)
+
+  publishedAt DateTime @default(now())
+  expiresAt   DateTime?
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId, isPublic, publishedAt])
+  @@map("school_notices")
+}

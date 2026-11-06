@@ -1,9 +1,14 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
+import swaggerUi from "swagger-ui-express";
+
 import env from "./config/env.js";
+import { swaggerSpec } from "./config/swagger.js";
+
 import { errorHandler } from "./middleware/errorHandler.js";
 import { notFound } from "./middleware/notFound.js";
+
 import { admissionRoutes } from "./modules/admission/route.js";
 import { authRoutes } from "./modules/auth/route.js";
 import { customPackageRequestRouter } from "./modules/customPackageRequest/customPackageRequest.route.js";
@@ -21,18 +26,15 @@ import { reportRoutes } from "./modules/report/route.js";
 import { classRoutes } from "./modules/class/route.js";
 import { sectionRoutes } from "./modules/section/route.js";
 import { publicRoutes } from "./modules/public/route.js";
-import swaggerUi from "swagger-ui-express";
-import { swaggerSpec } from "./config/swagger.js";
 
 const app = express();
 
 // Global middleware
-
 app.use(
-	cors({
-		origin: env.frontend_url,
-		credentials: true,
-	}),
+  cors({
+    origin: env.frontend_url,
+    credentials: true,
+  }),
 );
 
 app.use(express.json());
@@ -40,12 +42,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Root
-
 app.get("/", (_req, res) => {
-	res.status(200).json({
-		success: true,
-		message: "Multi-School Management System API API is running",
-	});
+  res.status(200).json({
+    success: true,
+    message: "Multi-School Management System API is running",
+  });
 });
 
 app.use(
@@ -53,17 +54,16 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerSpec),
 );
-// Health check
 
+// Health check
 app.get("/api/v1/health", (_req, res) => {
-	res.status(200).json({
-		success: true,
-		message: "Multi-School Management System API API is running",
-	});
+  res.status(200).json({
+    success: true,
+    message: "Multi-School Management System API is running",
+  });
 });
 
-// API v1
-
+// API v1 routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1", admissionRoutes);
 app.use("/api/v1/schools", schoolRoutes);
@@ -82,12 +82,10 @@ app.use("/api/v1", classRoutes);
 app.use("/api/v1", sectionRoutes);
 app.use("/api/v1/public", publicRoutes);
 
-// 404
-
+// 404 handler
 app.use(notFound);
 
 // Global error handler
-
 app.use(errorHandler);
 
 export default app;

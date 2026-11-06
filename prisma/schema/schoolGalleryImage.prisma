@@ -1,0 +1,17 @@
+model SchoolGalleryImage {
+  id       Int    @id @default(autoincrement())
+  schoolId Int
+
+  url      String
+  caption  String?
+  category String?  // "campus", "events", "classroom"
+  sortOrder Int     @default(0)
+  isPublic  Boolean @default(true)
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([schoolId, isPublic])
+  @@map("school_gallery_images")
+}

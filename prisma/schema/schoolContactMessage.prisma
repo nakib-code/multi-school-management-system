@@ -1,0 +1,21 @@
+model SchoolContactMessage {
+  id       Int    @id @default(autoincrement())
+  schoolId Int
+
+  name    String
+  email   String
+  phone   String?
+  subject String?
+  message String  @db.Text
+
+  isRead    Boolean @default(false)
+  ipAddress String?
+  userAgent String?
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([schoolId, isRead])
+  @@map("school_contact_messages")
+}

@@ -49,6 +49,35 @@ model School {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+    // ---- নতুন যোগ হচ্ছে Landing Page-এর জন্য ----
+  subdomain               String?  @unique
+  customDomain            String?  @unique
+  domainVerified          Boolean  @default(false)
+  domainVerificationToken String?
+
+  // Branding
+  tagline     String?   // "Excellence in Islamic Education"
+  description String?   @db.Text
+  primaryColor String?  @default("#0F766E")  // Islamic green
+  secondaryColor String? @default("#F59E0B")
+
+  // Contact info (footer-এর জন্য)
+  contactEmail   String?
+  contactPhone   String?
+  contactAddress String?  @db.Text
+  facebookUrl    String?
+  youtubeUrl     String?
+  mapEmbedUrl    String?  @db.Text
+
+  // Landing page content relations
+  pageContents   SchoolPageContent[]
+  notices        SchoolNotice[]
+  galleryImages  SchoolGalleryImage[]
+  contactMessages SchoolContactMessage[]
+
+  @@index([subdomain])
+  @@index([customDomain])
+
   @@index([name])
   @@index([selectedPackageId])
   @@map("schools")
