@@ -7,6 +7,7 @@ dotenv.config({
 
 export default {
 	database_url: process.env.DATABASE_URL as string,
+	redis_url: process.env.REDIS_URL as string,
 	port: process.env.PORT,
 	jwt_secret: process.env.JWT_SECRET as string,
 	node_env: process.env.NODE_ENV as string,

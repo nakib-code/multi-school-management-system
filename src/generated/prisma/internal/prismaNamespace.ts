@@ -414,6 +414,10 @@ export const ModelName = {
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
+  SchoolContactMessage: 'SchoolContactMessage',
+  SchoolGalleryImage: 'SchoolGalleryImage',
+  SchoolNotice: 'SchoolNotice',
+  SchoolPageContent: 'SchoolPageContent',
   SchoolSetting: 'SchoolSetting',
   SchoolSubscription: 'SchoolSubscription',
   Section: 'Section',
@@ -441,7 +445,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "customPackageRequest" | "customPackageRequestFeature" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "package" | "packageFeatureConfig" | "result" | "salaryPayment" | "school" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "customPackageRequest" | "customPackageRequestFeature" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "package" | "packageFeatureConfig" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1703,6 +1707,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SchoolContactMessage: {
+      payload: Prisma.$SchoolContactMessagePayload<ExtArgs>
+      fields: Prisma.SchoolContactMessageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolContactMessageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolContactMessageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolContactMessageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolContactMessageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>
+        }
+        findMany: {
+          args: Prisma.SchoolContactMessageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>[]
+        }
+        create: {
+          args: Prisma.SchoolContactMessageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>
+        }
+        createMany: {
+          args: Prisma.SchoolContactMessageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolContactMessageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolContactMessageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>
+        }
+        update: {
+          args: Prisma.SchoolContactMessageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolContactMessageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolContactMessageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolContactMessageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolContactMessageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolContactMessagePayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolContactMessageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolContactMessage>
+        }
+        groupBy: {
+          args: Prisma.SchoolContactMessageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolContactMessageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolContactMessageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolContactMessageCountAggregateOutputType> | number
+        }
+      }
+    }
+    SchoolGalleryImage: {
+      payload: Prisma.$SchoolGalleryImagePayload<ExtArgs>
+      fields: Prisma.SchoolGalleryImageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolGalleryImageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolGalleryImageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolGalleryImageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolGalleryImageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>
+        }
+        findMany: {
+          args: Prisma.SchoolGalleryImageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>[]
+        }
+        create: {
+          args: Prisma.SchoolGalleryImageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>
+        }
+        createMany: {
+          args: Prisma.SchoolGalleryImageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolGalleryImageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolGalleryImageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>
+        }
+        update: {
+          args: Prisma.SchoolGalleryImageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolGalleryImageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolGalleryImageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolGalleryImageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolGalleryImageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolGalleryImagePayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolGalleryImageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolGalleryImage>
+        }
+        groupBy: {
+          args: Prisma.SchoolGalleryImageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolGalleryImageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolGalleryImageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolGalleryImageCountAggregateOutputType> | number
+        }
+      }
+    }
+    SchoolNotice: {
+      payload: Prisma.$SchoolNoticePayload<ExtArgs>
+      fields: Prisma.SchoolNoticeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolNoticeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolNoticeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolNoticeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolNoticeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>
+        }
+        findMany: {
+          args: Prisma.SchoolNoticeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>[]
+        }
+        create: {
+          args: Prisma.SchoolNoticeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>
+        }
+        createMany: {
+          args: Prisma.SchoolNoticeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolNoticeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolNoticeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>
+        }
+        update: {
+          args: Prisma.SchoolNoticeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolNoticeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolNoticeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolNoticeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolNoticeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolNoticePayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolNoticeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolNotice>
+        }
+        groupBy: {
+          args: Prisma.SchoolNoticeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolNoticeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolNoticeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolNoticeCountAggregateOutputType> | number
+        }
+      }
+    }
+    SchoolPageContent: {
+      payload: Prisma.$SchoolPageContentPayload<ExtArgs>
+      fields: Prisma.SchoolPageContentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolPageContentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolPageContentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolPageContentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolPageContentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>
+        }
+        findMany: {
+          args: Prisma.SchoolPageContentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>[]
+        }
+        create: {
+          args: Prisma.SchoolPageContentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>
+        }
+        createMany: {
+          args: Prisma.SchoolPageContentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolPageContentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolPageContentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>
+        }
+        update: {
+          args: Prisma.SchoolPageContentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolPageContentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolPageContentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolPageContentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolPageContentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolPageContentPayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolPageContentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolPageContent>
+        }
+        groupBy: {
+          args: Prisma.SchoolPageContentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolPageContentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolPageContentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolPageContentCountAggregateOutputType> | number
+        }
+      }
+    }
     SchoolSetting: {
       payload: Prisma.$SchoolSettingPayload<ExtArgs>
       fields: Prisma.SchoolSettingFieldRefs
@@ -2923,10 +3223,87 @@ export const SchoolScalarFieldEnum = {
   adminEmailVerified: 'adminEmailVerified',
   selectedPackageId: 'selectedPackageId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  subdomain: 'subdomain',
+  customDomain: 'customDomain',
+  domainVerified: 'domainVerified',
+  domainVerificationToken: 'domainVerificationToken',
+  tagline: 'tagline',
+  description: 'description',
+  primaryColor: 'primaryColor',
+  secondaryColor: 'secondaryColor',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  contactAddress: 'contactAddress',
+  facebookUrl: 'facebookUrl',
+  youtubeUrl: 'youtubeUrl',
+  mapEmbedUrl: 'mapEmbedUrl'
 } as const
 
 export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
+
+
+export const SchoolContactMessageScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  subject: 'subject',
+  message: 'message',
+  isRead: 'isRead',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type SchoolContactMessageScalarFieldEnum = (typeof SchoolContactMessageScalarFieldEnum)[keyof typeof SchoolContactMessageScalarFieldEnum]
+
+
+export const SchoolGalleryImageScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  url: 'url',
+  caption: 'caption',
+  category: 'category',
+  sortOrder: 'sortOrder',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt'
+} as const
+
+export type SchoolGalleryImageScalarFieldEnum = (typeof SchoolGalleryImageScalarFieldEnum)[keyof typeof SchoolGalleryImageScalarFieldEnum]
+
+
+export const SchoolNoticeScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  title: 'title',
+  content: 'content',
+  category: 'category',
+  isPinned: 'isPinned',
+  isPublic: 'isPublic',
+  publishedAt: 'publishedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolNoticeScalarFieldEnum = (typeof SchoolNoticeScalarFieldEnum)[keyof typeof SchoolNoticeScalarFieldEnum]
+
+
+export const SchoolPageContentScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  slug: 'slug',
+  title: 'title',
+  content: 'content',
+  isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolPageContentScalarFieldEnum = (typeof SchoolPageContentScalarFieldEnum)[keyof typeof SchoolPageContentScalarFieldEnum]
 
 
 export const SchoolSettingScalarFieldEnum = {
@@ -3764,6 +4141,10 @@ export type GlobalOmitConfig = {
   result?: Prisma.ResultOmit
   salaryPayment?: Prisma.SalaryPaymentOmit
   school?: Prisma.SchoolOmit
+  schoolContactMessage?: Prisma.SchoolContactMessageOmit
+  schoolGalleryImage?: Prisma.SchoolGalleryImageOmit
+  schoolNotice?: Prisma.SchoolNoticeOmit
+  schoolPageContent?: Prisma.SchoolPageContentOmit
   schoolSetting?: Prisma.SchoolSettingOmit
   schoolSubscription?: Prisma.SchoolSubscriptionOmit
   section?: Prisma.SectionOmit

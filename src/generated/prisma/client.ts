@@ -127,6 +127,26 @@ export type SalaryPayment = Prisma.SalaryPaymentModel
  */
 export type School = Prisma.SchoolModel
 /**
+ * Model SchoolContactMessage
+ * 
+ */
+export type SchoolContactMessage = Prisma.SchoolContactMessageModel
+/**
+ * Model SchoolGalleryImage
+ * 
+ */
+export type SchoolGalleryImage = Prisma.SchoolGalleryImageModel
+/**
+ * Model SchoolNotice
+ * 
+ */
+export type SchoolNotice = Prisma.SchoolNoticeModel
+/**
+ * Model SchoolPageContent
+ * 
+ */
+export type SchoolPageContent = Prisma.SchoolPageContentModel
+/**
  * Model SchoolSetting
  * 
  */

@@ -25,6 +25,7 @@ import { userRoutes } from "./modules/user/route.js";
 import { reportRoutes } from "./modules/report/route.js";
 import { classRoutes } from "./modules/class/route.js";
 import { sectionRoutes } from "./modules/section/route.js";
+
 import { publicRoutes } from "./modules/public/route.js";
 
 const app = express();

@@ -68,6 +68,10 @@ export const ModelName = {
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
+  SchoolContactMessage: 'SchoolContactMessage',
+  SchoolGalleryImage: 'SchoolGalleryImage',
+  SchoolNotice: 'SchoolNotice',
+  SchoolPageContent: 'SchoolPageContent',
   SchoolSetting: 'SchoolSetting',
   SchoolSubscription: 'SchoolSubscription',
   Section: 'Section',
@@ -391,10 +395,87 @@ export const SchoolScalarFieldEnum = {
   adminEmailVerified: 'adminEmailVerified',
   selectedPackageId: 'selectedPackageId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  subdomain: 'subdomain',
+  customDomain: 'customDomain',
+  domainVerified: 'domainVerified',
+  domainVerificationToken: 'domainVerificationToken',
+  tagline: 'tagline',
+  description: 'description',
+  primaryColor: 'primaryColor',
+  secondaryColor: 'secondaryColor',
+  contactEmail: 'contactEmail',
+  contactPhone: 'contactPhone',
+  contactAddress: 'contactAddress',
+  facebookUrl: 'facebookUrl',
+  youtubeUrl: 'youtubeUrl',
+  mapEmbedUrl: 'mapEmbedUrl'
 } as const
 
 export type SchoolScalarFieldEnum = (typeof SchoolScalarFieldEnum)[keyof typeof SchoolScalarFieldEnum]
+
+
+export const SchoolContactMessageScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  subject: 'subject',
+  message: 'message',
+  isRead: 'isRead',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type SchoolContactMessageScalarFieldEnum = (typeof SchoolContactMessageScalarFieldEnum)[keyof typeof SchoolContactMessageScalarFieldEnum]
+
+
+export const SchoolGalleryImageScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  url: 'url',
+  caption: 'caption',
+  category: 'category',
+  sortOrder: 'sortOrder',
+  isPublic: 'isPublic',
+  createdAt: 'createdAt'
+} as const
+
+export type SchoolGalleryImageScalarFieldEnum = (typeof SchoolGalleryImageScalarFieldEnum)[keyof typeof SchoolGalleryImageScalarFieldEnum]
+
+
+export const SchoolNoticeScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  title: 'title',
+  content: 'content',
+  category: 'category',
+  isPinned: 'isPinned',
+  isPublic: 'isPublic',
+  publishedAt: 'publishedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolNoticeScalarFieldEnum = (typeof SchoolNoticeScalarFieldEnum)[keyof typeof SchoolNoticeScalarFieldEnum]
+
+
+export const SchoolPageContentScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  slug: 'slug',
+  title: 'title',
+  content: 'content',
+  isPublished: 'isPublished',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolPageContentScalarFieldEnum = (typeof SchoolPageContentScalarFieldEnum)[keyof typeof SchoolPageContentScalarFieldEnum]
 
 
 export const SchoolSettingScalarFieldEnum = {

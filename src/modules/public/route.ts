@@ -76,4 +76,26 @@ router.get(
   },
 );
 
+
+router.get(
+  '/schools/resolve',
+  validateRequest(schoolResolveSchema),
+  PublicController.resolveSchool
+)
+
+// ---- School-scoped public data ----
+router.get('/schools/:schoolId/page/:slug', PublicController.getPageContent)
+router.get('/schools/:schoolId/notices', PublicController.getNotices)
+router.get('/schools/:schoolId/notices/:id', PublicController.getNoticeById)
+router.get('/schools/:schoolId/gallery', PublicController.getGallery)
+router.get('/schools/:schoolId/stats', PublicController.getStats)
+
+router.post(
+  '/schools/:schoolId/contact',
+  validateRequest(contactFormSchema),
+  PublicController.submitContact
+)
+
 export const publicRoutes = router;
+
+
