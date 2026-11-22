@@ -4,26 +4,23 @@ model SubscriptionPayment {
   subscriptionId Int
   schoolId       Int
 
-  amount   Decimal @db.Decimal(10, 2)
-  currency String  @default("BDT")
+  paymentMethod  SubscriptionPaymentMethod
+  senderNumber   String
+  receiverNumber String?
+  trxId          String                    @unique
+  paidAmount     Decimal                   @db.Decimal(10, 2)
+  currency       String                    @default("BDT")
+  status         SubscriptionPaymentStatus @default(PENDING)
 
-  status SubscriptionPaymentStatus @default(PENDING)
-
-  paymentMethod SubscriptionPaymentMethod @default(ONLINE)
-
-  transactionId String? @unique
-  validationId  String? @unique
-
-  gatewayAmount   Decimal? @db.Decimal(10, 2)
-  gatewayCurrency String?
-
-  paidAt DateTime?
-
-  remarks String?
+  paidAt          DateTime  @default(now())
+  verifiedById    Int?
+  verifiedAt      DateTime?
+  rejectionReason String?
+  remarks         String?
 
   subscription SchoolSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-
-  school School @relation(fields: [schoolId], references: [id])
+  school       School             @relation(fields: [schoolId], references: [id])
+  verifiedBy   User?              @relation("SubscriptionPaymentVerifier", fields: [verifiedById], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

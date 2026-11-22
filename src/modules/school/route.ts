@@ -8,14 +8,14 @@ import {
 	blockSchoolController,
 	createSchoolController,
 	deleteSchoolController,
+	getPublicSchoolByIdController,
+	getPublicSchoolsController,
 	getSchoolsController,
 	getSchoolUserSummaryController,
 	getSchoolUsersController,
 	rejectSchoolController,
 	unblockSchoolController,
 	verifyAdminEmailController,
-	getPublicSchoolByIdController,
-	getPublicSchoolsController,
 } from "./controller.js";
 
 import {
@@ -142,7 +142,6 @@ router.delete(
 	deleteSchoolController,
 );
 
-
 /**
  * =========================================================
  * PUBLIC - SCHOOL DETAILS
@@ -152,9 +151,9 @@ router.delete(
  */
 
 router.get(
-        "/:id/public",
-        validateRequest(schoolIdParamsSchema),
-        getPublicSchoolByIdController,
+	"/:id/public",
+	validateRequest(schoolIdParamsSchema),
+	getPublicSchoolByIdController,
 );
 
 /**
@@ -165,9 +164,6 @@ router.get(
  * GET /api/v1/schools/public
  */
 
-router.get(
-        "/public",
-        getPublicSchoolsController,
-);
+router.get("/public", getPublicSchoolsController);
 
 export const schoolRoutes = router;

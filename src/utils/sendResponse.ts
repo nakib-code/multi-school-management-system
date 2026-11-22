@@ -5,16 +5,24 @@ interface SendResponseData<T> {
 	success?: boolean;
 	message: string;
 	data?: T;
+	meta?: Record<string, unknown>;
 }
 
 const sendResponse = <T>(
 	res: Response,
-	{ statusCode = 200, success = true, message, data }: SendResponseData<T>,
+	{
+		statusCode = 200,
+		success = true,
+		message,
+		data,
+		meta,
+	}: SendResponseData<T>,
 ) => {
 	return res.status(statusCode).json({
 		success,
 		message,
 		data,
+		...(meta !== undefined ? { meta } : {}),
 	});
 };
 

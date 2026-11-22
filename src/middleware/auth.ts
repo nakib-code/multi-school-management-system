@@ -7,7 +7,7 @@ import { verifyToken } from "../utils/jwt.js";
 export interface AuthRequest extends Request {
 	user?: {
 		userId: number;
-		role: "SUPER_ADMIN" | "ADMIN" | "MANAGER" | "TEACHER" | "STUDENT";
+		role: UserRole;
 		schoolId?: number;
 	};
 }

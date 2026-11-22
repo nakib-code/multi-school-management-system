@@ -1,116 +1,89 @@
 import { Router } from "express";
 
 import { UserRole } from "../../generated/prisma/client.js";
-
 import { authenticate, authorize } from "../../middleware/auth.js";
-
 import { validateRequest } from "../../middleware/validateRequest.js";
-
 import {
-	approveCashSubscriptionPaymentController,
-	getPendingCashPaymentsController,
+	getPendingSubscriptionPaymentsController,
 	getSubscriptionPaymentHistoryController,
 	getSubscriptionPaymentSummaryController,
-	initiateSubscriptionPaymentController,
-	rejectCashSubscriptionPaymentController,
-	requestCashSubscriptionPaymentController,
-	subscriptionPaymentCancelController,
-	subscriptionPaymentFailController,
-	subscriptionPaymentIpnController,
-	subscriptionPaymentSuccessController,
+	rejectSubscriptionPaymentController,
+	submitManualSubscriptionPaymentController,
+	verifySubscriptionPaymentController,
 } from "./controller.js";
-
-import { subscriptionIdParamsSchema } from "./validation.js";
+import {
+	paymentIdParamsSchema,
+	rejectSubscriptionPaymentSchema,
+	submitSubscriptionPaymentSchema,
+	subscriptionPaymentFilterQuerySchema,
+} from "./validation.js";
 
 const router = Router();
 
 // ====================================================
-// ADMIN - ONLINE SUBSCRIPTION PAYMENT
+// SCHOOL ADMIN - MANUAL bKash / Nagad / Rocket PAYMENT
 // ====================================================
 
 router.post(
-  "/subscriptions/:subscriptionId/pay",
-  authenticate,
-  authorize(UserRole.ADMIN),
-  validateRequest(subscriptionIdParamsSchema),
-  initiateSubscriptionPaymentController,
-);
-
-// ====================================================
-// SSLCommerz CALLBACKS
-// ====================================================
-
-// IMPORTANT:
-// These routes must NOT use authenticate/authorize.
-// SSLCommerz calls these endpoints directly.
-
-router.post(
-	"/payments/subscription/success",
-	subscriptionPaymentSuccessController,
-);
-
-router.post("/payments/subscription/fail", subscriptionPaymentFailController);
-
-router.post(
-	"/payments/subscription/cancel",
-	subscriptionPaymentCancelController,
-);
-
-router.post("/payments/subscription/ipn", subscriptionPaymentIpnController);
-
-// ====================================================
-// ADMIN - CASH PAYMENT
-// ====================================================
-
-router.post(
-	"/subscriptions/:subscriptionId/cash-payment",
+	"/subscriptions/:subscriptionId/payments",
 	authenticate,
 	authorize(UserRole.ADMIN),
-	validateRequest(subscriptionIdParamsSchema),
-	requestCashSubscriptionPaymentController,
+	validateRequest(submitSubscriptionPaymentSchema),
+	submitManualSubscriptionPaymentController,
+);
+
+router.post(
+	"/subscriptions/:subscriptionId/pay",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	validateRequest(submitSubscriptionPaymentSchema),
+	submitManualSubscriptionPaymentController,
 );
 
 // ====================================================
-// SUPER ADMIN - CASH PAYMENT MANAGEMENT
+// SUPER ADMIN - VERIFY / REJECT MANUAL PAYMENTS
 // ====================================================
 
 router.get(
-	"/payments/subscription/cash/pending",
+	"/payments/subscription/pending",
 	authenticate,
 	authorize(UserRole.SUPER_ADMIN),
-	getPendingCashPaymentsController,
+	getPendingSubscriptionPaymentsController,
 );
 
 router.patch(
-	"/payments/subscription/cash/:paymentId/approve",
+	"/payments/subscription/:paymentId/verify",
 	authenticate,
 	authorize(UserRole.SUPER_ADMIN),
-	approveCashSubscriptionPaymentController,
+	validateRequest(paymentIdParamsSchema),
+	verifySubscriptionPaymentController,
 );
 
 router.patch(
-	"/payments/subscription/cash/:paymentId/reject",
+	"/payments/subscription/:paymentId/reject",
 	authenticate,
 	authorize(UserRole.SUPER_ADMIN),
-	rejectCashSubscriptionPaymentController,
+	validateRequest(rejectSubscriptionPaymentSchema),
+	rejectSubscriptionPaymentController,
 );
-
 
 // ====================================================
 // SUPER ADMIN - PAYMENT OVERVIEW
 // ====================================================
 
 router.get(
-        "/payments/subscription/summary",
-        authenticate,
-        authorize(UserRole.SUPER_ADMIN),
-        getSubscriptionPaymentSummaryController,
+	"/payments/subscription/summary",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	getSubscriptionPaymentSummaryController,
 );
 
 router.get(
-        "/payments/subscription/history",
-        authenticate,
-        authorize(UserRole.SUPER_ADMIN),
-        getSubscriptionPaymentHistoryController,
+	"/payments/subscription/history",
+	authenticate,
+	authorize(UserRole.SUPER_ADMIN),
+	validateRequest(subscriptionPaymentFilterQuerySchema),
+	getSubscriptionPaymentHistoryController,
 );
+
 export const subscriptionPaymentRoutes = router;

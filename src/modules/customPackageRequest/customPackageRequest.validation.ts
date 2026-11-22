@@ -17,6 +17,8 @@ const packageFeatures = [
 	"TEACHER_SALARY",
 	"REPORTS",
 	"NOTIFICATIONS",
+	"KINDERGARTEN_MODULE",
+	"HEFZ_MODULE",
 ] as const;
 
 const billingCycles = ["MONTHLY", "YEARLY", "CUSTOM"] as const;

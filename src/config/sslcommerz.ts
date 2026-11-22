@@ -1,13 +1,16 @@
-import SSLCommerzPayment from "sslcommerz-lts";
 import env from "./env.js";
 
-const storeId = env.sslcz_store_id;
-const storePassword = env.sslcz_store_password;
-const isLive = env.sslcz_is_live;
+export type ManualMobilePaymentMethod = "BKASH" | "NAGAD" | "ROCKET";
 
-export const sslcommerz = new SSLCommerzPayment(storeId, storePassword, isLive);
-console.log("SSLCommerz config:", {
-	storeId: storeId ? "SET" : "MISSING",
-	storePassword: storePassword ? "SET" : "MISSING",
-	isLive,
-});
+export const platformMobileBankingConfig: Record<
+	ManualMobilePaymentMethod,
+	string | undefined
+> = {
+	BKASH: env.platform_bkash_number,
+	NAGAD: env.platform_nagad_number,
+	ROCKET: env.platform_rocket_number,
+};
+
+export const getPlatformReceiverNumber = (
+	method: ManualMobilePaymentMethod,
+): string | undefined => platformMobileBankingConfig[method];

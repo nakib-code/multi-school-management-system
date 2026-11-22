@@ -408,6 +408,8 @@ export const ModelName = {
   Exam: 'Exam',
   Guardian: 'Guardian',
   GuardianStudent: 'GuardianStudent',
+  HefzDailyLog: 'HefzDailyLog',
+  HefzEnrollment: 'HefzEnrollment',
   Manager: 'Manager',
   Package: 'Package',
   PackageFeatureConfig: 'PackageFeatureConfig',
@@ -445,7 +447,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "customPackageRequest" | "customPackageRequestFeature" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "manager" | "package" | "packageFeatureConfig" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "schoolClass" | "customPackageRequest" | "customPackageRequestFeature" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "package" | "packageFeatureConfig" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1260,6 +1262,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.GuardianStudentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.GuardianStudentCountAggregateOutputType> | number
+        }
+      }
+    }
+    HefzDailyLog: {
+      payload: Prisma.$HefzDailyLogPayload<ExtArgs>
+      fields: Prisma.HefzDailyLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HefzDailyLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HefzDailyLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>
+        }
+        findFirst: {
+          args: Prisma.HefzDailyLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HefzDailyLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>
+        }
+        findMany: {
+          args: Prisma.HefzDailyLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>[]
+        }
+        create: {
+          args: Prisma.HefzDailyLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>
+        }
+        createMany: {
+          args: Prisma.HefzDailyLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HefzDailyLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>[]
+        }
+        delete: {
+          args: Prisma.HefzDailyLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>
+        }
+        update: {
+          args: Prisma.HefzDailyLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.HefzDailyLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HefzDailyLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HefzDailyLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.HefzDailyLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzDailyLogPayload>
+        }
+        aggregate: {
+          args: Prisma.HefzDailyLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHefzDailyLog>
+        }
+        groupBy: {
+          args: Prisma.HefzDailyLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HefzDailyLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HefzDailyLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HefzDailyLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    HefzEnrollment: {
+      payload: Prisma.$HefzEnrollmentPayload<ExtArgs>
+      fields: Prisma.HefzEnrollmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HefzEnrollmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HefzEnrollmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>
+        }
+        findFirst: {
+          args: Prisma.HefzEnrollmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HefzEnrollmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>
+        }
+        findMany: {
+          args: Prisma.HefzEnrollmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>[]
+        }
+        create: {
+          args: Prisma.HefzEnrollmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>
+        }
+        createMany: {
+          args: Prisma.HefzEnrollmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HefzEnrollmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>[]
+        }
+        delete: {
+          args: Prisma.HefzEnrollmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>
+        }
+        update: {
+          args: Prisma.HefzEnrollmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.HefzEnrollmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HefzEnrollmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HefzEnrollmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.HefzEnrollmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HefzEnrollmentPayload>
+        }
+        aggregate: {
+          args: Prisma.HefzEnrollmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHefzEnrollment>
+        }
+        groupBy: {
+          args: Prisma.HefzEnrollmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HefzEnrollmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HefzEnrollmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HefzEnrollmentCountAggregateOutputType> | number
         }
       }
     }
@@ -3121,6 +3271,43 @@ export const GuardianStudentScalarFieldEnum = {
 export type GuardianStudentScalarFieldEnum = (typeof GuardianStudentScalarFieldEnum)[keyof typeof GuardianStudentScalarFieldEnum]
 
 
+export const HefzDailyLogScalarFieldEnum = {
+  id: 'id',
+  hefzEnrollmentId: 'hefzEnrollmentId',
+  schoolId: 'schoolId',
+  logDate: 'logDate',
+  sobok: 'sobok',
+  sobokPagesOrLines: 'sobokPagesOrLines',
+  sobokQuality: 'sobokQuality',
+  sobokAm: 'sobokAm',
+  manzil: 'manzil',
+  manzilParas: 'manzilParas',
+  attendanceStatus: 'attendanceStatus',
+  ustadNote: 'ustadNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HefzDailyLogScalarFieldEnum = (typeof HefzDailyLogScalarFieldEnum)[keyof typeof HefzDailyLogScalarFieldEnum]
+
+
+export const HefzEnrollmentScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  ustadId: 'ustadId',
+  wing: 'wing',
+  currentPara: 'currentPara',
+  currentSurah: 'currentSurah',
+  startDate: 'startDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HefzEnrollmentScalarFieldEnum = (typeof HefzEnrollmentScalarFieldEnum)[keyof typeof HefzEnrollmentScalarFieldEnum]
+
+
 export const ManagerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -3310,6 +3497,9 @@ export const SchoolSettingScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   admissionFee: 'admissionFee',
+  bkashNumber: 'bkashNumber',
+  nagadNumber: 'nagadNumber',
+  rocketNumber: 'rocketNumber',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3372,12 +3562,16 @@ export const StudentPaymentScalarFieldEnum = {
   schoolId: 'schoolId',
   studentId: 'studentId',
   feeId: 'feeId',
-  transactionId: 'transactionId',
-  amount: 'amount',
   paymentMethod: 'paymentMethod',
+  senderNumber: 'senderNumber',
+  receiverNumber: 'receiverNumber',
+  trxId: 'trxId',
+  paidAmount: 'paidAmount',
   status: 'status',
   paidAt: 'paidAt',
-  receivedBy: 'receivedBy',
+  verifiedById: 'verifiedById',
+  verifiedAt: 'verifiedAt',
+  rejectionReason: 'rejectionReason',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3426,15 +3620,17 @@ export const SubscriptionPaymentScalarFieldEnum = {
   id: 'id',
   subscriptionId: 'subscriptionId',
   schoolId: 'schoolId',
-  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  senderNumber: 'senderNumber',
+  receiverNumber: 'receiverNumber',
+  trxId: 'trxId',
+  paidAmount: 'paidAmount',
   currency: 'currency',
   status: 'status',
-  paymentMethod: 'paymentMethod',
-  transactionId: 'transactionId',
-  validationId: 'validationId',
-  gatewayAmount: 'gatewayAmount',
-  gatewayCurrency: 'gatewayCurrency',
   paidAt: 'paidAt',
+  verifiedById: 'verifiedById',
+  verifiedAt: 'verifiedAt',
+  rejectionReason: 'rejectionReason',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -3765,6 +3961,62 @@ export type ListEnumExamStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$P
 
 
 /**
+ * Reference to a field of type 'SobokQuality'
+ */
+export type EnumSobokQualityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SobokQuality'>
+    
+
+
+/**
+ * Reference to a field of type 'SobokQuality[]'
+ */
+export type ListEnumSobokQualityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SobokQuality[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzAttendanceStatus'
+ */
+export type EnumHefzAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzAttendanceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzAttendanceStatus[]'
+ */
+export type ListEnumHefzAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzAttendanceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzWing'
+ */
+export type EnumHefzWingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzWing'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzWing[]'
+ */
+export type ListEnumHefzWingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzWing[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzEnrollmentStatus'
+ */
+export type EnumHefzEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzEnrollmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzEnrollmentStatus[]'
+ */
+export type ListEnumHefzEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzEnrollmentStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Grade'
  */
 export type EnumGradeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Grade'>
@@ -3891,20 +4143,6 @@ export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType
 
 
 /**
- * Reference to a field of type 'SubscriptionPaymentStatus'
- */
-export type EnumSubscriptionPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPaymentStatus'>
-    
-
-
-/**
- * Reference to a field of type 'SubscriptionPaymentStatus[]'
- */
-export type ListEnumSubscriptionPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPaymentStatus[]'>
-    
-
-
-/**
  * Reference to a field of type 'SubscriptionPaymentMethod'
  */
 export type EnumSubscriptionPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPaymentMethod'>
@@ -3915,6 +4153,20 @@ export type EnumSubscriptionPaymentMethodFieldRefInput<$PrismaModel> = FieldRefI
  * Reference to a field of type 'SubscriptionPaymentMethod[]'
  */
 export type ListEnumSubscriptionPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPaymentMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionPaymentStatus'
+ */
+export type EnumSubscriptionPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionPaymentStatus[]'
+ */
+export type ListEnumSubscriptionPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPaymentStatus[]'>
     
 
 
@@ -4135,6 +4387,8 @@ export type GlobalOmitConfig = {
   exam?: Prisma.ExamOmit
   guardian?: Prisma.GuardianOmit
   guardianStudent?: Prisma.GuardianStudentOmit
+  hefzDailyLog?: Prisma.HefzDailyLogOmit
+  hefzEnrollment?: Prisma.HefzEnrollmentOmit
   manager?: Prisma.ManagerOmit
   package?: Prisma.PackageOmit
   packageFeatureConfig?: Prisma.PackageFeatureConfigOmit

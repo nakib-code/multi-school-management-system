@@ -1,9 +1,8 @@
 import { Router } from "express";
-import { UserRole } from "../../generated/prisma/enums.js";
+import { PackageFeature, UserRole } from "../../generated/prisma/enums.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-
+import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
-
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
@@ -20,6 +19,7 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	validateRequest(createTeacherSchema),
 	createTeacherController,
 );
@@ -29,6 +29,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	validateRequest(verifyTeacherEmailSchema),
 	verifyTeacherEmailController,
 );

@@ -444,6 +444,8 @@ export type SchoolWhereInput = {
   admissionPayments?: Prisma.AdmissionPaymentListRelationFilter
   schoolSetting?: Prisma.XOR<Prisma.SchoolSettingNullableScalarRelationFilter, Prisma.SchoolSettingWhereInput> | null
   teacherAssignments?: Prisma.TeacherAssignmentListRelationFilter
+  hefzEnrollments?: Prisma.HefzEnrollmentListRelationFilter
+  hefzDailyLogs?: Prisma.HefzDailyLogListRelationFilter
   pageContents?: Prisma.SchoolPageContentListRelationFilter
   notices?: Prisma.SchoolNoticeListRelationFilter
   galleryImages?: Prisma.SchoolGalleryImageListRelationFilter
@@ -505,6 +507,8 @@ export type SchoolOrderByWithRelationInput = {
   admissionPayments?: Prisma.AdmissionPaymentOrderByRelationAggregateInput
   schoolSetting?: Prisma.SchoolSettingOrderByWithRelationInput
   teacherAssignments?: Prisma.TeacherAssignmentOrderByRelationAggregateInput
+  hefzEnrollments?: Prisma.HefzEnrollmentOrderByRelationAggregateInput
+  hefzDailyLogs?: Prisma.HefzDailyLogOrderByRelationAggregateInput
   pageContents?: Prisma.SchoolPageContentOrderByRelationAggregateInput
   notices?: Prisma.SchoolNoticeOrderByRelationAggregateInput
   galleryImages?: Prisma.SchoolGalleryImageOrderByRelationAggregateInput
@@ -569,6 +573,8 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   admissionPayments?: Prisma.AdmissionPaymentListRelationFilter
   schoolSetting?: Prisma.XOR<Prisma.SchoolSettingNullableScalarRelationFilter, Prisma.SchoolSettingWhereInput> | null
   teacherAssignments?: Prisma.TeacherAssignmentListRelationFilter
+  hefzEnrollments?: Prisma.HefzEnrollmentListRelationFilter
+  hefzDailyLogs?: Prisma.HefzDailyLogListRelationFilter
   pageContents?: Prisma.SchoolPageContentListRelationFilter
   notices?: Prisma.SchoolNoticeListRelationFilter
   galleryImages?: Prisma.SchoolGalleryImageListRelationFilter
@@ -702,6 +708,8 @@ export type SchoolCreateInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -762,6 +770,8 @@ export type SchoolUncheckedCreateInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -821,6 +831,8 @@ export type SchoolUpdateInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -881,6 +893,8 @@ export type SchoolUncheckedUpdateInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1239,6 +1253,34 @@ export type SchoolUpdateOneRequiredWithoutGuardiansNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutGuardiansInput, Prisma.SchoolUpdateWithoutGuardiansInput>, Prisma.SchoolUncheckedUpdateWithoutGuardiansInput>
 }
 
+export type SchoolCreateNestedOneWithoutHefzDailyLogsInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutHefzDailyLogsInput, Prisma.SchoolUncheckedCreateWithoutHefzDailyLogsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutHefzDailyLogsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutHefzDailyLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutHefzDailyLogsInput, Prisma.SchoolUncheckedCreateWithoutHefzDailyLogsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutHefzDailyLogsInput
+  upsert?: Prisma.SchoolUpsertWithoutHefzDailyLogsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutHefzDailyLogsInput, Prisma.SchoolUpdateWithoutHefzDailyLogsInput>, Prisma.SchoolUncheckedUpdateWithoutHefzDailyLogsInput>
+}
+
+export type SchoolCreateNestedOneWithoutHefzEnrollmentsInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutHefzEnrollmentsInput, Prisma.SchoolUncheckedCreateWithoutHefzEnrollmentsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutHefzEnrollmentsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutHefzEnrollmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutHefzEnrollmentsInput, Prisma.SchoolUncheckedCreateWithoutHefzEnrollmentsInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutHefzEnrollmentsInput
+  upsert?: Prisma.SchoolUpsertWithoutHefzEnrollmentsInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutHefzEnrollmentsInput, Prisma.SchoolUpdateWithoutHefzEnrollmentsInput>, Prisma.SchoolUncheckedUpdateWithoutHefzEnrollmentsInput>
+}
+
 export type SchoolCreateNestedOneWithoutManagersInput = {
   create?: Prisma.XOR<Prisma.SchoolCreateWithoutManagersInput, Prisma.SchoolUncheckedCreateWithoutManagersInput>
   connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutManagersInput
@@ -1591,6 +1633,8 @@ export type SchoolCreateWithoutAdmissionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -1650,6 +1694,8 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -1724,6 +1770,8 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -1783,6 +1831,8 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1841,6 +1891,8 @@ export type SchoolCreateWithoutAdmissionPaymentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -1900,6 +1952,8 @@ export type SchoolUncheckedCreateWithoutAdmissionPaymentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -1974,6 +2028,8 @@ export type SchoolUpdateWithoutAdmissionPaymentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -2033,6 +2089,8 @@ export type SchoolUncheckedUpdateWithoutAdmissionPaymentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2091,6 +2149,8 @@ export type SchoolCreateWithoutAttendancesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -2150,6 +2210,8 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -2224,6 +2286,8 @@ export type SchoolUpdateWithoutAttendancesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -2283,6 +2347,8 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2341,6 +2407,8 @@ export type SchoolCreateWithoutAuditLogsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -2400,6 +2468,8 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -2474,6 +2544,8 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -2533,6 +2605,8 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2591,6 +2665,8 @@ export type SchoolCreateWithoutClassesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -2650,6 +2726,8 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -2724,6 +2802,8 @@ export type SchoolUpdateWithoutClassesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -2783,6 +2863,8 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2841,6 +2923,8 @@ export type SchoolCreateWithoutCustomPackageRequestsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -2900,6 +2984,8 @@ export type SchoolUncheckedCreateWithoutCustomPackageRequestsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -2974,6 +3060,8 @@ export type SchoolUpdateWithoutCustomPackageRequestsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -3033,6 +3121,8 @@ export type SchoolUncheckedUpdateWithoutCustomPackageRequestsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3091,6 +3181,8 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -3150,6 +3242,8 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -3224,6 +3318,8 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -3283,6 +3379,8 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3341,6 +3439,8 @@ export type SchoolCreateWithoutExamsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -3400,6 +3500,8 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -3474,6 +3576,8 @@ export type SchoolUpdateWithoutExamsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -3533,6 +3637,8 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3591,6 +3697,8 @@ export type SchoolCreateWithoutGuardiansInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -3650,6 +3758,8 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -3724,6 +3834,8 @@ export type SchoolUpdateWithoutGuardiansInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -3783,6 +3895,524 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutHefzDailyLogsInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  selectedPackage?: Prisma.PackageCreateNestedOneWithoutSelectedSchoolsInput
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutHefzDailyLogsInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  selectedPackageId?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutHefzDailyLogsInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutHefzDailyLogsInput, Prisma.SchoolUncheckedCreateWithoutHefzDailyLogsInput>
+}
+
+export type SchoolUpsertWithoutHefzDailyLogsInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutHefzDailyLogsInput, Prisma.SchoolUncheckedUpdateWithoutHefzDailyLogsInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutHefzDailyLogsInput, Prisma.SchoolUncheckedCreateWithoutHefzDailyLogsInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutHefzDailyLogsInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutHefzDailyLogsInput, Prisma.SchoolUncheckedUpdateWithoutHefzDailyLogsInput>
+}
+
+export type SchoolUpdateWithoutHefzDailyLogsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  selectedPackage?: Prisma.PackageUpdateOneWithoutSelectedSchoolsNestedInput
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutHefzDailyLogsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedPackageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutHefzEnrollmentsInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  selectedPackage?: Prisma.PackageCreateNestedOneWithoutSelectedSchoolsInput
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutHefzEnrollmentsInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  selectedPackageId?: number | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutHefzEnrollmentsInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutHefzEnrollmentsInput, Prisma.SchoolUncheckedCreateWithoutHefzEnrollmentsInput>
+}
+
+export type SchoolUpsertWithoutHefzEnrollmentsInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutHefzEnrollmentsInput, Prisma.SchoolUncheckedUpdateWithoutHefzEnrollmentsInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutHefzEnrollmentsInput, Prisma.SchoolUncheckedCreateWithoutHefzEnrollmentsInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutHefzEnrollmentsInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutHefzEnrollmentsInput, Prisma.SchoolUncheckedUpdateWithoutHefzEnrollmentsInput>
+}
+
+export type SchoolUpdateWithoutHefzEnrollmentsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  selectedPackage?: Prisma.PackageUpdateOneWithoutSelectedSchoolsNestedInput
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutHefzEnrollmentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedPackageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3841,6 +4471,8 @@ export type SchoolCreateWithoutManagersInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -3900,6 +4532,8 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -3974,6 +4608,8 @@ export type SchoolUpdateWithoutManagersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -4033,6 +4669,8 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4091,6 +4729,8 @@ export type SchoolCreateWithoutSelectedPackageInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -4150,6 +4790,8 @@ export type SchoolUncheckedCreateWithoutSelectedPackageInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -4270,6 +4912,8 @@ export type SchoolCreateWithoutResultsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -4329,6 +4973,8 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -4403,6 +5049,8 @@ export type SchoolUpdateWithoutResultsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -4462,6 +5110,8 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4520,6 +5170,8 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -4579,6 +5231,8 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -4653,6 +5307,8 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -4712,6 +5368,8 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4771,6 +5429,8 @@ export type SchoolCreateWithoutContactMessagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -4830,6 +5490,8 @@ export type SchoolUncheckedCreateWithoutContactMessagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -4904,6 +5566,8 @@ export type SchoolUpdateWithoutContactMessagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -4963,6 +5627,8 @@ export type SchoolUncheckedUpdateWithoutContactMessagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5021,6 +5687,8 @@ export type SchoolCreateWithoutGalleryImagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
@@ -5080,6 +5748,8 @@ export type SchoolUncheckedCreateWithoutGalleryImagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
@@ -5154,6 +5824,8 @@ export type SchoolUpdateWithoutGalleryImagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
@@ -5213,6 +5885,8 @@ export type SchoolUncheckedUpdateWithoutGalleryImagesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5271,6 +5945,8 @@ export type SchoolCreateWithoutNoticesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
   contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
@@ -5330,6 +6006,8 @@ export type SchoolUncheckedCreateWithoutNoticesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
   contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
@@ -5404,6 +6082,8 @@ export type SchoolUpdateWithoutNoticesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
   contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
@@ -5463,6 +6143,8 @@ export type SchoolUncheckedUpdateWithoutNoticesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
   contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5521,6 +6203,8 @@ export type SchoolCreateWithoutPageContentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
   contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
@@ -5580,6 +6264,8 @@ export type SchoolUncheckedCreateWithoutPageContentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
   contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
@@ -5654,6 +6340,8 @@ export type SchoolUpdateWithoutPageContentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
   contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
@@ -5713,6 +6401,8 @@ export type SchoolUncheckedUpdateWithoutPageContentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
   contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5770,6 +6460,8 @@ export type SchoolCreateWithoutSchoolSettingInput = {
   customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -5829,6 +6521,8 @@ export type SchoolUncheckedCreateWithoutSchoolSettingInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -5903,6 +6597,8 @@ export type SchoolUpdateWithoutSchoolSettingInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -5962,6 +6658,8 @@ export type SchoolUncheckedUpdateWithoutSchoolSettingInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6020,6 +6718,8 @@ export type SchoolCreateWithoutSubscriptionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -6079,6 +6779,8 @@ export type SchoolUncheckedCreateWithoutSubscriptionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -6153,6 +6855,8 @@ export type SchoolUpdateWithoutSubscriptionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -6212,6 +6916,8 @@ export type SchoolUncheckedUpdateWithoutSubscriptionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6270,6 +6976,8 @@ export type SchoolCreateWithoutSectionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -6329,6 +7037,8 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -6403,6 +7113,8 @@ export type SchoolUpdateWithoutSectionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -6462,6 +7174,8 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6520,6 +7234,8 @@ export type SchoolCreateWithoutStudentFeesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -6579,6 +7295,8 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -6653,6 +7371,8 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -6712,6 +7432,8 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6770,6 +7492,8 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -6829,6 +7553,8 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -6903,6 +7629,8 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -6962,6 +7690,8 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7020,6 +7750,8 @@ export type SchoolCreateWithoutSubjectsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -7079,6 +7811,8 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -7153,6 +7887,8 @@ export type SchoolUpdateWithoutSubjectsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -7212,6 +7948,8 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7270,6 +8008,8 @@ export type SchoolCreateWithoutSubscriptionPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -7329,6 +8069,8 @@ export type SchoolUncheckedCreateWithoutSubscriptionPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -7403,6 +8145,8 @@ export type SchoolUpdateWithoutSubscriptionPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -7462,6 +8206,8 @@ export type SchoolUncheckedUpdateWithoutSubscriptionPaymentsInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7520,6 +8266,8 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestCreateNestedManyWithoutSchoolInput
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -7579,6 +8327,8 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUncheckedCreateNestedManyWithoutSchoolInput
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -7653,6 +8403,8 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUpdateManyWithoutSchoolNestedInput
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -7712,6 +8464,8 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   customPackageRequests?: Prisma.CustomPackageRequestUncheckedUpdateManyWithoutSchoolNestedInput
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7770,6 +8524,8 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -7829,6 +8585,8 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -7903,6 +8661,8 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -7962,6 +8722,8 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8020,6 +8782,8 @@ export type SchoolCreateWithoutTeachersInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -8079,6 +8843,8 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -8153,6 +8919,8 @@ export type SchoolUpdateWithoutTeachersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -8212,6 +8980,8 @@ export type SchoolUncheckedUpdateWithoutTeachersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8270,6 +9040,8 @@ export type SchoolCreateWithoutUsersInput = {
   admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
@@ -8329,6 +9101,8 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
   schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
@@ -8403,6 +9177,8 @@ export type SchoolUpdateWithoutUsersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -8462,6 +9238,8 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8552,6 +9330,8 @@ export type SchoolUpdateWithoutSelectedPackageInput = {
   admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
@@ -8611,6 +9391,8 @@ export type SchoolUncheckedUpdateWithoutSelectedPackageInput = {
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8677,6 +9459,8 @@ export type SchoolCountOutputType = {
   customPackageRequests: number
   admissionPayments: number
   teacherAssignments: number
+  hefzEnrollments: number
+  hefzDailyLogs: number
   pageContents: number
   notices: number
   galleryImages: number
@@ -8706,6 +9490,8 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   customPackageRequests?: boolean | SchoolCountOutputTypeCountCustomPackageRequestsArgs
   admissionPayments?: boolean | SchoolCountOutputTypeCountAdmissionPaymentsArgs
   teacherAssignments?: boolean | SchoolCountOutputTypeCountTeacherAssignmentsArgs
+  hefzEnrollments?: boolean | SchoolCountOutputTypeCountHefzEnrollmentsArgs
+  hefzDailyLogs?: boolean | SchoolCountOutputTypeCountHefzDailyLogsArgs
   pageContents?: boolean | SchoolCountOutputTypeCountPageContentsArgs
   notices?: boolean | SchoolCountOutputTypeCountNoticesArgs
   galleryImages?: boolean | SchoolCountOutputTypeCountGalleryImagesArgs
@@ -8879,6 +9665,20 @@ export type SchoolCountOutputTypeCountTeacherAssignmentsArgs<ExtArgs extends run
 /**
  * SchoolCountOutputType without action
  */
+export type SchoolCountOutputTypeCountHefzEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HefzEnrollmentWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
+export type SchoolCountOutputTypeCountHefzDailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HefzDailyLogWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
 export type SchoolCountOutputTypeCountPageContentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SchoolPageContentWhereInput
 }
@@ -8960,6 +9760,8 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   admissionPayments?: boolean | Prisma.School$admissionPaymentsArgs<ExtArgs>
   schoolSetting?: boolean | Prisma.School$schoolSettingArgs<ExtArgs>
   teacherAssignments?: boolean | Prisma.School$teacherAssignmentsArgs<ExtArgs>
+  hefzEnrollments?: boolean | Prisma.School$hefzEnrollmentsArgs<ExtArgs>
+  hefzDailyLogs?: boolean | Prisma.School$hefzDailyLogsArgs<ExtArgs>
   pageContents?: boolean | Prisma.School$pageContentsArgs<ExtArgs>
   notices?: boolean | Prisma.School$noticesArgs<ExtArgs>
   galleryImages?: boolean | Prisma.School$galleryImagesArgs<ExtArgs>
@@ -9094,6 +9896,8 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   admissionPayments?: boolean | Prisma.School$admissionPaymentsArgs<ExtArgs>
   schoolSetting?: boolean | Prisma.School$schoolSettingArgs<ExtArgs>
   teacherAssignments?: boolean | Prisma.School$teacherAssignmentsArgs<ExtArgs>
+  hefzEnrollments?: boolean | Prisma.School$hefzEnrollmentsArgs<ExtArgs>
+  hefzDailyLogs?: boolean | Prisma.School$hefzDailyLogsArgs<ExtArgs>
   pageContents?: boolean | Prisma.School$pageContentsArgs<ExtArgs>
   notices?: boolean | Prisma.School$noticesArgs<ExtArgs>
   galleryImages?: boolean | Prisma.School$galleryImagesArgs<ExtArgs>
@@ -9134,6 +9938,8 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     admissionPayments: Prisma.$AdmissionPaymentPayload<ExtArgs>[]
     schoolSetting: Prisma.$SchoolSettingPayload<ExtArgs> | null
     teacherAssignments: Prisma.$TeacherAssignmentPayload<ExtArgs>[]
+    hefzEnrollments: Prisma.$HefzEnrollmentPayload<ExtArgs>[]
+    hefzDailyLogs: Prisma.$HefzDailyLogPayload<ExtArgs>[]
     pageContents: Prisma.$SchoolPageContentPayload<ExtArgs>[]
     notices: Prisma.$SchoolNoticePayload<ExtArgs>[]
     galleryImages: Prisma.$SchoolGalleryImagePayload<ExtArgs>[]
@@ -9588,6 +10394,8 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   admissionPayments<T extends Prisma.School$admissionPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$admissionPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   schoolSetting<T extends Prisma.School$schoolSettingArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$schoolSettingArgs<ExtArgs>>): Prisma.Prisma__SchoolSettingClient<runtime.Types.Result.GetResult<Prisma.$SchoolSettingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   teacherAssignments<T extends Prisma.School$teacherAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$teacherAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  hefzEnrollments<T extends Prisma.School$hefzEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$hefzEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HefzEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  hefzDailyLogs<T extends Prisma.School$hefzDailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$hefzDailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HefzDailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pageContents<T extends Prisma.School$pageContentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$pageContentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPageContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notices<T extends Prisma.School$noticesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$noticesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolNoticePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   galleryImages<T extends Prisma.School$galleryImagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolGalleryImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -10615,6 +11423,54 @@ export type School$teacherAssignmentsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.TeacherAssignmentScalarFieldEnum | Prisma.TeacherAssignmentScalarFieldEnum[]
+}
+
+/**
+ * School.hefzEnrollments
+ */
+export type School$hefzEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HefzEnrollment
+   */
+  select?: Prisma.HefzEnrollmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HefzEnrollment
+   */
+  omit?: Prisma.HefzEnrollmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HefzEnrollmentInclude<ExtArgs> | null
+  where?: Prisma.HefzEnrollmentWhereInput
+  orderBy?: Prisma.HefzEnrollmentOrderByWithRelationInput | Prisma.HefzEnrollmentOrderByWithRelationInput[]
+  cursor?: Prisma.HefzEnrollmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HefzEnrollmentScalarFieldEnum | Prisma.HefzEnrollmentScalarFieldEnum[]
+}
+
+/**
+ * School.hefzDailyLogs
+ */
+export type School$hefzDailyLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HefzDailyLog
+   */
+  select?: Prisma.HefzDailyLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HefzDailyLog
+   */
+  omit?: Prisma.HefzDailyLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HefzDailyLogInclude<ExtArgs> | null
+  where?: Prisma.HefzDailyLogWhereInput
+  orderBy?: Prisma.HefzDailyLogOrderByWithRelationInput | Prisma.HefzDailyLogOrderByWithRelationInput[]
+  cursor?: Prisma.HefzDailyLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HefzDailyLogScalarFieldEnum | Prisma.HefzDailyLogScalarFieldEnum[]
 }
 
 /**

@@ -303,6 +303,7 @@ export type StudentWhereInput = {
   results?: Prisma.ResultListRelationFilter
   fees?: Prisma.StudentFeeListRelationFilter
   payments?: Prisma.StudentPaymentListRelationFilter
+  hefzEnrollments?: Prisma.HefzEnrollmentListRelationFilter
 }
 
 export type StudentOrderByWithRelationInput = {
@@ -327,6 +328,7 @@ export type StudentOrderByWithRelationInput = {
   results?: Prisma.ResultOrderByRelationAggregateInput
   fees?: Prisma.StudentFeeOrderByRelationAggregateInput
   payments?: Prisma.StudentPaymentOrderByRelationAggregateInput
+  hefzEnrollments?: Prisma.HefzEnrollmentOrderByRelationAggregateInput
 }
 
 export type StudentWhereUniqueInput = Prisma.AtLeast<{
@@ -354,6 +356,7 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   results?: Prisma.ResultListRelationFilter
   fees?: Prisma.StudentFeeListRelationFilter
   payments?: Prisma.StudentPaymentListRelationFilter
+  hefzEnrollments?: Prisma.HefzEnrollmentListRelationFilter
 }, "id" | "userId" | "studentId">
 
 export type StudentOrderByWithAggregationInput = {
@@ -418,6 +421,7 @@ export type StudentCreateInput = {
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateInput = {
@@ -441,6 +445,7 @@ export type StudentUncheckedCreateInput = {
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUpdateInput = {
@@ -463,6 +468,7 @@ export type StudentUpdateInput = {
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateInput = {
@@ -486,6 +492,7 @@ export type StudentUncheckedUpdateInput = {
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateManyInput = {
@@ -652,6 +659,20 @@ export type StudentUpdateOneRequiredWithoutGuardiansNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutGuardiansInput, Prisma.StudentUpdateWithoutGuardiansInput>, Prisma.StudentUncheckedUpdateWithoutGuardiansInput>
 }
 
+export type StudentCreateNestedOneWithoutHefzEnrollmentsInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutHefzEnrollmentsInput, Prisma.StudentUncheckedCreateWithoutHefzEnrollmentsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutHefzEnrollmentsInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutHefzEnrollmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutHefzEnrollmentsInput, Prisma.StudentUncheckedCreateWithoutHefzEnrollmentsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutHefzEnrollmentsInput
+  upsert?: Prisma.StudentUpsertWithoutHefzEnrollmentsInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutHefzEnrollmentsInput, Prisma.StudentUpdateWithoutHefzEnrollmentsInput>, Prisma.StudentUncheckedUpdateWithoutHefzEnrollmentsInput>
+}
+
 export type StudentCreateNestedOneWithoutResultsInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutResultsInput, Prisma.StudentUncheckedCreateWithoutResultsInput>
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutResultsInput
@@ -745,6 +766,7 @@ export type StudentCreateWithoutAttendancesInput = {
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutAttendancesInput = {
@@ -767,6 +789,7 @@ export type StudentUncheckedCreateWithoutAttendancesInput = {
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutAttendancesInput = {
@@ -804,6 +827,7 @@ export type StudentUpdateWithoutAttendancesInput = {
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutAttendancesInput = {
@@ -826,6 +850,7 @@ export type StudentUncheckedUpdateWithoutAttendancesInput = {
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutEnrollmentsInput = {
@@ -847,6 +872,7 @@ export type StudentCreateWithoutEnrollmentsInput = {
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutEnrollmentsInput = {
@@ -869,6 +895,7 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutEnrollmentsInput = {
@@ -906,6 +933,7 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
@@ -928,6 +956,7 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutGuardiansInput = {
@@ -949,6 +978,7 @@ export type StudentCreateWithoutGuardiansInput = {
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutGuardiansInput = {
@@ -971,6 +1001,7 @@ export type StudentUncheckedCreateWithoutGuardiansInput = {
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutGuardiansInput = {
@@ -1008,6 +1039,7 @@ export type StudentUpdateWithoutGuardiansInput = {
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutGuardiansInput = {
@@ -1025,6 +1057,113 @@ export type StudentUncheckedUpdateWithoutGuardiansInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
+  fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
+  payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentCreateWithoutHefzEnrollmentsInput = {
+  schoolId: number
+  studentId: string
+  firstName: string
+  lastName?: string | null
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  phone?: string | null
+  address?: string | null
+  admissionDate?: Date | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutStudentInput
+  guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  results?: Prisma.ResultCreateNestedManyWithoutStudentInput
+  fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
+  payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutHefzEnrollmentsInput = {
+  id?: number
+  userId: number
+  schoolId: number
+  studentId: string
+  firstName: string
+  lastName?: string | null
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  phone?: string | null
+  address?: string | null
+  admissionDate?: Date | string
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
+  fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
+  payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type StudentCreateOrConnectWithoutHefzEnrollmentsInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutHefzEnrollmentsInput, Prisma.StudentUncheckedCreateWithoutHefzEnrollmentsInput>
+}
+
+export type StudentUpsertWithoutHefzEnrollmentsInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutHefzEnrollmentsInput, Prisma.StudentUncheckedUpdateWithoutHefzEnrollmentsInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutHefzEnrollmentsInput, Prisma.StudentUncheckedCreateWithoutHefzEnrollmentsInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutHefzEnrollmentsInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutHefzEnrollmentsInput, Prisma.StudentUncheckedUpdateWithoutHefzEnrollmentsInput>
+}
+
+export type StudentUpdateWithoutHefzEnrollmentsInput = {
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutStudentNestedInput
+  guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
+  fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
+  payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutHefzEnrollmentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
@@ -1051,6 +1190,7 @@ export type StudentCreateWithoutResultsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutResultsInput = {
@@ -1073,6 +1213,7 @@ export type StudentUncheckedCreateWithoutResultsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutResultsInput = {
@@ -1110,6 +1251,7 @@ export type StudentUpdateWithoutResultsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutResultsInput = {
@@ -1132,6 +1274,7 @@ export type StudentUncheckedUpdateWithoutResultsInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutFeesInput = {
@@ -1153,6 +1296,7 @@ export type StudentCreateWithoutFeesInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutFeesInput = {
@@ -1175,6 +1319,7 @@ export type StudentUncheckedCreateWithoutFeesInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutFeesInput = {
@@ -1212,6 +1357,7 @@ export type StudentUpdateWithoutFeesInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutFeesInput = {
@@ -1234,6 +1380,7 @@ export type StudentUncheckedUpdateWithoutFeesInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutPaymentsInput = {
@@ -1255,6 +1402,7 @@ export type StudentCreateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutPaymentsInput = {
@@ -1277,6 +1425,7 @@ export type StudentUncheckedCreateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutPaymentsInput = {
@@ -1314,6 +1463,7 @@ export type StudentUpdateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutPaymentsInput = {
@@ -1336,6 +1486,7 @@ export type StudentUncheckedUpdateWithoutPaymentsInput = {
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentCreateWithoutUserInput = {
@@ -1357,6 +1508,7 @@ export type StudentCreateWithoutUserInput = {
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
 }
 
 export type StudentUncheckedCreateWithoutUserInput = {
@@ -1379,6 +1531,7 @@ export type StudentUncheckedCreateWithoutUserInput = {
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
 }
 
 export type StudentCreateOrConnectWithoutUserInput = {
@@ -1416,6 +1569,7 @@ export type StudentUpdateWithoutUserInput = {
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
 }
 
 export type StudentUncheckedUpdateWithoutUserInput = {
@@ -1438,6 +1592,7 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
 }
 
 
@@ -1452,6 +1607,7 @@ export type StudentCountOutputType = {
   results: number
   fees: number
   payments: number
+  hefzEnrollments: number
 }
 
 export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1461,6 +1617,7 @@ export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   results?: boolean | StudentCountOutputTypeCountResultsArgs
   fees?: boolean | StudentCountOutputTypeCountFeesArgs
   payments?: boolean | StudentCountOutputTypeCountPaymentsArgs
+  hefzEnrollments?: boolean | StudentCountOutputTypeCountHefzEnrollmentsArgs
 }
 
 /**
@@ -1515,6 +1672,13 @@ export type StudentCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Type
   where?: Prisma.StudentPaymentWhereInput
 }
 
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountHefzEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HefzEnrollmentWhereInput
+}
+
 
 export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1538,6 +1702,7 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   results?: boolean | Prisma.Student$resultsArgs<ExtArgs>
   fees?: boolean | Prisma.Student$feesArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
+  hefzEnrollments?: boolean | Prisma.Student$hefzEnrollmentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["student"]>
 
@@ -1603,6 +1768,7 @@ export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   results?: boolean | Prisma.Student$resultsArgs<ExtArgs>
   fees?: boolean | Prisma.Student$feesArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
+  hefzEnrollments?: boolean | Prisma.Student$hefzEnrollmentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StudentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1622,6 +1788,7 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     results: Prisma.$ResultPayload<ExtArgs>[]
     fees: Prisma.$StudentFeePayload<ExtArgs>[]
     payments: Prisma.$StudentPaymentPayload<ExtArgs>[]
+    hefzEnrollments: Prisma.$HefzEnrollmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2039,6 +2206,7 @@ export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.
   results<T extends Prisma.Student$resultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fees<T extends Prisma.Student$feesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$feesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Student$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  hefzEnrollments<T extends Prisma.Student$hefzEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$hefzEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HefzEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2624,6 +2792,30 @@ export type Student$paymentsArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.StudentPaymentScalarFieldEnum | Prisma.StudentPaymentScalarFieldEnum[]
+}
+
+/**
+ * Student.hefzEnrollments
+ */
+export type Student$hefzEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HefzEnrollment
+   */
+  select?: Prisma.HefzEnrollmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HefzEnrollment
+   */
+  omit?: Prisma.HefzEnrollmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HefzEnrollmentInclude<ExtArgs> | null
+  where?: Prisma.HefzEnrollmentWhereInput
+  orderBy?: Prisma.HefzEnrollmentOrderByWithRelationInput | Prisma.HefzEnrollmentOrderByWithRelationInput[]
+  cursor?: Prisma.HefzEnrollmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HefzEnrollmentScalarFieldEnum | Prisma.HefzEnrollmentScalarFieldEnum[]
 }
 
 /**

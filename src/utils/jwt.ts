@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 import env from "../config/env.js";
+import type { UserRole } from "../generated/prisma/client.js";
 
 export interface JwtPayload {
 	userId: number;
-	role: "SUPER_ADMIN" | "ADMIN" | "MANAGER" | "TEACHER" | "STUDENT";
+	role: UserRole;
 	schoolId?: number;
 }
 

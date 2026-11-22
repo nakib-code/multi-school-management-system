@@ -309,6 +309,7 @@ export type TeacherWhereInput = {
   assignments?: Prisma.TeacherAssignmentListRelationFilter
   salaries?: Prisma.TeacherSalaryListRelationFilter
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
+  hefzEnrollments?: Prisma.HefzEnrollmentListRelationFilter
 }
 
 export type TeacherOrderByWithRelationInput = {
@@ -332,6 +333,7 @@ export type TeacherOrderByWithRelationInput = {
   assignments?: Prisma.TeacherAssignmentOrderByRelationAggregateInput
   salaries?: Prisma.TeacherSalaryOrderByRelationAggregateInput
   salaryPayments?: Prisma.SalaryPaymentOrderByRelationAggregateInput
+  hefzEnrollments?: Prisma.HefzEnrollmentOrderByRelationAggregateInput
 }
 
 export type TeacherWhereUniqueInput = Prisma.AtLeast<{
@@ -359,6 +361,7 @@ export type TeacherWhereUniqueInput = Prisma.AtLeast<{
   assignments?: Prisma.TeacherAssignmentListRelationFilter
   salaries?: Prisma.TeacherSalaryListRelationFilter
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
+  hefzEnrollments?: Prisma.HefzEnrollmentListRelationFilter
 }, "id" | "userId" | "schoolId_employeeId">
 
 export type TeacherOrderByWithAggregationInput = {
@@ -423,6 +426,7 @@ export type TeacherCreateInput = {
   assignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUncheckedCreateInput = {
@@ -444,6 +448,7 @@ export type TeacherUncheckedCreateInput = {
   assignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUpdateInput = {
@@ -464,6 +469,7 @@ export type TeacherUpdateInput = {
   assignments?: Prisma.TeacherAssignmentUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateInput = {
@@ -485,6 +491,7 @@ export type TeacherUncheckedUpdateInput = {
   assignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherCreateManyInput = {
@@ -629,6 +636,20 @@ export type TeacherNullableScalarRelationFilter = {
   isNot?: Prisma.TeacherWhereInput | null
 }
 
+export type TeacherCreateNestedOneWithoutHefzEnrollmentsInput = {
+  create?: Prisma.XOR<Prisma.TeacherCreateWithoutHefzEnrollmentsInput, Prisma.TeacherUncheckedCreateWithoutHefzEnrollmentsInput>
+  connectOrCreate?: Prisma.TeacherCreateOrConnectWithoutHefzEnrollmentsInput
+  connect?: Prisma.TeacherWhereUniqueInput
+}
+
+export type TeacherUpdateOneRequiredWithoutHefzEnrollmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TeacherCreateWithoutHefzEnrollmentsInput, Prisma.TeacherUncheckedCreateWithoutHefzEnrollmentsInput>
+  connectOrCreate?: Prisma.TeacherCreateOrConnectWithoutHefzEnrollmentsInput
+  upsert?: Prisma.TeacherUpsertWithoutHefzEnrollmentsInput
+  connect?: Prisma.TeacherWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TeacherUpdateToOneWithWhereWithoutHefzEnrollmentsInput, Prisma.TeacherUpdateWithoutHefzEnrollmentsInput>, Prisma.TeacherUncheckedUpdateWithoutHefzEnrollmentsInput>
+}
+
 export type TeacherCreateNestedOneWithoutSalaryPaymentsInput = {
   create?: Prisma.XOR<Prisma.TeacherCreateWithoutSalaryPaymentsInput, Prisma.TeacherUncheckedCreateWithoutSalaryPaymentsInput>
   connectOrCreate?: Prisma.TeacherCreateOrConnectWithoutSalaryPaymentsInput
@@ -745,6 +766,104 @@ export type TeacherUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TeacherUpdateToOneWithWhereWithoutUserInput, Prisma.TeacherUpdateWithoutUserInput>, Prisma.TeacherUncheckedUpdateWithoutUserInput>
 }
 
+export type TeacherCreateWithoutHefzEnrollmentsInput = {
+  employeeId: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  address?: string | null
+  dateOfBirth?: Date | string | null
+  joiningDate?: Date | string
+  designation?: string | null
+  qualification?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutTeacherInput
+  school: Prisma.SchoolCreateNestedOneWithoutTeachersInput
+  assignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutTeacherInput
+  salaries?: Prisma.TeacherSalaryCreateNestedManyWithoutTeacherInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutTeacherInput
+}
+
+export type TeacherUncheckedCreateWithoutHefzEnrollmentsInput = {
+  id?: number
+  userId: number
+  schoolId: number
+  employeeId: string
+  firstName: string
+  lastName?: string | null
+  phone?: string | null
+  address?: string | null
+  dateOfBirth?: Date | string | null
+  joiningDate?: Date | string
+  designation?: string | null
+  qualification?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutTeacherInput
+  salaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutTeacherInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutTeacherInput
+}
+
+export type TeacherCreateOrConnectWithoutHefzEnrollmentsInput = {
+  where: Prisma.TeacherWhereUniqueInput
+  create: Prisma.XOR<Prisma.TeacherCreateWithoutHefzEnrollmentsInput, Prisma.TeacherUncheckedCreateWithoutHefzEnrollmentsInput>
+}
+
+export type TeacherUpsertWithoutHefzEnrollmentsInput = {
+  update: Prisma.XOR<Prisma.TeacherUpdateWithoutHefzEnrollmentsInput, Prisma.TeacherUncheckedUpdateWithoutHefzEnrollmentsInput>
+  create: Prisma.XOR<Prisma.TeacherCreateWithoutHefzEnrollmentsInput, Prisma.TeacherUncheckedCreateWithoutHefzEnrollmentsInput>
+  where?: Prisma.TeacherWhereInput
+}
+
+export type TeacherUpdateToOneWithWhereWithoutHefzEnrollmentsInput = {
+  where?: Prisma.TeacherWhereInput
+  data: Prisma.XOR<Prisma.TeacherUpdateWithoutHefzEnrollmentsInput, Prisma.TeacherUncheckedUpdateWithoutHefzEnrollmentsInput>
+}
+
+export type TeacherUpdateWithoutHefzEnrollmentsInput = {
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutTeacherNestedInput
+  school?: Prisma.SchoolUpdateOneRequiredWithoutTeachersNestedInput
+  assignments?: Prisma.TeacherAssignmentUpdateManyWithoutTeacherNestedInput
+  salaries?: Prisma.TeacherSalaryUpdateManyWithoutTeacherNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutTeacherNestedInput
+}
+
+export type TeacherUncheckedUpdateWithoutHefzEnrollmentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  joiningDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  designation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  qualification?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutTeacherNestedInput
+  salaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutTeacherNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutTeacherNestedInput
+}
+
 export type TeacherCreateWithoutSalaryPaymentsInput = {
   employeeId: string
   firstName: string
@@ -762,6 +881,7 @@ export type TeacherCreateWithoutSalaryPaymentsInput = {
   school: Prisma.SchoolCreateNestedOneWithoutTeachersInput
   assignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUncheckedCreateWithoutSalaryPaymentsInput = {
@@ -782,6 +902,7 @@ export type TeacherUncheckedCreateWithoutSalaryPaymentsInput = {
   updatedAt?: Date | string
   assignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherCreateOrConnectWithoutSalaryPaymentsInput = {
@@ -817,6 +938,7 @@ export type TeacherUpdateWithoutSalaryPaymentsInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutTeachersNestedInput
   assignments?: Prisma.TeacherAssignmentUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateWithoutSalaryPaymentsInput = {
@@ -837,6 +959,7 @@ export type TeacherUncheckedUpdateWithoutSalaryPaymentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherCreateWithoutSchoolInput = {
@@ -856,6 +979,7 @@ export type TeacherCreateWithoutSchoolInput = {
   assignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUncheckedCreateWithoutSchoolInput = {
@@ -876,6 +1000,7 @@ export type TeacherUncheckedCreateWithoutSchoolInput = {
   assignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherCreateOrConnectWithoutSchoolInput = {
@@ -942,6 +1067,7 @@ export type TeacherCreateWithoutAssignmentsInput = {
   school: Prisma.SchoolCreateNestedOneWithoutTeachersInput
   salaries?: Prisma.TeacherSalaryCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUncheckedCreateWithoutAssignmentsInput = {
@@ -962,6 +1088,7 @@ export type TeacherUncheckedCreateWithoutAssignmentsInput = {
   updatedAt?: Date | string
   salaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherCreateOrConnectWithoutAssignmentsInput = {
@@ -997,6 +1124,7 @@ export type TeacherUpdateWithoutAssignmentsInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutTeachersNestedInput
   salaries?: Prisma.TeacherSalaryUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateWithoutAssignmentsInput = {
@@ -1017,6 +1145,7 @@ export type TeacherUncheckedUpdateWithoutAssignmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   salaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherCreateWithoutSalariesInput = {
@@ -1036,6 +1165,7 @@ export type TeacherCreateWithoutSalariesInput = {
   school: Prisma.SchoolCreateNestedOneWithoutTeachersInput
   assignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUncheckedCreateWithoutSalariesInput = {
@@ -1056,6 +1186,7 @@ export type TeacherUncheckedCreateWithoutSalariesInput = {
   updatedAt?: Date | string
   assignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherCreateOrConnectWithoutSalariesInput = {
@@ -1091,6 +1222,7 @@ export type TeacherUpdateWithoutSalariesInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutTeachersNestedInput
   assignments?: Prisma.TeacherAssignmentUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateWithoutSalariesInput = {
@@ -1111,6 +1243,7 @@ export type TeacherUncheckedUpdateWithoutSalariesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   assignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherCreateWithoutUserInput = {
@@ -1130,6 +1263,7 @@ export type TeacherCreateWithoutUserInput = {
   assignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherUncheckedCreateWithoutUserInput = {
@@ -1150,6 +1284,7 @@ export type TeacherUncheckedCreateWithoutUserInput = {
   assignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutTeacherInput
   salaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutTeacherInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutTeacherInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutUstadInput
 }
 
 export type TeacherCreateOrConnectWithoutUserInput = {
@@ -1185,6 +1320,7 @@ export type TeacherUpdateWithoutUserInput = {
   assignments?: Prisma.TeacherAssignmentUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateWithoutUserInput = {
@@ -1205,6 +1341,7 @@ export type TeacherUncheckedUpdateWithoutUserInput = {
   assignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherCreateManySchoolInput = {
@@ -1241,6 +1378,7 @@ export type TeacherUpdateWithoutSchoolInput = {
   assignments?: Prisma.TeacherAssignmentUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateWithoutSchoolInput = {
@@ -1261,6 +1399,7 @@ export type TeacherUncheckedUpdateWithoutSchoolInput = {
   assignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutTeacherNestedInput
   salaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutTeacherNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutTeacherNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutUstadNestedInput
 }
 
 export type TeacherUncheckedUpdateManyWithoutSchoolInput = {
@@ -1289,12 +1428,14 @@ export type TeacherCountOutputType = {
   assignments: number
   salaries: number
   salaryPayments: number
+  hefzEnrollments: number
 }
 
 export type TeacherCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   assignments?: boolean | TeacherCountOutputTypeCountAssignmentsArgs
   salaries?: boolean | TeacherCountOutputTypeCountSalariesArgs
   salaryPayments?: boolean | TeacherCountOutputTypeCountSalaryPaymentsArgs
+  hefzEnrollments?: boolean | TeacherCountOutputTypeCountHefzEnrollmentsArgs
 }
 
 /**
@@ -1328,6 +1469,13 @@ export type TeacherCountOutputTypeCountSalaryPaymentsArgs<ExtArgs extends runtim
   where?: Prisma.SalaryPaymentWhereInput
 }
 
+/**
+ * TeacherCountOutputType without action
+ */
+export type TeacherCountOutputTypeCountHefzEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.HefzEnrollmentWhereInput
+}
+
 
 export type TeacherSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1350,6 +1498,7 @@ export type TeacherSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   assignments?: boolean | Prisma.Teacher$assignmentsArgs<ExtArgs>
   salaries?: boolean | Prisma.Teacher$salariesArgs<ExtArgs>
   salaryPayments?: boolean | Prisma.Teacher$salaryPaymentsArgs<ExtArgs>
+  hefzEnrollments?: boolean | Prisma.Teacher$hefzEnrollmentsArgs<ExtArgs>
   _count?: boolean | Prisma.TeacherCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teacher"]>
 
@@ -1418,6 +1567,7 @@ export type TeacherInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   assignments?: boolean | Prisma.Teacher$assignmentsArgs<ExtArgs>
   salaries?: boolean | Prisma.Teacher$salariesArgs<ExtArgs>
   salaryPayments?: boolean | Prisma.Teacher$salaryPaymentsArgs<ExtArgs>
+  hefzEnrollments?: boolean | Prisma.Teacher$hefzEnrollmentsArgs<ExtArgs>
   _count?: boolean | Prisma.TeacherCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TeacherIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1437,6 +1587,7 @@ export type $TeacherPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     assignments: Prisma.$TeacherAssignmentPayload<ExtArgs>[]
     salaries: Prisma.$TeacherSalaryPayload<ExtArgs>[]
     salaryPayments: Prisma.$SalaryPaymentPayload<ExtArgs>[]
+    hefzEnrollments: Prisma.$HefzEnrollmentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1853,6 +2004,7 @@ export interface Prisma__TeacherClient<T, Null = never, ExtArgs extends runtime.
   assignments<T extends Prisma.Teacher$assignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Teacher$assignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   salaries<T extends Prisma.Teacher$salariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Teacher$salariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherSalaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   salaryPayments<T extends Prisma.Teacher$salaryPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Teacher$salaryPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalaryPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  hefzEnrollments<T extends Prisma.Teacher$hefzEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Teacher$hefzEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HefzEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2367,6 +2519,30 @@ export type Teacher$salaryPaymentsArgs<ExtArgs extends runtime.Types.Extensions.
   take?: number
   skip?: number
   distinct?: Prisma.SalaryPaymentScalarFieldEnum | Prisma.SalaryPaymentScalarFieldEnum[]
+}
+
+/**
+ * Teacher.hefzEnrollments
+ */
+export type Teacher$hefzEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HefzEnrollment
+   */
+  select?: Prisma.HefzEnrollmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HefzEnrollment
+   */
+  omit?: Prisma.HefzEnrollmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HefzEnrollmentInclude<ExtArgs> | null
+  where?: Prisma.HefzEnrollmentWhereInput
+  orderBy?: Prisma.HefzEnrollmentOrderByWithRelationInput | Prisma.HefzEnrollmentOrderByWithRelationInput[]
+  cursor?: Prisma.HefzEnrollmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.HefzEnrollmentScalarFieldEnum | Prisma.HefzEnrollmentScalarFieldEnum[]
 }
 
 /**

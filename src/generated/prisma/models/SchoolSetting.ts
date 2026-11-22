@@ -42,6 +42,9 @@ export type SchoolSettingMinAggregateOutputType = {
   id: number | null
   schoolId: number | null
   admissionFee: runtime.Decimal | null
+  bkashNumber: string | null
+  nagadNumber: string | null
+  rocketNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +53,9 @@ export type SchoolSettingMaxAggregateOutputType = {
   id: number | null
   schoolId: number | null
   admissionFee: runtime.Decimal | null
+  bkashNumber: string | null
+  nagadNumber: string | null
+  rocketNumber: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +64,9 @@ export type SchoolSettingCountAggregateOutputType = {
   id: number
   schoolId: number
   admissionFee: number
+  bkashNumber: number
+  nagadNumber: number
+  rocketNumber: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -80,6 +89,9 @@ export type SchoolSettingMinAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  bkashNumber?: true
+  nagadNumber?: true
+  rocketNumber?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +100,9 @@ export type SchoolSettingMaxAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  bkashNumber?: true
+  nagadNumber?: true
+  rocketNumber?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -96,6 +111,9 @@ export type SchoolSettingCountAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  bkashNumber?: true
+  nagadNumber?: true
+  rocketNumber?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -191,6 +209,9 @@ export type SchoolSettingGroupByOutputType = {
   id: number
   schoolId: number
   admissionFee: runtime.Decimal
+  bkashNumber: string | null
+  nagadNumber: string | null
+  rocketNumber: string | null
   createdAt: Date
   updatedAt: Date
   _count: SchoolSettingCountAggregateOutputType | null
@@ -222,6 +243,9 @@ export type SchoolSettingWhereInput = {
   id?: Prisma.IntFilter<"SchoolSetting"> | number
   schoolId?: Prisma.IntFilter<"SchoolSetting"> | number
   admissionFee?: Prisma.DecimalFilter<"SchoolSetting"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  nagadNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  rocketNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -231,6 +255,9 @@ export type SchoolSettingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  bkashNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  nagadNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  rocketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
@@ -243,6 +270,9 @@ export type SchoolSettingWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SchoolSettingWhereInput[]
   NOT?: Prisma.SchoolSettingWhereInput | Prisma.SchoolSettingWhereInput[]
   admissionFee?: Prisma.DecimalFilter<"SchoolSetting"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  nagadNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  rocketNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -252,6 +282,9 @@ export type SchoolSettingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  bkashNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  nagadNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  rocketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolSettingCountOrderByAggregateInput
@@ -268,12 +301,18 @@ export type SchoolSettingScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"SchoolSetting"> | number
   schoolId?: Prisma.IntWithAggregatesFilter<"SchoolSetting"> | number
   admissionFee?: Prisma.DecimalWithAggregatesFilter<"SchoolSetting"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  nagadNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  rocketNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
 }
 
 export type SchoolSettingCreateInput = {
   admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: string | null
+  nagadNumber?: string | null
+  rocketNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutSchoolSettingInput
@@ -283,12 +322,18 @@ export type SchoolSettingUncheckedCreateInput = {
   id?: number
   schoolId: number
   admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: string | null
+  nagadNumber?: string | null
+  rocketNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SchoolSettingUpdateInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutSchoolSettingNestedInput
@@ -298,6 +343,9 @@ export type SchoolSettingUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -306,12 +354,18 @@ export type SchoolSettingCreateManyInput = {
   id?: number
   schoolId: number
   admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: string | null
+  nagadNumber?: string | null
+  rocketNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SchoolSettingUpdateManyMutationInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -320,6 +374,9 @@ export type SchoolSettingUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -333,6 +390,9 @@ export type SchoolSettingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  bkashNumber?: Prisma.SortOrder
+  nagadNumber?: Prisma.SortOrder
+  rocketNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -347,6 +407,9 @@ export type SchoolSettingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  bkashNumber?: Prisma.SortOrder
+  nagadNumber?: Prisma.SortOrder
+  rocketNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -355,6 +418,9 @@ export type SchoolSettingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  bkashNumber?: Prisma.SortOrder
+  nagadNumber?: Prisma.SortOrder
+  rocketNumber?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -399,6 +465,9 @@ export type SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput = {
 
 export type SchoolSettingCreateWithoutSchoolInput = {
   admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: string | null
+  nagadNumber?: string | null
+  rocketNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -406,6 +475,9 @@ export type SchoolSettingCreateWithoutSchoolInput = {
 export type SchoolSettingUncheckedCreateWithoutSchoolInput = {
   id?: number
   admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: string | null
+  nagadNumber?: string | null
+  rocketNumber?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -428,6 +500,9 @@ export type SchoolSettingUpdateToOneWithWhereWithoutSchoolInput = {
 
 export type SchoolSettingUpdateWithoutSchoolInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -435,6 +510,9 @@ export type SchoolSettingUpdateWithoutSchoolInput = {
 export type SchoolSettingUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -445,6 +523,9 @@ export type SchoolSettingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  bkashNumber?: boolean
+  nagadNumber?: boolean
+  rocketNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -454,6 +535,9 @@ export type SchoolSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  bkashNumber?: boolean
+  nagadNumber?: boolean
+  rocketNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -463,6 +547,9 @@ export type SchoolSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  bkashNumber?: boolean
+  nagadNumber?: boolean
+  rocketNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -472,11 +559,14 @@ export type SchoolSettingSelectScalar = {
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  bkashNumber?: boolean
+  nagadNumber?: boolean
+  rocketNumber?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
+export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "bkashNumber" | "nagadNumber" | "rocketNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
 export type SchoolSettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
 }
@@ -496,6 +586,9 @@ export type $SchoolSettingPayload<ExtArgs extends runtime.Types.Extensions.Inter
     id: number
     schoolId: number
     admissionFee: runtime.Decimal
+    bkashNumber: string | null
+    nagadNumber: string | null
+    rocketNumber: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["schoolSetting"]>
@@ -925,6 +1018,9 @@ export interface SchoolSettingFieldRefs {
   readonly id: Prisma.FieldRef<"SchoolSetting", 'Int'>
   readonly schoolId: Prisma.FieldRef<"SchoolSetting", 'Int'>
   readonly admissionFee: Prisma.FieldRef<"SchoolSetting", 'Decimal'>
+  readonly bkashNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly nagadNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly rocketNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
   readonly createdAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
 }

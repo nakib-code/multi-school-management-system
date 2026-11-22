@@ -73,6 +73,16 @@ export type Guardian = Prisma.GuardianModel
  */
 export type GuardianStudent = Prisma.GuardianStudentModel
 /**
+ * Model HefzDailyLog
+ * 
+ */
+export type HefzDailyLog = Prisma.HefzDailyLogModel
+/**
+ * Model HefzEnrollment
+ * 
+ */
+export type HefzEnrollment = Prisma.HefzEnrollmentModel
+/**
  * Model Manager
  * 
  */

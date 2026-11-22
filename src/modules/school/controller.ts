@@ -9,14 +9,14 @@ import {
 	blockSchool,
 	createSchool,
 	deleteSchool,
+	getPublicSchoolById,
+	getPublicSchools,
 	getSchools,
 	getSchoolUserSummary,
 	getSchoolUsers,
 	rejectSchool,
 	unblockSchool,
 	verifyAdminEmail,
-	getPublicSchoolById,
-	getPublicSchools,
 } from "./service.js";
 
 export const createSchoolController = async (
@@ -305,31 +305,29 @@ export const getSchoolUsersController = async (
 	}
 };
 
-
 // ============================================
 // Public - School Details
 // ============================================
 
 export const getPublicSchoolByIdController = async (
-        req: Request,
-        res: Response,
+	req: Request,
+	res: Response,
 ) => {
-        const schoolId = Number(req.params.id);
+	const schoolId = Number(req.params.id);
 
-        if (!Number.isInteger(schoolId) || schoolId <= 0) {
-                throw new AppError(400, "Invalid school ID");
-        }
+	if (!Number.isInteger(schoolId) || schoolId <= 0) {
+		throw new AppError(400, "Invalid school ID");
+	}
 
-        const result = await getPublicSchoolById(schoolId);
+	const result = await getPublicSchoolById(schoolId);
 
-        return sendResponse(res, {
-                statusCode: 200,
-                success: true,
-                message: "School fetched successfully",
-                data: result,
-        });
+	return sendResponse(res, {
+		statusCode: 200,
+		success: true,
+		message: "School fetched successfully",
+		data: result,
+	});
 };
-
 
 // ============================================
 // Public - School List
@@ -345,15 +343,10 @@ export const getPublicSchoolsController = async (
 ) => {
 	const page = Math.max(Number(req.query.page) || 1, 1);
 
-	const limit = Math.min(
-		Math.max(Number(req.query.limit) || 10, 1),
-		50,
-	);
+	const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), 50);
 
 	const search =
-		typeof req.query.search === "string"
-			? req.query.search.trim()
-			: "";
+		typeof req.query.search === "string" ? req.query.search.trim() : "";
 
 	const result = await getPublicSchools({
 		page,

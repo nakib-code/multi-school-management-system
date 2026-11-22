@@ -151,6 +151,8 @@ enum PackageFeature {
   TEACHER_SALARY
   REPORTS
   NOTIFICATIONS
+  KINDERGARTEN_MODULE
+  HEFZ_MODULE
 }
 
 enum CustomPackageRequestStatus {
@@ -161,15 +163,15 @@ enum CustomPackageRequestStatus {
 }
 
 enum SubscriptionPaymentMethod {
-  ONLINE
-  CASH
+  BKASH
+  NAGAD
+  ROCKET
 }
 
 enum SubscriptionPaymentStatus {
   PENDING
-  PAID
-  FAILED
-  CANCELLED
+  VERIFIED
+  REJECTED
 }
 
 enum EnrollmentStatus {
@@ -177,4 +179,29 @@ enum EnrollmentStatus {
   COMPLETED
   TRANSFERRED
   DROPPED
+}
+
+enum HefzWing {
+  NAJERA
+  HEFZ
+}
+
+enum HefzEnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  DROPPED
+  TRANSFERRED
+}
+
+enum SobokQuality {
+  GOOD
+  AVERAGE
+  WEAK
+  REVISE
+}
+
+enum HefzAttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
 }

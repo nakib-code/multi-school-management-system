@@ -215,7 +215,9 @@ export const PackageFeature = {
   PAYMENT_MANAGEMENT: 'PAYMENT_MANAGEMENT',
   TEACHER_SALARY: 'TEACHER_SALARY',
   REPORTS: 'REPORTS',
-  NOTIFICATIONS: 'NOTIFICATIONS'
+  NOTIFICATIONS: 'NOTIFICATIONS',
+  KINDERGARTEN_MODULE: 'KINDERGARTEN_MODULE',
+  HEFZ_MODULE: 'HEFZ_MODULE'
 } as const
 
 export type PackageFeature = (typeof PackageFeature)[keyof typeof PackageFeature]
@@ -232,8 +234,9 @@ export type CustomPackageRequestStatus = (typeof CustomPackageRequestStatus)[key
 
 
 export const SubscriptionPaymentMethod = {
-  ONLINE: 'ONLINE',
-  CASH: 'CASH'
+  BKASH: 'BKASH',
+  NAGAD: 'NAGAD',
+  ROCKET: 'ROCKET'
 } as const
 
 export type SubscriptionPaymentMethod = (typeof SubscriptionPaymentMethod)[keyof typeof SubscriptionPaymentMethod]
@@ -241,9 +244,8 @@ export type SubscriptionPaymentMethod = (typeof SubscriptionPaymentMethod)[keyof
 
 export const SubscriptionPaymentStatus = {
   PENDING: 'PENDING',
-  PAID: 'PAID',
-  FAILED: 'FAILED',
-  CANCELLED: 'CANCELLED'
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
 } as const
 
 export type SubscriptionPaymentStatus = (typeof SubscriptionPaymentStatus)[keyof typeof SubscriptionPaymentStatus]
@@ -259,11 +261,47 @@ export const EnrollmentStatus = {
 export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof EnrollmentStatus]
 
 
+export const HefzWing = {
+  NAJERA: 'NAJERA',
+  HEFZ: 'HEFZ'
+} as const
+
+export type HefzWing = (typeof HefzWing)[keyof typeof HefzWing]
+
+
+export const HefzEnrollmentStatus = {
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  DROPPED: 'DROPPED',
+  TRANSFERRED: 'TRANSFERRED'
+} as const
+
+export type HefzEnrollmentStatus = (typeof HefzEnrollmentStatus)[keyof typeof HefzEnrollmentStatus]
+
+
+export const SobokQuality = {
+  GOOD: 'GOOD',
+  AVERAGE: 'AVERAGE',
+  WEAK: 'WEAK',
+  REVISE: 'REVISE'
+} as const
+
+export type SobokQuality = (typeof SobokQuality)[keyof typeof SobokQuality]
+
+
+export const HefzAttendanceStatus = {
+  PRESENT: 'PRESENT',
+  ABSENT: 'ABSENT',
+  LATE: 'LATE'
+} as const
+
+export type HefzAttendanceStatus = (typeof HefzAttendanceStatus)[keyof typeof HefzAttendanceStatus]
+
+
 export const PaymentMethod = {
-  CASH: 'CASH',
-  BANK: 'BANK',
-  MOBILE_BANKING: 'MOBILE_BANKING',
-  ONLINE: 'ONLINE'
+  BKASH: 'BKASH',
+  NAGAD: 'NAGAD',
+  ROCKET: 'ROCKET'
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
@@ -271,9 +309,8 @@ export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
 
 export const PaymentStatus = {
   PENDING: 'PENDING',
-  COMPLETED: 'COMPLETED',
-  FAILED: 'FAILED',
-  REFUNDED: 'REFUNDED'
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

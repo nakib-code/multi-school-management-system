@@ -30,6 +30,9 @@ export const getAdmissionFee = async (schoolId: number) => {
 			id: true,
 			schoolId: true,
 			admissionFee: true,
+			bkashNumber: true,
+			nagadNumber: true,
+			rocketNumber: true,
 			createdAt: true,
 			updatedAt: true,
 		},
@@ -77,15 +80,36 @@ export const updateAdmissionFee = async (
 		},
 		update: {
 			admissionFee: input.admissionFee,
+			...(input.bkashNumber !== undefined
+				? { bkashNumber: input.bkashNumber }
+				: {}),
+			...(input.nagadNumber !== undefined
+				? { nagadNumber: input.nagadNumber }
+				: {}),
+			...(input.rocketNumber !== undefined
+				? { rocketNumber: input.rocketNumber }
+				: {}),
 		},
 		create: {
 			schoolId,
 			admissionFee: input.admissionFee,
+			...(input.bkashNumber !== undefined
+				? { bkashNumber: input.bkashNumber }
+				: {}),
+			...(input.nagadNumber !== undefined
+				? { nagadNumber: input.nagadNumber }
+				: {}),
+			...(input.rocketNumber !== undefined
+				? { rocketNumber: input.rocketNumber }
+				: {}),
 		},
 		select: {
 			id: true,
 			schoolId: true,
 			admissionFee: true,
+			bkashNumber: true,
+			nagadNumber: true,
+			rocketNumber: true,
 			createdAt: true,
 			updatedAt: true,
 		},

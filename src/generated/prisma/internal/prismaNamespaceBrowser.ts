@@ -62,6 +62,8 @@ export const ModelName = {
   Exam: 'Exam',
   Guardian: 'Guardian',
   GuardianStudent: 'GuardianStudent',
+  HefzDailyLog: 'HefzDailyLog',
+  HefzEnrollment: 'HefzEnrollment',
   Manager: 'Manager',
   Package: 'Package',
   PackageFeatureConfig: 'PackageFeatureConfig',
@@ -293,6 +295,43 @@ export const GuardianStudentScalarFieldEnum = {
 export type GuardianStudentScalarFieldEnum = (typeof GuardianStudentScalarFieldEnum)[keyof typeof GuardianStudentScalarFieldEnum]
 
 
+export const HefzDailyLogScalarFieldEnum = {
+  id: 'id',
+  hefzEnrollmentId: 'hefzEnrollmentId',
+  schoolId: 'schoolId',
+  logDate: 'logDate',
+  sobok: 'sobok',
+  sobokPagesOrLines: 'sobokPagesOrLines',
+  sobokQuality: 'sobokQuality',
+  sobokAm: 'sobokAm',
+  manzil: 'manzil',
+  manzilParas: 'manzilParas',
+  attendanceStatus: 'attendanceStatus',
+  ustadNote: 'ustadNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HefzDailyLogScalarFieldEnum = (typeof HefzDailyLogScalarFieldEnum)[keyof typeof HefzDailyLogScalarFieldEnum]
+
+
+export const HefzEnrollmentScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  ustadId: 'ustadId',
+  wing: 'wing',
+  currentPara: 'currentPara',
+  currentSurah: 'currentSurah',
+  startDate: 'startDate',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type HefzEnrollmentScalarFieldEnum = (typeof HefzEnrollmentScalarFieldEnum)[keyof typeof HefzEnrollmentScalarFieldEnum]
+
+
 export const ManagerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -482,6 +521,9 @@ export const SchoolSettingScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   admissionFee: 'admissionFee',
+  bkashNumber: 'bkashNumber',
+  nagadNumber: 'nagadNumber',
+  rocketNumber: 'rocketNumber',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -544,12 +586,16 @@ export const StudentPaymentScalarFieldEnum = {
   schoolId: 'schoolId',
   studentId: 'studentId',
   feeId: 'feeId',
-  transactionId: 'transactionId',
-  amount: 'amount',
   paymentMethod: 'paymentMethod',
+  senderNumber: 'senderNumber',
+  receiverNumber: 'receiverNumber',
+  trxId: 'trxId',
+  paidAmount: 'paidAmount',
   status: 'status',
   paidAt: 'paidAt',
-  receivedBy: 'receivedBy',
+  verifiedById: 'verifiedById',
+  verifiedAt: 'verifiedAt',
+  rejectionReason: 'rejectionReason',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -598,15 +644,17 @@ export const SubscriptionPaymentScalarFieldEnum = {
   id: 'id',
   subscriptionId: 'subscriptionId',
   schoolId: 'schoolId',
-  amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  senderNumber: 'senderNumber',
+  receiverNumber: 'receiverNumber',
+  trxId: 'trxId',
+  paidAmount: 'paidAmount',
   currency: 'currency',
   status: 'status',
-  paymentMethod: 'paymentMethod',
-  transactionId: 'transactionId',
-  validationId: 'validationId',
-  gatewayAmount: 'gatewayAmount',
-  gatewayCurrency: 'gatewayCurrency',
   paidAt: 'paidAt',
+  verifiedById: 'verifiedById',
+  verifiedAt: 'verifiedAt',
+  rejectionReason: 'rejectionReason',
   remarks: 'remarks',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

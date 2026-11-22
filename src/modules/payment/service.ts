@@ -1,121 +1,40 @@
-import { sslcommerz } from "../../config/sslcommerz.js";
-import AppError from "../../utils/appError.js";
+import {
+	getPlatformReceiverNumber,
+	platformMobileBankingConfig,
+} from "../../config/sslcommerz.js";
+import type { ManualPaymentMethod, PaymentCallbackData } from "./interface.js";
 
-import type {
-	InitiatePaymentInput,
-	InitiatePaymentResult,
-	PaymentCallbackData,
-	SSLCommerzValidationResponse,
-} from "./interface.js";
+export const normalizeTrxId = (trxId: string): string =>
+	trxId.trim().toUpperCase();
 
-// ----------------------------------------------------
-// Initiate SSLCommerz Payment
-// ----------------------------------------------------
+export const getPlatformPaymentMethods = () => ({
+	supportedMethods: ["BKASH", "NAGAD", "ROCKET"] as ManualPaymentMethod[],
+	receiverNumbers: {
+		BKASH: platformMobileBankingConfig.BKASH ?? null,
+		NAGAD: platformMobileBankingConfig.NAGAD ?? null,
+		ROCKET: platformMobileBankingConfig.ROCKET ?? null,
+	},
+});
 
-export const initiatePayment = async (
-	input: InitiatePaymentInput,
-): Promise<InitiatePaymentResult> => {
-	const response = await sslcommerz.init({
-		total_amount: input.amount,
-		currency: "BDT",
-		tran_id: input.transactionId,
-
-		success_url: input.successUrl,
-		fail_url: input.failUrl,
-		cancel_url: input.cancelUrl,
-		ipn_url: input.ipnUrl,
-
-		product_name: input.productName,
-		product_category: input.productCategory,
-		product_profile: "general",
-
-		cus_name: input.customerName,
-		cus_email: input.customerEmail,
-		cus_phone: input.customerPhone || "N/A",
-
-		cus_add1: input.customerAddress || "N/A",
-		cus_city: input.customerCity || "Dhaka",
-		cus_country: input.customerCountry || "Bangladesh",
-
-		shipping_method: "NO",
-		num_of_item: 1,
-
-		value_a: input.valueA,
-		value_b: input.valueB,
-		value_c: input.valueC,
-		value_d: input.valueD,
-	});
-
-	console.log("SSLCommerz init response:", JSON.stringify(response, null, 2));
-
-	const gatewayResponse = response as {
-		GatewayPageURL?: string;
-		status?: string;
-	};
-
-	if (gatewayResponse.status && gatewayResponse.status !== "SUCCESS") {
-		throw new AppError(502, "Failed to initialize SSLCommerz payment");
-	}
-
-	if (!gatewayResponse.GatewayPageURL) {
-		throw new AppError(502, "SSLCommerz payment gateway URL was not returned");
-	}
-
-	return {
-		transactionId: input.transactionId,
-		amount: input.amount,
-		paymentUrl: gatewayResponse.GatewayPageURL,
-	};
-};
-
-// ----------------------------------------------------
-// Validate SSLCommerz Payment
-// ----------------------------------------------------
-
-export const validatePayment = async (
-	valId: string,
-): Promise<SSLCommerzValidationResponse> => {
-	if (!valId) {
-		throw new AppError(400, "SSLCommerz validation ID is required");
-	}
-
-	const response = await sslcommerz.validate({
-		val_id: valId,
-	});
-
-	const validationResponse = response as SSLCommerzValidationResponse;
-
-	if (!validationResponse.val_id) {
-		throw new AppError(400, "SSLCommerz payment validation failed");
-	}
-
-	return validationResponse;
-};
-
-// ----------------------------------------------------
-// Extract callback data
-// ----------------------------------------------------
+export const resolvePlatformReceiverNumber = (
+	method: ManualPaymentMethod,
+	provided?: string,
+): string | undefined => provided ?? getPlatformReceiverNumber(method);
 
 export const getPaymentCallbackData = (
-	body: PaymentCallbackData,
+	body: Record<string, unknown>,
 ): PaymentCallbackData => {
-	return {
-		...(body.status !== undefined ? { status: body.status } : {}),
+	const data: PaymentCallbackData = {};
 
-		...(body.tran_id !== undefined ? { tran_id: body.tran_id } : {}),
+	if (typeof body.status === "string") data.status = body.status;
+	if (typeof body.tran_id === "string") data.tran_id = body.tran_id;
+	if (typeof body.val_id === "string") data.val_id = body.val_id;
+	if (typeof body.amount === "string") data.amount = body.amount;
+	if (typeof body.currency === "string") data.currency = body.currency;
+	if (typeof body.value_a === "string") data.value_a = body.value_a;
+	if (typeof body.value_b === "string") data.value_b = body.value_b;
+	if (typeof body.value_c === "string") data.value_c = body.value_c;
+	if (typeof body.value_d === "string") data.value_d = body.value_d;
 
-		...(body.val_id !== undefined ? { val_id: body.val_id } : {}),
-
-		...(body.amount !== undefined ? { amount: body.amount } : {}),
-
-		...(body.currency !== undefined ? { currency: body.currency } : {}),
-
-		...(body.value_a !== undefined ? { value_a: body.value_a } : {}),
-
-		...(body.value_b !== undefined ? { value_b: body.value_b } : {}),
-
-		...(body.value_c !== undefined ? { value_c: body.value_c } : {}),
-
-		...(body.value_d !== undefined ? { value_d: body.value_d } : {}),
-	};
+	return data;
 };

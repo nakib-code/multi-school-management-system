@@ -1,0 +1,28 @@
+model HefzDailyLog {
+  id Int @id @default(autoincrement())
+
+  hefzEnrollmentId Int
+  schoolId         Int
+
+  logDate           DateTime
+  sobok             String
+  sobokPagesOrLines String?
+  sobokQuality      SobokQuality         @default(GOOD)
+  sobokAm           String?
+  manzil            String?
+  manzilParas       String?
+  attendanceStatus  HefzAttendanceStatus @default(PRESENT)
+  ustadNote         String?              @db.Text
+
+  hefzEnrollment HefzEnrollment @relation(fields: [hefzEnrollmentId], references: [id], onDelete: Cascade)
+  school         School         @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([hefzEnrollmentId, logDate])
+  @@index([schoolId])
+  @@index([hefzEnrollmentId])
+  @@index([schoolId, logDate])
+  @@map("hefz_daily_logs")
+}

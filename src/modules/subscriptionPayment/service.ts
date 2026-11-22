@@ -1,1032 +1,420 @@
-import crypto from "node:crypto";
-
-import { sslcommerz } from "../../config/sslcommerz.js";
+import {
+	BillingCycle,
+	SubscriptionPaymentMethod,
+	SubscriptionPaymentStatus,
+	SubscriptionStatus,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
-
+import {
+	normalizeTrxId,
+	resolvePlatformReceiverNumber,
+} from "../payment/service.js";
 import type {
-	InitiateSubscriptionPaymentResult,
-	SubscriptionPaymentCallbackData,
+	RejectSubscriptionPaymentInput,
+	SubmitSubscriptionPaymentInput,
+	SubscriptionPaymentFilterQuery,
+	SubscriptionPaymentSummary,
 } from "./interface.js";
 
-// ====================================================
-// Helpers
-// ====================================================
-
-const generateTransactionId = () => {
-	return `SUB-${Date.now()}-${crypto.randomBytes(4).toString("hex")}`;
+const subscriptionPaymentInclude = {
+	school: {
+		select: {
+			id: true,
+			name: true,
+			code: true,
+			email: true,
+		},
+	},
+	subscription: {
+		select: {
+			id: true,
+			status: true,
+			startDate: true,
+			endDate: true,
+			package: {
+				select: {
+					id: true,
+					name: true,
+					price: true,
+					billingCycle: true,
+				},
+			},
+		},
+	},
+	verifiedBy: {
+		select: {
+			id: true,
+			name: true,
+			role: true,
+		},
+	},
 };
 
-const calculateEndDate = (startDate: Date, billingCycle: string) => {
+const calculateSubscriptionEndDate = (
+	startDate: Date,
+	billingCycle: BillingCycle,
+): Date => {
 	const endDate = new Date(startDate);
-
-	if (billingCycle === "YEARLY") {
+	if (billingCycle === BillingCycle.YEARLY) {
 		endDate.setFullYear(endDate.getFullYear() + 1);
 	} else {
 		endDate.setMonth(endDate.getMonth() + 1);
 	}
-
 	return endDate;
 };
 
-// ====================================================
-// ONLINE PAYMENT
-// ====================================================
+/* ---------- School Admin: Submit Manual Subscription Payment ---------- */
 
-/**
- * Initiate Online Subscription Payment
- *
- * Admin can only pay for a PENDING subscription.
- */
-export const initiateSubscriptionPayment = async (
+export const submitManualSubscriptionPayment = async (
 	subscriptionId: number,
 	schoolId: number,
+	payload: SubmitSubscriptionPaymentInput,
 ) => {
 	const subscription = await prisma.schoolSubscription.findFirst({
 		where: {
 			id: subscriptionId,
 			schoolId,
 		},
-
 		include: {
-			school: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-					adminEmail: true,
-					adminPhone: true,
-					adminName: true,
-				},
-			},
-
-			package: {
-				select: {
-					id: true,
-					name: true,
-					price: true,
-					billingCycle: true,
-					isActive: true,
-				},
-			},
+			package: true,
 		},
 	});
 
 	if (!subscription) {
-		throw new AppError(404, "Subscription not found");
+		throw new AppError(404, "Subscription not found for your school");
 	}
 
-	if (subscription.status === "ACTIVE") {
-		throw new AppError(400, "This subscription is already active");
+	if (subscription.status === SubscriptionStatus.CANCELLED) {
+		throw new AppError(400, "Cannot pay for a cancelled subscription");
 	}
 
-	if (subscription.status !== "PENDING") {
-		throw new AppError(400, "This subscription is not available for payment");
-	}
+	const normalizedTrxId = normalizeTrxId(payload.trxId);
 
-	if (!subscription.package.isActive) {
-		throw new AppError(400, "The selected package is no longer active");
-	}
-
-	const amount = Number(subscription.price);
-
-	if (!Number.isFinite(amount) || amount <= 0) {
-		throw new AppError(400, "Invalid subscription payment amount");
-	}
-
-	// --------------------------------------------------
-	// Check pending online payment
-	// --------------------------------------------------
-
-	const existingPendingPayment = await prisma.subscriptionPayment.findFirst({
-		where: {
-			subscriptionId,
-			schoolId,
-			paymentMethod: "ONLINE",
-			status: "PENDING",
-		},
-
-		orderBy: {
-			createdAt: "desc",
-		},
+	const duplicateTrx = await prisma.subscriptionPayment.findUnique({
+		where: { trxId: normalizedTrxId },
 	});
-
-	if (existingPendingPayment) {
+	if (duplicateTrx) {
 		throw new AppError(
-			400,
-			"A payment is already pending for this subscription",
+			409,
+			"This transaction ID (trxId) has already been submitted",
 		);
 	}
 
-	const transactionId = generateTransactionId();
+	const existingPending = await prisma.subscriptionPayment.findFirst({
+		where: {
+			subscriptionId,
+			status: SubscriptionPaymentStatus.PENDING,
+		},
+	});
+	if (existingPending) {
+		throw new AppError(
+			409,
+			"A pending payment already exists for this subscription. Please wait for verification.",
+		);
+	}
 
-	// --------------------------------------------------
-	// Create payment record
-	// --------------------------------------------------
+	const receiverNumber = resolvePlatformReceiverNumber(
+		payload.paymentMethod,
+		payload.receiverNumber,
+	);
 
 	const payment = await prisma.subscriptionPayment.create({
 		data: {
 			subscriptionId,
 			schoolId,
-			amount,
+			paymentMethod: payload.paymentMethod,
+			senderNumber: payload.senderNumber.trim(),
+			...(receiverNumber !== undefined ? { receiverNumber } : {}),
+			trxId: normalizedTrxId,
+			paidAmount: payload.paidAmount,
 			currency: "BDT",
-			status: "PENDING",
-			paymentMethod: "ONLINE",
-			transactionId,
+			status: SubscriptionPaymentStatus.PENDING,
+			...(payload.paidAt !== undefined ? { paidAt: payload.paidAt } : {}),
+			...(payload.remarks !== undefined ? { remarks: payload.remarks } : {}),
+		},
+		include: subscriptionPaymentInclude,
+	});
+
+	return {
+		...payment,
+		paidAmount: Number(payment.paidAmount),
+	};
+};
+
+/* ---------- Super Admin: List Pending Payments ---------- */
+
+export const getPendingSubscriptionPayments = async () => {
+	const payments = await prisma.subscriptionPayment.findMany({
+		where: {
+			status: SubscriptionPaymentStatus.PENDING,
+		},
+		include: subscriptionPaymentInclude,
+		orderBy: { createdAt: "asc" },
+	});
+
+	return payments.map((payment) => ({
+		...payment,
+		paidAmount: Number(payment.paidAmount),
+	}));
+};
+
+/* ---------- Super Admin: Verify Payment & Activate/Renew Subscription ---------- */
+
+export const verifySubscriptionPayment = async (
+	paymentId: number,
+	verifierUserId: number,
+) => {
+	const payment = await prisma.subscriptionPayment.findUnique({
+		where: { id: paymentId },
+		include: {
+			subscription: {
+				include: {
+					package: true,
+				},
+			},
 		},
 	});
 
-	try {
-		const baseUrl = process.env.BACKEND_URL || "http://localhost:5001";
+	if (!payment) {
+		throw new AppError(404, "Subscription payment not found");
+	}
 
-		const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+	if (payment.status === SubscriptionPaymentStatus.VERIFIED) {
+		throw new AppError(400, "Subscription payment is already verified");
+	}
 
-		const response = await sslcommerz.init({
-			total_amount: amount,
-			currency: "BDT",
-			tran_id: transactionId,
+	if (payment.status !== SubscriptionPaymentStatus.PENDING) {
+		throw new AppError(
+			400,
+			"Only pending subscription payments can be verified",
+		);
+	}
 
-			success_url: `${baseUrl}/api/v1/payments/subscription/success`,
+	const now = new Date();
+	const currentSub = payment.subscription;
 
-			fail_url: `${baseUrl}/api/v1/payments/subscription/fail`,
+	// If renewing an active subscription whose endDate is still in the future, extend from endDate
+	const baseStartDate =
+		currentSub.status === SubscriptionStatus.ACTIVE && currentSub.endDate > now
+			? currentSub.endDate
+			: now;
 
-			cancel_url: `${baseUrl}/api/v1/payments/subscription/cancel`,
+	const nextStartDate =
+		currentSub.status === SubscriptionStatus.ACTIVE && currentSub.endDate > now
+			? currentSub.startDate
+			: now;
 
-			ipn_url: `${baseUrl}/api/v1/payments/subscription/ipn`,
+	const nextEndDate = calculateSubscriptionEndDate(
+		baseStartDate,
+		currentSub.package.billingCycle,
+	);
 
-			product_name: `${subscription.package.name} Subscription`,
-
-			product_category: "Subscription",
-			product_profile: "general",
-
-			cus_name: subscription.school.adminName || subscription.school.name,
-
-			cus_email: subscription.school.adminEmail || "admin@example.com",
-
-			cus_phone: subscription.school.adminPhone || "N/A",
-
-			cus_add1: subscription.school.name,
-			cus_city: "Dhaka",
-			cus_country: "Bangladesh",
-
-			shipping_method: "NO",
-			num_of_item: 1,
-
-			value_a: String(payment.id),
-			value_b: String(subscriptionId),
-			value_c: String(schoolId),
-			value_d: frontendUrl,
+	return prisma.$transaction(async (tx) => {
+		// Expire any other currently active subscriptions for the same school
+		await tx.schoolSubscription.updateMany({
+			where: {
+				schoolId: payment.schoolId,
+				status: SubscriptionStatus.ACTIVE,
+				id: { not: payment.subscriptionId },
+			},
+			data: {
+				status: SubscriptionStatus.EXPIRED,
+			},
 		});
 
-		const gatewayResponse = response as {
-			status?: string;
-			GatewayPageURL?: string;
-		};
+		const updatedPayment = await tx.subscriptionPayment.update({
+			where: { id: paymentId },
+			data: {
+				status: SubscriptionPaymentStatus.VERIFIED,
+				verifiedById: verifierUserId,
+				verifiedAt: now,
+				rejectionReason: null,
+			},
+			include: subscriptionPaymentInclude,
+		});
 
-		if (gatewayResponse.status && gatewayResponse.status !== "SUCCESS") {
-			throw new AppError(502, "Failed to initialize SSLCommerz payment");
-		}
-
-		if (!gatewayResponse.GatewayPageURL) {
-			throw new AppError(
-				502,
-				"SSLCommerz payment gateway URL was not returned",
-			);
-		}
+		const updatedSubscription = await tx.schoolSubscription.update({
+			where: { id: payment.subscriptionId },
+			data: {
+				status: SubscriptionStatus.ACTIVE,
+				startDate: nextStartDate,
+				endDate: nextEndDate,
+				notes: `Activated/renewed after manual ${payment.paymentMethod} payment verification (TrxID: ${payment.trxId}).`,
+			},
+		});
 
 		return {
-			paymentId: payment.id,
-			subscriptionId,
-			transactionId,
-			amount,
-			currency: "BDT",
-			paymentUrl: gatewayResponse.GatewayPageURL,
-		} satisfies InitiateSubscriptionPaymentResult;
-	} catch (error) {
-		await prisma.subscriptionPayment.update({
-			where: {
-				id: payment.id,
+			payment: {
+				...updatedPayment,
+				paidAmount: Number(updatedPayment.paidAmount),
 			},
-
-			data: {
-				status: "FAILED",
-				remarks: "SSLCommerz payment initialization failed.",
-			},
-		});
-
-		throw error;
-	}
+			subscription: updatedSubscription,
+		};
+	});
 };
 
-// ====================================================
-// CALLBACK DATA
-// ====================================================
+/* ---------- Super Admin: Reject Payment ---------- */
 
-export const getSubscriptionPaymentCallbackData = (
-	body: SubscriptionPaymentCallbackData,
-): SubscriptionPaymentCallbackData => {
-	return {
-		...(body.status !== undefined && {
-			status: body.status,
-		}),
-
-		...(body.tran_id !== undefined && {
-			tran_id: body.tran_id,
-		}),
-
-		...(body.val_id !== undefined && {
-			val_id: body.val_id,
-		}),
-
-		...(body.amount !== undefined && {
-			amount: body.amount,
-		}),
-
-		...(body.currency !== undefined && {
-			currency: body.currency,
-		}),
-
-		...(body.value_a !== undefined && {
-			value_a: body.value_a,
-		}),
-
-		...(body.value_b !== undefined && {
-			value_b: body.value_b,
-		}),
-
-		...(body.value_c !== undefined && {
-			value_c: body.value_c,
-		}),
-
-		...(body.value_d !== undefined && {
-			value_d: body.value_d,
-		}),
-	};
-};
-
-// ====================================================
-// SUCCESSFUL ONLINE PAYMENT
-// ====================================================
-
-export const processSuccessfulSubscriptionPayment = async (
-	callbackData: SubscriptionPaymentCallbackData,
+export const rejectSubscriptionPayment = async (
+	paymentId: number,
+	verifierUserId: number,
+	payload: RejectSubscriptionPaymentInput,
 ) => {
-	if (!callbackData.tran_id) {
-		throw new AppError(400, "Transaction ID is missing");
-	}
-
-	if (!callbackData.val_id) {
-		throw new AppError(400, "SSLCommerz validation ID is missing");
-	}
-
 	const payment = await prisma.subscriptionPayment.findUnique({
-		where: {
-			transactionId: callbackData.tran_id,
-		},
-
-		include: {
-			subscription: {
-				include: {
-					package: true,
-				},
-			},
-		},
+		where: { id: paymentId },
 	});
 
 	if (!payment) {
 		throw new AppError(404, "Subscription payment not found");
 	}
 
-	// --------------------------------------------------
-	// Idempotency
-	// --------------------------------------------------
-
-	if (payment.status === "PAID") {
-		return payment;
-	}
-
-	if (payment.status === "CANCELLED") {
-		throw new AppError(400, "This payment has already been cancelled");
-	}
-
-	if (payment.paymentMethod !== "ONLINE") {
-		throw new AppError(400, "Invalid payment method");
-	}
-
-	// --------------------------------------------------
-	// Validate payment with SSLCommerz
-	// --------------------------------------------------
-
-	const validationResponse = await sslcommerz.validate({
-		val_id: callbackData.val_id,
-	});
-
-	const validation = validationResponse as {
-		status?: string;
-		tran_id?: string;
-		val_id?: string;
-		amount?: string;
-		currency?: string;
-	};
-
-	if (validation.status !== "VALID" && validation.status !== "VALIDATED") {
-		throw new AppError(400, "SSLCommerz payment validation failed");
-	}
-
-	if (validation.tran_id !== payment.transactionId) {
-		throw new AppError(400, "Transaction ID verification failed");
-	}
-
-	const gatewayAmount = Number(validation.amount);
-
-	if (
-		!Number.isFinite(gatewayAmount) ||
-		gatewayAmount !== Number(payment.amount)
-	) {
-		throw new AppError(400, "Payment amount verification failed");
-	}
-
-	if (validation.currency !== payment.currency) {
-		throw new AppError(400, "Payment currency verification failed");
-	}
-
-	const paidAt = new Date();
-
-	// --------------------------------------------------
-	// Mark payment PAID + activate subscription
-	// --------------------------------------------------
-
-	const result = await prisma.$transaction(async (tx) => {
-		const currentPayment = await tx.subscriptionPayment.findUnique({
-			where: {
-				id: payment.id,
-			},
-		});
-
-		if (!currentPayment) {
-			throw new AppError(404, "Subscription payment not found");
-		}
-
-		if (currentPayment.status === "PAID") {
-			return currentPayment;
-		}
-
-		if (currentPayment.status === "CANCELLED") {
-			throw new AppError(400, "This payment has already been cancelled");
-		}
-
-		const subscription = await tx.schoolSubscription.findUnique({
-			where: {
-				id: currentPayment.subscriptionId,
-			},
-
-			include: {
-				package: true,
-				school: {
-					select: {
-						id: true,
-						status: true,
-					},
-				},
-			},
-		});
-
-		if (!subscription) {
-			throw new AppError(404, "Subscription not found");
-		}
-
-		if (subscription.school.status !== "ACTIVE") {
-			throw new AppError(400, "School is not active");
-		}
-
-		if (subscription.status !== "PENDING") {
-			throw new AppError(400, "Subscription is not pending");
-		}
-
-		if (!subscription.package.isActive) {
-			throw new AppError(400, "The selected package is no longer active");
-		}
-
-		// Recalculate dates from actual payment time.
-		const startDate = paidAt;
-
-		const endDate = calculateEndDate(
-			startDate,
-			subscription.package.billingCycle,
-		);
-		if (!validation.val_id) {
-			throw new AppError(400, "SSLCommerz validation ID is missing");
-		}
-
-		if (!validation.currency) {
-			throw new AppError(400, "SSLCommerz validation currency is missing");
-		}
-		const updatedPayment = await tx.subscriptionPayment.update({
-			where: {
-				id: currentPayment.id,
-			},
-
-			data: {
-				status: "PAID",
-				validationId: validation.val_id,
-				gatewayAmount,
-				gatewayCurrency: validation.currency,
-				paidAt,
-			},
-		});
-
-		await tx.schoolSubscription.update({
-			where: {
-				id: subscription.id,
-			},
-
-			data: {
-				status: "ACTIVE",
-				startDate,
-				endDate,
-
-				// Use server-side payment amount.
-				price: currentPayment.amount,
-
-				notes: "Subscription activated after successful SSLCommerz payment.",
-			},
-		});
-
-		return updatedPayment;
-	});
-
-	return result;
-};
-
-// ====================================================
-// FAILED ONLINE PAYMENT
-// ====================================================
-
-export const processFailedSubscriptionPayment = async (
-	callbackData: SubscriptionPaymentCallbackData,
-) => {
-	if (!callbackData.tran_id) {
-		throw new AppError(400, "Transaction ID is missing");
-	}
-
-	const payment = await prisma.subscriptionPayment.findUnique({
-		where: {
-			transactionId: callbackData.tran_id,
-		},
-	});
-
-	if (!payment) {
-		throw new AppError(404, "Subscription payment not found");
-	}
-
-	if (payment.status === "PAID") {
-		return payment;
-	}
-
-	if (payment.status === "CANCELLED") {
-		return payment;
-	}
-
-	return prisma.subscriptionPayment.update({
-		where: {
-			id: payment.id,
-		},
-
-		data: {
-			status: "FAILED",
-			remarks: "SSLCommerz payment failed.",
-		},
-	});
-};
-
-// ====================================================
-// CANCELLED ONLINE PAYMENT
-// ====================================================
-
-export const processCancelledSubscriptionPayment = async (
-	callbackData: SubscriptionPaymentCallbackData,
-) => {
-	if (!callbackData.tran_id) {
-		throw new AppError(400, "Transaction ID is missing");
-	}
-
-	const payment = await prisma.subscriptionPayment.findUnique({
-		where: {
-			transactionId: callbackData.tran_id,
-		},
-	});
-
-	if (!payment) {
-		throw new AppError(404, "Subscription payment not found");
-	}
-
-	if (payment.status === "PAID") {
-		return payment;
-	}
-
-	if (payment.status === "CANCELLED") {
-		return payment;
-	}
-
-	return prisma.subscriptionPayment.update({
-		where: {
-			id: payment.id,
-		},
-
-		data: {
-			status: "CANCELLED",
-			remarks: "SSLCommerz payment cancelled.",
-		},
-	});
-};
-
-// ====================================================
-// CASH PAYMENT
-// ====================================================
-
-/**
- * Admin - Request Cash Payment
- */
-export const requestCashSubscriptionPayment = async (
-	subscriptionId: number,
-	schoolId: number,
-) => {
-	const subscription = await prisma.schoolSubscription.findFirst({
-		where: {
-			id: subscriptionId,
-			schoolId,
-		},
-
-		include: {
-			package: {
-				select: {
-					id: true,
-					name: true,
-					price: true,
-					billingCycle: true,
-					isActive: true,
-				},
-			},
-		},
-	});
-
-	if (!subscription) {
-		throw new AppError(404, "Subscription not found");
-	}
-
-	if (subscription.status === "ACTIVE") {
-		throw new AppError(400, "This subscription is already active");
-	}
-
-	if (subscription.status !== "PENDING") {
-		throw new AppError(400, "This subscription is not available for payment");
-	}
-
-	if (!subscription.package.isActive) {
-		throw new AppError(400, "The selected package is no longer active");
-	}
-
-	const amount = Number(subscription.price);
-
-	if (!Number.isFinite(amount) || amount <= 0) {
-		throw new AppError(400, "Invalid subscription payment amount");
-	}
-
-	// --------------------------------------------------
-	// Check pending cash payment
-	// --------------------------------------------------
-
-	const existingPendingPayment = await prisma.subscriptionPayment.findFirst({
-		where: {
-			subscriptionId,
-			schoolId,
-			paymentMethod: "CASH",
-			status: "PENDING",
-		},
-
-		orderBy: {
-			createdAt: "desc",
-		},
-	});
-
-	if (existingPendingPayment) {
+	if (payment.status === SubscriptionPaymentStatus.VERIFIED) {
 		throw new AppError(
 			400,
-			"A cash payment request is already pending for this subscription",
+			"Verified subscription payments cannot be rejected",
 		);
 	}
 
-	const payment = await prisma.subscriptionPayment.create({
+	if (payment.status !== SubscriptionPaymentStatus.PENDING) {
+		throw new AppError(
+			400,
+			"Only pending subscription payments can be rejected",
+		);
+	}
+
+	const updated = await prisma.subscriptionPayment.update({
+		where: { id: paymentId },
 		data: {
-			subscriptionId,
-			schoolId,
-			amount,
-			currency: "BDT",
-			status: "PENDING",
-			paymentMethod: "CASH",
-			remarks: "Cash payment request submitted by school admin.",
+			status: SubscriptionPaymentStatus.REJECTED,
+			verifiedById: verifierUserId,
+			verifiedAt: new Date(),
+			rejectionReason: payload.rejectionReason.trim(),
 		},
+		include: subscriptionPaymentInclude,
 	});
 
 	return {
-		paymentId: payment.id,
+		...updated,
+		paidAmount: Number(updated.paidAmount),
+	};
+};
+
+/* ---------- Super Admin: Summary & History ---------- */
+
+export const getSubscriptionPaymentSummary =
+	async (): Promise<SubscriptionPaymentSummary> => {
+		const [
+			totalPayments,
+			verifiedPayments,
+			pendingPayments,
+			rejectedPayments,
+			verifiedAgg,
+			bkashAgg,
+			nagadAgg,
+			rocketAgg,
+			pendingAgg,
+		] = await Promise.all([
+			prisma.subscriptionPayment.count(),
+			prisma.subscriptionPayment.count({
+				where: { status: SubscriptionPaymentStatus.VERIFIED },
+			}),
+			prisma.subscriptionPayment.count({
+				where: { status: SubscriptionPaymentStatus.PENDING },
+			}),
+			prisma.subscriptionPayment.count({
+				where: { status: SubscriptionPaymentStatus.REJECTED },
+			}),
+			prisma.subscriptionPayment.aggregate({
+				_sum: { paidAmount: true },
+				where: { status: SubscriptionPaymentStatus.VERIFIED },
+			}),
+			prisma.subscriptionPayment.aggregate({
+				_sum: { paidAmount: true },
+				where: {
+					status: SubscriptionPaymentStatus.VERIFIED,
+					paymentMethod: SubscriptionPaymentMethod.BKASH,
+				},
+			}),
+			prisma.subscriptionPayment.aggregate({
+				_sum: { paidAmount: true },
+				where: {
+					status: SubscriptionPaymentStatus.VERIFIED,
+					paymentMethod: SubscriptionPaymentMethod.NAGAD,
+				},
+			}),
+			prisma.subscriptionPayment.aggregate({
+				_sum: { paidAmount: true },
+				where: {
+					status: SubscriptionPaymentStatus.VERIFIED,
+					paymentMethod: SubscriptionPaymentMethod.ROCKET,
+				},
+			}),
+			prisma.subscriptionPayment.aggregate({
+				_sum: { paidAmount: true },
+				where: { status: SubscriptionPaymentStatus.PENDING },
+			}),
+		]);
+
+		return {
+			totalRevenue: Number(verifiedAgg._sum.paidAmount ?? 0),
+			bkashRevenue: Number(bkashAgg._sum.paidAmount ?? 0),
+			nagadRevenue: Number(nagadAgg._sum.paidAmount ?? 0),
+			rocketRevenue: Number(rocketAgg._sum.paidAmount ?? 0),
+			pendingAmount: Number(pendingAgg._sum.paidAmount ?? 0),
+			totalPayments,
+			verifiedPayments,
+			pendingPayments,
+			rejectedPayments,
+		};
+	};
+
+export const getSubscriptionPaymentHistory = async (
+	query: SubscriptionPaymentFilterQuery = {},
+) => {
+	const payments = await prisma.subscriptionPayment.findMany({
+		where: {
+			...(query.schoolId !== undefined ? { schoolId: query.schoolId } : {}),
+			...(query.subscriptionId !== undefined
+				? { subscriptionId: query.subscriptionId }
+				: {}),
+			...(query.paymentMethod !== undefined
+				? { paymentMethod: query.paymentMethod }
+				: {}),
+			...(query.status !== undefined ? { status: query.status } : {}),
+		},
+		include: subscriptionPaymentInclude,
+		orderBy: { createdAt: "desc" },
+	});
+
+	return payments.map((payment) => ({
+		id: payment.id,
 		subscriptionId: payment.subscriptionId,
 		schoolId: payment.schoolId,
-		amount: Number(payment.amount),
+		paymentMethod: payment.paymentMethod,
+		senderNumber: payment.senderNumber,
+		receiverNumber: payment.receiverNumber,
+		trxId: payment.trxId,
+		paidAmount: Number(payment.paidAmount),
 		currency: payment.currency,
 		status: payment.status,
-		paymentMethod: payment.paymentMethod,
-
-		package: {
-			id: subscription.package.id,
-			name: subscription.package.name,
-			price: Number(subscription.package.price),
-			billingCycle: subscription.package.billingCycle,
-		},
-
+		paidAt: payment.paidAt,
+		verifiedById: payment.verifiedById,
+		verifiedAt: payment.verifiedAt,
+		rejectionReason: payment.rejectionReason,
+		remarks: payment.remarks,
 		createdAt: payment.createdAt,
-	};
-};
-
-// ====================================================
-// SUPER ADMIN - PENDING CASH PAYMENTS
-// ====================================================
-
-export const getPendingCashPayments = async () => {
-	return prisma.subscriptionPayment.findMany({
-		where: {
-			paymentMethod: "CASH",
-			status: "PENDING",
-		},
-
-		include: {
-			school: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-					adminName: true,
-					adminEmail: true,
-					adminPhone: true,
-				},
-			},
-
-			subscription: {
-				include: {
-					package: {
-						select: {
-							id: true,
-							name: true,
-							price: true,
-							billingCycle: true,
-						},
-					},
-				},
+		school: payment.school,
+		verifiedBy: payment.verifiedBy,
+		subscription: {
+			id: payment.subscription.id,
+			status: payment.subscription.status,
+			package: {
+				id: payment.subscription.package.id,
+				name: payment.subscription.package.name,
+				price: Number(payment.subscription.package.price),
+				billingCycle: payment.subscription.package.billingCycle,
 			},
 		},
-
-		orderBy: {
-			createdAt: "desc",
-		},
-	});
-};
-
-// ====================================================
-// SUPER ADMIN - APPROVE CASH PAYMENT
-// ====================================================
-
-export const approveCashSubscriptionPayment = async (
-	paymentId: number,
-	remarks?: string,
-) => {
-	const payment = await prisma.subscriptionPayment.findUnique({
-		where: {
-			id: paymentId,
-		},
-
-		include: {
-			subscription: {
-				include: {
-					package: true,
-				},
-			},
-		},
-	});
-
-	if (!payment) {
-		throw new AppError(404, "Payment not found");
-	}
-
-	if (payment.paymentMethod !== "CASH") {
-		throw new AppError(
-			400,
-			"Only cash payments can be approved using this action",
-		);
-	}
-
-	if (payment.status === "PAID") {
-		return payment;
-	}
-
-	if (payment.status === "CANCELLED") {
-		throw new AppError(
-			400,
-			"This cash payment request has already been rejected",
-		);
-	}
-
-	const paidAt = new Date();
-
-	const result = await prisma.$transaction(async (tx) => {
-		const currentPayment = await tx.subscriptionPayment.findUnique({
-			where: {
-				id: paymentId,
-			},
-		});
-
-		if (!currentPayment) {
-			throw new AppError(404, "Payment not found");
-		}
-
-		if (currentPayment.status === "PAID") {
-			return currentPayment;
-		}
-
-		if (currentPayment.status === "CANCELLED") {
-			throw new AppError(
-				400,
-				"This cash payment request has already been rejected",
-			);
-		}
-
-		const subscription = await tx.schoolSubscription.findUnique({
-			where: {
-				id: currentPayment.subscriptionId,
-			},
-
-			include: {
-				package: true,
-				school: {
-					select: {
-						id: true,
-						status: true,
-					},
-				},
-			},
-		});
-
-		if (!subscription) {
-			throw new AppError(404, "Subscription not found");
-		}
-
-		if (subscription.school.id !== currentPayment.schoolId) {
-			throw new AppError(400, "Payment and subscription school do not match");
-		}
-
-		if (subscription.school.status !== "ACTIVE") {
-			throw new AppError(400, "School is not active");
-		}
-
-		if (subscription.status !== "PENDING") {
-			throw new AppError(400, "Subscription is not pending");
-		}
-
-		if (!subscription.package.isActive) {
-			throw new AppError(400, "The selected package is no longer active");
-		}
-
-		const startDate = paidAt;
-
-		const endDate = calculateEndDate(
-			startDate,
-			subscription.package.billingCycle,
-		);
-
-		const updatedPayment = await tx.subscriptionPayment.update({
-			where: {
-				id: currentPayment.id,
-			},
-
-			data: {
-				status: "PAID",
-				paidAt,
-
-				remarks: remarks?.trim() || "Cash payment approved by Super Admin.",
-			},
-		});
-
-		await tx.schoolSubscription.update({
-			where: {
-				id: subscription.id,
-			},
-
-			data: {
-				status: "ACTIVE",
-				startDate,
-				endDate,
-				price: currentPayment.amount,
-
-				notes: "Subscription activated after cash payment approval.",
-			},
-		});
-
-		return updatedPayment;
-	});
-
-	return result;
-};
-
-// ====================================================
-// SUPER ADMIN - REJECT CASH PAYMENT
-// ====================================================
-
-export const rejectCashSubscriptionPayment = async (
-	paymentId: number,
-	remarks?: string,
-) => {
-	const payment = await prisma.subscriptionPayment.findUnique({
-		where: {
-			id: paymentId,
-		},
-	});
-
-	if (!payment) {
-		throw new AppError(404, "Payment not found");
-	}
-
-	if (payment.paymentMethod !== "CASH") {
-		throw new AppError(
-			400,
-			"Only cash payments can be rejected using this action",
-		);
-	}
-
-	if (payment.status === "PAID") {
-		throw new AppError(400, "A paid payment cannot be rejected");
-	}
-
-	if (payment.status === "CANCELLED") {
-		return payment;
-	}
-
-	return prisma.subscriptionPayment.update({
-		where: {
-			id: payment.id,
-		},
-
-		data: {
-			status: "CANCELLED",
-
-			remarks:
-				remarks?.trim() || "Cash payment request rejected by Super Admin.",
-		},
-	});
-};
-
-
-// ====================================================
-// SUPER ADMIN - PAYMENT SUMMARY
-// ====================================================
-
-export const getSubscriptionPaymentSummary = async () => {
-        const payments = await prisma.subscriptionPayment.findMany({
-                select: {
-                        amount: true,
-                        status: true,
-                        paymentMethod: true,
-                },
-        });
-
-        let totalRevenue = 0;
-        let onlineRevenue = 0;
-        let cashRevenue = 0;
-        let pendingCashAmount = 0;
-
-        let paidPayments = 0;
-        let pendingPayments = 0;
-        let failedPayments = 0;
-        let cancelledPayments = 0;
-
-        for (const payment of payments) {
-                const amount = Number(payment.amount);
-
-                if (!Number.isFinite(amount)) {
-                        continue;
-                }
-
-                if (payment.status === "PAID") {
-                        totalRevenue += amount;
-                        paidPayments++;
-
-                        if (payment.paymentMethod === "ONLINE") {
-                                onlineRevenue += amount;
-                        }
-
-                        if (payment.paymentMethod === "CASH") {
-                                cashRevenue += amount;
-                        }
-                }
-
-                if (payment.status === "PENDING") {
-                        pendingPayments++;
-
-                        if (payment.paymentMethod === "CASH") {
-                                pendingCashAmount += amount;
-                        }
-                }
-
-                if (payment.status === "FAILED") {
-                        failedPayments++;
-                }
-
-                if (payment.status === "CANCELLED") {
-                        cancelledPayments++;
-                }
-        }
-
-        return {
-                totalRevenue,
-                onlineRevenue,
-                cashRevenue,
-                pendingCashAmount,
-
-                totalPayments: payments.length,
-                paidPayments,
-                pendingPayments,
-                failedPayments,
-                cancelledPayments,
-        };
-};
-
-// ====================================================
-// SUPER ADMIN - PAYMENT HISTORY
-// ====================================================
-
-export const getSubscriptionPaymentHistory = async () => {
-        const payments = await prisma.subscriptionPayment.findMany({
-                include: {
-                        school: {
-                                select: {
-                                        id: true,
-                                        name: true,
-                                        code: true,
-                                },
-                        },
-
-                        subscription: {
-                                select: {
-                                        id: true,
-                                        status: true,
-
-                                        package: {
-                                                select: {
-                                                        id: true,
-                                                        name: true,
-                                                        price: true,
-                                                        billingCycle: true,
-                                                },
-                                        },
-                                },
-                        },
-                },
-
-                orderBy: {
-                        createdAt: "desc",
-                },
-        });
-
-        return payments.map((payment) => ({
-                id: payment.id,
-                subscriptionId: payment.subscriptionId,
-                schoolId: payment.schoolId,
-
-                amount: Number(payment.amount),
-                currency: payment.currency,
-
-                status: payment.status,
-                paymentMethod: payment.paymentMethod,
-
-                transactionId: payment.transactionId,
-                validationId: payment.validationId,
-
-                paidAt: payment.paidAt,
-                createdAt: payment.createdAt,
-
-                school: payment.school,
-
-                subscription: {
-                        id: payment.subscription.id,
-                        status: payment.subscription.status,
-
-                        package: {
-                                id: payment.subscription.package.id,
-                                name: payment.subscription.package.name,
-                                price: Number(
-                                        payment.subscription.package.price,
-                                ),
-                                billingCycle:
-                                        payment.subscription.package.billingCycle,
-                        },
-                },
-        }));
+	}));
 };

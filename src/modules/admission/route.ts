@@ -2,38 +2,31 @@ import { Router } from "express";
 
 import { UserRole } from "../../generated/prisma/enums.js";
 
-import {
-  authenticate,
-  authorize,
-} from "../../middleware/auth.js";
+import { authenticate, authorize } from "../../middleware/auth.js";
 
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
-  approveAdmissionController,
-  confirmCashPaymentController,
-  createAdmissionController,
-  getAdmissionByIdController,
-  getAdmissionsController,
-  initiateOnlinePaymentController,
-  paymentCancelController,
-  paymentFailController,
-  paymentIpnController,
-  paymentSuccessController,
-  rejectAdmissionController,
-  trackAdmissionController,
-  verifyStudentEmailController,
+	approveAdmissionController,
+	confirmCashPaymentController,
+	createAdmissionController,
+	getAdmissionByIdController,
+	getAdmissionsController,
+	initiateOnlinePaymentController,
+	rejectAdmissionController,
+	trackAdmissionController,
+	verifyStudentEmailController,
 } from "./controller.js";
 
 import {
-  confirmCashPaymentSchema,
-  createAdmissionSchema,
-  getAdmissionsSchema,
-  rejectAdmissionSchema,
-  trackAdmissionSchema,
-  verifyStudentEmailSchema,
+	confirmCashPaymentSchema,
+	createAdmissionSchema,
+	getAdmissionsSchema,
+	rejectAdmissionSchema,
+	trackAdmissionSchema,
+	verifyStudentEmailSchema,
 } from "./validation.js";
 
 const router = Router();
@@ -43,15 +36,15 @@ const router = Router();
 // ====================================================
 
 router.post(
-  "/schools/:schoolId/admissions",
-  validateRequest(createAdmissionSchema),
-  createAdmissionController,
+	"/schools/:schoolId/admissions",
+	validateRequest(createAdmissionSchema),
+	createAdmissionController,
 );
 
 router.post(
-  "/admissions/verify-email",
-  validateRequest(verifyStudentEmailSchema),
-  verifyStudentEmailController,
+	"/admissions/verify-email",
+	validateRequest(verifyStudentEmailSchema),
+	verifyStudentEmailController,
 );
 
 // ====================================================
@@ -60,52 +53,40 @@ router.post(
 
 // Get Admissions
 router.get(
-  "/schools/:schoolId/admissions",
-  authenticate,
-  authorize(
-    UserRole.ADMIN,
-    UserRole.MANAGER,
-  ),
-  requireSchoolAccess,
-  validateRequest(getAdmissionsSchema),
-  getAdmissionsController,
+	"/schools/:schoolId/admissions",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(getAdmissionsSchema),
+	getAdmissionsController,
 );
 
 // Get Admission By ID
 router.get(
-  "/schools/:schoolId/admissions/:id",
-  authenticate,
-  authorize(
-    UserRole.ADMIN,
-    UserRole.MANAGER,
-  ),
-  requireSchoolAccess,
-  getAdmissionByIdController,
+	"/schools/:schoolId/admissions/:id",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	getAdmissionByIdController,
 );
 
 // Approve Admission
 router.patch(
-  "/schools/:schoolId/admissions/:id/approve",
-  authenticate,
-  authorize(
-    UserRole.ADMIN,
-    UserRole.MANAGER,
-  ),
-  requireSchoolAccess,
-  approveAdmissionController,
+	"/schools/:schoolId/admissions/:id/approve",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	approveAdmissionController,
 );
 
 // Reject Admission
 router.patch(
-  "/schools/:schoolId/admissions/:id/reject",
-  authenticate,
-  authorize(
-    UserRole.ADMIN,
-    UserRole.MANAGER,
-  ),
-  requireSchoolAccess,
-  validateRequest(rejectAdmissionSchema),
-  rejectAdmissionController,
+	"/schools/:schoolId/admissions/:id/reject",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(rejectAdmissionSchema),
+	rejectAdmissionController,
 );
 
 // ====================================================
@@ -113,15 +94,12 @@ router.patch(
 // ====================================================
 
 router.patch(
-  "/schools/:schoolId/admissions/:id/payment/confirm-cash",
-  authenticate,
-  authorize(
-    UserRole.ADMIN,
-    UserRole.MANAGER,
-  ),
-  requireSchoolAccess,
-  validateRequest(confirmCashPaymentSchema),
-  confirmCashPaymentController,
+	"/schools/:schoolId/admissions/:id/payment/confirm-cash",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(confirmCashPaymentSchema),
+	confirmCashPaymentController,
 );
 
 // ====================================================
@@ -129,8 +107,8 @@ router.patch(
 // ====================================================
 
 router.post(
-  "/schools/:schoolId/admissions/:id/payment/online/initiate",
-  initiateOnlinePaymentController,
+	"/schools/:schoolId/admissions/:id/payment/online/initiate",
+	initiateOnlinePaymentController,
 );
 
 // ====================================================
@@ -138,33 +116,9 @@ router.post(
 // ====================================================
 
 router.post(
-  "/admissions/track",
-  validateRequest(trackAdmissionSchema),
-  trackAdmissionController,
-);
-
-// ====================================================
-// SSLCommerz Callbacks
-// ====================================================
-
-router.post(
-  "/payments/admission/success",
-  paymentSuccessController,
-);
-
-router.post(
-  "/payments/admission/ipn",
-  paymentIpnController,
-);
-
-router.post(
-  "/payments/admission/fail",
-  paymentFailController,
-);
-
-router.post(
-  "/payments/admission/cancel",
-  paymentCancelController,
+	"/admissions/track",
+	validateRequest(trackAdmissionSchema),
+	trackAdmissionController,
 );
 
 export const admissionRoutes = router;

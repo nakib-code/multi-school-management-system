@@ -5,6 +5,10 @@ model SchoolSetting {
 
   admissionFee Decimal @db.Decimal(10, 2)
 
+  bkashNumber  String?
+  nagadNumber  String?
+  rocketNumber String?
+
   school School @relation(fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())

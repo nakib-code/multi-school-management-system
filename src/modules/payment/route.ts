@@ -1,22 +1,9 @@
 import { Router } from "express";
 
+import { getPlatformPaymentMethodsController } from "./controller.js";
+
 const router = Router();
 
-// ====================================================
-// School / Admin Payment Routes
-// ====================================================
-//
-// Future payment routes can be added here.
-//
-// Example:
-// router.post(
-//   "/payments/school/...",
-//   schoolPaymentController,
-// );
-//
-// Admission payment callbacks are handled in:
-// src/modules/admission/route.ts
-//
-// ====================================================
+router.get("/payments/methods", getPlatformPaymentMethodsController);
 
 export const paymentRoutes = router;

@@ -16,12 +16,13 @@ model Student {
 
   user User @relation(fields: [userId], references: [id])
 
-  guardians   GuardianStudent[]
-  enrollments Enrollment[]
-  attendances Attendance[]
-  results     Result[]
-  fees        StudentFee[]
-  payments    StudentPayment[]
+  guardians       GuardianStudent[]
+  enrollments     Enrollment[]
+  attendances     Attendance[]
+  results         Result[]
+  fees            StudentFee[]
+  payments        StudentPayment[]
+  hefzEnrollments HefzEnrollment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

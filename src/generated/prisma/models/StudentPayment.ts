@@ -31,8 +31,8 @@ export type StudentPaymentAvgAggregateOutputType = {
   schoolId: number | null
   studentId: number | null
   feeId: number | null
-  amount: runtime.Decimal | null
-  receivedBy: number | null
+  paidAmount: runtime.Decimal | null
+  verifiedById: number | null
 }
 
 export type StudentPaymentSumAggregateOutputType = {
@@ -40,8 +40,8 @@ export type StudentPaymentSumAggregateOutputType = {
   schoolId: number | null
   studentId: number | null
   feeId: number | null
-  amount: runtime.Decimal | null
-  receivedBy: number | null
+  paidAmount: runtime.Decimal | null
+  verifiedById: number | null
 }
 
 export type StudentPaymentMinAggregateOutputType = {
@@ -49,12 +49,16 @@ export type StudentPaymentMinAggregateOutputType = {
   schoolId: number | null
   studentId: number | null
   feeId: number | null
-  transactionId: string | null
-  amount: runtime.Decimal | null
   paymentMethod: $Enums.PaymentMethod | null
+  senderNumber: string | null
+  receiverNumber: string | null
+  trxId: string | null
+  paidAmount: runtime.Decimal | null
   status: $Enums.PaymentStatus | null
   paidAt: Date | null
-  receivedBy: number | null
+  verifiedById: number | null
+  verifiedAt: Date | null
+  rejectionReason: string | null
   remarks: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -65,12 +69,16 @@ export type StudentPaymentMaxAggregateOutputType = {
   schoolId: number | null
   studentId: number | null
   feeId: number | null
-  transactionId: string | null
-  amount: runtime.Decimal | null
   paymentMethod: $Enums.PaymentMethod | null
+  senderNumber: string | null
+  receiverNumber: string | null
+  trxId: string | null
+  paidAmount: runtime.Decimal | null
   status: $Enums.PaymentStatus | null
   paidAt: Date | null
-  receivedBy: number | null
+  verifiedById: number | null
+  verifiedAt: Date | null
+  rejectionReason: string | null
   remarks: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -81,12 +89,16 @@ export type StudentPaymentCountAggregateOutputType = {
   schoolId: number
   studentId: number
   feeId: number
-  transactionId: number
-  amount: number
   paymentMethod: number
+  senderNumber: number
+  receiverNumber: number
+  trxId: number
+  paidAmount: number
   status: number
   paidAt: number
-  receivedBy: number
+  verifiedById: number
+  verifiedAt: number
+  rejectionReason: number
   remarks: number
   createdAt: number
   updatedAt: number
@@ -99,8 +111,8 @@ export type StudentPaymentAvgAggregateInputType = {
   schoolId?: true
   studentId?: true
   feeId?: true
-  amount?: true
-  receivedBy?: true
+  paidAmount?: true
+  verifiedById?: true
 }
 
 export type StudentPaymentSumAggregateInputType = {
@@ -108,8 +120,8 @@ export type StudentPaymentSumAggregateInputType = {
   schoolId?: true
   studentId?: true
   feeId?: true
-  amount?: true
-  receivedBy?: true
+  paidAmount?: true
+  verifiedById?: true
 }
 
 export type StudentPaymentMinAggregateInputType = {
@@ -117,12 +129,16 @@ export type StudentPaymentMinAggregateInputType = {
   schoolId?: true
   studentId?: true
   feeId?: true
-  transactionId?: true
-  amount?: true
   paymentMethod?: true
+  senderNumber?: true
+  receiverNumber?: true
+  trxId?: true
+  paidAmount?: true
   status?: true
   paidAt?: true
-  receivedBy?: true
+  verifiedById?: true
+  verifiedAt?: true
+  rejectionReason?: true
   remarks?: true
   createdAt?: true
   updatedAt?: true
@@ -133,12 +149,16 @@ export type StudentPaymentMaxAggregateInputType = {
   schoolId?: true
   studentId?: true
   feeId?: true
-  transactionId?: true
-  amount?: true
   paymentMethod?: true
+  senderNumber?: true
+  receiverNumber?: true
+  trxId?: true
+  paidAmount?: true
   status?: true
   paidAt?: true
-  receivedBy?: true
+  verifiedById?: true
+  verifiedAt?: true
+  rejectionReason?: true
   remarks?: true
   createdAt?: true
   updatedAt?: true
@@ -149,12 +169,16 @@ export type StudentPaymentCountAggregateInputType = {
   schoolId?: true
   studentId?: true
   feeId?: true
-  transactionId?: true
-  amount?: true
   paymentMethod?: true
+  senderNumber?: true
+  receiverNumber?: true
+  trxId?: true
+  paidAmount?: true
   status?: true
   paidAt?: true
-  receivedBy?: true
+  verifiedById?: true
+  verifiedAt?: true
+  rejectionReason?: true
   remarks?: true
   createdAt?: true
   updatedAt?: true
@@ -252,12 +276,16 @@ export type StudentPaymentGroupByOutputType = {
   schoolId: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber: string | null
+  trxId: string
+  paidAmount: runtime.Decimal
   status: $Enums.PaymentStatus
   paidAt: Date
-  receivedBy: number | null
+  verifiedById: number | null
+  verifiedAt: Date | null
+  rejectionReason: string | null
   remarks: string | null
   createdAt: Date
   updatedAt: Date
@@ -291,19 +319,23 @@ export type StudentPaymentWhereInput = {
   schoolId?: Prisma.IntFilter<"StudentPayment"> | number
   studentId?: Prisma.IntFilter<"StudentPayment"> | number
   feeId?: Prisma.IntFilter<"StudentPayment"> | number
-  transactionId?: Prisma.StringFilter<"StudentPayment"> | string
-  amount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFilter<"StudentPayment"> | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
+  receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
+  trxId?: Prisma.StringFilter<"StudentPayment"> | string
+  paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
-  receivedBy?: Prisma.IntNullableFilter<"StudentPayment"> | number | null
+  verifiedById?: Prisma.IntNullableFilter<"StudentPayment"> | number | null
+  verifiedAt?: Prisma.DateTimeNullableFilter<"StudentPayment"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   remarks?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   fee?: Prisma.XOR<Prisma.StudentFeeScalarRelationFilter, Prisma.StudentFeeWhereInput>
-  receivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  verifiedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type StudentPaymentOrderByWithRelationInput = {
@@ -311,55 +343,67 @@ export type StudentPaymentOrderByWithRelationInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
+  receiverNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  trxId?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  verifiedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
   student?: Prisma.StudentOrderByWithRelationInput
   fee?: Prisma.StudentFeeOrderByWithRelationInput
-  receivedByUser?: Prisma.UserOrderByWithRelationInput
+  verifiedBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  transactionId?: string
+  trxId?: string
   AND?: Prisma.StudentPaymentWhereInput | Prisma.StudentPaymentWhereInput[]
   OR?: Prisma.StudentPaymentWhereInput[]
   NOT?: Prisma.StudentPaymentWhereInput | Prisma.StudentPaymentWhereInput[]
   schoolId?: Prisma.IntFilter<"StudentPayment"> | number
   studentId?: Prisma.IntFilter<"StudentPayment"> | number
   feeId?: Prisma.IntFilter<"StudentPayment"> | number
-  amount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFilter<"StudentPayment"> | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
+  receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
+  paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
-  receivedBy?: Prisma.IntNullableFilter<"StudentPayment"> | number | null
+  verifiedById?: Prisma.IntNullableFilter<"StudentPayment"> | number | null
+  verifiedAt?: Prisma.DateTimeNullableFilter<"StudentPayment"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   remarks?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   fee?: Prisma.XOR<Prisma.StudentFeeScalarRelationFilter, Prisma.StudentFeeWhereInput>
-  receivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "transactionId">
+  verifiedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+}, "id" | "trxId">
 
 export type StudentPaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
+  receiverNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  trxId?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  verifiedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -378,30 +422,38 @@ export type StudentPaymentScalarWhereWithAggregatesInput = {
   schoolId?: Prisma.IntWithAggregatesFilter<"StudentPayment"> | number
   studentId?: Prisma.IntWithAggregatesFilter<"StudentPayment"> | number
   feeId?: Prisma.IntWithAggregatesFilter<"StudentPayment"> | number
-  transactionId?: Prisma.StringWithAggregatesFilter<"StudentPayment"> | string
-  amount?: Prisma.DecimalWithAggregatesFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodWithAggregatesFilter<"StudentPayment"> | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringWithAggregatesFilter<"StudentPayment"> | string
+  receiverNumber?: Prisma.StringNullableWithAggregatesFilter<"StudentPayment"> | string | null
+  trxId?: Prisma.StringWithAggregatesFilter<"StudentPayment"> | string
+  paidAmount?: Prisma.DecimalWithAggregatesFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeWithAggregatesFilter<"StudentPayment"> | Date | string
-  receivedBy?: Prisma.IntNullableWithAggregatesFilter<"StudentPayment"> | number | null
+  verifiedById?: Prisma.IntNullableWithAggregatesFilter<"StudentPayment"> | number | null
+  verifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"StudentPayment"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"StudentPayment"> | string | null
   remarks?: Prisma.StringNullableWithAggregatesFilter<"StudentPayment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StudentPayment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"StudentPayment"> | Date | string
 }
 
 export type StudentPaymentCreateInput = {
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutStudentPaymentsInput
   student: Prisma.StudentCreateNestedOneWithoutPaymentsInput
   fee: Prisma.StudentFeeCreateNestedOneWithoutPaymentsInput
-  receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedStudentPaymentsInput
+  verifiedBy?: Prisma.UserCreateNestedOneWithoutVerifiedStudentPaymentsInput
 }
 
 export type StudentPaymentUncheckedCreateInput = {
@@ -409,30 +461,38 @@ export type StudentPaymentUncheckedCreateInput = {
   schoolId: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type StudentPaymentUpdateInput = {
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutStudentPaymentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutPaymentsNestedInput
   fee?: Prisma.StudentFeeUpdateOneRequiredWithoutPaymentsNestedInput
-  receivedByUser?: Prisma.UserUpdateOneWithoutReceivedStudentPaymentsNestedInput
+  verifiedBy?: Prisma.UserUpdateOneWithoutVerifiedStudentPaymentsNestedInput
 }
 
 export type StudentPaymentUncheckedUpdateInput = {
@@ -440,12 +500,16 @@ export type StudentPaymentUncheckedUpdateInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -456,23 +520,31 @@ export type StudentPaymentCreateManyInput = {
   schoolId: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type StudentPaymentUpdateManyMutationInput = {
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -483,12 +555,16 @@ export type StudentPaymentUncheckedUpdateManyInput = {
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -509,12 +585,16 @@ export type StudentPaymentCountOrderByAggregateInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
+  receiverNumber?: Prisma.SortOrder
+  trxId?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
+  verifiedById?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -525,8 +605,8 @@ export type StudentPaymentAvgOrderByAggregateInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  verifiedById?: Prisma.SortOrder
 }
 
 export type StudentPaymentMaxOrderByAggregateInput = {
@@ -534,12 +614,16 @@ export type StudentPaymentMaxOrderByAggregateInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
+  receiverNumber?: Prisma.SortOrder
+  trxId?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
+  verifiedById?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -550,12 +634,16 @@ export type StudentPaymentMinOrderByAggregateInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  transactionId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
   paymentMethod?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
+  receiverNumber?: Prisma.SortOrder
+  trxId?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
+  verifiedById?: Prisma.SortOrder
+  verifiedAt?: Prisma.SortOrder
+  rejectionReason?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -566,8 +654,8 @@ export type StudentPaymentSumOrderByAggregateInput = {
   schoolId?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
   feeId?: Prisma.SortOrder
-  amount?: Prisma.SortOrder
-  receivedBy?: Prisma.SortOrder
+  paidAmount?: Prisma.SortOrder
+  verifiedById?: Prisma.SortOrder
 }
 
 export type StudentPaymentCreateNestedManyWithoutSchoolInput = {
@@ -704,72 +792,80 @@ export type StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput = {
   deleteMany?: Prisma.StudentPaymentScalarWhereInput | Prisma.StudentPaymentScalarWhereInput[]
 }
 
-export type StudentPaymentCreateNestedManyWithoutReceivedByUserInput = {
-  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput> | Prisma.StudentPaymentCreateWithoutReceivedByUserInput[] | Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput[]
-  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput | Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput[]
-  createMany?: Prisma.StudentPaymentCreateManyReceivedByUserInputEnvelope
+export type StudentPaymentCreateNestedManyWithoutVerifiedByInput = {
+  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput> | Prisma.StudentPaymentCreateWithoutVerifiedByInput[] | Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput[]
+  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput | Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput[]
+  createMany?: Prisma.StudentPaymentCreateManyVerifiedByInputEnvelope
   connect?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
 }
 
-export type StudentPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput = {
-  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput> | Prisma.StudentPaymentCreateWithoutReceivedByUserInput[] | Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput[]
-  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput | Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput[]
-  createMany?: Prisma.StudentPaymentCreateManyReceivedByUserInputEnvelope
+export type StudentPaymentUncheckedCreateNestedManyWithoutVerifiedByInput = {
+  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput> | Prisma.StudentPaymentCreateWithoutVerifiedByInput[] | Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput[]
+  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput | Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput[]
+  createMany?: Prisma.StudentPaymentCreateManyVerifiedByInputEnvelope
   connect?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
 }
 
-export type StudentPaymentUpdateManyWithoutReceivedByUserNestedInput = {
-  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput> | Prisma.StudentPaymentCreateWithoutReceivedByUserInput[] | Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput[]
-  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput | Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput[]
-  upsert?: Prisma.StudentPaymentUpsertWithWhereUniqueWithoutReceivedByUserInput | Prisma.StudentPaymentUpsertWithWhereUniqueWithoutReceivedByUserInput[]
-  createMany?: Prisma.StudentPaymentCreateManyReceivedByUserInputEnvelope
+export type StudentPaymentUpdateManyWithoutVerifiedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput> | Prisma.StudentPaymentCreateWithoutVerifiedByInput[] | Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput[]
+  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput | Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput[]
+  upsert?: Prisma.StudentPaymentUpsertWithWhereUniqueWithoutVerifiedByInput | Prisma.StudentPaymentUpsertWithWhereUniqueWithoutVerifiedByInput[]
+  createMany?: Prisma.StudentPaymentCreateManyVerifiedByInputEnvelope
   set?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
   disconnect?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
   delete?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
   connect?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
-  update?: Prisma.StudentPaymentUpdateWithWhereUniqueWithoutReceivedByUserInput | Prisma.StudentPaymentUpdateWithWhereUniqueWithoutReceivedByUserInput[]
-  updateMany?: Prisma.StudentPaymentUpdateManyWithWhereWithoutReceivedByUserInput | Prisma.StudentPaymentUpdateManyWithWhereWithoutReceivedByUserInput[]
+  update?: Prisma.StudentPaymentUpdateWithWhereUniqueWithoutVerifiedByInput | Prisma.StudentPaymentUpdateWithWhereUniqueWithoutVerifiedByInput[]
+  updateMany?: Prisma.StudentPaymentUpdateManyWithWhereWithoutVerifiedByInput | Prisma.StudentPaymentUpdateManyWithWhereWithoutVerifiedByInput[]
   deleteMany?: Prisma.StudentPaymentScalarWhereInput | Prisma.StudentPaymentScalarWhereInput[]
 }
 
-export type StudentPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput = {
-  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput> | Prisma.StudentPaymentCreateWithoutReceivedByUserInput[] | Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput[]
-  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput | Prisma.StudentPaymentCreateOrConnectWithoutReceivedByUserInput[]
-  upsert?: Prisma.StudentPaymentUpsertWithWhereUniqueWithoutReceivedByUserInput | Prisma.StudentPaymentUpsertWithWhereUniqueWithoutReceivedByUserInput[]
-  createMany?: Prisma.StudentPaymentCreateManyReceivedByUserInputEnvelope
+export type StudentPaymentUncheckedUpdateManyWithoutVerifiedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentPaymentCreateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput> | Prisma.StudentPaymentCreateWithoutVerifiedByInput[] | Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput[]
+  connectOrCreate?: Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput | Prisma.StudentPaymentCreateOrConnectWithoutVerifiedByInput[]
+  upsert?: Prisma.StudentPaymentUpsertWithWhereUniqueWithoutVerifiedByInput | Prisma.StudentPaymentUpsertWithWhereUniqueWithoutVerifiedByInput[]
+  createMany?: Prisma.StudentPaymentCreateManyVerifiedByInputEnvelope
   set?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
   disconnect?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
   delete?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
   connect?: Prisma.StudentPaymentWhereUniqueInput | Prisma.StudentPaymentWhereUniqueInput[]
-  update?: Prisma.StudentPaymentUpdateWithWhereUniqueWithoutReceivedByUserInput | Prisma.StudentPaymentUpdateWithWhereUniqueWithoutReceivedByUserInput[]
-  updateMany?: Prisma.StudentPaymentUpdateManyWithWhereWithoutReceivedByUserInput | Prisma.StudentPaymentUpdateManyWithWhereWithoutReceivedByUserInput[]
+  update?: Prisma.StudentPaymentUpdateWithWhereUniqueWithoutVerifiedByInput | Prisma.StudentPaymentUpdateWithWhereUniqueWithoutVerifiedByInput[]
+  updateMany?: Prisma.StudentPaymentUpdateManyWithWhereWithoutVerifiedByInput | Prisma.StudentPaymentUpdateManyWithWhereWithoutVerifiedByInput[]
   deleteMany?: Prisma.StudentPaymentScalarWhereInput | Prisma.StudentPaymentScalarWhereInput[]
 }
 
 export type StudentPaymentCreateWithoutSchoolInput = {
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   student: Prisma.StudentCreateNestedOneWithoutPaymentsInput
   fee: Prisma.StudentFeeCreateNestedOneWithoutPaymentsInput
-  receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedStudentPaymentsInput
+  verifiedBy?: Prisma.UserCreateNestedOneWithoutVerifiedStudentPaymentsInput
 }
 
 export type StudentPaymentUncheckedCreateWithoutSchoolInput = {
   id?: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -809,41 +905,53 @@ export type StudentPaymentScalarWhereInput = {
   schoolId?: Prisma.IntFilter<"StudentPayment"> | number
   studentId?: Prisma.IntFilter<"StudentPayment"> | number
   feeId?: Prisma.IntFilter<"StudentPayment"> | number
-  transactionId?: Prisma.StringFilter<"StudentPayment"> | string
-  amount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFilter<"StudentPayment"> | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
+  receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
+  trxId?: Prisma.StringFilter<"StudentPayment"> | string
+  paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
-  receivedBy?: Prisma.IntNullableFilter<"StudentPayment"> | number | null
+  verifiedById?: Prisma.IntNullableFilter<"StudentPayment"> | number | null
+  verifiedAt?: Prisma.DateTimeNullableFilter<"StudentPayment"> | Date | string | null
+  rejectionReason?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   remarks?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
 }
 
 export type StudentPaymentCreateWithoutFeeInput = {
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutStudentPaymentsInput
   student: Prisma.StudentCreateNestedOneWithoutPaymentsInput
-  receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedStudentPaymentsInput
+  verifiedBy?: Prisma.UserCreateNestedOneWithoutVerifiedStudentPaymentsInput
 }
 
 export type StudentPaymentUncheckedCreateWithoutFeeInput = {
   id?: number
   schoolId: number
   studentId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -876,29 +984,37 @@ export type StudentPaymentUpdateManyWithWhereWithoutFeeInput = {
 }
 
 export type StudentPaymentCreateWithoutStudentInput = {
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutStudentPaymentsInput
   fee: Prisma.StudentFeeCreateNestedOneWithoutPaymentsInput
-  receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedStudentPaymentsInput
+  verifiedBy?: Prisma.UserCreateNestedOneWithoutVerifiedStudentPaymentsInput
 }
 
 export type StudentPaymentUncheckedCreateWithoutStudentInput = {
   id?: number
   schoolId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -930,12 +1046,16 @@ export type StudentPaymentUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.StudentPaymentUpdateManyMutationInput, Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentInput>
 }
 
-export type StudentPaymentCreateWithoutReceivedByUserInput = {
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+export type StudentPaymentCreateWithoutVerifiedByInput = {
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -944,86 +1064,102 @@ export type StudentPaymentCreateWithoutReceivedByUserInput = {
   fee: Prisma.StudentFeeCreateNestedOneWithoutPaymentsInput
 }
 
-export type StudentPaymentUncheckedCreateWithoutReceivedByUserInput = {
+export type StudentPaymentUncheckedCreateWithoutVerifiedByInput = {
   id?: number
   schoolId: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type StudentPaymentCreateOrConnectWithoutReceivedByUserInput = {
+export type StudentPaymentCreateOrConnectWithoutVerifiedByInput = {
   where: Prisma.StudentPaymentWhereUniqueInput
-  create: Prisma.XOR<Prisma.StudentPaymentCreateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput>
+  create: Prisma.XOR<Prisma.StudentPaymentCreateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput>
 }
 
-export type StudentPaymentCreateManyReceivedByUserInputEnvelope = {
-  data: Prisma.StudentPaymentCreateManyReceivedByUserInput | Prisma.StudentPaymentCreateManyReceivedByUserInput[]
+export type StudentPaymentCreateManyVerifiedByInputEnvelope = {
+  data: Prisma.StudentPaymentCreateManyVerifiedByInput | Prisma.StudentPaymentCreateManyVerifiedByInput[]
   skipDuplicates?: boolean
 }
 
-export type StudentPaymentUpsertWithWhereUniqueWithoutReceivedByUserInput = {
+export type StudentPaymentUpsertWithWhereUniqueWithoutVerifiedByInput = {
   where: Prisma.StudentPaymentWhereUniqueInput
-  update: Prisma.XOR<Prisma.StudentPaymentUpdateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedUpdateWithoutReceivedByUserInput>
-  create: Prisma.XOR<Prisma.StudentPaymentCreateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedCreateWithoutReceivedByUserInput>
+  update: Prisma.XOR<Prisma.StudentPaymentUpdateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedUpdateWithoutVerifiedByInput>
+  create: Prisma.XOR<Prisma.StudentPaymentCreateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedCreateWithoutVerifiedByInput>
 }
 
-export type StudentPaymentUpdateWithWhereUniqueWithoutReceivedByUserInput = {
+export type StudentPaymentUpdateWithWhereUniqueWithoutVerifiedByInput = {
   where: Prisma.StudentPaymentWhereUniqueInput
-  data: Prisma.XOR<Prisma.StudentPaymentUpdateWithoutReceivedByUserInput, Prisma.StudentPaymentUncheckedUpdateWithoutReceivedByUserInput>
+  data: Prisma.XOR<Prisma.StudentPaymentUpdateWithoutVerifiedByInput, Prisma.StudentPaymentUncheckedUpdateWithoutVerifiedByInput>
 }
 
-export type StudentPaymentUpdateManyWithWhereWithoutReceivedByUserInput = {
+export type StudentPaymentUpdateManyWithWhereWithoutVerifiedByInput = {
   where: Prisma.StudentPaymentScalarWhereInput
-  data: Prisma.XOR<Prisma.StudentPaymentUpdateManyMutationInput, Prisma.StudentPaymentUncheckedUpdateManyWithoutReceivedByUserInput>
+  data: Prisma.XOR<Prisma.StudentPaymentUpdateManyMutationInput, Prisma.StudentPaymentUncheckedUpdateManyWithoutVerifiedByInput>
 }
 
 export type StudentPaymentCreateManySchoolInput = {
   id?: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type StudentPaymentUpdateWithoutSchoolInput = {
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   student?: Prisma.StudentUpdateOneRequiredWithoutPaymentsNestedInput
   fee?: Prisma.StudentFeeUpdateOneRequiredWithoutPaymentsNestedInput
-  receivedByUser?: Prisma.UserUpdateOneWithoutReceivedStudentPaymentsNestedInput
+  verifiedBy?: Prisma.UserUpdateOneWithoutVerifiedStudentPaymentsNestedInput
 }
 
 export type StudentPaymentUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1033,12 +1169,16 @@ export type StudentPaymentUncheckedUpdateManyWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1048,41 +1188,53 @@ export type StudentPaymentCreateManyFeeInput = {
   id?: number
   schoolId: number
   studentId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type StudentPaymentUpdateWithoutFeeInput = {
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutStudentPaymentsNestedInput
   student?: Prisma.StudentUpdateOneRequiredWithoutPaymentsNestedInput
-  receivedByUser?: Prisma.UserUpdateOneWithoutReceivedStudentPaymentsNestedInput
+  verifiedBy?: Prisma.UserUpdateOneWithoutVerifiedStudentPaymentsNestedInput
 }
 
 export type StudentPaymentUncheckedUpdateWithoutFeeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1092,12 +1244,16 @@ export type StudentPaymentUncheckedUpdateManyWithoutFeeInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1107,41 +1263,53 @@ export type StudentPaymentCreateManyStudentInput = {
   id?: number
   schoolId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
-  receivedBy?: number | null
+  verifiedById?: number | null
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type StudentPaymentUpdateWithoutStudentInput = {
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutStudentPaymentsNestedInput
   fee?: Prisma.StudentFeeUpdateOneRequiredWithoutPaymentsNestedInput
-  receivedByUser?: Prisma.UserUpdateOneWithoutReceivedStudentPaymentsNestedInput
+  verifiedBy?: Prisma.UserUpdateOneWithoutVerifiedStudentPaymentsNestedInput
 }
 
 export type StudentPaymentUncheckedUpdateWithoutStudentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1151,38 +1319,50 @@ export type StudentPaymentUncheckedUpdateManyWithoutStudentInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type StudentPaymentCreateManyReceivedByUserInput = {
+export type StudentPaymentCreateManyVerifiedByInput = {
   id?: number
   schoolId: number
   studentId: number
   feeId: number
-  transactionId: string
-  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.PaymentMethod
+  senderNumber: string
+  receiverNumber?: string | null
+  trxId: string
+  paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
+  verifiedAt?: Date | string | null
+  rejectionReason?: string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
-export type StudentPaymentUpdateWithoutReceivedByUserInput = {
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+export type StudentPaymentUpdateWithoutVerifiedByInput = {
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1191,31 +1371,39 @@ export type StudentPaymentUpdateWithoutReceivedByUserInput = {
   fee?: Prisma.StudentFeeUpdateOneRequiredWithoutPaymentsNestedInput
 }
 
-export type StudentPaymentUncheckedUpdateWithoutReceivedByUserInput = {
+export type StudentPaymentUncheckedUpdateWithoutVerifiedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type StudentPaymentUncheckedUpdateManyWithoutReceivedByUserInput = {
+export type StudentPaymentUncheckedUpdateManyWithoutVerifiedByInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   studentId?: Prisma.IntFieldUpdateOperationsInput | number
   feeId?: Prisma.IntFieldUpdateOperationsInput | number
-  transactionId?: Prisma.StringFieldUpdateOperationsInput | string
-  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumPaymentMethodFieldUpdateOperationsInput | $Enums.PaymentMethod
+  senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1228,19 +1416,23 @@ export type StudentPaymentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   schoolId?: boolean
   studentId?: boolean
   feeId?: boolean
-  transactionId?: boolean
-  amount?: boolean
   paymentMethod?: boolean
+  senderNumber?: boolean
+  receiverNumber?: boolean
+  trxId?: boolean
+  paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
-  receivedBy?: boolean
+  verifiedById?: boolean
+  verifiedAt?: boolean
+  rejectionReason?: boolean
   remarks?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   fee?: boolean | Prisma.StudentFeeDefaultArgs<ExtArgs>
-  receivedByUser?: boolean | Prisma.StudentPayment$receivedByUserArgs<ExtArgs>
+  verifiedBy?: boolean | Prisma.StudentPayment$verifiedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentPayment"]>
 
 export type StudentPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1248,19 +1440,23 @@ export type StudentPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   schoolId?: boolean
   studentId?: boolean
   feeId?: boolean
-  transactionId?: boolean
-  amount?: boolean
   paymentMethod?: boolean
+  senderNumber?: boolean
+  receiverNumber?: boolean
+  trxId?: boolean
+  paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
-  receivedBy?: boolean
+  verifiedById?: boolean
+  verifiedAt?: boolean
+  rejectionReason?: boolean
   remarks?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   fee?: boolean | Prisma.StudentFeeDefaultArgs<ExtArgs>
-  receivedByUser?: boolean | Prisma.StudentPayment$receivedByUserArgs<ExtArgs>
+  verifiedBy?: boolean | Prisma.StudentPayment$verifiedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentPayment"]>
 
 export type StudentPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1268,19 +1464,23 @@ export type StudentPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   schoolId?: boolean
   studentId?: boolean
   feeId?: boolean
-  transactionId?: boolean
-  amount?: boolean
   paymentMethod?: boolean
+  senderNumber?: boolean
+  receiverNumber?: boolean
+  trxId?: boolean
+  paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
-  receivedBy?: boolean
+  verifiedById?: boolean
+  verifiedAt?: boolean
+  rejectionReason?: boolean
   remarks?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   fee?: boolean | Prisma.StudentFeeDefaultArgs<ExtArgs>
-  receivedByUser?: boolean | Prisma.StudentPayment$receivedByUserArgs<ExtArgs>
+  verifiedBy?: boolean | Prisma.StudentPayment$verifiedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentPayment"]>
 
 export type StudentPaymentSelectScalar = {
@@ -1288,35 +1488,39 @@ export type StudentPaymentSelectScalar = {
   schoolId?: boolean
   studentId?: boolean
   feeId?: boolean
-  transactionId?: boolean
-  amount?: boolean
   paymentMethod?: boolean
+  senderNumber?: boolean
+  receiverNumber?: boolean
+  trxId?: boolean
+  paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
-  receivedBy?: boolean
+  verifiedById?: boolean
+  verifiedAt?: boolean
+  rejectionReason?: boolean
   remarks?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StudentPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "feeId" | "transactionId" | "amount" | "paymentMethod" | "status" | "paidAt" | "receivedBy" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["studentPayment"]>
+export type StudentPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "feeId" | "paymentMethod" | "senderNumber" | "receiverNumber" | "trxId" | "paidAmount" | "status" | "paidAt" | "verifiedById" | "verifiedAt" | "rejectionReason" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["studentPayment"]>
 export type StudentPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   fee?: boolean | Prisma.StudentFeeDefaultArgs<ExtArgs>
-  receivedByUser?: boolean | Prisma.StudentPayment$receivedByUserArgs<ExtArgs>
+  verifiedBy?: boolean | Prisma.StudentPayment$verifiedByArgs<ExtArgs>
 }
 export type StudentPaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   fee?: boolean | Prisma.StudentFeeDefaultArgs<ExtArgs>
-  receivedByUser?: boolean | Prisma.StudentPayment$receivedByUserArgs<ExtArgs>
+  verifiedBy?: boolean | Prisma.StudentPayment$verifiedByArgs<ExtArgs>
 }
 export type StudentPaymentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   fee?: boolean | Prisma.StudentFeeDefaultArgs<ExtArgs>
-  receivedByUser?: boolean | Prisma.StudentPayment$receivedByUserArgs<ExtArgs>
+  verifiedBy?: boolean | Prisma.StudentPayment$verifiedByArgs<ExtArgs>
 }
 
 export type $StudentPaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1325,19 +1529,23 @@ export type $StudentPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inte
     school: Prisma.$SchoolPayload<ExtArgs>
     student: Prisma.$StudentPayload<ExtArgs>
     fee: Prisma.$StudentFeePayload<ExtArgs>
-    receivedByUser: Prisma.$UserPayload<ExtArgs> | null
+    verifiedBy: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     schoolId: number
     studentId: number
     feeId: number
-    transactionId: string
-    amount: runtime.Decimal
     paymentMethod: $Enums.PaymentMethod
+    senderNumber: string
+    receiverNumber: string | null
+    trxId: string
+    paidAmount: runtime.Decimal
     status: $Enums.PaymentStatus
     paidAt: Date
-    receivedBy: number | null
+    verifiedById: number | null
+    verifiedAt: Date | null
+    rejectionReason: string | null
     remarks: string | null
     createdAt: Date
     updatedAt: Date
@@ -1738,7 +1946,7 @@ export interface Prisma__StudentPaymentClient<T, Null = never, ExtArgs extends r
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   student<T extends Prisma.StudentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentClient<runtime.Types.Result.GetResult<Prisma.$StudentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   fee<T extends Prisma.StudentFeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentFeeDefaultArgs<ExtArgs>>): Prisma.Prisma__StudentFeeClient<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  receivedByUser<T extends Prisma.StudentPayment$receivedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentPayment$receivedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  verifiedBy<T extends Prisma.StudentPayment$verifiedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentPayment$verifiedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1772,12 +1980,16 @@ export interface StudentPaymentFieldRefs {
   readonly schoolId: Prisma.FieldRef<"StudentPayment", 'Int'>
   readonly studentId: Prisma.FieldRef<"StudentPayment", 'Int'>
   readonly feeId: Prisma.FieldRef<"StudentPayment", 'Int'>
-  readonly transactionId: Prisma.FieldRef<"StudentPayment", 'String'>
-  readonly amount: Prisma.FieldRef<"StudentPayment", 'Decimal'>
   readonly paymentMethod: Prisma.FieldRef<"StudentPayment", 'PaymentMethod'>
+  readonly senderNumber: Prisma.FieldRef<"StudentPayment", 'String'>
+  readonly receiverNumber: Prisma.FieldRef<"StudentPayment", 'String'>
+  readonly trxId: Prisma.FieldRef<"StudentPayment", 'String'>
+  readonly paidAmount: Prisma.FieldRef<"StudentPayment", 'Decimal'>
   readonly status: Prisma.FieldRef<"StudentPayment", 'PaymentStatus'>
   readonly paidAt: Prisma.FieldRef<"StudentPayment", 'DateTime'>
-  readonly receivedBy: Prisma.FieldRef<"StudentPayment", 'Int'>
+  readonly verifiedById: Prisma.FieldRef<"StudentPayment", 'Int'>
+  readonly verifiedAt: Prisma.FieldRef<"StudentPayment", 'DateTime'>
+  readonly rejectionReason: Prisma.FieldRef<"StudentPayment", 'String'>
   readonly remarks: Prisma.FieldRef<"StudentPayment", 'String'>
   readonly createdAt: Prisma.FieldRef<"StudentPayment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"StudentPayment", 'DateTime'>
@@ -2182,9 +2394,9 @@ export type StudentPaymentDeleteManyArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * StudentPayment.receivedByUser
+ * StudentPayment.verifiedBy
  */
-export type StudentPayment$receivedByUserArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type StudentPayment$verifiedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the User
    */
