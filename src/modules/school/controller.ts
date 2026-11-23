@@ -1,8 +1,11 @@
 import type { NextFunction, Request, Response } from "express";
 
 import type { AuthRequest } from "../../middleware/auth.js";
+import { AuditAction } from "../../generated/prisma/client.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
+import { createNotification } from "../notification/service.js";
+import { recordPlatformAudit } from "../platform-audit-log/service.js";
 import type { GetSchoolUsersQuery } from "./interface.js";
 import {
 	approveSchool,
@@ -96,6 +99,25 @@ export const approveSchoolController = async (
 		}
 
 		const result = await approveSchool(schoolId);
+
+		await recordPlatformAudit({
+			actorId: req.user?.userId ?? null,
+			action: AuditAction.APPROVE,
+			entityType: "School",
+			entityId: schoolId,
+			schoolId,
+			description: `Approved school ${result.school.name}`,
+			ipAddress: req.ip ?? null,
+			userAgent: req.headers["user-agent"] ?? null,
+		});
+
+		await createNotification({
+			recipientId: result.admin.id,
+			schoolId,
+			type: "SYSTEM",
+			title: "Institution Approved",
+			message: `Your institution "${result.school.name}" has been approved. Select a subscription plan to get started.`,
+		}).catch(() => {});
 
 		return sendResponse(res, {
 			statusCode: 200,

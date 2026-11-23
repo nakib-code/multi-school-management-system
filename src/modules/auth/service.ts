@@ -5,7 +5,8 @@ import { comparePassword } from "../../utils/password.js";
 import type { LoginInput } from "./interface.js";
 
 export const login = async (payload: LoginInput) => {
-	const { email, password } = payload;
+	const email = payload.email.trim().toLowerCase();
+	const { password } = payload;
 
 	const user = await prisma.user.findUnique({
 		where: { email },
@@ -20,10 +21,6 @@ export const login = async (payload: LoginInput) => {
 
 	if (user.status !== "ACTIVE") {
 		throw new AppError(403, "Your account is not active");
-	}
-
-	if (user.role === "GUARDIAN") {
-		throw new AppError(403, "Guardian login is not available");
 	}
 
 	// SUPER_ADMIN does not need a school.

@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 
+import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedStudentIds } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { StudentFeeFilterQuery } from "./interface.js";
 import {
@@ -38,7 +40,7 @@ export const createStudentFeeController = async (
 };
 
 export const getStudentFeesController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -47,7 +49,13 @@ export const getStudentFeesController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: StudentFeeFilterQuery }
 			| undefined;
-		const result = await getStudentFees(schoolId, validated?.query ?? {});
+		let result = await getStudentFees(schoolId, validated?.query ?? {});
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (allowedStudentIds !== null) {
+				result = result.filter((r) => allowedStudentIds.includes(r.studentId));
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student fees retrieved successfully",
@@ -59,7 +67,7 @@ export const getStudentFeesController = async (
 };
 
 export const getStudentFeeByIdController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -67,6 +75,15 @@ export const getStudentFeeByIdController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "student fee ID");
 		const result = await getStudentFeeById(schoolId, id);
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (
+				allowedStudentIds !== null &&
+				!allowedStudentIds.includes(result.studentId)
+			) {
+				throw new AppError(403, "You do not have permission to view this student fee");
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student fee retrieved successfully",

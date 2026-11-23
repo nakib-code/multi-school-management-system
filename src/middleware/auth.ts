@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from "express";
 
 import type { UserRole } from "../generated/prisma/client.js";
+import { prisma } from "../lib/prisma.js";
 import AppError from "../utils/appError.js";
 import { verifyToken } from "../utils/jwt.js";
 
@@ -12,7 +13,7 @@ export interface AuthRequest extends Request {
 	};
 }
 
-export const authenticate = (
+export const authenticate = async (
 	req: AuthRequest,
 	_res: Response,
 	next: NextFunction,
@@ -32,7 +33,32 @@ export const authenticate = (
 	}
 
 	try {
-		const decoded = verifyToken(token);
+		const decoded = verifyToken(token) as {
+			userId: number;
+			role: UserRole;
+			schoolId?: number;
+			iat?: number;
+		};
+
+		// Verify user still exists, is active, and token predates any password reset
+		const dbUser = await prisma.user.findUnique({
+			where: { id: decoded.userId },
+			select: { status: true, passwordChangedAt: true },
+		});
+
+		if (!dbUser || dbUser.status !== "ACTIVE") {
+			return next(new AppError(401, "Session is no longer active"));
+		}
+
+		if (
+			dbUser.passwordChangedAt &&
+			decoded.iat &&
+			decoded.iat * 1000 < dbUser.passwordChangedAt.getTime()
+		) {
+			return next(
+				new AppError(401, "Password was recently changed. Please sign in again."),
+			);
+		}
 
 		req.user = {
 			userId: decoded.userId,

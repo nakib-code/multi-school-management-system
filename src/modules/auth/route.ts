@@ -2,6 +2,7 @@ import { Router } from "express";
 import env from "../../config/env.js";
 import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import AppError from "../../utils/appError.js";
 import { getSchoolsController } from "../school/controller.js";
@@ -11,8 +12,18 @@ import {
 	logoutController,
 } from "./controller.js";
 import { googleClient } from "./google.js";
+import {
+	forgotPasswordController,
+	resetPasswordController,
+	verifyResetTokenController,
+} from "./passwordReset.js";
 import { googleAdminLogin } from "./service.js";
-import { loginSchema } from "./validation.js";
+import {
+	forgotPasswordSchema,
+	loginSchema,
+	resetPasswordSchema,
+	verifyResetTokenSchema,
+} from "./validation.js";
 
 const router = Router();
 
@@ -23,7 +34,32 @@ const cookieOptions = {
 	maxAge: 7 * 24 * 60 * 60 * 1000,
 };
 
+const passwordResetLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 10,
+	keyPrefix: "password-reset",
+	message: "Too many password recovery attempts. Please try again in 15 minutes.",
+});
+
 router.post("/login", validateRequest(loginSchema), loginController);
+router.post(
+	"/forgot-password",
+	passwordResetLimiter,
+	validateRequest(forgotPasswordSchema),
+	forgotPasswordController,
+);
+router.post(
+	"/verify-reset-token",
+	passwordResetLimiter,
+	validateRequest(verifyResetTokenSchema),
+	verifyResetTokenController,
+);
+router.post(
+	"/reset-password",
+	passwordResetLimiter,
+	validateRequest(resetPasswordSchema),
+	resetPasswordController,
+);
 
 router.get(
 	"/",

@@ -139,11 +139,16 @@ export const getAdmissionsSchema = z.object({
 });
 
 export const trackAdmissionSchema = z.object({
-	applicationNo: z
-		.string()
-		.trim()
-		.min(1, "Application number is required")
-		.max(100),
+	body: z.object({
+		applicationNo: z
+			.string()
+			.trim()
+			.min(1, "Application number is required")
+			.max(100),
 
-	studentEmail: z.string().trim().email("Please provide a valid student email"),
+		studentEmail: z
+			.string()
+			.trim()
+			.email("Please provide a valid student email"),
+	}),
 });

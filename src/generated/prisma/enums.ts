@@ -9,6 +9,19 @@
 * 🟢 You can import this file directly.
 */
 
+export const DayOfWeek = {
+  SATURDAY: 'SATURDAY',
+  SUNDAY: 'SUNDAY',
+  MONDAY: 'MONDAY',
+  TUESDAY: 'TUESDAY',
+  WEDNESDAY: 'WEDNESDAY',
+  THURSDAY: 'THURSDAY',
+  FRIDAY: 'FRIDAY'
+} as const
+
+export type DayOfWeek = (typeof DayOfWeek)[keyof typeof DayOfWeek]
+
+
 export const AdmissionStatus = {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
@@ -296,6 +309,23 @@ export const HefzAttendanceStatus = {
 } as const
 
 export type HefzAttendanceStatus = (typeof HefzAttendanceStatus)[keyof typeof HefzAttendanceStatus]
+
+
+export const NotificationType = {
+  ADMISSION: 'ADMISSION',
+  ENROLLMENT: 'ENROLLMENT',
+  ATTENDANCE: 'ATTENDANCE',
+  EXAM: 'EXAM',
+  RESULT: 'RESULT',
+  FEE: 'FEE',
+  PAYMENT: 'PAYMENT',
+  SUBSCRIPTION: 'SUBSCRIPTION',
+  ROUTINE: 'ROUTINE',
+  ANNOUNCEMENT: 'ANNOUNCEMENT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
 
 
 export const PaymentMethod = {

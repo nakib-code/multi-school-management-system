@@ -228,7 +228,7 @@ export const confirmCashPaymentController = async (
 		schoolId,
 		admissionId,
 		req.user.userId,
-		req.body.remarks,
+		{ remarks: req.body?.remarks },
 	);
 
 	return sendResponse(res, {

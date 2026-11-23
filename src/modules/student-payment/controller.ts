@@ -2,6 +2,7 @@ import type { NextFunction, Response } from "express";
 
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedStudentIds } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { StudentPaymentFilterQuery } from "./interface.js";
 import {
@@ -53,7 +54,13 @@ export const getStudentPaymentsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: StudentPaymentFilterQuery }
 			| undefined;
-		const result = await getStudentPayments(schoolId, validated?.query ?? {});
+		let result = await getStudentPayments(schoolId, validated?.query ?? {});
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (allowedStudentIds !== null) {
+				result = result.filter((r) => allowedStudentIds.includes(r.studentId));
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student payments retrieved successfully",
@@ -73,6 +80,15 @@ export const getStudentPaymentByIdController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "student payment ID");
 		const result = await getStudentPaymentById(schoolId, id);
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (
+				allowedStudentIds !== null &&
+				!allowedStudentIds.includes(result.studentId)
+			) {
+				throw new AppError(403, "You do not have permission to view this payment");
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student payment retrieved successfully",

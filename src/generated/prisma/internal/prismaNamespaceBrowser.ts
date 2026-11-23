@@ -55,6 +55,7 @@ export const ModelName = {
   AdmissionPayment: 'AdmissionPayment',
   Attendance: 'Attendance',
   AuditLog: 'AuditLog',
+  ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
   CustomPackageRequest: 'CustomPackageRequest',
   CustomPackageRequestFeature: 'CustomPackageRequestFeature',
@@ -65,8 +66,11 @@ export const ModelName = {
   HefzDailyLog: 'HefzDailyLog',
   HefzEnrollment: 'HefzEnrollment',
   Manager: 'Manager',
+  Notification: 'Notification',
   Package: 'Package',
   PackageFeatureConfig: 'PackageFeatureConfig',
+  PasswordResetToken: 'PasswordResetToken',
+  PlatformAuditLog: 'PlatformAuditLog',
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
@@ -85,6 +89,7 @@ export const ModelName = {
   TeacherAssignment: 'TeacherAssignment',
   TeacherSalary: 'TeacherSalary',
   Teacher: 'Teacher',
+  UploadedFile: 'UploadedFile',
   User: 'User'
 } as const
 
@@ -191,6 +196,26 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const ClassRoutineScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  classId: 'classId',
+  sectionId: 'sectionId',
+  subjectId: 'subjectId',
+  teacherId: 'teacherId',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  roomNumber: 'roomNumber',
+  academicYear: 'academicYear',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassRoutineScalarFieldEnum = (typeof ClassRoutineScalarFieldEnum)[keyof typeof ClassRoutineScalarFieldEnum]
 
 
 export const SchoolClassScalarFieldEnum = {
@@ -352,6 +377,23 @@ export const ManagerScalarFieldEnum = {
 export type ManagerScalarFieldEnum = (typeof ManagerScalarFieldEnum)[keyof typeof ManagerScalarFieldEnum]
 
 
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  recipientId: 'recipientId',
+  title: 'title',
+  message: 'message',
+  type: 'type',
+  metadata: 'metadata',
+  isRead: 'isRead',
+  readAt: 'readAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const PackageScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -378,6 +420,35 @@ export const PackageFeatureConfigScalarFieldEnum = {
 } as const
 
 export type PackageFeatureConfigScalarFieldEnum = (typeof PackageFeatureConfigScalarFieldEnum)[keyof typeof PackageFeatureConfigScalarFieldEnum]
+
+
+export const PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PasswordResetTokenScalarFieldEnum = (typeof PasswordResetTokenScalarFieldEnum)[keyof typeof PasswordResetTokenScalarFieldEnum]
+
+
+export const PlatformAuditLogScalarFieldEnum = {
+  id: 'id',
+  actorId: 'actorId',
+  action: 'action',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  schoolId: 'schoolId',
+  description: 'description',
+  metadata: 'metadata',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  createdAt: 'createdAt'
+} as const
+
+export type PlatformAuditLogScalarFieldEnum = (typeof PlatformAuditLogScalarFieldEnum)[keyof typeof PlatformAuditLogScalarFieldEnum]
 
 
 export const ResultScalarFieldEnum = {
@@ -719,6 +790,23 @@ export const TeacherScalarFieldEnum = {
 export type TeacherScalarFieldEnum = (typeof TeacherScalarFieldEnum)[keyof typeof TeacherScalarFieldEnum]
 
 
+export const UploadedFileScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  uploadedById: 'uploadedById',
+  publicId: 'publicId',
+  url: 'url',
+  resourceType: 'resourceType',
+  mimeType: 'mimeType',
+  bytes: 'bytes',
+  folder: 'folder',
+  category: 'category',
+  createdAt: 'createdAt'
+} as const
+
+export type UploadedFileScalarFieldEnum = (typeof UploadedFileScalarFieldEnum)[keyof typeof UploadedFileScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -728,6 +816,8 @@ export const UserScalarFieldEnum = {
   role: 'role',
   status: 'status',
   mustChangePassword: 'mustChangePassword',
+  passwordChangedAt: 'passwordChangedAt',
+  avatarUrl: 'avatarUrl',
   schoolId: 'schoolId',
   lastLoginAt: 'lastLoginAt',
   createdAt: 'createdAt',
@@ -745,6 +835,14 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -759,4 +857,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

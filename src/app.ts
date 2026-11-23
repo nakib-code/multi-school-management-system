@@ -14,6 +14,10 @@ import { attendanceRoutes } from "./modules/attendance/route.js";
 import { auditLogRoutes } from "./modules/audit-log/route.js";
 import { authRoutes } from "./modules/auth/route.js";
 import { classRoutes } from "./modules/class/route.js";
+import { classRoutineRoutes } from "./modules/class-routine/route.js";
+import { notificationRoutes } from "./modules/notification/route.js";
+import { platformAuditLogRoutes } from "./modules/platform-audit-log/route.js";
+import { uploadRoutes } from "./modules/upload/route.js";
 import { customPackageRequestRouter } from "./modules/customPackageRequest/customPackageRequest.route.js";
 import { dashboardRoutes } from "./modules/dashboard/route.js";
 import { enrollmentRoutes } from "./modules/enrollment/route.js";
@@ -46,13 +50,13 @@ const app = express();
 // Global middleware
 app.use(
 	cors({
-		origin: env.frontend_url,
+		origin: "http://localhost:3000",
 		credentials: true,
 	}),
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "15mb" }));
+app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 app.use(cookieParser());
 
 // Root
@@ -104,6 +108,10 @@ app.use("/api/v1", teacherSalaryRoutes);
 app.use("/api/v1", salaryPaymentRoutes);
 app.use("/api/v1", auditLogRoutes);
 app.use("/api/v1", hefzRoutes);
+app.use("/api/v1/notifications", notificationRoutes);
+app.use("/api/v1", classRoutineRoutes);
+app.use("/api/v1/uploads", uploadRoutes);
+app.use("/api/v1/platform-audit-logs", platformAuditLogRoutes);
 app.use("/api/v1/public", publicRoutes);
 
 // 404 handler

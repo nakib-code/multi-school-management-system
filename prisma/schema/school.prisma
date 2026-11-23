@@ -47,6 +47,10 @@ model School {
   teacherAssignments TeacherAssignment[]
   hefzEnrollments    HefzEnrollment[]
   hefzDailyLogs      HefzDailyLog[]
+  notifications      Notification[]
+  classRoutines      ClassRoutine[]
+  platformAuditLogs  PlatformAuditLog[]
+  uploadedFiles      UploadedFile[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

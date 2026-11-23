@@ -1,0 +1,35 @@
+enum NotificationType {
+  ADMISSION
+  ENROLLMENT
+  ATTENDANCE
+  EXAM
+  RESULT
+  FEE
+  PAYMENT
+  SUBSCRIPTION
+  ROUTINE
+  ANNOUNCEMENT
+  SYSTEM
+}
+
+model Notification {
+  id          Int              @id @default(autoincrement())
+  schoolId    Int?
+  recipientId Int
+  title       String
+  message     String
+  type        NotificationType @default(SYSTEM)
+  metadata    Json?
+  isRead      Boolean          @default(false)
+  readAt      DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  school    School? @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  recipient User    @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+
+  @@index([recipientId, isRead])
+  @@index([schoolId])
+  @@index([createdAt])
+  @@map("notifications")
+}

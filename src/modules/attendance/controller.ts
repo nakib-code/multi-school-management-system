@@ -2,6 +2,7 @@ import type { NextFunction, Response } from "express";
 
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedStudentIds } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { AttendanceFilterQuery } from "./interface.js";
 import {
@@ -73,7 +74,13 @@ export const getAttendancesController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: AttendanceFilterQuery }
 			| undefined;
-		const result = await getAttendances(schoolId, validated?.query ?? {});
+		let result = await getAttendances(schoolId, validated?.query ?? {});
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (allowedStudentIds !== null) {
+				result = result.filter((r) => allowedStudentIds.includes(r.studentId));
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Attendance records retrieved successfully",
@@ -93,6 +100,15 @@ export const getAttendanceByIdController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "attendance ID");
 		const result = await getAttendanceById(schoolId, id);
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (
+				allowedStudentIds !== null &&
+				!allowedStudentIds.includes(result.studentId)
+			) {
+				throw new AppError(403, "You do not have permission to view this attendance record");
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Attendance record retrieved successfully",

@@ -29,3 +29,25 @@ export const loginSchema = z.object({
 		password: z.string().min(1, "Password is required"),
 	}),
 });
+
+export const forgotPasswordSchema = z.object({
+	body: z.object({
+		email: z.string().trim().email("Please provide a valid email"),
+	}),
+});
+
+export const verifyResetTokenSchema = z.object({
+	body: z.object({
+		token: z.string().trim().min(32, "Invalid reset token"),
+	}),
+});
+
+export const resetPasswordSchema = z.object({
+	body: z.object({
+		token: z.string().trim().min(32, "Invalid reset token"),
+		password: z
+			.string()
+			.min(8, "Password must be at least 8 characters")
+			.max(100, "Password must be less than 100 characters"),
+	}),
+});

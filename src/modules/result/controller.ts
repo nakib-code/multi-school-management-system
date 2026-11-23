@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 
+import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedStudentIds } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { ResultFilterQuery } from "./interface.js";
 import {
@@ -38,7 +40,7 @@ export const createResultController = async (
 };
 
 export const getResultsController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -47,7 +49,13 @@ export const getResultsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: ResultFilterQuery }
 			| undefined;
-		const result = await getResults(schoolId, validated?.query ?? {});
+		let result = await getResults(schoolId, validated?.query ?? {});
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (allowedStudentIds !== null) {
+				result = result.filter((r) => allowedStudentIds.includes(r.studentId));
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Results retrieved successfully",
@@ -59,7 +67,7 @@ export const getResultsController = async (
 };
 
 export const getResultByIdController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -67,6 +75,15 @@ export const getResultByIdController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "result ID");
 		const result = await getResultById(schoolId, id);
+		if (req.user) {
+			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			if (
+				allowedStudentIds !== null &&
+				!allowedStudentIds.includes(result.studentId)
+			) {
+				throw new AppError(403, "You do not have permission to view this result");
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Result retrieved successfully",

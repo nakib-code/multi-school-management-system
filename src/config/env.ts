@@ -26,4 +26,7 @@ export default {
 	google_client_id: process.env.GOOGLE_CLIENT_ID as string,
 	google_client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
 	google_callback_url: process.env.GOOGLE_CALLBACK_URL as string,
+	cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
+	cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
 };

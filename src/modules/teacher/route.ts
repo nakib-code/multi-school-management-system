@@ -7,6 +7,10 @@ import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
 	createTeacherController,
+	deactivateTeacherController,
+	getTeacherByIdController,
+	getTeachersController,
+	updateTeacherController,
 	verifyTeacherEmailController,
 } from "./controller.js";
 
@@ -32,6 +36,42 @@ router.patch(
 	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	validateRequest(verifyTeacherEmailSchema),
 	verifyTeacherEmailController,
+);
+
+router.get(
+	"/schools/:schoolId/teachers",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
+	requireSchoolAccess,
+	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
+	getTeachersController,
+);
+
+router.get(
+	"/schools/:schoolId/teachers/:id",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
+	requireSchoolAccess,
+	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
+	getTeacherByIdController,
+);
+
+router.patch(
+	"/schools/:schoolId/teachers/:id",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
+	updateTeacherController,
+);
+
+router.delete(
+	"/schools/:schoolId/teachers/:id",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
+	deactivateTeacherController,
 );
 
 export const teacherRoutes = router;

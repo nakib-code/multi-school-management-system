@@ -1,0 +1,23 @@
+model PlatformAuditLog {
+  id          Int         @id @default(autoincrement())
+  actorId     Int?
+  action      AuditAction
+  entityType  String
+  entityId    String?
+  schoolId    Int?
+  description String?
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime    @default(now())
+
+  actor  User?   @relation("PlatformAuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+  school School? @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+
+  @@index([actorId])
+  @@index([action])
+  @@index([entityType])
+  @@index([schoolId])
+  @@index([createdAt])
+  @@map("platform_audit_logs")
+}

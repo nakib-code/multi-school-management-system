@@ -1,0 +1,21 @@
+model UploadedFile {
+  id           Int      @id @default(autoincrement())
+  schoolId     Int?
+  uploadedById Int
+  publicId     String   @unique
+  url          String
+  resourceType String
+  mimeType     String
+  bytes        Int
+  folder       String
+  category     String
+  createdAt    DateTime @default(now())
+
+  school     School? @relation(fields: [schoolId], references: [id], onDelete: SetNull)
+  uploadedBy User    @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+
+  @@index([schoolId])
+  @@index([uploadedById])
+  @@index([category])
+  @@map("uploaded_files")
+}

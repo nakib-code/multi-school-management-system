@@ -7,6 +7,8 @@ model User {
   role               UserRole
   status             UserStatus @default(ACTIVE)
   mustChangePassword Boolean    @default(true)
+  passwordChangedAt  DateTime?
+  avatarUrl          String?
 
   // Multi-school relation
   schoolId Int?
@@ -28,6 +30,10 @@ model User {
   paidSalaryPayments           SalaryPayment[]
   admissionsReviewed           Admission[]           @relation("AdmissionReviewer")
   auditLogs                    AuditLog[]
+  passwordResetTokens          PasswordResetToken[]
+  notifications                Notification[]
+  platformAuditLogs            PlatformAuditLog[]    @relation("PlatformAuditActor")
+  uploadedFiles                UploadedFile[]
 
   @@index([role])
   @@index([status])

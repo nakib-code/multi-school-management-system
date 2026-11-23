@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 
+import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedTeacherId } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { TeacherSalaryFilterQuery } from "./interface.js";
 import {
@@ -38,7 +40,7 @@ export const createTeacherSalaryController = async (
 };
 
 export const getTeacherSalariesController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -47,7 +49,13 @@ export const getTeacherSalariesController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: TeacherSalaryFilterQuery }
 			| undefined;
-		const result = await getTeacherSalaries(schoolId, validated?.query ?? {});
+		let result = await getTeacherSalaries(schoolId, validated?.query ?? {});
+		if (req.user) {
+			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
+			if (scopedTeacherId !== null) {
+				result = result.filter((r) => r.teacherId === scopedTeacherId);
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Teacher salaries retrieved successfully",
@@ -59,7 +67,7 @@ export const getTeacherSalariesController = async (
 };
 
 export const getTeacherSalaryByIdController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -67,6 +75,12 @@ export const getTeacherSalaryByIdController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "teacher salary ID");
 		const result = await getTeacherSalaryById(schoolId, id);
+		if (req.user) {
+			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
+			if (scopedTeacherId !== null && result.teacherId !== scopedTeacherId) {
+				throw new AppError(403, "You do not have permission to view this salary record");
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Teacher salary retrieved successfully",

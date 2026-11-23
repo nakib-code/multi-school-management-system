@@ -62,6 +62,11 @@ export type Attendance = Prisma.AttendanceModel
  */
 export type AuditLog = Prisma.AuditLogModel
 /**
+ * Model ClassRoutine
+ * 
+ */
+export type ClassRoutine = Prisma.ClassRoutineModel
+/**
  * Model SchoolClass
  * 
  */
@@ -112,6 +117,11 @@ export type HefzEnrollment = Prisma.HefzEnrollmentModel
  */
 export type Manager = Prisma.ManagerModel
 /**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
  * Model Package
  * 
  */
@@ -121,6 +131,16 @@ export type Package = Prisma.PackageModel
  * 
  */
 export type PackageFeatureConfig = Prisma.PackageFeatureConfigModel
+/**
+ * Model PasswordResetToken
+ * 
+ */
+export type PasswordResetToken = Prisma.PasswordResetTokenModel
+/**
+ * Model PlatformAuditLog
+ * 
+ */
+export type PlatformAuditLog = Prisma.PlatformAuditLogModel
 /**
  * Model Result
  * 
@@ -211,6 +231,11 @@ export type TeacherSalary = Prisma.TeacherSalaryModel
  * 
  */
 export type Teacher = Prisma.TeacherModel
+/**
+ * Model UploadedFile
+ * 
+ */
+export type UploadedFile = Prisma.UploadedFileModel
 /**
  * Model User
  * 

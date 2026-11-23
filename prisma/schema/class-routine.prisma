@@ -1,0 +1,37 @@
+enum DayOfWeek {
+  SATURDAY
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+}
+
+model ClassRoutine {
+  id           Int       @id @default(autoincrement())
+  schoolId     Int
+  classId      Int
+  sectionId    Int?
+  subjectId    Int
+  teacherId    Int
+  dayOfWeek    DayOfWeek
+  startTime    String
+  endTime      String
+  roomNumber   String?
+  academicYear String
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  school  School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  class   SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section Section?    @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  subject Subject     @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  teacher Teacher     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@index([schoolId, academicYear, dayOfWeek])
+  @@index([schoolId, classId, sectionId, dayOfWeek])
+  @@index([schoolId, teacherId, dayOfWeek])
+  @@map("class_routines")
+}

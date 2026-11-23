@@ -2,6 +2,7 @@ import type { NextFunction, Response } from "express";
 
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedTeacherId } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { SalaryPaymentFilterQuery } from "./interface.js";
 import {
@@ -52,7 +53,13 @@ export const getSalaryPaymentsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: SalaryPaymentFilterQuery }
 			| undefined;
-		const result = await getSalaryPayments(schoolId, validated?.query ?? {});
+		let result = await getSalaryPayments(schoolId, validated?.query ?? {});
+		if (req.user) {
+			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
+			if (scopedTeacherId !== null) {
+				result = result.filter((r) => r.teacherId === scopedTeacherId);
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Salary payments retrieved successfully",
@@ -72,6 +79,12 @@ export const getSalaryPaymentByIdController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "salary payment ID");
 		const result = await getSalaryPaymentById(schoolId, id);
+		if (req.user) {
+			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
+			if (scopedTeacherId !== null && result.teacherId !== scopedTeacherId) {
+				throw new AppError(403, "You do not have permission to view this salary payment");
+			}
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Salary payment retrieved successfully",

@@ -16,6 +16,7 @@ model Subject {
   updatedAt          DateTime            @updatedAt
   teacherAssignments TeacherAssignment[]
   results            Result[]
+  classRoutines      ClassRoutine[]
 
   @@unique([schoolId, code])
   @@index([schoolId])

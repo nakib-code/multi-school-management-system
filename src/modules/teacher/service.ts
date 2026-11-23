@@ -332,3 +332,120 @@ export const verifyTeacherEmail = async (
 		status: updatedTeacher.status,
 	};
 };
+
+export const getTeachers = async (
+	schoolId: number,
+	params?: { search?: string },
+) => {
+	const search = params?.search?.trim();
+	return prisma.teacher.findMany({
+		where: {
+			schoolId,
+			...(search
+				? {
+						OR: [
+							{ firstName: { contains: search, mode: "insensitive" } },
+							{ lastName: { contains: search, mode: "insensitive" } },
+							{ employeeId: { contains: search, mode: "insensitive" } },
+							{ user: { email: { contains: search, mode: "insensitive" } } },
+						],
+					}
+				: {}),
+		},
+		include: {
+			user: {
+				select: {
+					id: true,
+					name: true,
+					email: true,
+					phone: true,
+					role: true,
+					status: true,
+				},
+			},
+		},
+		orderBy: { createdAt: "desc" },
+	});
+};
+
+export const getTeacherById = async (schoolId: number, teacherId: number) => {
+	const teacher = await prisma.teacher.findFirst({
+		where: { id: teacherId, schoolId },
+		include: {
+			user: {
+				select: {
+					id: true,
+					name: true,
+					email: true,
+					phone: true,
+					role: true,
+					status: true,
+				},
+			},
+		},
+	});
+	if (!teacher) {
+		throw new AppError(404, "Teacher not found");
+	}
+	return teacher;
+};
+
+export const updateTeacher = async (
+	schoolId: number,
+	teacherId: number,
+	data: {
+		firstName?: string;
+		lastName?: string;
+		phone?: string;
+		address?: string;
+		designation?: string;
+		qualification?: string;
+		isActive?: boolean;
+	},
+) => {
+	const existing = await prisma.teacher.findFirst({
+		where: { id: teacherId, schoolId },
+	});
+	if (!existing) {
+		throw new AppError(404, "Teacher not found");
+	}
+	return prisma.teacher.update({
+		where: { id: teacherId },
+		data,
+		include: {
+			user: {
+				select: {
+					id: true,
+					name: true,
+					email: true,
+					phone: true,
+					role: true,
+					status: true,
+				},
+			},
+		},
+	});
+};
+
+export const deactivateTeacher = async (
+	schoolId: number,
+	teacherId: number,
+) => {
+	const existing = await prisma.teacher.findFirst({
+		where: { id: teacherId, schoolId },
+	});
+	if (!existing) {
+		throw new AppError(404, "Teacher not found");
+	}
+	return prisma.$transaction(async (tx) => {
+		const updated = await tx.teacher.update({
+			where: { id: teacherId },
+			data: { isActive: false },
+		});
+		await tx.user.update({
+			where: { id: existing.userId },
+			data: { status: "INACTIVE" },
+		});
+		return updated;
+	});
+};

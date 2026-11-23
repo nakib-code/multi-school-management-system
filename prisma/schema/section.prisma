@@ -19,6 +19,7 @@ model Section {
   enrollments        Enrollment[]
   exams              Exam[]
   admissions         Admission[]
+  classRoutines      ClassRoutine[]
 
   @@unique([classId, code])
   @@index([schoolId])

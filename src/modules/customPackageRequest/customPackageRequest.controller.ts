@@ -1,6 +1,7 @@
 import type { Response } from "express";
 
 import type { AuthRequest } from "../../middleware/auth.js";
+import AppError from "../../utils/appError.js";
 import {
 	cancelCustomPackageRequest,
 	createCustomPackageRequest,
@@ -19,6 +20,16 @@ import {
 export const customPackageRequestController = {
 	create: async (req: AuthRequest, res: Response) => {
 		const payload = createCustomPackageRequestSchema.parse(req.body);
+
+		if (
+			req.user?.role !== "SUPER_ADMIN" &&
+			req.user?.schoolId !== payload.schoolId
+		) {
+			throw new AppError(
+				403,
+				"You can only submit custom package requests for your own school",
+			);
+		}
 
 		const result = await createCustomPackageRequest(payload);
 
