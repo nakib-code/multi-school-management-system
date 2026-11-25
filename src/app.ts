@@ -50,7 +50,7 @@ const app = express();
 // Global middleware
 app.use(
 	cors({
-		origin: "http://localhost:3000",
+		origin: process.env.backend_url,
 		credentials: true,
 	}),
 );
