@@ -41,14 +41,5 @@ export interface ReportOverview {
 		total: number;
 		active: number;
 		inactive: number;
-		custom: number;
-	};
-
-	customPackageRequests: {
-		total: number;
-		pending: number;
-		approved: number;
-		rejected: number;
-		cancelled: number;
 	};
 }

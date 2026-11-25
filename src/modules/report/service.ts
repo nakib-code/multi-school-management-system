@@ -228,7 +228,7 @@ const getPaymentReports = async (): Promise<ReportOverview["payments"]> => {
 };
 
 const getPackageReports = async (): Promise<ReportOverview["packages"]> => {
-	const [total, active, inactive, custom] = await Promise.all([
+	const [total, active, inactive] = await Promise.all([
 		prisma.package.count(),
 
 		prisma.package.count({
@@ -242,78 +242,25 @@ const getPackageReports = async (): Promise<ReportOverview["packages"]> => {
 				isActive: false,
 			},
 		}),
-
-		prisma.package.count({
-			where: {
-				isCustom: true,
-			},
-		}),
 	]);
 
 	return {
 		total,
 		active,
 		inactive,
-		custom,
-	};
-};
-
-const getCustomPackageRequestReports = async (): Promise<
-	ReportOverview["customPackageRequests"]
-> => {
-	const [total, pending, approved, rejected, cancelled] = await Promise.all([
-		prisma.customPackageRequest.count(),
-
-		prisma.customPackageRequest.count({
-			where: {
-				status: "PENDING",
-			},
-		}),
-
-		prisma.customPackageRequest.count({
-			where: {
-				status: "APPROVED",
-			},
-		}),
-
-		prisma.customPackageRequest.count({
-			where: {
-				status: "REJECTED",
-			},
-		}),
-
-		prisma.customPackageRequest.count({
-			where: {
-				status: "CANCELLED",
-			},
-		}),
-	]);
-
-	return {
-		total,
-		pending,
-		approved,
-		rejected,
-		cancelled,
 	};
 };
 
 export const getReportOverview = async (): Promise<ReportOverview> => {
-	const [
-		schools,
-		users,
-		subscriptions,
-		payments,
-		packages,
-		customPackageRequests,
-	] = await Promise.all([
-		getSchoolReports(),
-		getUserReports(),
-		getSubscriptionReports(),
-		getPaymentReports(),
-		getPackageReports(),
-		getCustomPackageRequestReports(),
-	]);
+	const [schools, users, subscriptions, payments, packages] = await Promise.all(
+		[
+			getSchoolReports(),
+			getUserReports(),
+			getSubscriptionReports(),
+			getPaymentReports(),
+			getPackageReports(),
+		],
+	);
 
 	return {
 		schools,
@@ -321,6 +268,5 @@ export const getReportOverview = async (): Promise<ReportOverview> => {
 		subscriptions,
 		payments,
 		packages,
-		customPackageRequests,
 	};
 };

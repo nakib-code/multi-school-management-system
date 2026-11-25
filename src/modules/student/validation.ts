@@ -1,33 +1,27 @@
 import { z } from "zod";
 
-export const createSchoolSchema = z.object({
+export const createStudentSchema = z.object({
 	body: z.object({
-		name: z
+		firstName: z
 			.string()
-			.min(2, "School name must be at least 2 characters")
-			.max(150, "School name is too long"),
+			.trim()
+			.min(2, "First name must be at least 2 characters")
+			.max(100, "First name is too long"),
+		lastName: z.string().trim().max(100, "Last name is too long").optional(),
+		dateOfBirth: z.coerce.date().optional(),
+		gender: z.string().trim().max(20, "Gender is too long").optional(),
+		phone: z.string().trim().max(20, "Phone number is too long").optional(),
+		address: z.string().trim().max(255, "Address is too long").optional(),
+		studentId: z.string().trim().max(40).optional(),
 
-		code: z
-			.string()
-			.min(2, "School code must be at least 2 characters")
-			.max(30, "School code is too long"),
-
-		email: z.string().email("Please provide a valid school email").optional(),
-
-		phone: z.string().optional(),
-
-		address: z.string().optional(),
-
-		logo: z.string().url("Logo must be a valid URL").optional(),
-
-		adminName: z
-			.string()
-			.min(2, "Admin name must be at least 2 characters")
-			.max(100, "Admin name is too long"),
-
-		adminEmail: z.string().email("Please provide a valid admin email"),
-
-		adminPhone: z.string().optional(),
+		// Combined Guardian Onboarding (No student login required)
+		guardianName: z.string().trim().min(2).max(100).optional(),
+		guardianPhone: z.string().trim().min(6).max(20).optional(),
+		guardianEmail: z.string().trim().email().optional(),
+		guardianRelation: z.string().trim().max(50).optional(),
+		guardianOccupation: z.string().trim().max(100).optional(),
+		guardianAddress: z.string().trim().max(255).optional(),
+		guardianPassword: z.string().min(6).max(100).optional(),
 	}),
 });
 

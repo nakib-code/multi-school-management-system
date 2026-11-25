@@ -1,22 +1,72 @@
 import { prisma } from "../../lib/prisma.js";
+import { DEFAULT_SCHOOL_FEATURES } from "../../middleware/schoolFeature.js";
 import AppError from "../../utils/appError.js";
 import { generateToken } from "../../utils/jwt.js";
 import { comparePassword } from "../../utils/password.js";
 import type { LoginInput } from "./interface.js";
 
+const buildSchoolSettingPayload = (
+	schoolId: number | null,
+	setting?: {
+		hasGeneralSection: boolean;
+		hasHefzSection: boolean;
+		hasPublicWebsite: boolean;
+		hasOnlineAdmission: boolean;
+		hasTeacherPayroll: boolean;
+		smsEnabled: boolean;
+		bkashNumber: string | null;
+		bkashType: string;
+		nagadNumber: string | null;
+		nagadType: string;
+		rocketNumber: string | null;
+		rocketType: string;
+		feePaymentInstruction: string | null;
+	} | null,
+) => {
+	if (schoolId === null) return null;
+
+	return {
+		hasGeneralSection:
+			setting?.hasGeneralSection ?? DEFAULT_SCHOOL_FEATURES.hasGeneralSection,
+		hasHefzSection:
+			setting?.hasHefzSection ?? DEFAULT_SCHOOL_FEATURES.hasHefzSection,
+		hasPublicWebsite:
+			setting?.hasPublicWebsite ?? DEFAULT_SCHOOL_FEATURES.hasPublicWebsite,
+		hasOnlineAdmission:
+			setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission,
+		hasTeacherPayroll:
+			setting?.hasTeacherPayroll ?? DEFAULT_SCHOOL_FEATURES.hasTeacherPayroll,
+		smsEnabled: setting?.smsEnabled ?? DEFAULT_SCHOOL_FEATURES.smsEnabled,
+		bkashNumber: setting?.bkashNumber ?? null,
+		bkashType: setting?.bkashType ?? "PERSONAL",
+		nagadNumber: setting?.nagadNumber ?? null,
+		nagadType: setting?.nagadType ?? "PERSONAL",
+		rocketNumber: setting?.rocketNumber ?? null,
+		rocketType: setting?.rocketType ?? "PERSONAL",
+		feePaymentInstruction: setting?.feePaymentInstruction ?? null,
+	};
+};
+
 export const login = async (payload: LoginInput) => {
-	const email = payload.email.trim().toLowerCase();
+	const identifier = payload.email.trim();
+	const normalizedEmail = identifier.toLowerCase();
 	const { password } = payload;
 
-	const user = await prisma.user.findUnique({
-		where: { email },
+	const user = await prisma.user.findFirst({
+		where: {
+			OR: [{ email: normalizedEmail }, { phone: identifier }],
+		},
 		include: {
-			school: true,
+			school: {
+				include: {
+					schoolSetting: true,
+				},
+			},
 		},
 	});
 
 	if (!user) {
-		throw new AppError(401, "Invalid email or password");
+		throw new AppError(401, "Invalid email/phone or password");
 	}
 
 	if (user.status !== "ACTIVE") {
@@ -24,8 +74,7 @@ export const login = async (payload: LoginInput) => {
 	}
 
 	// SUPER_ADMIN does not need a school.
-	// All other dashboard users must be associated
-	// with a school.
+	// All other dashboard users must be associated with a school.
 	if (user.role !== "SUPER_ADMIN" && user.schoolId === null) {
 		throw new AppError(403, "Your account is not associated with any school");
 	}
@@ -37,7 +86,7 @@ export const login = async (payload: LoginInput) => {
 	const isPasswordMatched = await comparePassword(password, user.passwordHash);
 
 	if (!isPasswordMatched) {
-		throw new AppError(401, "Invalid email or password");
+		throw new AppError(401, "Invalid email/phone or password");
 	}
 
 	const tokenPayload: {
@@ -74,6 +123,10 @@ export const login = async (payload: LoginInput) => {
 			status: user.status,
 			schoolId: user.schoolId,
 			mustChangePassword: user.mustChangePassword,
+			schoolSetting: buildSchoolSettingPayload(
+				user.schoolId,
+				user.school?.schoolSetting,
+			),
 		},
 		token,
 	};
@@ -89,7 +142,11 @@ export const googleAdminLogin = async (email: string) => {
 			email,
 		},
 		include: {
-			school: true,
+			school: {
+				include: {
+					schoolSetting: true,
+				},
+			},
 		},
 	});
 
@@ -116,8 +173,6 @@ export const googleAdminLogin = async (email: string) => {
 		throw new AppError(403, "Your school is not active");
 	}
 
-	// At this point schoolId is guaranteed to exist
-	// because user.school exists.
 	const schoolId = user.schoolId;
 
 	if (schoolId === null) {
@@ -149,6 +204,10 @@ export const googleAdminLogin = async (email: string) => {
 			status: user.status,
 			schoolId: user.schoolId,
 			mustChangePassword: user.mustChangePassword,
+			schoolSetting: buildSchoolSettingPayload(
+				user.schoolId,
+				user.school.schoolSetting,
+			),
 		},
 	};
 };
@@ -163,7 +222,11 @@ export const getMe = async (userId: number) => {
 			id: userId,
 		},
 		include: {
-			school: true,
+			school: {
+				include: {
+					schoolSetting: true,
+				},
+			},
 		},
 	});
 
@@ -192,5 +255,9 @@ export const getMe = async (userId: number) => {
 		status: user.status,
 		schoolId: user.schoolId,
 		mustChangePassword: user.mustChangePassword,
+		schoolSetting: buildSchoolSettingPayload(
+			user.schoolId,
+			user.school?.schoolSetting,
+		),
 	};
 };

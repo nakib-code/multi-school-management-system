@@ -1,8 +1,7 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -28,7 +27,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(createSubjectSchema),
 	createSubjectController,
 );
@@ -38,7 +36,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(subjectSchoolParamsSchema),
 	getSubjectsController,
 );
@@ -48,7 +45,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(subjectSchoolParamsSchema),
 	getActiveSubjectsController,
 );
@@ -58,7 +54,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(subjectParamsSchema),
 	getSubjectByIdController,
 );
@@ -68,7 +63,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(updateSubjectSchema),
 	updateSubjectController,
 );
@@ -78,7 +72,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(subjectParamsSchema),
 	toggleSubjectStatusController,
 );
@@ -88,7 +81,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SUBJECT_MANAGEMENT),
 	validateRequest(subjectParamsSchema),
 	deleteSubjectController,
 );

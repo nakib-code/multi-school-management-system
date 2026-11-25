@@ -114,7 +114,7 @@ export const submitManualSubscriptionPayment = async (
 		);
 	}
 
-	const receiverNumber = resolvePlatformReceiverNumber(
+	const receiverNumber = await resolvePlatformReceiverNumber(
 		payload.paymentMethod,
 		payload.receiverNumber,
 	);

@@ -1,8 +1,7 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 
@@ -36,7 +35,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(createSectionSchema),
 	createSectionController,
 );
@@ -47,7 +45,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(sectionSchoolParamsSchema),
 	getSectionsController,
 );
@@ -58,7 +55,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(sectionSchoolParamsSchema),
 	getActiveSectionsController,
 );
@@ -69,7 +65,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(sectionParamsSchema),
 	getSectionByIdController,
 );
@@ -80,7 +75,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(updateSectionSchema),
 	updateSectionController,
 );
@@ -91,7 +85,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(toggleSectionStatusSchema),
 	toggleSectionStatusController,
 );
@@ -102,7 +95,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(sectionParamsSchema),
 	deleteSectionController,
 );

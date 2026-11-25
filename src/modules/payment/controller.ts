@@ -9,7 +9,7 @@ export const getPlatformPaymentMethodsController = async (
 	next: NextFunction,
 ) => {
 	try {
-		const data = getPlatformPaymentMethods();
+		const data = await getPlatformPaymentMethods();
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Supported manual payment methods retrieved successfully",

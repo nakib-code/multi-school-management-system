@@ -1,5 +1,184 @@
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import { hashPassword } from "../../utils/password.js";
+
+export interface CreateStudentInput {
+	firstName: string;
+	lastName?: string | undefined;
+	dateOfBirth?: Date | undefined;
+	gender?: string | undefined;
+	phone?: string | undefined;
+	address?: string | undefined;
+	studentId?: string | undefined;
+	guardianName?: string | undefined;
+	guardianPhone?: string | undefined;
+	guardianEmail?: string | undefined;
+	guardianRelation?: string | undefined;
+	guardianOccupation?: string | undefined;
+	guardianAddress?: string | undefined;
+	guardianPassword?: string | undefined;
+}
+
+const generateStudentCode = (schoolId: number) => {
+	const rand = Math.floor(1000 + Math.random() * 9000);
+	const ts = Date.now().toString().slice(-5);
+	return `STD-${schoolId}-${ts}${rand}`;
+};
+
+export const createStudent = async (
+	schoolId: number,
+	input: CreateStudentInput,
+) => {
+	const school = await prisma.school.findUnique({
+		where: { id: schoolId },
+		select: { id: true, status: true },
+	});
+
+	if (!school) {
+		throw new AppError(404, "School not found");
+	}
+
+	const generatedCode = input.studentId?.trim() || generateStudentCode(schoolId);
+
+	return prisma.$transaction(async (tx) => {
+		// 1. Create Student WITHOUT requiring email or User login account
+		const student = await tx.student.create({
+			data: {
+				schoolId,
+				studentId: generatedCode,
+				firstName: input.firstName.trim(),
+				...(input.lastName !== undefined && {
+					lastName: input.lastName.trim(),
+				}),
+				...(input.dateOfBirth !== undefined && {
+					dateOfBirth: input.dateOfBirth,
+				}),
+				...(input.gender !== undefined && { gender: input.gender.trim() }),
+				...(input.phone !== undefined && { phone: input.phone.trim() }),
+				...(input.address !== undefined && { address: input.address.trim() }),
+				isActive: true,
+			},
+		});
+
+		let guardianSummary: {
+			guardianId: number;
+			name: string;
+			phone: string;
+			email: string;
+			isExistingGuardian: boolean;
+			defaultPassword?: string;
+		} | null = null;
+
+		// 2. Combined Guardian Onboarding by (schoolId, phone)
+		if (input.guardianPhone?.trim()) {
+			const cleanPhone = input.guardianPhone.trim();
+
+			const existingGuardian = await tx.guardian.findFirst({
+				where: {
+					schoolId,
+					user: {
+						phone: cleanPhone,
+					},
+				},
+				include: {
+					user: {
+						select: {
+							id: true,
+							name: true,
+							email: true,
+							phone: true,
+						},
+					},
+				},
+			});
+
+			if (existingGuardian) {
+				await tx.guardianStudent.upsert({
+					where: {
+						guardianId_studentId: {
+							guardianId: existingGuardian.id,
+							studentId: student.id,
+						},
+					},
+					update: {},
+					create: {
+						guardianId: existingGuardian.id,
+						studentId: student.id,
+						isPrimary: true,
+					},
+				});
+
+				guardianSummary = {
+					guardianId: existingGuardian.id,
+					name: existingGuardian.user.name,
+					phone: existingGuardian.user.phone ?? cleanPhone,
+					email: existingGuardian.user.email,
+					isExistingGuardian: true,
+				};
+			} else {
+				const digits = cleanPhone.replace(/\D/g, "");
+				const defaultPassword =
+					input.guardianPassword?.trim() ||
+					`Madrasa@${digits.slice(-4) || "1234"}`;
+				const passwordHash = await hashPassword(defaultPassword);
+				const guardianEmail =
+					input.guardianEmail?.trim().toLowerCase() ||
+					`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
+				const guardianName =
+					input.guardianName?.trim() || `Guardian of ${input.firstName.trim()}`;
+
+				const guardianUser = await tx.user.create({
+					data: {
+						name: guardianName,
+						email: guardianEmail,
+						phone: cleanPhone,
+						passwordHash,
+						role: "GUARDIAN",
+						status: "ACTIVE",
+						schoolId,
+						mustChangePassword: true,
+					},
+				});
+
+				const guardian = await tx.guardian.create({
+					data: {
+						userId: guardianUser.id,
+						schoolId,
+						relation: input.guardianRelation?.trim() || "Father",
+						...(input.guardianOccupation !== undefined && {
+							occupation: input.guardianOccupation.trim(),
+						}),
+						...(input.guardianAddress !== undefined && {
+							address: input.guardianAddress.trim(),
+						}),
+					},
+				});
+
+				await tx.guardianStudent.create({
+					data: {
+						guardianId: guardian.id,
+						studentId: student.id,
+						isPrimary: true,
+					},
+				});
+
+				guardianSummary = {
+					guardianId: guardian.id,
+					name: guardianUser.name,
+					phone: cleanPhone,
+					email: guardianUser.email,
+					isExistingGuardian: false,
+					defaultPassword,
+				};
+			}
+		}
+
+		return {
+			student,
+			guardian: guardianSummary,
+		};
+	});
+};
 
 export const getMyStudentProfile = async (userId: number, schoolId: number) => {
 	const student = await prisma.student.findFirst({
@@ -74,6 +253,12 @@ export const getAllStudents = async (
 							},
 						},
 						{
+							phone: {
+								contains: search,
+								mode: "insensitive" as const,
+							},
+						},
+						{
 							user: {
 								email: {
 									contains: search,
@@ -113,6 +298,24 @@ export const getAllStudents = async (
 						phone: true,
 						role: true,
 						status: true,
+					},
+				},
+				guardians: {
+					select: {
+						isPrimary: true,
+						guardian: {
+							select: {
+								id: true,
+								relation: true,
+								user: {
+									select: {
+										name: true,
+										phone: true,
+										email: true,
+									},
+								},
+							},
+						},
 					},
 				},
 			},
@@ -156,6 +359,25 @@ export const getStudentById = async (schoolId: number, studentId: number) => {
 					phone: true,
 					role: true,
 					status: true,
+				},
+			},
+			guardians: {
+				select: {
+					isPrimary: true,
+					guardian: {
+						select: {
+							id: true,
+							relation: true,
+							occupation: true,
+							user: {
+								select: {
+									name: true,
+									phone: true,
+									email: true,
+								},
+							},
+						},
+					},
 				},
 			},
 		},
@@ -252,14 +474,16 @@ export const deactivateStudent = async (
 			},
 		});
 
-		await tx.user.update({
-			where: {
-				id: student.userId,
-			},
-			data: {
-				status: "INACTIVE",
-			},
-		});
+		if (student.userId !== null) {
+			await tx.user.update({
+				where: {
+					id: student.userId,
+				},
+				data: {
+					status: "INACTIVE",
+				},
+			});
+		}
 
 		return updatedStudent;
 	});
@@ -293,14 +517,16 @@ export const activateStudent = async (schoolId: number, studentId: number) => {
 			},
 		});
 
-		await tx.user.update({
-			where: {
-				id: student.userId,
-			},
-			data: {
-				status: "ACTIVE",
-			},
-		});
+		if (student.userId !== null) {
+			await tx.user.update({
+				where: {
+					id: student.userId,
+				},
+				data: {
+					status: "ACTIVE",
+				},
+			});
+		}
 
 		return updatedStudent;
 	});

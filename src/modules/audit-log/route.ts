@@ -1,8 +1,7 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -23,7 +22,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SCHOOL_MANAGEMENT),
 	validateRequest(createAuditLogSchema),
 	createAuditLogController,
 );
@@ -33,7 +31,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SCHOOL_MANAGEMENT),
 	validateRequest(auditLogSchoolParamsSchema),
 	getAuditLogsController,
 );
@@ -43,7 +40,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.SCHOOL_MANAGEMENT),
 	validateRequest(auditLogParamsSchema),
 	getAuditLogByIdController,
 );

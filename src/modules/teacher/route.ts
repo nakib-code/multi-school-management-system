@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { PackageFeature, UserRole } from "../../generated/prisma/enums.js";
+import { UserRole } from "../../generated/prisma/enums.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 
@@ -23,7 +22,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	validateRequest(createTeacherSchema),
 	createTeacherController,
 );
@@ -33,7 +31,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	validateRequest(verifyTeacherEmailSchema),
 	verifyTeacherEmailController,
 );
@@ -43,7 +40,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	getTeachersController,
 );
 
@@ -52,7 +48,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	getTeacherByIdController,
 );
 
@@ -61,7 +56,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	updateTeacherController,
 );
 
@@ -70,7 +64,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_MANAGEMENT),
 	deactivateTeacherController,
 );
 

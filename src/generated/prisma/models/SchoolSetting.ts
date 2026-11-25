@@ -42,9 +42,19 @@ export type SchoolSettingMinAggregateOutputType = {
   id: number | null
   schoolId: number | null
   admissionFee: runtime.Decimal | null
+  hasGeneralSection: boolean | null
+  hasHefzSection: boolean | null
+  hasPublicWebsite: boolean | null
+  hasOnlineAdmission: boolean | null
+  hasTeacherPayroll: boolean | null
+  smsEnabled: boolean | null
   bkashNumber: string | null
+  bkashType: $Enums.MobileAccountType | null
   nagadNumber: string | null
+  nagadType: $Enums.MobileAccountType | null
   rocketNumber: string | null
+  rocketType: $Enums.MobileAccountType | null
+  feePaymentInstruction: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,9 +63,19 @@ export type SchoolSettingMaxAggregateOutputType = {
   id: number | null
   schoolId: number | null
   admissionFee: runtime.Decimal | null
+  hasGeneralSection: boolean | null
+  hasHefzSection: boolean | null
+  hasPublicWebsite: boolean | null
+  hasOnlineAdmission: boolean | null
+  hasTeacherPayroll: boolean | null
+  smsEnabled: boolean | null
   bkashNumber: string | null
+  bkashType: $Enums.MobileAccountType | null
   nagadNumber: string | null
+  nagadType: $Enums.MobileAccountType | null
   rocketNumber: string | null
+  rocketType: $Enums.MobileAccountType | null
+  feePaymentInstruction: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -64,9 +84,19 @@ export type SchoolSettingCountAggregateOutputType = {
   id: number
   schoolId: number
   admissionFee: number
+  hasGeneralSection: number
+  hasHefzSection: number
+  hasPublicWebsite: number
+  hasOnlineAdmission: number
+  hasTeacherPayroll: number
+  smsEnabled: number
   bkashNumber: number
+  bkashType: number
   nagadNumber: number
+  nagadType: number
   rocketNumber: number
+  rocketType: number
+  feePaymentInstruction: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -89,9 +119,19 @@ export type SchoolSettingMinAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  hasGeneralSection?: true
+  hasHefzSection?: true
+  hasPublicWebsite?: true
+  hasOnlineAdmission?: true
+  hasTeacherPayroll?: true
+  smsEnabled?: true
   bkashNumber?: true
+  bkashType?: true
   nagadNumber?: true
+  nagadType?: true
   rocketNumber?: true
+  rocketType?: true
+  feePaymentInstruction?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -100,9 +140,19 @@ export type SchoolSettingMaxAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  hasGeneralSection?: true
+  hasHefzSection?: true
+  hasPublicWebsite?: true
+  hasOnlineAdmission?: true
+  hasTeacherPayroll?: true
+  smsEnabled?: true
   bkashNumber?: true
+  bkashType?: true
   nagadNumber?: true
+  nagadType?: true
   rocketNumber?: true
+  rocketType?: true
+  feePaymentInstruction?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -111,9 +161,19 @@ export type SchoolSettingCountAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  hasGeneralSection?: true
+  hasHefzSection?: true
+  hasPublicWebsite?: true
+  hasOnlineAdmission?: true
+  hasTeacherPayroll?: true
+  smsEnabled?: true
   bkashNumber?: true
+  bkashType?: true
   nagadNumber?: true
+  nagadType?: true
   rocketNumber?: true
+  rocketType?: true
+  feePaymentInstruction?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -209,9 +269,19 @@ export type SchoolSettingGroupByOutputType = {
   id: number
   schoolId: number
   admissionFee: runtime.Decimal
+  hasGeneralSection: boolean
+  hasHefzSection: boolean
+  hasPublicWebsite: boolean
+  hasOnlineAdmission: boolean
+  hasTeacherPayroll: boolean
+  smsEnabled: boolean
   bkashNumber: string | null
+  bkashType: $Enums.MobileAccountType
   nagadNumber: string | null
+  nagadType: $Enums.MobileAccountType
   rocketNumber: string | null
+  rocketType: $Enums.MobileAccountType
+  feePaymentInstruction: string | null
   createdAt: Date
   updatedAt: Date
   _count: SchoolSettingCountAggregateOutputType | null
@@ -243,9 +313,19 @@ export type SchoolSettingWhereInput = {
   id?: Prisma.IntFilter<"SchoolSetting"> | number
   schoolId?: Prisma.IntFilter<"SchoolSetting"> | number
   admissionFee?: Prisma.DecimalFilter<"SchoolSetting"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasHefzSection?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasPublicWebsite?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasOnlineAdmission?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasTeacherPayroll?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  smsEnabled?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   bkashNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   nagadNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   rocketNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -255,9 +335,19 @@ export type SchoolSettingOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  hasGeneralSection?: Prisma.SortOrder
+  hasHefzSection?: Prisma.SortOrder
+  hasPublicWebsite?: Prisma.SortOrder
+  hasOnlineAdmission?: Prisma.SortOrder
+  hasTeacherPayroll?: Prisma.SortOrder
+  smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  bkashType?: Prisma.SortOrder
   nagadNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  nagadType?: Prisma.SortOrder
   rocketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  rocketType?: Prisma.SortOrder
+  feePaymentInstruction?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
@@ -270,9 +360,19 @@ export type SchoolSettingWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.SchoolSettingWhereInput[]
   NOT?: Prisma.SchoolSettingWhereInput | Prisma.SchoolSettingWhereInput[]
   admissionFee?: Prisma.DecimalFilter<"SchoolSetting"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasHefzSection?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasPublicWebsite?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasOnlineAdmission?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  hasTeacherPayroll?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  smsEnabled?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   bkashNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   nagadNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   rocketNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -282,9 +382,19 @@ export type SchoolSettingOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  hasGeneralSection?: Prisma.SortOrder
+  hasHefzSection?: Prisma.SortOrder
+  hasPublicWebsite?: Prisma.SortOrder
+  hasOnlineAdmission?: Prisma.SortOrder
+  hasTeacherPayroll?: Prisma.SortOrder
+  smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  bkashType?: Prisma.SortOrder
   nagadNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  nagadType?: Prisma.SortOrder
   rocketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  rocketType?: Prisma.SortOrder
+  feePaymentInstruction?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolSettingCountOrderByAggregateInput
@@ -301,18 +411,38 @@ export type SchoolSettingScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"SchoolSetting"> | number
   schoolId?: Prisma.IntWithAggregatesFilter<"SchoolSetting"> | number
   admissionFee?: Prisma.DecimalWithAggregatesFilter<"SchoolSetting"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
+  hasHefzSection?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
+  hasPublicWebsite?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
+  hasOnlineAdmission?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
+  hasTeacherPayroll?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
+  smsEnabled?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
   bkashNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeWithAggregatesFilter<"SchoolSetting"> | $Enums.MobileAccountType
   nagadNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeWithAggregatesFilter<"SchoolSetting"> | $Enums.MobileAccountType
   rocketNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeWithAggregatesFilter<"SchoolSetting"> | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
 }
 
 export type SchoolSettingCreateInput = {
-  admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  admissionFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: string | null
+  bkashType?: $Enums.MobileAccountType
   nagadNumber?: string | null
+  nagadType?: $Enums.MobileAccountType
   rocketNumber?: string | null
+  rocketType?: $Enums.MobileAccountType
+  feePaymentInstruction?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutSchoolSettingInput
@@ -321,19 +451,39 @@ export type SchoolSettingCreateInput = {
 export type SchoolSettingUncheckedCreateInput = {
   id?: number
   schoolId: number
-  admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  admissionFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: string | null
+  bkashType?: $Enums.MobileAccountType
   nagadNumber?: string | null
+  nagadType?: $Enums.MobileAccountType
   rocketNumber?: string | null
+  rocketType?: $Enums.MobileAccountType
+  feePaymentInstruction?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SchoolSettingUpdateInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutSchoolSettingNestedInput
@@ -343,9 +493,19 @@ export type SchoolSettingUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -353,19 +513,39 @@ export type SchoolSettingUncheckedUpdateInput = {
 export type SchoolSettingCreateManyInput = {
   id?: number
   schoolId: number
-  admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  admissionFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: string | null
+  bkashType?: $Enums.MobileAccountType
   nagadNumber?: string | null
+  nagadType?: $Enums.MobileAccountType
   rocketNumber?: string | null
+  rocketType?: $Enums.MobileAccountType
+  feePaymentInstruction?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SchoolSettingUpdateManyMutationInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,9 +554,19 @@ export type SchoolSettingUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   schoolId?: Prisma.IntFieldUpdateOperationsInput | number
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -390,9 +580,19 @@ export type SchoolSettingCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  hasGeneralSection?: Prisma.SortOrder
+  hasHefzSection?: Prisma.SortOrder
+  hasPublicWebsite?: Prisma.SortOrder
+  hasOnlineAdmission?: Prisma.SortOrder
+  hasTeacherPayroll?: Prisma.SortOrder
+  smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrder
+  bkashType?: Prisma.SortOrder
   nagadNumber?: Prisma.SortOrder
+  nagadType?: Prisma.SortOrder
   rocketNumber?: Prisma.SortOrder
+  rocketType?: Prisma.SortOrder
+  feePaymentInstruction?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -407,9 +607,19 @@ export type SchoolSettingMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  hasGeneralSection?: Prisma.SortOrder
+  hasHefzSection?: Prisma.SortOrder
+  hasPublicWebsite?: Prisma.SortOrder
+  hasOnlineAdmission?: Prisma.SortOrder
+  hasTeacherPayroll?: Prisma.SortOrder
+  smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrder
+  bkashType?: Prisma.SortOrder
   nagadNumber?: Prisma.SortOrder
+  nagadType?: Prisma.SortOrder
   rocketNumber?: Prisma.SortOrder
+  rocketType?: Prisma.SortOrder
+  feePaymentInstruction?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -418,9 +628,19 @@ export type SchoolSettingMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  hasGeneralSection?: Prisma.SortOrder
+  hasHefzSection?: Prisma.SortOrder
+  hasPublicWebsite?: Prisma.SortOrder
+  hasOnlineAdmission?: Prisma.SortOrder
+  hasTeacherPayroll?: Prisma.SortOrder
+  smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrder
+  bkashType?: Prisma.SortOrder
   nagadNumber?: Prisma.SortOrder
+  nagadType?: Prisma.SortOrder
   rocketNumber?: Prisma.SortOrder
+  rocketType?: Prisma.SortOrder
+  feePaymentInstruction?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -464,20 +684,40 @@ export type SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput = {
 }
 
 export type SchoolSettingCreateWithoutSchoolInput = {
-  admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  admissionFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: string | null
+  bkashType?: $Enums.MobileAccountType
   nagadNumber?: string | null
+  nagadType?: $Enums.MobileAccountType
   rocketNumber?: string | null
+  rocketType?: $Enums.MobileAccountType
+  feePaymentInstruction?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type SchoolSettingUncheckedCreateWithoutSchoolInput = {
   id?: number
-  admissionFee: runtime.Decimal | runtime.DecimalJsLike | number | string
+  admissionFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: string | null
+  bkashType?: $Enums.MobileAccountType
   nagadNumber?: string | null
+  nagadType?: $Enums.MobileAccountType
   rocketNumber?: string | null
+  rocketType?: $Enums.MobileAccountType
+  feePaymentInstruction?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -500,9 +740,19 @@ export type SchoolSettingUpdateToOneWithWhereWithoutSchoolInput = {
 
 export type SchoolSettingUpdateWithoutSchoolInput = {
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -510,9 +760,19 @@ export type SchoolSettingUpdateWithoutSchoolInput = {
 export type SchoolSettingUncheckedUpdateWithoutSchoolInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   admissionFee?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  hasGeneralSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bkashType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   nagadNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nagadType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
+  feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -523,9 +783,19 @@ export type SchoolSettingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: boolean
+  bkashType?: boolean
   nagadNumber?: boolean
+  nagadType?: boolean
   rocketNumber?: boolean
+  rocketType?: boolean
+  feePaymentInstruction?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -535,9 +805,19 @@ export type SchoolSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: boolean
+  bkashType?: boolean
   nagadNumber?: boolean
+  nagadType?: boolean
   rocketNumber?: boolean
+  rocketType?: boolean
+  feePaymentInstruction?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -547,9 +827,19 @@ export type SchoolSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: boolean
+  bkashType?: boolean
   nagadNumber?: boolean
+  nagadType?: boolean
   rocketNumber?: boolean
+  rocketType?: boolean
+  feePaymentInstruction?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -559,14 +849,24 @@ export type SchoolSettingSelectScalar = {
   id?: boolean
   schoolId?: boolean
   admissionFee?: boolean
+  hasGeneralSection?: boolean
+  hasHefzSection?: boolean
+  hasPublicWebsite?: boolean
+  hasOnlineAdmission?: boolean
+  hasTeacherPayroll?: boolean
+  smsEnabled?: boolean
   bkashNumber?: boolean
+  bkashType?: boolean
   nagadNumber?: boolean
+  nagadType?: boolean
   rocketNumber?: boolean
+  rocketType?: boolean
+  feePaymentInstruction?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "bkashNumber" | "nagadNumber" | "rocketNumber" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
+export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
 export type SchoolSettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
 }
@@ -586,9 +886,19 @@ export type $SchoolSettingPayload<ExtArgs extends runtime.Types.Extensions.Inter
     id: number
     schoolId: number
     admissionFee: runtime.Decimal
+    hasGeneralSection: boolean
+    hasHefzSection: boolean
+    hasPublicWebsite: boolean
+    hasOnlineAdmission: boolean
+    hasTeacherPayroll: boolean
+    smsEnabled: boolean
     bkashNumber: string | null
+    bkashType: $Enums.MobileAccountType
     nagadNumber: string | null
+    nagadType: $Enums.MobileAccountType
     rocketNumber: string | null
+    rocketType: $Enums.MobileAccountType
+    feePaymentInstruction: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["schoolSetting"]>
@@ -1018,9 +1328,19 @@ export interface SchoolSettingFieldRefs {
   readonly id: Prisma.FieldRef<"SchoolSetting", 'Int'>
   readonly schoolId: Prisma.FieldRef<"SchoolSetting", 'Int'>
   readonly admissionFee: Prisma.FieldRef<"SchoolSetting", 'Decimal'>
+  readonly hasGeneralSection: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
+  readonly hasHefzSection: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
+  readonly hasPublicWebsite: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
+  readonly hasOnlineAdmission: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
+  readonly hasTeacherPayroll: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
+  readonly smsEnabled: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
   readonly bkashNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly bkashType: Prisma.FieldRef<"SchoolSetting", 'MobileAccountType'>
   readonly nagadNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly nagadType: Prisma.FieldRef<"SchoolSetting", 'MobileAccountType'>
   readonly rocketNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly rocketType: Prisma.FieldRef<"SchoolSetting", 'MobileAccountType'>
+  readonly feePaymentInstruction: Prisma.FieldRef<"SchoolSetting", 'String'>
   readonly createdAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
 }

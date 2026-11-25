@@ -26,10 +26,6 @@ const createSubscription = async (payload: CreateSubscriptionPayload) => {
 		where: {
 			id: payload.packageId,
 		},
-
-		include: {
-			features: true,
-		},
 	});
 
 	if (!packageData) {
@@ -75,12 +71,7 @@ const createSubscription = async (payload: CreateSubscriptionPayload) => {
 					status: true,
 				},
 			},
-
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 	});
 
@@ -111,9 +102,6 @@ const selectPackageForAdmin = async (
 
 	const packageData = await prisma.package.findUnique({
 		where: { id: payload.packageId },
-		include: {
-			features: true,
-		},
 	});
 
 	if (!packageData) {
@@ -122,10 +110,6 @@ const selectPackageForAdmin = async (
 
 	if (!packageData.isActive) {
 		throw new Error("Cannot select an inactive package");
-	}
-
-	if (packageData.isCustom) {
-		throw new Error("Custom packages must be configured separately");
 	}
 
 	const activeSubscription = await prisma.schoolSubscription.findFirst({
@@ -199,11 +183,7 @@ const selectPackageForAdmin = async (
 					status: true,
 				},
 			},
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 	});
 
@@ -225,12 +205,7 @@ const getAllSubscriptions = async () => {
 					status: true,
 				},
 			},
-
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 
 		orderBy: {
@@ -258,12 +233,7 @@ const getSubscriptionById = async (id: number) => {
 					status: true,
 				},
 			},
-
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 	});
 
@@ -295,11 +265,7 @@ const getSchoolSubscriptions = async (schoolId: number) => {
 		},
 
 		include: {
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 
 		orderBy: {
@@ -340,11 +306,7 @@ const getMySubscription = async (schoolId: number) => {
 		},
 
 		include: {
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 
 		orderBy: {
@@ -411,12 +373,7 @@ const updateSubscription = async (
 					status: true,
 				},
 			},
-
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 	});
 };
@@ -457,12 +414,7 @@ const updateSubscriptionStatus = async (
 					status: true,
 				},
 			},
-
-			package: {
-				include: {
-					features: true,
-				},
-			},
+			package: true,
 		},
 	});
 };

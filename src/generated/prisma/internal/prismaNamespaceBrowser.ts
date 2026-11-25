@@ -57,8 +57,6 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
-  CustomPackageRequest: 'CustomPackageRequest',
-  CustomPackageRequestFeature: 'CustomPackageRequestFeature',
   Enrollment: 'Enrollment',
   Exam: 'Exam',
   Guardian: 'Guardian',
@@ -68,9 +66,9 @@ export const ModelName = {
   Manager: 'Manager',
   Notification: 'Notification',
   Package: 'Package',
-  PackageFeatureConfig: 'PackageFeatureConfig',
   PasswordResetToken: 'PasswordResetToken',
   PlatformAuditLog: 'PlatformAuditLog',
+  PlatformSetting: 'PlatformSetting',
   Result: 'Result',
   SalaryPayment: 'SalaryPayment',
   School: 'School',
@@ -232,35 +230,6 @@ export const SchoolClassScalarFieldEnum = {
 export type SchoolClassScalarFieldEnum = (typeof SchoolClassScalarFieldEnum)[keyof typeof SchoolClassScalarFieldEnum]
 
 
-export const CustomPackageRequestScalarFieldEnum = {
-  id: 'id',
-  schoolId: 'schoolId',
-  requestedStudentLimit: 'requestedStudentLimit',
-  requestedPrice: 'requestedPrice',
-  billingCycle: 'billingCycle',
-  description: 'description',
-  status: 'status',
-  reviewedBy: 'reviewedBy',
-  reviewedAt: 'reviewedAt',
-  reviewNote: 'reviewNote',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CustomPackageRequestScalarFieldEnum = (typeof CustomPackageRequestScalarFieldEnum)[keyof typeof CustomPackageRequestScalarFieldEnum]
-
-
-export const CustomPackageRequestFeatureScalarFieldEnum = {
-  id: 'id',
-  requestId: 'requestId',
-  feature: 'feature',
-  enabled: 'enabled',
-  createdAt: 'createdAt'
-} as const
-
-export type CustomPackageRequestFeatureScalarFieldEnum = (typeof CustomPackageRequestFeatureScalarFieldEnum)[keyof typeof CustomPackageRequestFeatureScalarFieldEnum]
-
-
 export const EnrollmentScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -401,25 +370,12 @@ export const PackageScalarFieldEnum = {
   price: 'price',
   billingCycle: 'billingCycle',
   studentLimit: 'studentLimit',
-  isCustom: 'isCustom',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type PackageScalarFieldEnum = (typeof PackageScalarFieldEnum)[keyof typeof PackageScalarFieldEnum]
-
-
-export const PackageFeatureConfigScalarFieldEnum = {
-  id: 'id',
-  packageId: 'packageId',
-  feature: 'feature',
-  enabled: 'enabled',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PackageFeatureConfigScalarFieldEnum = (typeof PackageFeatureConfigScalarFieldEnum)[keyof typeof PackageFeatureConfigScalarFieldEnum]
 
 
 export const PasswordResetTokenScalarFieldEnum = {
@@ -449,6 +405,24 @@ export const PlatformAuditLogScalarFieldEnum = {
 } as const
 
 export type PlatformAuditLogScalarFieldEnum = (typeof PlatformAuditLogScalarFieldEnum)[keyof typeof PlatformAuditLogScalarFieldEnum]
+
+
+export const PlatformSettingScalarFieldEnum = {
+  id: 'id',
+  platformName: 'platformName',
+  supportPhone: 'supportPhone',
+  bkashNumber: 'bkashNumber',
+  bkashType: 'bkashType',
+  nagadNumber: 'nagadNumber',
+  nagadType: 'nagadType',
+  rocketNumber: 'rocketNumber',
+  rocketType: 'rocketType',
+  paymentInstruction: 'paymentInstruction',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PlatformSettingScalarFieldEnum = (typeof PlatformSettingScalarFieldEnum)[keyof typeof PlatformSettingScalarFieldEnum]
 
 
 export const ResultScalarFieldEnum = {
@@ -504,6 +478,7 @@ export const SchoolScalarFieldEnum = {
   adminPasswordHash: 'adminPasswordHash',
   adminEmailVerified: 'adminEmailVerified',
   selectedPackageId: 'selectedPackageId',
+  rejectionReason: 'rejectionReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   subdomain: 'subdomain',
@@ -592,9 +567,19 @@ export const SchoolSettingScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
   admissionFee: 'admissionFee',
+  hasGeneralSection: 'hasGeneralSection',
+  hasHefzSection: 'hasHefzSection',
+  hasPublicWebsite: 'hasPublicWebsite',
+  hasOnlineAdmission: 'hasOnlineAdmission',
+  hasTeacherPayroll: 'hasTeacherPayroll',
+  smsEnabled: 'smsEnabled',
   bkashNumber: 'bkashNumber',
+  bkashType: 'bkashType',
   nagadNumber: 'nagadNumber',
+  nagadType: 'nagadType',
   rocketNumber: 'rocketNumber',
+  rocketType: 'rocketType',
+  feePaymentInstruction: 'feePaymentInstruction',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

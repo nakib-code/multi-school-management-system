@@ -17,6 +17,8 @@ model School {
   adminEmailVerified Boolean @default(false)
   selectedPackageId  Int?
 
+  rejectionReason String?
+
   selectedPackage Package? @relation("SchoolSelectedPackage", fields: [selectedPackageId], references: [id], onDelete: SetNull)
 
   subscriptions        SchoolSubscription[]
@@ -39,8 +41,6 @@ model School {
   admissions      Admission[]
   auditLogs       AuditLog[]
   users           User[]
-
-  customPackageRequests CustomPackageRequest[]
 
   admissionPayments  AdmissionPayment[]
   schoolSetting      SchoolSetting?

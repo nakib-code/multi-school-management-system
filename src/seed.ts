@@ -13,28 +13,6 @@ const adapter = new PrismaPg({ connectionString });
 
 const prisma = new PrismaClient({ adapter });
 
-/* ---------- Constants ---------- */
-const packageFeatures = [
-	"SCHOOL_MANAGEMENT",
-	"USER_MANAGEMENT",
-	"STUDENT_MANAGEMENT",
-	"TEACHER_MANAGEMENT",
-	"GUARDIAN_MANAGEMENT",
-	"ADMISSION",
-	"ATTENDANCE",
-	"CLASS_MANAGEMENT",
-	"SUBJECT_MANAGEMENT",
-	"EXAM_MANAGEMENT",
-	"RESULT_MANAGEMENT",
-	"FEES_MANAGEMENT",
-	"PAYMENT_MANAGEMENT",
-	"TEACHER_SALARY",
-	"REPORTS",
-	"NOTIFICATIONS",
-	"KINDERGARTEN_MODULE",
-	"HEFZ_MODULE",
-] as const;
-
 /* ---------- Super Admin ---------- */
 const seedSuperAdmin = async () => {
 	const email = "superadmin@school.com";
@@ -77,14 +55,13 @@ const seedPackage = async ({
 	price,
 	studentLimit,
 }: SeedPackageInput) => {
-	const packageData = await prisma.package.upsert({
+	await prisma.package.upsert({
 		where: { name },
 		update: {
 			description,
 			price,
 			billingCycle: "MONTHLY",
 			studentLimit,
-			isCustom: false,
 			isActive: true,
 		},
 		create: {
@@ -93,22 +70,8 @@ const seedPackage = async ({
 			price,
 			billingCycle: "MONTHLY",
 			studentLimit,
-			isCustom: false,
 			isActive: true,
 		},
-	});
-
-	// Replace existing feature configs
-	await prisma.packageFeatureConfig.deleteMany({
-		where: { packageId: packageData.id },
-	});
-
-	await prisma.packageFeatureConfig.createMany({
-		data: packageFeatures.map((feature) => ({
-			packageId: packageData.id,
-			feature,
-			enabled: true,
-		})),
 	});
 
 	console.log(`✅ ${name} package seeded (${studentLimit} students)`);

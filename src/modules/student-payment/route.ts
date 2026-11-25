@@ -1,8 +1,7 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -32,7 +31,6 @@ router.post(
 		UserRole.STUDENT,
 	),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.PAYMENT_MANAGEMENT),
 	validateRequest(createStudentPaymentSchema),
 	submitStudentPaymentController,
 );
@@ -47,7 +45,6 @@ router.get(
 		UserRole.STUDENT,
 	),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.PAYMENT_MANAGEMENT),
 	validateRequest(studentPaymentSchoolParamsSchema),
 	getStudentPaymentsController,
 );
@@ -62,7 +59,6 @@ router.get(
 		UserRole.STUDENT,
 	),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.PAYMENT_MANAGEMENT),
 	validateRequest(studentPaymentParamsSchema),
 	getStudentPaymentByIdController,
 );
@@ -73,7 +69,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.PAYMENT_MANAGEMENT),
 	validateRequest(studentPaymentParamsSchema),
 	verifyStudentPaymentController,
 );
@@ -84,7 +79,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.PAYMENT_MANAGEMENT),
 	validateRequest(rejectStudentPaymentSchema),
 	rejectStudentPaymentController,
 );

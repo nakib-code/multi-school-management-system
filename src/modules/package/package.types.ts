@@ -1,12 +1,4 @@
-import type {
-	BillingCycle,
-	PackageFeature,
-} from "../../generated/prisma/enums.js";
-
-export interface PackageFeatureInput {
-	feature: PackageFeature;
-	enabled: boolean;
-}
+import type { BillingCycle } from "../../generated/prisma/enums.js";
 
 export interface CreatePackagePayload {
 	name: string;
@@ -14,9 +6,7 @@ export interface CreatePackagePayload {
 	price: number;
 	billingCycle: BillingCycle;
 	studentLimit: number;
-	isCustom?: boolean | undefined;
 	isActive?: boolean | undefined;
-	features: PackageFeatureInput[];
 }
 
 export interface UpdatePackagePayload {
@@ -26,5 +16,4 @@ export interface UpdatePackagePayload {
 	billingCycle?: BillingCycle | undefined;
 	studentLimit?: number | undefined;
 	isActive?: boolean | undefined;
-	features?: PackageFeatureInput[] | undefined;
 }

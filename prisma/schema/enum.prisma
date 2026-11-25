@@ -124,7 +124,6 @@ enum AdmissionPaymentStatus {
 enum BillingCycle {
   MONTHLY
   YEARLY
-  CUSTOM
 }
 
 enum SubscriptionStatus {
@@ -134,38 +133,16 @@ enum SubscriptionStatus {
   PENDING
 }
 
-enum PackageFeature {
-  SCHOOL_MANAGEMENT
-  USER_MANAGEMENT
-  STUDENT_MANAGEMENT
-  TEACHER_MANAGEMENT
-  GUARDIAN_MANAGEMENT
-  ADMISSION
-  ATTENDANCE
-  CLASS_MANAGEMENT
-  SUBJECT_MANAGEMENT
-  EXAM_MANAGEMENT
-  RESULT_MANAGEMENT
-  FEES_MANAGEMENT
-  PAYMENT_MANAGEMENT
-  TEACHER_SALARY
-  REPORTS
-  NOTIFICATIONS
-  KINDERGARTEN_MODULE
-  HEFZ_MODULE
-}
-
-enum CustomPackageRequestStatus {
-  PENDING
-  APPROVED
-  REJECTED
-  CANCELLED
-}
-
 enum SubscriptionPaymentMethod {
   BKASH
   NAGAD
   ROCKET
+}
+
+enum MobileAccountType {
+  PERSONAL
+  MERCHANT
+  AGENT
 }
 
 enum SubscriptionPaymentStatus {

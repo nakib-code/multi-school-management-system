@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { requireSchoolFeature } from "../../middleware/schoolFeature.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { getActiveClasses } from "../class/service.js";
@@ -73,12 +74,36 @@ router.get("/schools/:schoolId/sections/active", async (req, res, next) => {
 // School-scoped public data
 // ============================================
 
-router.get("/schools/:schoolId/page/:slug", PublicController.getPageContent);
-router.get("/schools/:schoolId/notices", PublicController.getNotices);
-router.get("/schools/:schoolId/notices/:id", PublicController.getNoticeById);
-router.get("/schools/:schoolId/gallery", PublicController.getGallery);
-router.get("/schools/:schoolId/stats", PublicController.getStats);
+router.get(
+	"/schools/:schoolId/page/:slug",
+	requireSchoolFeature("hasPublicWebsite"),
+	PublicController.getPageContent,
+);
+router.get(
+	"/schools/:schoolId/notices",
+	requireSchoolFeature("hasPublicWebsite"),
+	PublicController.getNotices,
+);
+router.get(
+	"/schools/:schoolId/notices/:id",
+	requireSchoolFeature("hasPublicWebsite"),
+	PublicController.getNoticeById,
+);
+router.get(
+	"/schools/:schoolId/gallery",
+	requireSchoolFeature("hasPublicWebsite"),
+	PublicController.getGallery,
+);
+router.get(
+	"/schools/:schoolId/stats",
+	requireSchoolFeature("hasPublicWebsite"),
+	PublicController.getStats,
+);
 
-router.post("/schools/:schoolId/contact", PublicController.submitContact);
+router.post(
+	"/schools/:schoolId/contact",
+	requireSchoolFeature("hasPublicWebsite"),
+	PublicController.submitContact,
+);
 
 export const publicRoutes = router;

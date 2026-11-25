@@ -1,7 +1,6 @@
 import { Router } from "express";
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -24,7 +23,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(createRoutineSchema),
 	createRoutineController,
 );
@@ -40,7 +38,6 @@ router.get(
 		UserRole.GUARDIAN,
 	),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(routineSchoolParamsSchema),
 	getRoutinesController,
 );
@@ -50,7 +47,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(updateRoutineSchema),
 	updateRoutineController,
 );
@@ -60,7 +56,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.CLASS_MANAGEMENT),
 	validateRequest(routineIdParamsSchema),
 	deleteRoutineController,
 );

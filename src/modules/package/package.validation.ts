@@ -1,32 +1,6 @@
 import { z } from "zod";
 
-const packageFeatures = [
-	"SCHOOL_MANAGEMENT",
-	"USER_MANAGEMENT",
-	"STUDENT_MANAGEMENT",
-	"TEACHER_MANAGEMENT",
-	"GUARDIAN_MANAGEMENT",
-	"ADMISSION",
-	"ATTENDANCE",
-	"CLASS_MANAGEMENT",
-	"SUBJECT_MANAGEMENT",
-	"EXAM_MANAGEMENT",
-	"RESULT_MANAGEMENT",
-	"FEES_MANAGEMENT",
-	"PAYMENT_MANAGEMENT",
-	"TEACHER_SALARY",
-	"REPORTS",
-	"NOTIFICATIONS",
-	"KINDERGARTEN_MODULE",
-	"HEFZ_MODULE",
-] as const;
-
-const billingCycles = ["MONTHLY", "YEARLY", "CUSTOM"] as const;
-
-const featureSchema = z.object({
-	feature: z.enum(packageFeatures),
-	enabled: z.boolean().default(true),
-});
+const billingCycles = ["MONTHLY", "YEARLY"] as const;
 
 export const createPackageSchema = z.object({
 	name: z
@@ -48,11 +22,7 @@ export const createPackageSchema = z.object({
 		.int("Student limit must be an integer")
 		.positive("Student limit must be greater than 0"),
 
-	isCustom: z.boolean().default(false),
-
 	isActive: z.boolean().default(true),
-
-	features: z.array(featureSchema).min(1, "At least one feature is required"),
 });
 
 export const updatePackageSchema = z.object({
@@ -67,8 +37,6 @@ export const updatePackageSchema = z.object({
 	studentLimit: z.number().int().positive().optional(),
 
 	isActive: z.boolean().optional(),
-
-	features: z.array(featureSchema).min(1).optional(),
 });
 
 export const packageIdSchema = z.object({

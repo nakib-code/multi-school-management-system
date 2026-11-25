@@ -17,8 +17,8 @@ import { classRoutes } from "./modules/class/route.js";
 import { classRoutineRoutes } from "./modules/class-routine/route.js";
 import { notificationRoutes } from "./modules/notification/route.js";
 import { platformAuditLogRoutes } from "./modules/platform-audit-log/route.js";
+import { platformSettingRoutes } from "./modules/platformSetting/route.js";
 import { uploadRoutes } from "./modules/upload/route.js";
-import { customPackageRequestRouter } from "./modules/customPackageRequest/customPackageRequest.route.js";
 import { dashboardRoutes } from "./modules/dashboard/route.js";
 import { enrollmentRoutes } from "./modules/enrollment/route.js";
 import { examRoutes } from "./modules/exam/route.js";
@@ -90,7 +90,6 @@ app.use("/api/v1/dashboard", dashboardRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/packages", packageRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
-app.use("/api/v1/custom-package-requests", customPackageRequestRouter);
 app.use("/api/v1/reports", reportRoutes);
 app.use("/api/v1", classRoutes);
 app.use("/api/v1", sectionRoutes);
@@ -112,6 +111,7 @@ app.use("/api/v1/notifications", notificationRoutes);
 app.use("/api/v1", classRoutineRoutes);
 app.use("/api/v1/uploads", uploadRoutes);
 app.use("/api/v1/platform-audit-logs", platformAuditLogRoutes);
+app.use("/api/v1/platform-settings", platformSettingRoutes);
 app.use("/api/v1/public", publicRoutes);
 
 // 404 handler

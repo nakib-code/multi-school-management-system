@@ -8,10 +8,8 @@ model Package {
 
   studentLimit Int
 
-  isCustom Boolean @default(false)
   isActive Boolean @default(true)
 
-  features        PackageFeatureConfig[]
   subscriptions   SchoolSubscription[]
   selectedSchools School[]               @relation("SchoolSelectedPackage")
 
@@ -19,6 +17,5 @@ model Package {
   updatedAt DateTime @updatedAt
 
   @@index([isActive])
-  @@index([isCustom])
   @@map("packages")
 }

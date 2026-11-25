@@ -1,8 +1,7 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -30,7 +29,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(createGuardianSchema),
 	createGuardianController,
 );
@@ -40,7 +38,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(guardianSchoolParamsSchema),
 	getGuardiansController,
 );
@@ -50,7 +47,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(guardianParamsSchema),
 	getGuardianByIdController,
 );
@@ -60,7 +56,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(updateGuardianSchema),
 	updateGuardianController,
 );
@@ -70,7 +65,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(linkGuardianStudentSchema),
 	linkStudentToGuardianController,
 );
@@ -80,7 +74,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(guardianStudentParamsSchema),
 	unlinkStudentFromGuardianController,
 );
@@ -90,7 +83,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.GUARDIAN_MANAGEMENT),
 	validateRequest(guardianParamsSchema),
 	deleteGuardianController,
 );

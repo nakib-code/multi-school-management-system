@@ -24,19 +24,7 @@ const createPackage = async (payload: CreatePackagePayload) => {
 			price: payload.price,
 			billingCycle: payload.billingCycle,
 			studentLimit: payload.studentLimit,
-			isCustom: payload.isCustom ?? false,
 			isActive: payload.isActive ?? true,
-
-			features: {
-				create: payload.features.map((item) => ({
-					feature: item.feature,
-					enabled: item.enabled,
-				})),
-			},
-		},
-
-		include: {
-			features: true,
 		},
 	});
 
@@ -45,9 +33,6 @@ const createPackage = async (payload: CreatePackagePayload) => {
 
 const getAllPackages = async () => {
 	return prisma.package.findMany({
-		include: {
-			features: true,
-		},
 		orderBy: {
 			createdAt: "desc",
 		},
@@ -58,9 +43,6 @@ const getPackageById = async (id: number) => {
 	const packageData = await prisma.package.findUnique({
 		where: {
 			id,
-		},
-		include: {
-			features: true,
 		},
 	});
 
@@ -94,62 +76,31 @@ const updatePackage = async (id: number, payload: UpdatePackagePayload) => {
 		}
 	}
 
-	const updatedPackage = await prisma.$transaction(async (tx) => {
-		if (payload.features) {
-			await tx.packageFeatureConfig.deleteMany({
-				where: {
-					packageId: id,
-				},
-			});
-		}
-
-		return tx.package.update({
-			where: {
-				id,
-			},
-
-			data: {
-				...(payload.name !== undefined && {
-					name: payload.name,
-				}),
-
-				...(payload.description !== undefined && {
-					description: payload.description,
-				}),
-
-				...(payload.price !== undefined && {
-					price: payload.price,
-				}),
-
-				...(payload.billingCycle !== undefined && {
-					billingCycle: payload.billingCycle,
-				}),
-
-				...(payload.studentLimit !== undefined && {
-					studentLimit: payload.studentLimit,
-				}),
-
-				...(payload.isActive !== undefined && {
-					isActive: payload.isActive,
-				}),
-
-				...(payload.features && {
-					features: {
-						create: payload.features.map((item) => ({
-							feature: item.feature,
-							enabled: item.enabled,
-						})),
-					},
-				}),
-			},
-
-			include: {
-				features: true,
-			},
-		});
+	return prisma.package.update({
+		where: {
+			id,
+		},
+		data: {
+			...(payload.name !== undefined && {
+				name: payload.name,
+			}),
+			...(payload.description !== undefined && {
+				description: payload.description,
+			}),
+			...(payload.price !== undefined && {
+				price: payload.price,
+			}),
+			...(payload.billingCycle !== undefined && {
+				billingCycle: payload.billingCycle,
+			}),
+			...(payload.studentLimit !== undefined && {
+				studentLimit: payload.studentLimit,
+			}),
+			...(payload.isActive !== undefined && {
+				isActive: payload.isActive,
+			}),
+		},
 	});
-
-	return updatedPackage;
 };
 
 const updatePackageStatus = async (id: number, isActive: boolean) => {
@@ -170,9 +121,6 @@ const updatePackageStatus = async (id: number, isActive: boolean) => {
 		data: {
 			isActive,
 		},
-		include: {
-			features: true,
-		},
 	});
 };
 
@@ -188,26 +136,11 @@ const getPublicPackages = async () => {
 			price: true,
 			billingCycle: true,
 			studentLimit: true,
-			isCustom: true,
 			isActive: true,
-			features: {
-				where: {
-					enabled: true,
-				},
-				select: {
-					feature: true,
-					enabled: true,
-				},
-			},
 		},
-		orderBy: [
-			{
-				isCustom: "asc",
-			},
-			{
-				studentLimit: "asc",
-			},
-		],
+		orderBy: {
+			studentLimit: "asc",
+		},
 	});
 };
 

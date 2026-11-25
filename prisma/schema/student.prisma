@@ -1,6 +1,6 @@
 model Student {
   id        Int    @id @default(autoincrement())
-  userId    Int    @unique
+  userId    Int?   @unique
   schoolId  Int
   studentId String @unique
 
@@ -14,7 +14,7 @@ model Student {
 
   isActive Boolean @default(true)
 
-  user User @relation(fields: [userId], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   guardians       GuardianStudent[]
   enrollments     Enrollment[]

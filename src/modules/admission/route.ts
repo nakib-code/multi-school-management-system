@@ -5,6 +5,7 @@ import { UserRole } from "../../generated/prisma/enums.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
 
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
+import { requireSchoolFeature } from "../../middleware/schoolFeature.js";
 
 import { validateRequest } from "../../middleware/validateRequest.js";
 
@@ -37,6 +38,7 @@ const router = Router();
 
 router.post(
 	"/schools/:schoolId/admissions",
+	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(createAdmissionSchema),
 	createAdmissionController,
 );
@@ -57,6 +59,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(getAdmissionsSchema),
 	getAdmissionsController,
 );
@@ -67,6 +70,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
 	getAdmissionByIdController,
 );
 
@@ -76,6 +80,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
 	approveAdmissionController,
 );
 
@@ -85,6 +90,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(rejectAdmissionSchema),
 	rejectAdmissionController,
 );
@@ -98,6 +104,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(confirmCashPaymentSchema),
 	confirmCashPaymentController,
 );

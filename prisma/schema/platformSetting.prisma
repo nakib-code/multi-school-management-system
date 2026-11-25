@@ -1,0 +1,18 @@
+model PlatformSetting {
+  id Int @id @default(autoincrement())
+
+  platformName       String            @default("MadrasaOS")
+  supportPhone       String?
+  bkashNumber        String?
+  bkashType          MobileAccountType @default(PERSONAL)
+  nagadNumber        String?
+  nagadType          MobileAccountType @default(PERSONAL)
+  rocketNumber       String?
+  rocketType         MobileAccountType @default(PERSONAL)
+  paymentInstruction String?           @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("platform_settings")
+}

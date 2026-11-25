@@ -1,8 +1,7 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -26,7 +25,6 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.USER_MANAGEMENT),
 	validateRequest(createManagerSchema),
 	createManagerController,
 );
@@ -36,7 +34,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.USER_MANAGEMENT),
 	validateRequest(managerSchoolParamsSchema),
 	getManagersController,
 );
@@ -46,7 +43,6 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.USER_MANAGEMENT),
 	validateRequest(managerParamsSchema),
 	getManagerByIdController,
 );
@@ -56,7 +52,6 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.USER_MANAGEMENT),
 	validateRequest(updateManagerSchema),
 	updateManagerController,
 );
@@ -66,7 +61,6 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.USER_MANAGEMENT),
 	validateRequest(managerParamsSchema),
 	deleteManagerController,
 );

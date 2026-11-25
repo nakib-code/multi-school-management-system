@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
+import { requireSchoolFeature } from "../../middleware/schoolFeature.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
 	createSalaryPaymentController,
@@ -25,7 +25,7 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_SALARY),
+	requireSchoolFeature("hasTeacherPayroll"),
 	validateRequest(createSalaryPaymentSchema),
 	createSalaryPaymentController,
 );
@@ -35,7 +35,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_SALARY),
+	requireSchoolFeature("hasTeacherPayroll"),
 	validateRequest(salaryPaymentSchoolParamsSchema),
 	getSalaryPaymentsController,
 );
@@ -45,7 +45,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_SALARY),
+	requireSchoolFeature("hasTeacherPayroll"),
 	validateRequest(salaryPaymentParamsSchema),
 	getSalaryPaymentByIdController,
 );
@@ -55,7 +55,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.TEACHER_SALARY),
+	requireSchoolFeature("hasTeacherPayroll"),
 	validateRequest(updateSalaryPaymentSchema),
 	updateSalaryPaymentController,
 );

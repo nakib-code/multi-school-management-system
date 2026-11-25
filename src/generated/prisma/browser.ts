@@ -48,16 +48,6 @@ export type ClassRoutine = Prisma.ClassRoutineModel
  */
 export type SchoolClass = Prisma.SchoolClassModel
 /**
- * Model CustomPackageRequest
- * 
- */
-export type CustomPackageRequest = Prisma.CustomPackageRequestModel
-/**
- * Model CustomPackageRequestFeature
- * 
- */
-export type CustomPackageRequestFeature = Prisma.CustomPackageRequestFeatureModel
-/**
  * Model Enrollment
  * 
  */
@@ -103,11 +93,6 @@ export type Notification = Prisma.NotificationModel
  */
 export type Package = Prisma.PackageModel
 /**
- * Model PackageFeatureConfig
- * 
- */
-export type PackageFeatureConfig = Prisma.PackageFeatureConfigModel
-/**
  * Model PasswordResetToken
  * 
  */
@@ -117,6 +102,11 @@ export type PasswordResetToken = Prisma.PasswordResetTokenModel
  * 
  */
 export type PlatformAuditLog = Prisma.PlatformAuditLogModel
+/**
+ * Model PlatformSetting
+ * 
+ */
+export type PlatformSetting = Prisma.PlatformSettingModel
 /**
  * Model Result
  * 

@@ -3,13 +3,26 @@ model SchoolSetting {
 
   schoolId Int @unique
 
-  admissionFee Decimal @db.Decimal(10, 2)
+  admissionFee Decimal @default(0) @db.Decimal(10, 2)
 
-  bkashNumber  String?
-  nagadNumber  String?
-  rocketNumber String?
+  // Per-School Feature Flags (Controlled by Super Admin)
+  hasGeneralSection  Boolean @default(true)
+  hasHefzSection     Boolean @default(true)
+  hasPublicWebsite   Boolean @default(false)
+  hasOnlineAdmission Boolean @default(false)
+  hasTeacherPayroll  Boolean @default(false)
+  smsEnabled         Boolean @default(false)
 
-  school School @relation(fields: [schoolId], references: [id])
+  // School-Level Manual Mobile Banking Settings (Editable by School Admin / Manager)
+  bkashNumber           String?
+  bkashType             MobileAccountType @default(PERSONAL)
+  nagadNumber           String?
+  nagadType             MobileAccountType @default(PERSONAL)
+  rocketNumber          String?
+  rocketType            MobileAccountType @default(PERSONAL)
+  feePaymentInstruction String?           @db.Text
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

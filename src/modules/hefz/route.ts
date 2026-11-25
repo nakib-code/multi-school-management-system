@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { PackageFeature, UserRole } from "../../generated/prisma/client.js";
+import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
-import { requirePackageFeature } from "../../middleware/packageFeature.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
+import { requireSchoolFeature } from "../../middleware/schoolFeature.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
 	createHefzEnrollmentController,
@@ -42,7 +42,7 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(createHefzEnrollmentSchema),
 	createHefzEnrollmentController,
 );
@@ -52,7 +52,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzEnrollmentQuerySchema),
 	getHefzEnrollmentsController,
 );
@@ -62,7 +62,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzIdParamsSchema),
 	getHefzEnrollmentByIdController,
 );
@@ -72,7 +72,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(updateHefzEnrollmentSchema),
 	updateHefzEnrollmentController,
 );
@@ -82,7 +82,7 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzIdParamsSchema),
 	deleteHefzEnrollmentController,
 );
@@ -96,7 +96,7 @@ router.post(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(createHefzDailyLogSchema),
 	upsertHefzDailyLogController,
 );
@@ -106,7 +106,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzDailyLogQuerySchema),
 	getHefzDailyLogsController,
 );
@@ -116,7 +116,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzIdParamsSchema),
 	getHefzDailyLogByIdController,
 );
@@ -126,7 +126,7 @@ router.patch(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(updateHefzDailyLogSchema),
 	updateHefzDailyLogController,
 );
@@ -136,7 +136,7 @@ router.delete(
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzIdParamsSchema),
 	deleteHefzDailyLogController,
 );
@@ -150,7 +150,7 @@ router.get(
 	authenticate,
 	authorize(UserRole.GUARDIAN),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzGuardianProgressSchema),
 	getGuardianChildrenHefzProgressController,
 );
@@ -166,7 +166,7 @@ router.get(
 		UserRole.STUDENT,
 	),
 	requireSchoolAccess,
-	requirePackageFeature(PackageFeature.HEFZ_MODULE),
+	requireSchoolFeature("hasHefzSection"),
 	validateRequest(hefzStudentProgressSchema),
 	getStudentHefzProgressController,
 );

@@ -6,12 +6,29 @@ import sendResponse from "../../utils/sendResponse.js";
 
 import {
 	activateStudent,
+	createStudent,
 	deactivateStudent,
 	getAllStudents,
 	getMyStudentProfile,
 	getStudentById,
 	updateStudent,
 } from "./service.js";
+
+export const createStudentController = async (req: Request, res: Response) => {
+	const schoolId = Number(req.params.schoolId);
+
+	if (!schoolId || Number.isNaN(schoolId)) {
+		throw new AppError(400, "Invalid school ID");
+	}
+
+	const result = await createStudent(schoolId, req.body);
+
+	return sendResponse(res, {
+		statusCode: 201,
+		message: "Student created successfully",
+		data: result,
+	});
+};
 
 export const getMyStudentProfileController = async (
 	req: AuthRequest,
