@@ -48,9 +48,25 @@ import { userRoutes } from "./modules/user/route.js";
 const app = express();
 
 // Global middleware
+const allowedOrigins = (env.frontend_url ?? "")
+	.split(",")
+	.map((o) => o.trim().replace(/\/$/, ""))
+	.filter(Boolean);
+
 app.use(
 	cors({
-		origin: process.env.backend_url,
+		origin: (origin, callback) => {
+			if (!origin) return callback(null, true);
+			const normalized = origin.replace(/\/$/, "");
+			if (
+				allowedOrigins.includes(normalized) ||
+				normalized === "http://localhost:3000" ||
+				normalized.endsWith(".vercel.app")
+			) {
+				return callback(null, true);
+			}
+			return callback(null, false);
+		},
 		credentials: true,
 	}),
 );

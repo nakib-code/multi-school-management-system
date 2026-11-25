@@ -7,14 +7,20 @@ const CACHE_TTL = 300; // 5 মিনিট
 export const resolveSchoolService = async (identifier: string) => {
 	const cacheKey = `school:resolve:${identifier}`;
 
-	const cached = await redisClient.get(cacheKey);
-	if (cached) {
-		try {
-			return JSON.parse(cached);
-		} catch {
-			// corrupt cache — ignore and refetch
-			await redisClient.del(cacheKey);
+	try {
+		if (redisClient.isOpen) {
+			const cached = await redisClient.get(cacheKey);
+			if (cached) {
+				try {
+					return JSON.parse(cached);
+				} catch {
+					// corrupt cache — ignore and refetch
+					await redisClient.del(cacheKey);
+				}
+			}
 		}
+	} catch (error) {
+		console.error("[resolveSchoolService] Redis read error:", error);
 	}
 
 	const school = await prisma.school.findFirst({
@@ -40,12 +46,17 @@ export const resolveSchoolService = async (identifier: string) => {
 			facebookUrl: true,
 			youtubeUrl: true,
 			mapEmbedUrl: true,
-			schoolType: true,
 		},
 	});
 
 	if (school) {
-		await redisClient.setEx(cacheKey, CACHE_TTL, JSON.stringify(school));
+		try {
+			if (redisClient.isOpen) {
+				await redisClient.setEx(cacheKey, CACHE_TTL, JSON.stringify(school));
+			}
+		} catch (error) {
+			console.error("[resolveSchoolService] Redis write error:", error);
+		}
 	}
 
 	return school;
