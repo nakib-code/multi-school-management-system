@@ -1,19 +1,10 @@
 {
-	"version": 2,
-
-	"builds": [
+	"$schema": "https://openapi.vercel.sh/vercel.json",
+	"buildCommand": "npx prisma generate && npm run build",
+	"rewrites": [
 		{
-			"src": "dist/server.js",
-
-			"use": "@vercel/node"
-		}
-	],
-
-	"routes": [
-		{
-			"src": "/(.*)",
-
-			"dest": "dist/server.js"
+			"source": "/(.*)",
+			"destination": "/api"
 		}
 	]
 }

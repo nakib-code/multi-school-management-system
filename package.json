@@ -7,7 +7,7 @@
 		"dev": "tsx watch src/server.ts",
 		"seed": "tsx src/seed.ts",
 		"build": "tsup",
-		"start": "node dist/src/server.js",
+		"start": "node dist/server.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"format:check": "npx @biomejs/biome format ./src",
 		"format:fix": "npx @biomejs/biome format ./src --write",
@@ -21,6 +21,9 @@
 	"author": "",
 	"license": "ISC",
 	"type": "module",
+	"engines": {
+		"node": ">=20.0.0"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.13",
 		"@types/bcrypt": "^6.0.0",

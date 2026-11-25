@@ -5,8 +5,8 @@ import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import type { UploadCategory } from "./validation.js";
 
-const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5 MB
-const MAX_DOC_BYTES = 10 * 1024 * 1024; // 10 MB
+const MAX_IMAGE_BYTES = 3 * 1024 * 1024; // 3 MB (fits Vercel 4.5 MB base64 payload limit)
+const MAX_DOC_BYTES = 3 * 1024 * 1024; // 3 MB (fits Vercel 4.5 MB base64 payload limit)
 
 const SCHOOL_ADMIN_ONLY_CATEGORIES = new Set<UploadCategory>([
 	"SCHOOL_LOGO",
@@ -116,10 +116,7 @@ export const uploadFile = async (input: {
 
 	const maxBytes = isPdf ? MAX_DOC_BYTES : MAX_IMAGE_BYTES;
 	if (buffer.length > maxBytes) {
-		throw new AppError(
-			400,
-			`File size exceeds limit (${isPdf ? "10MB" : "5MB"})`,
-		);
+		throw new AppError(400, "File size exceeds limit (3MB)");
 	}
 
 	const { cloudName, apiKey, apiSecret } = assertCloudinaryConfigured();

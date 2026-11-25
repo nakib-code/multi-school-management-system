@@ -46,12 +46,17 @@ import { teacherSalaryRoutes } from "./modules/teacher-salary/route.js";
 import { userRoutes } from "./modules/user/route.js";
 
 const app = express();
+app.set("trust proxy", 1);
 
 // Global middleware
 const allowedOrigins = (env.frontend_url ?? "")
 	.split(",")
 	.map((o) => o.trim().replace(/\/$/, ""))
 	.filter(Boolean);
+
+const isProduction = env.node_env === "production";
+const allowedPreviewPattern =
+	/^https:\/\/school-management-system-frontend(-[a-z0-9-]+)?\.vercel\.app$/;
 
 app.use(
 	cors({
@@ -60,8 +65,8 @@ app.use(
 			const normalized = origin.replace(/\/$/, "");
 			if (
 				allowedOrigins.includes(normalized) ||
-				normalized === "http://localhost:3000" ||
-				normalized.endsWith(".vercel.app")
+				(!isProduction && normalized === "http://localhost:3000") ||
+				allowedPreviewPattern.test(normalized)
 			) {
 				return callback(null, true);
 			}
@@ -71,8 +76,8 @@ app.use(
 	}),
 );
 
-app.use(express.json({ limit: "15mb" }));
-app.use(express.urlencoded({ extended: true, limit: "15mb" }));
+app.use(express.json({ limit: "4.5mb" }));
+app.use(express.urlencoded({ extended: true, limit: "4.5mb" }));
 app.use(cookieParser());
 
 // Root
@@ -83,7 +88,9 @@ app.get("/", (_req, res) => {
 	});
 });
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+if (!isProduction) {
+	app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+}
 
 // Health check
 app.get("/api/v1/health", (_req, res) => {

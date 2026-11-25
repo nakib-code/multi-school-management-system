@@ -27,12 +27,21 @@ import {
 
 const router = Router();
 
+const isProduction = env.node_env === "production";
+
 const cookieOptions = {
 	httpOnly: true,
-	secure: false,
-	sameSite: "lax" as const,
+	secure: isProduction,
+	sameSite: isProduction ? ("none" as const) : ("lax" as const),
 	maxAge: 7 * 24 * 60 * 60 * 1000,
 };
+
+const loginLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 15,
+	keyPrefix: "login",
+	message: "Too many login attempts. Please try again in 15 minutes.",
+});
 
 const passwordResetLimiter = createRateLimiter({
 	windowMs: 15 * 60 * 1000,
@@ -41,7 +50,12 @@ const passwordResetLimiter = createRateLimiter({
 	message: "Too many password recovery attempts. Please try again in 15 minutes.",
 });
 
-router.post("/login", validateRequest(loginSchema), loginController);
+router.post(
+	"/login",
+	loginLimiter,
+	validateRequest(loginSchema),
+	loginController,
+);
 router.post(
 	"/forgot-password",
 	passwordResetLimiter,

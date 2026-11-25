@@ -54,10 +54,10 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
 		}),
 	]);
 
-	const frontendBase = (env.frontend_url || "http://localhost:3000").replace(
-		/\/$/,
-		"",
-	);
+	const frontendBase = (
+		(env.frontend_url || "http://localhost:3000").split(",")[0]?.trim() ||
+		"http://localhost:3000"
+	).replace(/\/$/, "");
 	const resetUrl = `${frontendBase}/auth/reset-password?token=${rawToken}`;
 
 	try {
