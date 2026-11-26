@@ -30,7 +30,7 @@ export const createAttendanceController = async (
 	try {
 		if (!req.user) throw new AppError(401, "Authentication required");
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
-		const result = await createAttendance(schoolId, req.user.userId, req.body);
+		const result = await createAttendance(schoolId, req.user, req.body);
 		return sendResponse(res, {
 			statusCode: 201,
 			message: "Attendance recorded successfully",
@@ -49,11 +49,7 @@ export const bulkMarkAttendanceController = async (
 	try {
 		if (!req.user) throw new AppError(401, "Authentication required");
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
-		const result = await bulkMarkAttendance(
-			schoolId,
-			req.user.userId,
-			req.body,
-		);
+		const result = await bulkMarkAttendance(schoolId, req.user, req.body);
 		return sendResponse(res, {
 			statusCode: 201,
 			message: "Bulk attendance recorded successfully",
@@ -128,12 +124,7 @@ export const updateAttendanceController = async (
 		if (!req.user) throw new AppError(401, "Authentication required");
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "attendance ID");
-		const result = await updateAttendance(
-			schoolId,
-			id,
-			req.user.userId,
-			req.body,
-		);
+		const result = await updateAttendance(schoolId, id, req.user, req.body);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Attendance record updated successfully",

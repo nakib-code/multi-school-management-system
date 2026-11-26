@@ -69,11 +69,20 @@ export const getAllStudentsController = async (req: Request, res: Response) => {
 	});
 };
 
-export const getStudentByIdController = async (req: Request, res: Response) => {
+export const getStudentByIdController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
 	const schoolId = Number(req.params.schoolId);
 	const studentId = Number(req.params.id);
 
-	const result = await getStudentById(schoolId, studentId);
+	const result = await getStudentById(
+		schoolId,
+		studentId,
+		req.user
+			? { userId: req.user.userId, role: req.user.role }
+			: undefined,
+	);
 
 	sendResponse(res, {
 		statusCode: 200,
@@ -82,11 +91,21 @@ export const getStudentByIdController = async (req: Request, res: Response) => {
 	});
 };
 
-export const updateStudentController = async (req: Request, res: Response) => {
+export const updateStudentController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
 	const schoolId = Number(req.params.schoolId);
 	const studentId = Number(req.params.id);
 
-	const result = await updateStudent(schoolId, studentId, req.body);
+	const result = await updateStudent(
+		schoolId,
+		studentId,
+		req.body,
+		req.user
+			? { userId: req.user.userId, role: req.user.role }
+			: undefined,
+	);
 
 	sendResponse(res, {
 		statusCode: 200,

@@ -45,6 +45,7 @@ export type GuardianMinAggregateOutputType = {
   relation: string | null
   occupation: string | null
   address: string | null
+  nid: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +57,7 @@ export type GuardianMaxAggregateOutputType = {
   relation: string | null
   occupation: string | null
   address: string | null
+  nid: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,6 +69,7 @@ export type GuardianCountAggregateOutputType = {
   relation: number
   occupation: number
   address: number
+  nid: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +95,7 @@ export type GuardianMinAggregateInputType = {
   relation?: true
   occupation?: true
   address?: true
+  nid?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,6 +107,7 @@ export type GuardianMaxAggregateInputType = {
   relation?: true
   occupation?: true
   address?: true
+  nid?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -114,6 +119,7 @@ export type GuardianCountAggregateInputType = {
   relation?: true
   occupation?: true
   address?: true
+  nid?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -212,6 +218,7 @@ export type GuardianGroupByOutputType = {
   relation: string | null
   occupation: string | null
   address: string | null
+  nid: string | null
   createdAt: Date
   updatedAt: Date
   _count: GuardianCountAggregateOutputType | null
@@ -246,6 +253,7 @@ export type GuardianWhereInput = {
   relation?: Prisma.StringNullableFilter<"Guardian"> | string | null
   occupation?: Prisma.StringNullableFilter<"Guardian"> | string | null
   address?: Prisma.StringNullableFilter<"Guardian"> | string | null
+  nid?: Prisma.StringNullableFilter<"Guardian"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Guardian"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Guardian"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -260,6 +268,7 @@ export type GuardianOrderByWithRelationInput = {
   relation?: Prisma.SortOrderInput | Prisma.SortOrder
   occupation?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  nid?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -277,6 +286,7 @@ export type GuardianWhereUniqueInput = Prisma.AtLeast<{
   relation?: Prisma.StringNullableFilter<"Guardian"> | string | null
   occupation?: Prisma.StringNullableFilter<"Guardian"> | string | null
   address?: Prisma.StringNullableFilter<"Guardian"> | string | null
+  nid?: Prisma.StringNullableFilter<"Guardian"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Guardian"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Guardian"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -291,6 +301,7 @@ export type GuardianOrderByWithAggregationInput = {
   relation?: Prisma.SortOrderInput | Prisma.SortOrder
   occupation?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  nid?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GuardianCountOrderByAggregateInput
@@ -310,6 +321,7 @@ export type GuardianScalarWhereWithAggregatesInput = {
   relation?: Prisma.StringNullableWithAggregatesFilter<"Guardian"> | string | null
   occupation?: Prisma.StringNullableWithAggregatesFilter<"Guardian"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Guardian"> | string | null
+  nid?: Prisma.StringNullableWithAggregatesFilter<"Guardian"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Guardian"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Guardian"> | Date | string
 }
@@ -318,6 +330,7 @@ export type GuardianCreateInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutGuardianInput
@@ -332,6 +345,7 @@ export type GuardianUncheckedCreateInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   students?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutGuardianInput
@@ -341,6 +355,7 @@ export type GuardianUpdateInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutGuardianNestedInput
@@ -355,6 +370,7 @@ export type GuardianUncheckedUpdateInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   students?: Prisma.GuardianStudentUncheckedUpdateManyWithoutGuardianNestedInput
@@ -367,6 +383,7 @@ export type GuardianCreateManyInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -375,6 +392,7 @@ export type GuardianUpdateManyMutationInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -386,6 +404,7 @@ export type GuardianUncheckedUpdateManyInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -397,6 +416,7 @@ export type GuardianCountOrderByAggregateInput = {
   relation?: Prisma.SortOrder
   occupation?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  nid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -414,6 +434,7 @@ export type GuardianMaxOrderByAggregateInput = {
   relation?: Prisma.SortOrder
   occupation?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  nid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -425,6 +446,7 @@ export type GuardianMinOrderByAggregateInput = {
   relation?: Prisma.SortOrder
   occupation?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  nid?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -547,6 +569,7 @@ export type GuardianCreateWithoutStudentsInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutGuardianInput
@@ -560,6 +583,7 @@ export type GuardianUncheckedCreateWithoutStudentsInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -584,6 +608,7 @@ export type GuardianUpdateWithoutStudentsInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutGuardianNestedInput
@@ -597,6 +622,7 @@ export type GuardianUncheckedUpdateWithoutStudentsInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -605,6 +631,7 @@ export type GuardianCreateWithoutSchoolInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutGuardianInput
@@ -617,6 +644,7 @@ export type GuardianUncheckedCreateWithoutSchoolInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   students?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutGuardianInput
@@ -658,6 +686,7 @@ export type GuardianScalarWhereInput = {
   relation?: Prisma.StringNullableFilter<"Guardian"> | string | null
   occupation?: Prisma.StringNullableFilter<"Guardian"> | string | null
   address?: Prisma.StringNullableFilter<"Guardian"> | string | null
+  nid?: Prisma.StringNullableFilter<"Guardian"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Guardian"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Guardian"> | Date | string
 }
@@ -666,6 +695,7 @@ export type GuardianCreateWithoutUserInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutGuardiansInput
@@ -678,6 +708,7 @@ export type GuardianUncheckedCreateWithoutUserInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   students?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutGuardianInput
@@ -703,6 +734,7 @@ export type GuardianUpdateWithoutUserInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutGuardiansNestedInput
@@ -715,6 +747,7 @@ export type GuardianUncheckedUpdateWithoutUserInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   students?: Prisma.GuardianStudentUncheckedUpdateManyWithoutGuardianNestedInput
@@ -726,6 +759,7 @@ export type GuardianCreateManySchoolInput = {
   relation?: string | null
   occupation?: string | null
   address?: string | null
+  nid?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -734,6 +768,7 @@ export type GuardianUpdateWithoutSchoolInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutGuardianNestedInput
@@ -746,6 +781,7 @@ export type GuardianUncheckedUpdateWithoutSchoolInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   students?: Prisma.GuardianStudentUncheckedUpdateManyWithoutGuardianNestedInput
@@ -757,6 +793,7 @@ export type GuardianUncheckedUpdateManyWithoutSchoolInput = {
   relation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   occupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -799,6 +836,7 @@ export type GuardianSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   relation?: boolean
   occupation?: boolean
   address?: boolean
+  nid?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -814,6 +852,7 @@ export type GuardianSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   relation?: boolean
   occupation?: boolean
   address?: boolean
+  nid?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -827,6 +866,7 @@ export type GuardianSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   relation?: boolean
   occupation?: boolean
   address?: boolean
+  nid?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -840,11 +880,12 @@ export type GuardianSelectScalar = {
   relation?: boolean
   occupation?: boolean
   address?: boolean
+  nid?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GuardianOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "relation" | "occupation" | "address" | "createdAt" | "updatedAt", ExtArgs["result"]["guardian"]>
+export type GuardianOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "relation" | "occupation" | "address" | "nid" | "createdAt" | "updatedAt", ExtArgs["result"]["guardian"]>
 export type GuardianInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -874,6 +915,7 @@ export type $GuardianPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     relation: string | null
     occupation: string | null
     address: string | null
+    nid: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["guardian"]>
@@ -1308,6 +1350,7 @@ export interface GuardianFieldRefs {
   readonly relation: Prisma.FieldRef<"Guardian", 'String'>
   readonly occupation: Prisma.FieldRef<"Guardian", 'String'>
   readonly address: Prisma.FieldRef<"Guardian", 'String'>
+  readonly nid: Prisma.FieldRef<"Guardian", 'String'>
   readonly createdAt: Prisma.FieldRef<"Guardian", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Guardian", 'DateTime'>
 }

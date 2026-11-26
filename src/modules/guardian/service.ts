@@ -38,8 +38,29 @@ export const createGuardian = async (
 	schoolId: number,
 	payload: CreateGuardianInput,
 ) => {
+	const cleanPhone = payload.phone.trim();
+	const digits = cleanPhone.replace(/\D/g, "");
+
+	const existingByPhone = await prisma.guardian.findFirst({
+		where: {
+			schoolId,
+			user: { phone: cleanPhone },
+		},
+		select: { id: true },
+	});
+	if (existingByPhone) {
+		throw new AppError(
+			409,
+			"A guardian with this phone number already exists in this school",
+		);
+	}
+
+	const normalizedEmail =
+		payload.email?.trim().toLowerCase() ||
+		`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
+
 	const existingUser = await prisma.user.findUnique({
-		where: { email: payload.email },
+		where: { email: normalizedEmail },
 	});
 	if (existingUser) {
 		throw new AppError(409, "A user with this email already exists");
@@ -58,18 +79,21 @@ export const createGuardian = async (
 		}
 	}
 
-	const passwordHash = await hashPassword(payload.password);
+	const rawPassword =
+		payload.password?.trim() || `Madrasa@${digits.slice(-4) || "1234"}`;
+	const passwordHash = await hashPassword(rawPassword);
 
 	return prisma.$transaction(async (tx) => {
 		const user = await tx.user.create({
 			data: {
-				name: payload.name,
-				email: payload.email,
+				name: payload.name.trim(),
+				email: normalizedEmail,
 				passwordHash,
 				role: UserRole.GUARDIAN,
 				status: UserStatus.ACTIVE,
 				schoolId,
-				...(payload.phone !== undefined ? { phone: payload.phone } : {}),
+				phone: cleanPhone,
+				mustChangePassword: !payload.password,
 			},
 		});
 
@@ -77,13 +101,14 @@ export const createGuardian = async (
 			data: {
 				userId: user.id,
 				schoolId,
-				...(payload.relation !== undefined
-					? { relation: payload.relation }
-					: {}),
+				relation: payload.relation?.trim() || "Father",
 				...(payload.occupation !== undefined
-					? { occupation: payload.occupation }
+					? { occupation: payload.occupation.trim() }
 					: {}),
-				...(payload.address !== undefined ? { address: payload.address } : {}),
+				...(payload.address !== undefined
+					? { address: payload.address.trim() }
+					: {}),
+				...(payload.nid !== undefined ? { nid: payload.nid.trim() } : {}),
 				...(payload.studentIds && payload.studentIds.length > 0
 					? {
 							students: {
@@ -150,6 +175,7 @@ export const updateGuardian = async (
 					? { occupation: payload.occupation }
 					: {}),
 				...(payload.address !== undefined ? { address: payload.address } : {}),
+				...(payload.nid !== undefined ? { nid: payload.nid } : {}),
 			},
 			include: guardianInclude,
 		});

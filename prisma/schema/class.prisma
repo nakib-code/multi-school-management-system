@@ -17,6 +17,7 @@ model SchoolClass {
   exams              Exam[]
   admissions         Admission[]
   classRoutines      ClassRoutine[]
+  classDiaries       ClassDiary[]
 
   @@unique([schoolId, code])
   @@index([schoolId])

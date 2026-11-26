@@ -1,17 +1,18 @@
 import {
+	type AcademicGroup,
+	type AdmissionPaymentMethod,
 	type AdmissionPaymentStatus,
 	type AdmissionStatus,
+	type HefzWing,
 	Prisma,
+	type ResidentialType,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
-import { sendVerificationEmail } from "../../utils/sendEmail.js";
 import {
 	deleteVerificationCode,
-	generateVerificationCode,
 	getVerificationCode,
-	saveVerificationCode,
 } from "../../utils/verificationCode.js";
 import type {
 	ConfirmCashPaymentInput,
@@ -21,62 +22,80 @@ import type {
 	VerifyStudentEmailInput,
 } from "./interface.js";
 
+const normalizePhone = (phone: string): string => phone.trim();
+
+const parseAcademicGroup = (
+	academicGroup?: string | null,
+	legacyGroup?: string | null,
+): AcademicGroup | undefined => {
+	const raw = (academicGroup || legacyGroup || "").trim().toUpperCase();
+	if (raw === "SCIENCE" || raw === "ARTS" || raw === "COMMERCE") {
+		return raw as AcademicGroup;
+	}
+	return undefined;
+};
+
 /**
- * Create Admission
+ * Create Admission (Public — Guardian-Centric, No Forced Student Login/OTP)
  */
 export const createAdmission = async (payload: CreateAdmissionInput) => {
 	const {
 		schoolId,
 
-		// Student
+		// Stage 1 — Student
 		studentName,
-		studentEmail,
-		password,
 		dateOfBirth,
 		gender,
-		bloodGroup,
-		previousSchool,
-		previousClass,
+		residentialType,
 
-		// Guardian
+		// Stage 1 — Academic
+		classId,
+		sectionId,
+		academicYear,
+		shift,
+		academicGroup,
+		group,
+		quranWing,
+
+		// Stage 1 — Guardian
 		guardianName,
-		guardianEmail,
 		guardianPhone,
 		guardianRelationship,
+		guardianEmail,
 		guardianNid,
 		guardianOccupation,
 
-		// Address
-		address,
+		// Optional Student Login
+		studentEmail,
+		password,
 
-		// Application
-		classId,
-		academicYear,
-		shift,
-		group,
+		// Stage 2 — Optional
+		nameBangla,
+		birthRegNo,
+		bloodGroup,
+		previousSchool,
+		previousClass,
+		fatherName,
+		motherName,
+		address,
+		presentAddress,
+		permanentAddress,
 
 		// Documents
 		studentPhotoUrl,
 		birthCertificateUrl,
 		previousCertificateUrl,
+		guardianNidUrl,
+		previousTcUrl,
+		marksheetUrl,
 
 		// Payment
 		paymentMethod,
 	} = payload;
 
-	// ----------------------------------------------------
-	// Check school
-	// ----------------------------------------------------
-
 	const school = await prisma.school.findUnique({
-		where: {
-			id: schoolId,
-		},
-		select: {
-			id: true,
-			name: true,
-			status: true,
-		},
+		where: { id: schoolId },
+		select: { id: true, name: true, status: true },
 	});
 
 	if (!school) {
@@ -87,276 +106,142 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 		throw new AppError(400, "Admission is not available for this school");
 	}
 
-	// ----------------------------------------------------
-	// Check class
-	// ----------------------------------------------------
-
 	const schoolClass = await prisma.schoolClass.findFirst({
-		where: {
-			id: classId,
-			schoolId,
-			isActive: true,
-		},
-		select: {
-			id: true,
-			name: true,
-			code: true,
-		},
+		where: { id: classId, schoolId, isActive: true },
+		select: { id: true, name: true, code: true },
 	});
 
 	if (!schoolClass) {
 		throw new AppError(404, "Selected class was not found or is inactive");
 	}
 
-	// ----------------------------------------------------
-	// Get admission fee
-	// ----------------------------------------------------
+	if (sectionId !== undefined) {
+		const section = await prisma.section.findFirst({
+			where: { id: sectionId, schoolId, classId, isActive: true },
+			select: { id: true },
+		});
+		if (!section) {
+			throw new AppError(404, "Selected section was not found for this class");
+		}
+	}
 
 	const setting = await prisma.schoolSetting.findUnique({
-		where: {
-			schoolId,
-		},
-		select: {
-			admissionFee: true,
-		},
+		where: { schoolId },
+		select: { admissionFee: true },
 	});
 
-	if (!setting) {
-		throw new AppError(400, "Admission fee is not configured for this school");
+	const normalizedEmail = studentEmail?.trim().toLowerCase() || undefined;
+	const cleanGuardianPhone = normalizePhone(guardianPhone);
+
+	if (normalizedEmail) {
+		const existingUser = await prisma.user.findUnique({
+			where: { email: normalizedEmail },
+			select: { id: true },
+		});
+		if (existingUser) {
+			throw new AppError(409, "A user with this student email already exists");
+		}
 	}
 
-	// ----------------------------------------------------
-	// Normalize student email
-	// ----------------------------------------------------
-
-	const normalizedEmail = studentEmail.trim().toLowerCase();
-
-	// ----------------------------------------------------
-	// Check existing user
-	// ----------------------------------------------------
-
-	const existingUser = await prisma.user.findUnique({
-		where: {
-			email: normalizedEmail,
-		},
-		select: {
-			id: true,
-		},
-	});
-
-	if (existingUser) {
-		throw new AppError(409, "A user with this email already exists");
-	}
-
-	// ----------------------------------------------------
-	// Check existing pending admission
-	// ----------------------------------------------------
-
-	const existingAdmission = await prisma.admission.findFirst({
+	const existingPending = await prisma.admission.findFirst({
 		where: {
 			schoolId,
-			studentEmail: normalizedEmail,
+			studentName: { equals: studentName.trim(), mode: "insensitive" },
+			guardianPhone: cleanGuardianPhone,
+			academicYear: academicYear.trim(),
 			status: "PENDING",
 		},
-		select: {
-			id: true,
-		},
+		select: { id: true },
 	});
 
-	if (existingAdmission) {
+	if (existingPending) {
 		throw new AppError(
 			409,
-			"A pending admission already exists for this email",
+			"A pending admission already exists for this student and guardian phone",
 		);
 	}
 
-	// ----------------------------------------------------
-	// Hash password
-	// ----------------------------------------------------
-
-	const passwordHash = await hashPassword(password);
-
-	// ----------------------------------------------------
-	// Generate application number
-	// ----------------------------------------------------
+	const passwordHash = password ? await hashPassword(password) : undefined;
+	const resolvedGroup = parseAcademicGroup(academicGroup, group);
 
 	const applicationNo = `ADM-${Date.now()}-${Math.floor(
 		1000 + Math.random() * 9000,
 	)}`;
 
-	// ----------------------------------------------------
-	// Create admission + payment
-	// ----------------------------------------------------
+	const admissionFeeAmount = setting ? Number(setting.admissionFee) : 0;
+	const hasAdmissionFee = Number.isFinite(admissionFeeAmount) && admissionFeeAmount > 0;
 
 	const result = await prisma.$transaction(async (tx) => {
 		const admission = await tx.admission.create({
 			data: {
 				schoolId,
 				classId,
+				...(sectionId !== undefined ? { sectionId } : {}),
 				applicationNo,
 
 				// Student
 				studentName: studentName.trim(),
-				studentEmail: normalizedEmail,
-				passwordHash,
+				...(nameBangla ? { nameBangla: nameBangla.trim() } : {}),
+				...(normalizedEmail ? { studentEmail: normalizedEmail } : {}),
+				...(passwordHash ? { passwordHash } : {}),
+				dateOfBirth: new Date(dateOfBirth),
+				gender: gender.trim().toUpperCase(),
+				residentialType: (residentialType ?? "NON_RESIDENTIAL") as ResidentialType,
+				...(birthRegNo ? { birthRegNo: birthRegNo.trim() } : {}),
+				...(bloodGroup ? { bloodGroup: bloodGroup.trim() } : {}),
+				...(previousSchool ? { previousSchool: previousSchool.trim() } : {}),
+				...(previousClass ? { previousClass: previousClass.trim() } : {}),
 
-				...(dateOfBirth
-					? {
-							dateOfBirth: new Date(dateOfBirth),
-						}
-					: {}),
-
-				...(gender
-					? {
-							gender: gender.trim(),
-						}
-					: {}),
-
-				...(bloodGroup
-					? {
-							bloodGroup: bloodGroup.trim(),
-						}
-					: {}),
-
-				...(previousSchool
-					? {
-							previousSchool: previousSchool.trim(),
-						}
-					: {}),
-
-				...(previousClass
-					? {
-							previousClass: previousClass.trim(),
-						}
-					: {}),
-
-				// Guardian
-				...(guardianName
-					? {
-							guardianName: guardianName.trim(),
-						}
-					: {}),
-
-				...(guardianEmail
-					? {
-							guardianEmail: guardianEmail.trim().toLowerCase(),
-						}
-					: {}),
-
-				...(guardianPhone
-					? {
-							guardianPhone: guardianPhone.trim(),
-						}
-					: {}),
-
-				...(guardianRelationship
-					? {
-							guardianRelationship: guardianRelationship.trim(),
-						}
-					: {}),
-
-				...(guardianNid
-					? {
-							guardianNid: guardianNid.trim(),
-						}
-					: {}),
-
-				...(guardianOccupation
-					? {
-							guardianOccupation: guardianOccupation.trim(),
-						}
-					: {}),
+				// Guardian & Parents
+				guardianName: guardianName.trim(),
+				guardianPhone: cleanGuardianPhone,
+				guardianRelationship: (guardianRelationship?.trim() || "FATHER").toUpperCase(),
+				...(guardianEmail ? { guardianEmail: guardianEmail.trim().toLowerCase() } : {}),
+				...(guardianNid ? { guardianNid: guardianNid.trim() } : {}),
+				...(guardianOccupation ? { guardianOccupation: guardianOccupation.trim() } : {}),
+				...(fatherName ? { fatherName: fatherName.trim() } : {}),
+				...(motherName ? { motherName: motherName.trim() } : {}),
 
 				// Address
-				...(address
-					? {
-							address: address.trim(),
-						}
-					: {}),
+				...(address ? { address: address.trim() } : {}),
+				...(presentAddress ? { presentAddress: presentAddress.trim() } : {}),
+				...(permanentAddress ? { permanentAddress: permanentAddress.trim() } : {}),
 
 				// Application
 				academicYear: academicYear.trim(),
-
-				...(shift
-					? {
-							shift: shift.trim(),
-						}
-					: {}),
-
-				...(group
-					? {
-							group: group.trim(),
-						}
-					: {}),
+				shift: (shift?.trim() || "MORNING").toUpperCase(),
+				...(resolvedGroup ? { academicGroup: resolvedGroup, group: resolvedGroup } : {}),
+				...(quranWing ? { quranWing: quranWing as HefzWing } : {}),
 
 				// Documents
-				...(studentPhotoUrl
-					? {
-							studentPhotoUrl,
-						}
-					: {}),
-
-				...(birthCertificateUrl
-					? {
-							birthCertificateUrl,
-						}
-					: {}),
-
-				...(previousCertificateUrl
-					? {
-							previousCertificateUrl,
-						}
-					: {}),
+				...(studentPhotoUrl ? { studentPhotoUrl } : {}),
+				...(birthCertificateUrl ? { birthCertificateUrl } : {}),
+				...(previousCertificateUrl ? { previousCertificateUrl } : {}),
+				...(guardianNidUrl ? { guardianNidUrl } : {}),
+				...(previousTcUrl ? { previousTcUrl } : {}),
+				...(marksheetUrl ? { marksheetUrl } : {}),
 
 				status: "PENDING",
+				studentEmailVerified: true,
 			},
 		});
 
-		const payment = await tx.admissionPayment.create({
-			data: {
-				admissionId: admission.id,
-				schoolId,
-				amount: setting.admissionFee,
-				paymentMethod,
-				status: "PENDING",
-			},
-		});
+		let payment = null;
+		if (hasAdmissionFee && setting) {
+			const method: AdmissionPaymentMethod = paymentMethod ?? "CASH";
+			payment = await tx.admissionPayment.create({
+				data: {
+					admissionId: admission.id,
+					schoolId,
+					amount: setting.admissionFee,
+					paymentMethod: method,
+					status: "PENDING",
+				},
+			});
+		}
 
-		return {
-			admission,
-			payment,
-		};
+		return { admission, payment };
 	});
-
-	// ----------------------------------------------------
-	// Send verification email
-	// ----------------------------------------------------
-
-	const verificationCode = generateVerificationCode();
-
-	await saveVerificationCode(normalizedEmail, verificationCode);
-
-	try {
-		await sendVerificationEmail(normalizedEmail, verificationCode);
-	} catch (error) {
-		console.error("Failed to send student verification email:", error);
-
-		await deleteVerificationCode(normalizedEmail);
-
-		await prisma.admissionPayment.delete({
-			where: {
-				id: result.payment.id,
-			},
-		});
-
-		await prisma.admission.delete({
-			where: {
-				id: result.admission.id,
-			},
-		});
-
-		throw new AppError(500, "Failed to send verification email");
-	}
 
 	return {
 		id: result.admission.id,
@@ -364,33 +249,64 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 		applicationNo: result.admission.applicationNo,
 		studentName: result.admission.studentName,
 		studentEmail: result.admission.studentEmail,
+		guardianName: result.admission.guardianName,
+		guardianPhone: result.admission.guardianPhone,
 		classId: result.admission.classId,
+		sectionId: result.admission.sectionId,
 		academicYear: result.admission.academicYear,
+		residentialType: result.admission.residentialType,
+		academicGroup: result.admission.academicGroup,
+		quranWing: result.admission.quranWing,
 		status: result.admission.status,
-		emailVerified: result.admission.studentEmailVerified,
-		payment: {
-			id: result.payment.id,
-			amount: Number(result.payment.amount),
-			paymentMethod: result.payment.paymentMethod,
-			status: result.payment.status,
-		},
+		emailVerified: true,
+		emailVerificationRequired: false,
+		paymentMethod: result.payment?.paymentMethod ?? null,
+		paymentStatus: result.payment?.status ?? null,
+		payment: result.payment
+			? {
+					id: result.payment.id,
+					amount: Number(result.payment.amount),
+					paymentMethod: result.payment.paymentMethod,
+					status: result.payment.status,
+				}
+			: null,
 		createdAt: result.admission.createdAt,
 	};
 };
 
 /**
- * Verify Student Email
+ * Create Public Admission by School Slug
+ */
+export const createPublicAdmissionBySlug = async (
+	slug: string,
+	payload: Omit<CreateAdmissionInput, "schoolId">,
+) => {
+	const school = await prisma.school.findFirst({
+		where: {
+			OR: [{ slug: slug.trim() }, { code: slug.trim() }],
+		},
+		select: { id: true },
+	});
+
+	if (!school) {
+		throw new AppError(404, "School not found");
+	}
+
+	return createAdmission({
+		...payload,
+		schoolId: school.id,
+	});
+};
+
+/**
+ * Verify Student Email (Legacy endpoint retained for backward compatibility)
  */
 export const verifyStudentEmail = async (payload: VerifyStudentEmailInput) => {
 	const { email, code } = payload;
-
 	const normalizedEmail = email.trim().toLowerCase();
 
 	const admission = await prisma.admission.findFirst({
-		where: {
-			studentEmail: normalizedEmail,
-			status: "PENDING",
-		},
+		where: { studentEmail: normalizedEmail, status: "PENDING" },
 		select: {
 			id: true,
 			applicationNo: true,
@@ -404,26 +320,22 @@ export const verifyStudentEmail = async (payload: VerifyStudentEmailInput) => {
 	}
 
 	if (admission.studentEmailVerified) {
-		throw new AppError(400, "Student email is already verified");
+		return {
+			admissionId: admission.id,
+			applicationNo: admission.applicationNo,
+			studentEmail: admission.studentEmail,
+			emailVerified: true,
+		};
 	}
 
 	const savedCode = await getVerificationCode(normalizedEmail);
-
-	if (!savedCode) {
-		throw new AppError(400, "Verification code has expired or is invalid");
-	}
-
-	if (savedCode !== code) {
-		throw new AppError(400, "Invalid verification code");
+	if (!savedCode || savedCode !== code) {
+		throw new AppError(400, "Invalid or expired verification code");
 	}
 
 	const updatedAdmission = await prisma.admission.update({
-		where: {
-			id: admission.id,
-		},
-		data: {
-			studentEmailVerified: true,
-		},
+		where: { id: admission.id },
+		data: { studentEmailVerified: true },
 		select: {
 			id: true,
 			applicationNo: true,
@@ -453,54 +365,26 @@ export const getAdmissions = async (
 	const limit = Math.min(100, Math.max(1, query.limit ?? 10));
 	const skip = (page - 1) * limit;
 
-	const where: Prisma.AdmissionWhereInput = {
-		schoolId,
-	};
+	const where: Prisma.AdmissionWhereInput = { schoolId };
 
-	// Search
 	if (query.search?.trim()) {
 		const search = query.search.trim();
-
 		where.OR = [
-			{
-				applicationNo: {
-					contains: search,
-					mode: "insensitive",
-				},
-			},
-			{
-				studentName: {
-					contains: search,
-					mode: "insensitive",
-				},
-			},
-			{
-				studentEmail: {
-					contains: search,
-					mode: "insensitive",
-				},
-			},
-			{
-				guardianPhone: {
-					contains: search,
-					mode: "insensitive",
-				},
-			},
+			{ applicationNo: { contains: search, mode: "insensitive" } },
+			{ studentName: { contains: search, mode: "insensitive" } },
+			{ studentEmail: { contains: search, mode: "insensitive" } },
+			{ guardianName: { contains: search, mode: "insensitive" } },
+			{ guardianPhone: { contains: search, mode: "insensitive" } },
 		];
 	}
 
-	// Admission status filter
-	// Admission status filter
 	if (query.status) {
 		where.status = query.status as AdmissionStatus;
 	}
 
-	// Payment status filter
 	if (query.paymentStatus) {
 		where.payment = {
-			is: {
-				status: query.paymentStatus as AdmissionPaymentStatus,
-			},
+			is: { status: query.paymentStatus as AdmissionPaymentStatus },
 		};
 	}
 
@@ -509,32 +393,31 @@ export const getAdmissions = async (
 			where,
 			skip,
 			take: limit,
-			orderBy: {
-				createdAt: "desc",
-			},
+			orderBy: { createdAt: "desc" },
 			select: {
 				id: true,
 				applicationNo: true,
 				studentName: true,
+				nameBangla: true,
 				studentEmail: true,
+				dateOfBirth: true,
+				gender: true,
+				residentialType: true,
 				guardianName: true,
 				guardianPhone: true,
+				guardianRelationship: true,
 				academicYear: true,
 				shift: true,
 				group: true,
+				academicGroup: true,
+				quranWing: true,
+				studentPhotoUrl: true,
 				status: true,
 				studentEmailVerified: true,
 				createdAt: true,
 				updatedAt: true,
-
-				class: {
-					select: {
-						id: true,
-						name: true,
-						code: true,
-					},
-				},
-
+				class: { select: { id: true, name: true, code: true } },
+				section: { select: { id: true, name: true, code: true } },
 				payment: {
 					select: {
 						id: true,
@@ -547,10 +430,7 @@ export const getAdmissions = async (
 				},
 			},
 		}),
-
-		prisma.admission.count({
-			where,
-		}),
+		prisma.admission.count({ where }),
 	]);
 
 	return {
@@ -563,7 +443,6 @@ export const getAdmissions = async (
 					}
 				: null,
 		})),
-
 		meta: {
 			page,
 			limit,
@@ -573,15 +452,15 @@ export const getAdmissions = async (
 	};
 };
 
+/**
+ * Get Admission By ID (Full Detail View)
+ */
 export const getAdmissionById = async (
 	schoolId: number,
 	admissionId: number,
 ) => {
 	const admission = await prisma.admission.findFirst({
-		where: {
-			id: admissionId,
-			schoolId,
-		},
+		where: { id: admissionId, schoolId },
 		select: {
 			id: true,
 			schoolId: true,
@@ -589,23 +468,30 @@ export const getAdmissionById = async (
 
 			// Student
 			studentName: true,
+			nameBangla: true,
 			studentEmail: true,
 			dateOfBirth: true,
 			gender: true,
 			bloodGroup: true,
+			birthRegNo: true,
+			residentialType: true,
 			previousSchool: true,
 			previousClass: true,
 
-			// Guardian
+			// Guardian & Parents
 			guardianName: true,
 			guardianEmail: true,
 			guardianPhone: true,
 			guardianRelationship: true,
 			guardianNid: true,
 			guardianOccupation: true,
+			fatherName: true,
+			motherName: true,
 
 			// Address
 			address: true,
+			presentAddress: true,
+			permanentAddress: true,
 
 			// Application
 			classId: true,
@@ -613,11 +499,16 @@ export const getAdmissionById = async (
 			academicYear: true,
 			shift: true,
 			group: true,
+			academicGroup: true,
+			quranWing: true,
 
 			// Documents
 			studentPhotoUrl: true,
 			birthCertificateUrl: true,
 			previousCertificateUrl: true,
+			guardianNidUrl: true,
+			previousTcUrl: true,
+			marksheetUrl: true,
 
 			studentEmailVerified: true,
 			status: true,
@@ -625,22 +516,8 @@ export const getAdmissionById = async (
 			reviewedBy: true,
 			rejectionReason: true,
 
-			class: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-				},
-			},
-
-			section: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-				},
-			},
-
+			class: { select: { id: true, name: true, code: true } },
+			section: { select: { id: true, name: true, code: true } },
 			payment: {
 				select: {
 					id: true,
@@ -653,7 +530,6 @@ export const getAdmissionById = async (
 					remarks: true,
 				},
 			},
-
 			createdAt: true,
 			updatedAt: true,
 		},
@@ -665,7 +541,6 @@ export const getAdmissionById = async (
 
 	return {
 		...admission,
-
 		payment: admission.payment
 			? {
 					...admission.payment,
@@ -676,72 +551,61 @@ export const getAdmissionById = async (
 };
 
 /**
- * Track Admission
- *
- * Public admission tracking.
- * Requires both application number and student email.
+ * Track Admission (Public — by applicationNo + guardianPhone OR studentEmail)
  */
 export const trackAdmission = async ({
 	applicationNo,
 	studentEmail,
+	guardianPhone,
 }: TrackAdmissionInput) => {
 	const normalizedApplicationNo = applicationNo.trim().toUpperCase();
-
-	const normalizedEmail = studentEmail.trim().toLowerCase();
+	const normalizedEmail = studentEmail?.trim().toLowerCase();
+	const cleanPhone = guardianPhone?.trim();
 
 	if (!normalizedApplicationNo) {
 		throw new AppError(400, "Application number is required");
 	}
-
-	if (!normalizedEmail) {
-		throw new AppError(400, "Student email is required");
+	if (!normalizedEmail && !cleanPhone) {
+		throw new AppError(400, "Guardian phone or student email is required");
 	}
 
-	const admission = await prisma.admission.findFirst({
-		where: {
-			applicationNo: normalizedApplicationNo,
-			studentEmail: normalizedEmail,
-		},
+	const where: Prisma.AdmissionWhereInput = {
+		applicationNo: normalizedApplicationNo,
+		...(cleanPhone && normalizedEmail
+			? {
+					OR: [
+						{ guardianPhone: cleanPhone },
+						{ studentEmail: normalizedEmail },
+					],
+				}
+			: cleanPhone
+				? { guardianPhone: cleanPhone }
+				: { studentEmail: normalizedEmail ?? null }),
+	};
 
+	const admission = await prisma.admission.findFirst({
+		where,
 		select: {
 			id: true,
 			schoolId: true,
 			applicationNo: true,
 			studentName: true,
 			studentEmail: true,
+			guardianName: true,
+			guardianPhone: true,
+			residentialType: true,
 			academicYear: true,
 			shift: true,
 			group: true,
+			academicGroup: true,
+			quranWing: true,
 			studentEmailVerified: true,
 			status: true,
 			rejectionReason: true,
 			reviewedAt: true,
-
-			class: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-				},
-			},
-
-			// Section can be null before admin assigns it.
-			section: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-				},
-			},
-
-			school: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-				},
-			},
-
+			class: { select: { id: true, name: true, code: true } },
+			section: { select: { id: true, name: true, code: true } },
+			school: { select: { id: true, name: true, code: true } },
 			payment: {
 				select: {
 					id: true,
@@ -753,7 +617,6 @@ export const trackAdmission = async ({
 					remarks: true,
 				},
 			},
-
 			createdAt: true,
 			updatedAt: true,
 		},
@@ -765,31 +628,27 @@ export const trackAdmission = async ({
 
 	return {
 		admissionId: admission.id,
-
 		applicationNo: admission.applicationNo,
-
 		student: {
 			name: admission.studentName,
 			email: admission.studentEmail,
+			guardianName: admission.guardianName,
+			guardianPhone: admission.guardianPhone,
+			residentialType: admission.residentialType,
 			emailVerified: admission.studentEmailVerified,
 		},
-
 		school: admission.school,
-
 		academic: {
 			year: admission.academicYear,
 			class: admission.class,
 			section: admission.section,
 			shift: admission.shift,
-			group: admission.group,
+			group: admission.academicGroup ?? admission.group,
+			quranWing: admission.quranWing,
 		},
-
 		status: admission.status,
-
 		rejectionReason: admission.rejectionReason,
-
 		reviewedAt: admission.reviewedAt,
-
 		payment: admission.payment
 			? {
 					id: admission.payment.id,
@@ -801,30 +660,23 @@ export const trackAdmission = async ({
 					remarks: admission.payment.remarks,
 				}
 			: null,
-
 		createdAt: admission.createdAt,
-
 		updatedAt: admission.updatedAt,
 	};
 };
 
 /**
  * Approve Admission
+ * Atomically transfers ALL collected fields to Student + Enrollment + Guardian/GuardianStudent.
+ * Does NOT require student email verification or forced student login account.
  */
 export const approveAdmission = async (
 	schoolId: number,
 	admissionId: number,
 	reviewerId: number,
 ) => {
-	// ----------------------------------------------------
-	// Get admission
-	// ----------------------------------------------------
-
 	const admission = await prisma.admission.findFirst({
-		where: {
-			id: admissionId,
-			schoolId,
-		},
+		where: { id: admissionId, schoolId },
 		include: {
 			payment: true,
 			class: true,
@@ -836,125 +688,70 @@ export const approveAdmission = async (
 		throw new AppError(404, "Admission not found");
 	}
 
-	// ----------------------------------------------------
-	// Admission status
-	// ----------------------------------------------------
-
 	if (admission.status !== "PENDING") {
 		throw new AppError(400, "Only pending admissions can be approved");
 	}
 
-	// ----------------------------------------------------
-	// Email verification
-	// ----------------------------------------------------
-
-	if (!admission.studentEmailVerified) {
-		throw new AppError(400, "Student email must be verified before approval");
-	}
-
-	// ----------------------------------------------------
-	// Payment
-	// ----------------------------------------------------
-
-	if (!admission.payment) {
-		throw new AppError(400, "Admission payment not found");
-	}
-
-	if (admission.payment.status !== "PAID") {
+	if (
+		admission.payment &&
+		Number(admission.payment.amount) > 0 &&
+		admission.payment.status !== "PAID"
+	) {
 		throw new AppError(
 			400,
 			"Admission payment must be completed before approval",
 		);
 	}
 
-	// ----------------------------------------------------
-	// Check existing user
-	// ----------------------------------------------------
-
-	const existingUser = await prisma.user.findUnique({
-		where: {
-			email: admission.studentEmail,
-		},
-		select: {
-			id: true,
-		},
-	});
-
-	if (existingUser) {
-		throw new AppError(409, "A user with this email already exists");
+	if (admission.studentEmail) {
+		const existingUser = await prisma.user.findUnique({
+			where: { email: admission.studentEmail },
+			select: { id: true },
+		});
+		if (existingUser) {
+			throw new AppError(409, "A user with this student email already exists");
+		}
 	}
 
-	// ----------------------------------------------------
-	// Split student name
-	// ----------------------------------------------------
-
 	const nameParts = admission.studentName.trim().split(/\s+/);
-
 	const firstName = nameParts[0] ?? admission.studentName.trim();
-
 	const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : null;
 
-	// ----------------------------------------------------
-	// Generate student ID
-	// ----------------------------------------------------
-
-	const studentId = `STU-${schoolId}-${Date.now()}-${Math.floor(
+	const studentCode = `STU-${schoolId}-${Date.now()}-${Math.floor(
 		1000 + Math.random() * 9000,
 	)}`;
 
-	// ----------------------------------------------------
-	// Transaction
-	// ----------------------------------------------------
+	const resolvedGroup = parseAcademicGroup(
+		admission.academicGroup,
+		admission.group,
+	);
 
 	const result = await prisma.$transaction(
 		async (tx) => {
 			const now = new Date();
 
-			// -----------------------------------------------
-			// Check subscription
-			// -----------------------------------------------
-
 			const activeSubscription = await tx.schoolSubscription.findFirst({
 				where: {
 					schoolId,
 					status: "ACTIVE",
-					startDate: {
-						lte: now,
-					},
-					endDate: {
-						gte: now,
-					},
-					package: {
-						isActive: true,
-					},
+					startDate: { lte: now },
+					endDate: { gte: now },
+					package: { isActive: true },
 				},
 				include: {
 					package: {
-						select: {
-							id: true,
-							name: true,
-							studentLimit: true,
-						},
+						select: { id: true, name: true, studentLimit: true },
 					},
 				},
-				orderBy: {
-					startDate: "desc",
-				},
+				orderBy: { startDate: "desc" },
 			});
 
 			if (!activeSubscription) {
 				throw new AppError(403, "School does not have an active subscription");
 			}
 
-			// -----------------------------------------------
-			// Count students
-			// -----------------------------------------------
-
 			const currentStudentCount = await tx.student.count({
-				where: {
-					schoolId,
-					isActive: true,
-				},
+				where: { schoolId, isActive: true },
 			});
 
 			if (currentStudentCount >= activeSubscription.package.studentLimit) {
@@ -963,13 +760,6 @@ export const approveAdmission = async (
 					`Student limit reached for ${activeSubscription.package.name} package. Maximum allowed students: ${activeSubscription.package.studentLimit}`,
 				);
 			}
-
-			// -----------------------------------------------
-			// Re-check section capacity
-			//
-			// Section is optional during admission.
-			// If admin already assigned one, check capacity.
-			// -----------------------------------------------
 
 			if (admission.sectionId && admission.section) {
 				const activeEnrollmentCount = await tx.enrollment.count({
@@ -988,90 +778,243 @@ export const approveAdmission = async (
 				}
 			}
 
-			// -----------------------------------------------
-			// Create User
-			// -----------------------------------------------
+			// 1. Optional Student User Login (only if email + password were provided)
+			let studentUser: { id: number; email: string } | null = null;
+			if (admission.studentEmail && admission.passwordHash) {
+				studentUser = await tx.user.create({
+					data: {
+						name: admission.studentName,
+						email: admission.studentEmail,
+						passwordHash: admission.passwordHash,
+						role: "STUDENT",
+						status: "ACTIVE",
+						mustChangePassword: false,
+						schoolId,
+					},
+					select: { id: true, email: true },
+				});
+			}
 
-			const user = await tx.user.create({
-				data: {
-					name: admission.studentName,
-					email: admission.studentEmail,
-					passwordHash: admission.passwordHash,
-					role: "STUDENT",
-					status: "ACTIVE",
-					mustChangePassword: false,
-					schoolId,
-				},
-			});
+			// Determine father/mother name fallback from guardian relationship
+			const relUpper = (admission.guardianRelationship ?? "").toUpperCase();
+			const derivedFatherName =
+				admission.fatherName ||
+				(relUpper === "FATHER" ? admission.guardianName : null);
+			const derivedMotherName =
+				admission.motherName ||
+				(relUpper === "MOTHER" ? admission.guardianName : null);
 
-			// -----------------------------------------------
-			// Create Student
-			// -----------------------------------------------
-
+			// 2. Create Student transferring ALL collected fields
 			const student = await tx.student.create({
 				data: {
-					userId: user.id,
+					...(studentUser ? { userId: studentUser.id } : {}),
 					schoolId,
-					studentId,
+					studentId: studentCode,
 					firstName,
 					lastName,
-
-					...(admission.dateOfBirth
+					...(admission.nameBangla ? { nameBangla: admission.nameBangla } : {}),
+					...(admission.dateOfBirth ? { dateOfBirth: admission.dateOfBirth } : {}),
+					...(admission.gender ? { gender: admission.gender } : {}),
+					...(admission.guardianPhone ? { phone: admission.guardianPhone } : {}),
+					...(admission.address || admission.presentAddress
+						? { address: admission.presentAddress ?? admission.address }
+						: {}),
+					...(admission.presentAddress || admission.address
+						? { presentAddress: admission.presentAddress ?? admission.address }
+						: {}),
+					...(admission.permanentAddress
+						? { permanentAddress: admission.permanentAddress }
+						: {}),
+					residentialType: admission.residentialType,
+					...(admission.shift ? { shift: admission.shift } : {}),
+					...(resolvedGroup ? { academicGroup: resolvedGroup } : {}),
+					...(admission.quranWing ? { quranWing: admission.quranWing } : {}),
+					...(admission.bloodGroup ? { bloodGroup: admission.bloodGroup } : {}),
+					...(admission.birthRegNo ? { birthRegNo: admission.birthRegNo } : {}),
+					...(admission.previousSchool
+						? { previousSchool: admission.previousSchool }
+						: {}),
+					...(admission.previousClass
+						? { previousClass: admission.previousClass }
+						: {}),
+					...(derivedFatherName ? { fatherName: derivedFatherName } : {}),
+					...(derivedMotherName ? { motherName: derivedMotherName } : {}),
+					...(relUpper === "FATHER" && admission.guardianPhone
+						? { fatherPhone: admission.guardianPhone }
+						: {}),
+					...(relUpper === "FATHER" && admission.guardianOccupation
+						? { fatherOccupation: admission.guardianOccupation }
+						: {}),
+					...(relUpper === "FATHER" && admission.guardianNid
+						? { fatherNid: admission.guardianNid }
+						: {}),
+					...(relUpper === "MOTHER" && admission.guardianPhone
+						? { motherPhone: admission.guardianPhone }
+						: {}),
+					...(relUpper === "MOTHER" && admission.guardianOccupation
+						? { motherOccupation: admission.guardianOccupation }
+						: {}),
+					...(relUpper === "MOTHER" && admission.guardianNid
+						? { motherNid: admission.guardianNid }
+						: {}),
+					...(admission.studentPhotoUrl
+						? { studentPhotoUrl: admission.studentPhotoUrl }
+						: {}),
+					...(admission.birthCertificateUrl
+						? { birthCertificateUrl: admission.birthCertificateUrl }
+						: {}),
+					...(admission.guardianNidUrl
+						? { guardianNidUrl: admission.guardianNidUrl }
+						: {}),
+					...(admission.previousTcUrl || admission.previousCertificateUrl
 						? {
-								dateOfBirth: admission.dateOfBirth,
+								previousTcUrl:
+									admission.previousTcUrl ?? admission.previousCertificateUrl,
 							}
 						: {}),
-
-					...(admission.gender
-						? {
-								gender: admission.gender,
-							}
+					...(admission.marksheetUrl
+						? { marksheetUrl: admission.marksheetUrl }
 						: {}),
-
-					...(admission.guardianPhone
-						? {
-								phone: admission.guardianPhone,
-							}
-						: {}),
-
-					...(admission.address
-						? {
-								address: admission.address,
-							}
-						: {}),
-
 					admissionDate: now,
 					isActive: true,
 				},
 			});
 
-			// -----------------------------------------------
-			// Create Enrollment
-			// -----------------------------------------------
-
+			// 3. Create Enrollment with sectionId, shift, academicGroup
 			const enrollment = await tx.enrollment.create({
 				data: {
 					schoolId,
 					studentId: student.id,
 					classId: admission.classId,
-
-					// Section is optional.
 					sectionId: admission.sectionId ?? null,
-
 					academicYear: admission.academicYear,
-
+					...(admission.shift ? { shift: admission.shift } : {}),
+					...(resolvedGroup ? { academicGroup: resolvedGroup } : {}),
 					status: "ACTIVE",
 				},
 			});
 
-			// -----------------------------------------------
-			// Update Admission
-			// -----------------------------------------------
+			// 4. Find or Create Guardian by (schoolId, guardianPhone) & Link via GuardianStudent
+			let guardianSummary: {
+				guardianId: number;
+				name: string;
+				phone: string;
+				email: string;
+				isExistingGuardian: boolean;
+			} | null = null;
 
+			if (admission.guardianPhone?.trim()) {
+				const cleanPhone = admission.guardianPhone.trim();
+				const existingGuardian = await tx.guardian.findFirst({
+					where: {
+						schoolId,
+						user: { phone: cleanPhone },
+					},
+					include: {
+						user: {
+							select: { id: true, name: true, email: true, phone: true },
+						},
+					},
+				});
+
+				if (existingGuardian) {
+					await tx.guardianStudent.upsert({
+						where: {
+							guardianId_studentId: {
+								guardianId: existingGuardian.id,
+								studentId: student.id,
+							},
+						},
+						update: { isPrimary: true },
+						create: {
+							guardianId: existingGuardian.id,
+							studentId: student.id,
+							isPrimary: true,
+						},
+					});
+
+					if (admission.guardianNid && !existingGuardian.nid) {
+						await tx.guardian.update({
+							where: { id: existingGuardian.id },
+							data: { nid: admission.guardianNid },
+						});
+					}
+
+					guardianSummary = {
+						guardianId: existingGuardian.id,
+						name: existingGuardian.user.name,
+						phone: existingGuardian.user.phone ?? cleanPhone,
+						email: existingGuardian.user.email,
+						isExistingGuardian: true,
+					};
+				} else {
+					const digits = cleanPhone.replace(/\D/g, "");
+					const defaultPassword = `Madrasa@${digits.slice(-4) || "1234"}`;
+					const gPasswordHash = await hashPassword(defaultPassword);
+
+					let guardianEmail =
+						admission.guardianEmail?.trim().toLowerCase() ||
+						`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
+
+					const emailConflict = await tx.user.findUnique({
+						where: { email: guardianEmail },
+						select: { id: true },
+					});
+					if (emailConflict) {
+						guardianEmail = `guardian.${schoolId}.${digits || Date.now()}.${Math.floor(100 + Math.random() * 900)}@madrasaos.local`;
+					}
+
+					const guardianUser = await tx.user.create({
+						data: {
+							name:
+								admission.guardianName?.trim() ||
+								`Guardian of ${admission.studentName.trim()}`,
+							email: guardianEmail,
+							phone: cleanPhone,
+							passwordHash: gPasswordHash,
+							role: "GUARDIAN",
+							status: "ACTIVE",
+							schoolId,
+							mustChangePassword: true,
+						},
+					});
+
+					const guardian = await tx.guardian.create({
+						data: {
+							userId: guardianUser.id,
+							schoolId,
+							relation: admission.guardianRelationship?.trim() || "FATHER",
+							...(admission.guardianOccupation
+								? { occupation: admission.guardianOccupation }
+								: {}),
+							...(admission.presentAddress || admission.address
+								? { address: admission.presentAddress ?? admission.address }
+								: {}),
+							...(admission.guardianNid ? { nid: admission.guardianNid } : {}),
+						},
+					});
+
+					await tx.guardianStudent.create({
+						data: {
+							guardianId: guardian.id,
+							studentId: student.id,
+							isPrimary: true,
+						},
+					});
+
+					guardianSummary = {
+						guardianId: guardian.id,
+						name: guardianUser.name,
+						phone: cleanPhone,
+						email: guardianUser.email,
+						isExistingGuardian: false,
+					};
+				}
+			}
+
+			// 5. Update Admission Status
 			const updatedAdmission = await tx.admission.update({
-				where: {
-					id: admission.id,
-				},
+				where: { id: admission.id },
 				data: {
 					status: "APPROVED",
 					reviewedAt: now,
@@ -1081,9 +1024,10 @@ export const approveAdmission = async (
 
 			return {
 				admission: updatedAdmission,
-				user,
+				user: studentUser,
 				student,
 				enrollment,
+				guardian: guardianSummary,
 				package: activeSubscription.package,
 				previousStudentCount: currentStudentCount,
 			};
@@ -1093,42 +1037,25 @@ export const approveAdmission = async (
 		},
 	);
 
-	// ----------------------------------------------------
-	// Response
-	// ----------------------------------------------------
-
 	return {
 		admissionId: result.admission.id,
-
 		applicationNo: result.admission.applicationNo,
-
 		studentId: result.student.studentId,
-
+		studentRecordId: result.student.id,
 		studentName: result.admission.studentName,
-
-		studentEmail: result.user.email,
-
+		studentEmail: result.user?.email ?? null,
 		enrollmentId: result.enrollment.id,
-
 		classId: result.enrollment.classId,
-
 		sectionId: result.enrollment.sectionId,
-
 		academicYear: result.enrollment.academicYear,
-
+		guardian: result.guardian,
 		status: result.admission.status,
-
 		reviewedAt: result.admission.reviewedAt,
-
 		subscription: {
 			packageId: result.package.id,
-
 			packageName: result.package.name,
-
 			studentLimit: result.package.studentLimit,
-
 			previousStudentCount: result.previousStudentCount,
-
 			currentStudentCount: result.previousStudentCount + 1,
 		},
 	};
@@ -1144,10 +1071,7 @@ export const rejectAdmission = async (
 	rejectionReason: string,
 ) => {
 	const admission = await prisma.admission.findFirst({
-		where: {
-			id: admissionId,
-			schoolId,
-		},
+		where: { id: admissionId, schoolId },
 	});
 
 	if (!admission) {
@@ -1158,14 +1082,8 @@ export const rejectAdmission = async (
 		throw new AppError(400, "Only pending admissions can be rejected");
 	}
 
-	if (!admission.studentEmailVerified) {
-		throw new AppError(400, "Student email must be verified before rejection");
-	}
-
 	const updatedAdmission = await prisma.admission.update({
-		where: {
-			id: admissionId,
-		},
+		where: { id: admissionId },
 		data: {
 			status: "REJECTED",
 			rejectionReason: rejectionReason.trim(),
@@ -1177,6 +1095,7 @@ export const rejectAdmission = async (
 			applicationNo: true,
 			studentName: true,
 			studentEmail: true,
+			guardianPhone: true,
 			status: true,
 			rejectionReason: true,
 			reviewedAt: true,
@@ -1197,14 +1116,11 @@ export const confirmCashPayment = async (
 	input: ConfirmCashPaymentInput,
 ) => {
 	const admission = await prisma.admission.findUnique({
-		where: {
-			id: admissionId,
-		},
+		where: { id: admissionId },
 		select: {
 			id: true,
 			schoolId: true,
 			status: true,
-
 			payment: {
 				select: {
 					id: true,
@@ -1253,19 +1169,12 @@ export const confirmCashPayment = async (
 	}
 
 	const payment = await prisma.admissionPayment.update({
-		where: {
-			id: admission.payment.id,
-		},
+		where: { id: admission.payment.id },
 		data: {
 			status: "PAID",
 			paidAt: new Date(),
 			receivedBy: userId,
-
-			...(input.remarks !== undefined
-				? {
-						remarks: input.remarks.trim(),
-					}
-				: {}),
+			...(input.remarks !== undefined ? { remarks: input.remarks.trim() } : {}),
 		},
 		select: {
 			id: true,
@@ -1289,24 +1198,19 @@ export const confirmCashPayment = async (
 	};
 };
 
+/**
+ * Initiate Online / Mobile Banking Payment
+ */
 export const initiateOnlinePayment = async (
 	schoolId: number,
 	admissionId: number,
 ) => {
 	const admission = await prisma.admission.findFirst({
-		where: {
-			id: admissionId,
-			schoolId,
-		},
+		where: { id: admissionId, schoolId },
 		include: {
 			payment: true,
 			school: {
-				select: {
-					name: true,
-					email: true,
-					phone: true,
-					address: true,
-				},
+				select: { name: true, email: true, phone: true, address: true },
 			},
 		},
 	});
@@ -1315,30 +1219,18 @@ export const initiateOnlinePayment = async (
 		throw new AppError(404, "Admission not found");
 	}
 
-	// Check admission status
 	if (admission.status !== "PENDING") {
 		throw new AppError(400, "Only pending admissions can make payment");
 	}
 
-	// Verify student email before payment
-	if (!admission.studentEmailVerified) {
-		throw new AppError(
-			403,
-			"Please verify your student email before making payment",
-		);
-	}
-
-	// Check payment record
 	if (!admission.payment) {
 		throw new AppError(404, "Admission payment not found");
 	}
 
-	// Check payment method
-	if (admission.payment.paymentMethod !== "ONLINE") {
-		throw new AppError(400, "This admission is not using online payment");
+	if (admission.payment.paymentMethod === "CASH") {
+		throw new AppError(400, "This admission is using cash payment");
 	}
 
-	// Prevent duplicate payment
 	if (admission.payment.status === "PAID") {
 		throw new AppError(400, "Admission payment is already completed");
 	}
@@ -1348,18 +1240,13 @@ export const initiateOnlinePayment = async (
 	}
 
 	const amount = Number(admission.payment.amount);
-
 	if (!Number.isFinite(amount) || amount <= 0) {
 		throw new AppError(400, "Invalid admission payment amount");
 	}
 
 	const schoolSetting = await prisma.schoolSetting.findUnique({
 		where: { schoolId },
-		select: {
-			bkashNumber: true,
-			nagadNumber: true,
-			rocketNumber: true,
-		},
+		select: { bkashNumber: true, nagadNumber: true, rocketNumber: true },
 	});
 
 	return {

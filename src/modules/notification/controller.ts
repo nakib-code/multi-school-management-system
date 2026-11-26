@@ -4,6 +4,7 @@ import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import {
+	broadcastNotifications,
 	createBulkNotifications,
 	deleteNotification,
 	getUnreadNotificationCount,
@@ -31,6 +32,34 @@ export const createNotificationController = async (
 	return sendResponse(res, {
 		statusCode: 201,
 		message: "Notifications sent successfully",
+		data: result,
+	});
+};
+
+export const broadcastNotificationController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
+	if (!req.user) throw new AppError(401, "Authentication required");
+	const result = await broadcastNotifications({
+		actorUserId: req.user.userId,
+		actorRole: req.user.role,
+		...(req.user.schoolId !== undefined
+			? { actorSchoolId: req.user.schoolId }
+			: {}),
+		...(req.body.schoolId !== undefined ? { schoolId: req.body.schoolId } : {}),
+		title: req.body.title,
+		message: req.body.message,
+		type: req.body.type,
+		audience: req.body.audience,
+		...(req.body.classId !== undefined ? { classId: req.body.classId } : {}),
+		...(req.body.sectionId !== undefined
+			? { sectionId: req.body.sectionId }
+			: {}),
+	});
+	return sendResponse(res, {
+		statusCode: 201,
+		message: `Notification broadcast delivered to ${result.sentCount} recipient(s)`,
 		data: result,
 	});
 };

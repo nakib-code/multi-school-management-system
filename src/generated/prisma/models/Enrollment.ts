@@ -52,6 +52,12 @@ export type EnrollmentMinAggregateOutputType = {
   sectionId: number | null
   academicYear: string | null
   rollNumber: number | null
+  shift: string | null
+  academicGroup: $Enums.AcademicGroup | null
+  boardName: string | null
+  boardRollNo: string | null
+  boardRegNo: string | null
+  fourthSubject: string | null
   status: $Enums.EnrollmentStatus | null
   enrolledAt: Date | null
   createdAt: Date | null
@@ -66,6 +72,12 @@ export type EnrollmentMaxAggregateOutputType = {
   sectionId: number | null
   academicYear: string | null
   rollNumber: number | null
+  shift: string | null
+  academicGroup: $Enums.AcademicGroup | null
+  boardName: string | null
+  boardRollNo: string | null
+  boardRegNo: string | null
+  fourthSubject: string | null
   status: $Enums.EnrollmentStatus | null
   enrolledAt: Date | null
   createdAt: Date | null
@@ -80,6 +92,12 @@ export type EnrollmentCountAggregateOutputType = {
   sectionId: number
   academicYear: number
   rollNumber: number
+  shift: number
+  academicGroup: number
+  boardName: number
+  boardRollNo: number
+  boardRegNo: number
+  fourthSubject: number
   status: number
   enrolledAt: number
   createdAt: number
@@ -114,6 +132,12 @@ export type EnrollmentMinAggregateInputType = {
   sectionId?: true
   academicYear?: true
   rollNumber?: true
+  shift?: true
+  academicGroup?: true
+  boardName?: true
+  boardRollNo?: true
+  boardRegNo?: true
+  fourthSubject?: true
   status?: true
   enrolledAt?: true
   createdAt?: true
@@ -128,6 +152,12 @@ export type EnrollmentMaxAggregateInputType = {
   sectionId?: true
   academicYear?: true
   rollNumber?: true
+  shift?: true
+  academicGroup?: true
+  boardName?: true
+  boardRollNo?: true
+  boardRegNo?: true
+  fourthSubject?: true
   status?: true
   enrolledAt?: true
   createdAt?: true
@@ -142,6 +172,12 @@ export type EnrollmentCountAggregateInputType = {
   sectionId?: true
   academicYear?: true
   rollNumber?: true
+  shift?: true
+  academicGroup?: true
+  boardName?: true
+  boardRollNo?: true
+  boardRegNo?: true
+  fourthSubject?: true
   status?: true
   enrolledAt?: true
   createdAt?: true
@@ -243,6 +279,12 @@ export type EnrollmentGroupByOutputType = {
   sectionId: number | null
   academicYear: string
   rollNumber: number | null
+  shift: string | null
+  academicGroup: $Enums.AcademicGroup | null
+  boardName: string | null
+  boardRollNo: string | null
+  boardRegNo: string | null
+  fourthSubject: string | null
   status: $Enums.EnrollmentStatus
   enrolledAt: Date
   createdAt: Date
@@ -280,6 +322,12 @@ export type EnrollmentWhereInput = {
   sectionId?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableFilter<"Enrollment"> | number | null
+  shift?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableFilter<"Enrollment"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  boardRollNo?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  boardRegNo?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  fourthSubject?: Prisma.StringNullableFilter<"Enrollment"> | string | null
   status?: Prisma.EnumEnrollmentStatusFilter<"Enrollment"> | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
@@ -301,6 +349,12 @@ export type EnrollmentOrderByWithRelationInput = {
   sectionId?: Prisma.SortOrderInput | Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  shift?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardName?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   enrolledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -327,6 +381,12 @@ export type EnrollmentWhereUniqueInput = Prisma.AtLeast<{
   sectionId?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableFilter<"Enrollment"> | number | null
+  shift?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableFilter<"Enrollment"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  boardRollNo?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  boardRegNo?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  fourthSubject?: Prisma.StringNullableFilter<"Enrollment"> | string | null
   status?: Prisma.EnumEnrollmentStatusFilter<"Enrollment"> | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
@@ -348,6 +408,12 @@ export type EnrollmentOrderByWithAggregationInput = {
   sectionId?: Prisma.SortOrderInput | Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  shift?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardName?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   enrolledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -370,6 +436,12 @@ export type EnrollmentScalarWhereWithAggregatesInput = {
   sectionId?: Prisma.IntNullableWithAggregatesFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringWithAggregatesFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableWithAggregatesFilter<"Enrollment"> | number | null
+  shift?: Prisma.StringNullableWithAggregatesFilter<"Enrollment"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableWithAggregatesFilter<"Enrollment"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableWithAggregatesFilter<"Enrollment"> | string | null
+  boardRollNo?: Prisma.StringNullableWithAggregatesFilter<"Enrollment"> | string | null
+  boardRegNo?: Prisma.StringNullableWithAggregatesFilter<"Enrollment"> | string | null
+  fourthSubject?: Prisma.StringNullableWithAggregatesFilter<"Enrollment"> | string | null
   status?: Prisma.EnumEnrollmentStatusWithAggregatesFilter<"Enrollment"> | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeWithAggregatesFilter<"Enrollment"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Enrollment"> | Date | string
@@ -379,6 +451,12 @@ export type EnrollmentScalarWhereWithAggregatesInput = {
 export type EnrollmentCreateInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -400,6 +478,12 @@ export type EnrollmentUncheckedCreateInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -412,6 +496,12 @@ export type EnrollmentUncheckedCreateInput = {
 export type EnrollmentUpdateInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -433,6 +523,12 @@ export type EnrollmentUncheckedUpdateInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -450,6 +546,12 @@ export type EnrollmentCreateManyInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -459,6 +561,12 @@ export type EnrollmentCreateManyInput = {
 export type EnrollmentUpdateManyMutationInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -473,6 +581,12 @@ export type EnrollmentUncheckedUpdateManyInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -513,6 +627,12 @@ export type EnrollmentCountOrderByAggregateInput = {
   sectionId?: Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  academicGroup?: Prisma.SortOrder
+  boardName?: Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrder
   status?: Prisma.SortOrder
   enrolledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -536,6 +656,12 @@ export type EnrollmentMaxOrderByAggregateInput = {
   sectionId?: Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  academicGroup?: Prisma.SortOrder
+  boardName?: Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrder
   status?: Prisma.SortOrder
   enrolledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -550,6 +676,12 @@ export type EnrollmentMinOrderByAggregateInput = {
   sectionId?: Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   rollNumber?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  academicGroup?: Prisma.SortOrder
+  boardName?: Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrder
   status?: Prisma.SortOrder
   enrolledAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -782,6 +914,12 @@ export type EnrollmentUncheckedUpdateManyWithoutStudentNestedInput = {
 export type EnrollmentCreateWithoutAttendancesInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -802,6 +940,12 @@ export type EnrollmentUncheckedCreateWithoutAttendancesInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -829,6 +973,12 @@ export type EnrollmentUpdateToOneWithWhereWithoutAttendancesInput = {
 export type EnrollmentUpdateWithoutAttendancesInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -849,6 +999,12 @@ export type EnrollmentUncheckedUpdateWithoutAttendancesInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -860,6 +1016,12 @@ export type EnrollmentUncheckedUpdateWithoutAttendancesInput = {
 export type EnrollmentCreateWithoutClassInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -879,6 +1041,12 @@ export type EnrollmentUncheckedCreateWithoutClassInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -925,6 +1093,12 @@ export type EnrollmentScalarWhereInput = {
   sectionId?: Prisma.IntNullableFilter<"Enrollment"> | number | null
   academicYear?: Prisma.StringFilter<"Enrollment"> | string
   rollNumber?: Prisma.IntNullableFilter<"Enrollment"> | number | null
+  shift?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableFilter<"Enrollment"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  boardRollNo?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  boardRegNo?: Prisma.StringNullableFilter<"Enrollment"> | string | null
+  fourthSubject?: Prisma.StringNullableFilter<"Enrollment"> | string | null
   status?: Prisma.EnumEnrollmentStatusFilter<"Enrollment"> | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Enrollment"> | Date | string
@@ -934,6 +1108,12 @@ export type EnrollmentScalarWhereInput = {
 export type EnrollmentCreateWithoutResultsInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -954,6 +1134,12 @@ export type EnrollmentUncheckedCreateWithoutResultsInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -981,6 +1167,12 @@ export type EnrollmentUpdateToOneWithWhereWithoutResultsInput = {
 export type EnrollmentUpdateWithoutResultsInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1001,6 +1193,12 @@ export type EnrollmentUncheckedUpdateWithoutResultsInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1012,6 +1210,12 @@ export type EnrollmentUncheckedUpdateWithoutResultsInput = {
 export type EnrollmentCreateWithoutSchoolInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1031,6 +1235,12 @@ export type EnrollmentUncheckedCreateWithoutSchoolInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1069,6 +1279,12 @@ export type EnrollmentUpdateManyWithWhereWithoutSchoolInput = {
 export type EnrollmentCreateWithoutSectionInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1088,6 +1304,12 @@ export type EnrollmentUncheckedCreateWithoutSectionInput = {
   classId: number
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1126,6 +1348,12 @@ export type EnrollmentUpdateManyWithWhereWithoutSectionInput = {
 export type EnrollmentCreateWithoutFeesInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1146,6 +1374,12 @@ export type EnrollmentUncheckedCreateWithoutFeesInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1173,6 +1407,12 @@ export type EnrollmentUpdateToOneWithWhereWithoutFeesInput = {
 export type EnrollmentUpdateWithoutFeesInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1193,6 +1433,12 @@ export type EnrollmentUncheckedUpdateWithoutFeesInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1204,6 +1450,12 @@ export type EnrollmentUncheckedUpdateWithoutFeesInput = {
 export type EnrollmentCreateWithoutStudentInput = {
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1223,6 +1475,12 @@ export type EnrollmentUncheckedCreateWithoutStudentInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1265,6 +1523,12 @@ export type EnrollmentCreateManyClassInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1274,6 +1538,12 @@ export type EnrollmentCreateManyClassInput = {
 export type EnrollmentUpdateWithoutClassInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1293,6 +1563,12 @@ export type EnrollmentUncheckedUpdateWithoutClassInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1309,6 +1585,12 @@ export type EnrollmentUncheckedUpdateManyWithoutClassInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1322,6 +1604,12 @@ export type EnrollmentCreateManySchoolInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1331,6 +1619,12 @@ export type EnrollmentCreateManySchoolInput = {
 export type EnrollmentUpdateWithoutSchoolInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1350,6 +1644,12 @@ export type EnrollmentUncheckedUpdateWithoutSchoolInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1366,6 +1666,12 @@ export type EnrollmentUncheckedUpdateManyWithoutSchoolInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1379,6 +1685,12 @@ export type EnrollmentCreateManySectionInput = {
   classId: number
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1388,6 +1700,12 @@ export type EnrollmentCreateManySectionInput = {
 export type EnrollmentUpdateWithoutSectionInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1407,6 +1725,12 @@ export type EnrollmentUncheckedUpdateWithoutSectionInput = {
   classId?: Prisma.IntFieldUpdateOperationsInput | number
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1423,6 +1747,12 @@ export type EnrollmentUncheckedUpdateManyWithoutSectionInput = {
   classId?: Prisma.IntFieldUpdateOperationsInput | number
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1436,6 +1766,12 @@ export type EnrollmentCreateManyStudentInput = {
   sectionId?: number | null
   academicYear: string
   rollNumber?: number | null
+  shift?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
   status?: $Enums.EnrollmentStatus
   enrolledAt?: Date | string
   createdAt?: Date | string
@@ -1445,6 +1781,12 @@ export type EnrollmentCreateManyStudentInput = {
 export type EnrollmentUpdateWithoutStudentInput = {
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1464,6 +1806,12 @@ export type EnrollmentUncheckedUpdateWithoutStudentInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1480,6 +1828,12 @@ export type EnrollmentUncheckedUpdateManyWithoutStudentInput = {
   sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   academicYear?: Prisma.StringFieldUpdateOperationsInput | string
   rollNumber?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumEnrollmentStatusFieldUpdateOperationsInput | $Enums.EnrollmentStatus
   enrolledAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1543,6 +1897,12 @@ export type EnrollmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   sectionId?: boolean
   academicYear?: boolean
   rollNumber?: boolean
+  shift?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
   status?: boolean
   enrolledAt?: boolean
   createdAt?: boolean
@@ -1565,6 +1925,12 @@ export type EnrollmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   sectionId?: boolean
   academicYear?: boolean
   rollNumber?: boolean
+  shift?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
   status?: boolean
   enrolledAt?: boolean
   createdAt?: boolean
@@ -1583,6 +1949,12 @@ export type EnrollmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   sectionId?: boolean
   academicYear?: boolean
   rollNumber?: boolean
+  shift?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
   status?: boolean
   enrolledAt?: boolean
   createdAt?: boolean
@@ -1601,13 +1973,19 @@ export type EnrollmentSelectScalar = {
   sectionId?: boolean
   academicYear?: boolean
   rollNumber?: boolean
+  shift?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
   status?: boolean
   enrolledAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EnrollmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "classId" | "sectionId" | "academicYear" | "rollNumber" | "status" | "enrolledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["enrollment"]>
+export type EnrollmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "classId" | "sectionId" | "academicYear" | "rollNumber" | "shift" | "academicGroup" | "boardName" | "boardRollNo" | "boardRegNo" | "fourthSubject" | "status" | "enrolledAt" | "createdAt" | "updatedAt", ExtArgs["result"]["enrollment"]>
 export type EnrollmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -1650,6 +2028,12 @@ export type $EnrollmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     sectionId: number | null
     academicYear: string
     rollNumber: number | null
+    shift: string | null
+    academicGroup: $Enums.AcademicGroup | null
+    boardName: string | null
+    boardRollNo: string | null
+    boardRegNo: string | null
+    fourthSubject: string | null
     status: $Enums.EnrollmentStatus
     enrolledAt: Date
     createdAt: Date
@@ -2091,6 +2475,12 @@ export interface EnrollmentFieldRefs {
   readonly sectionId: Prisma.FieldRef<"Enrollment", 'Int'>
   readonly academicYear: Prisma.FieldRef<"Enrollment", 'String'>
   readonly rollNumber: Prisma.FieldRef<"Enrollment", 'Int'>
+  readonly shift: Prisma.FieldRef<"Enrollment", 'String'>
+  readonly academicGroup: Prisma.FieldRef<"Enrollment", 'AcademicGroup'>
+  readonly boardName: Prisma.FieldRef<"Enrollment", 'String'>
+  readonly boardRollNo: Prisma.FieldRef<"Enrollment", 'String'>
+  readonly boardRegNo: Prisma.FieldRef<"Enrollment", 'String'>
+  readonly fourthSubject: Prisma.FieldRef<"Enrollment", 'String'>
   readonly status: Prisma.FieldRef<"Enrollment", 'EnrollmentStatus'>
   readonly enrolledAt: Prisma.FieldRef<"Enrollment", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Enrollment", 'DateTime'>

@@ -4,13 +4,72 @@ model Student {
   schoolId  Int
   studentId String @unique
 
-  firstName     String
-  lastName      String?
-  dateOfBirth   DateTime?
-  gender        String?
-  phone         String?
-  address       String?
-  admissionDate DateTime  @default(now())
+  firstName       String
+  lastName        String?
+  nameBangla      String?
+  dateOfBirth     DateTime?
+  gender          String?
+  phone           String?
+  address         String?
+  admissionDate   DateTime        @default(now())
+  residentialType ResidentialType @default(NON_RESIDENTIAL)
+  shift           String?
+  quranWing       HefzWing?
+
+  // Identity & Localization
+  birthRegNo      String?
+  bloodGroup      String?
+  religion        String?
+  nationality     String?
+  studentPhotoUrl String?
+
+  // Parents & Emergency Contact
+  fatherName            String?
+  fatherPhone           String?
+  fatherOccupation      String?
+  fatherNid             String?
+  motherName            String?
+  motherPhone           String?
+  motherOccupation      String?
+  motherNid             String?
+  emergencyContactName  String?
+  emergencyContactPhone String?
+
+  // Addresses
+  presentAddress   String?
+  permanentAddress String?
+
+  // Kindergarten / Junior Safety (Play - Class 5)
+  authorizedPickupName     String?
+  authorizedPickupRelation String?
+  authorizedPickupPhone    String?
+  authorizedPickupNid      String?
+  pickupPersonPhotoUrl     String?
+
+  // Class 9-10 / Board Exam
+  academicGroup AcademicGroup?
+  boardName     String?
+  boardRollNo   String?
+  boardRegNo    String?
+  fourthSubject String?
+
+  // Previous Institution / Transfer
+  previousSchool String?
+  previousClass  String?
+  tcNumber       String?
+  tcDate         DateTime?
+
+  // Health & Care Notes
+  allergies         String?
+  medicalConditions String?
+  medications       String?
+  healthNotes       String?
+
+  // Documents
+  birthCertificateUrl String?
+  guardianNidUrl      String?
+  previousTcUrl       String?
+  marksheetUrl        String?
 
   isActive Boolean @default(true)
 

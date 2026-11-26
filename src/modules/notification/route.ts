@@ -3,6 +3,7 @@ import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
+	broadcastNotificationController,
 	createNotificationController,
 	deleteNotificationController,
 	getNotificationsController,
@@ -11,6 +12,7 @@ import {
 	markReadController,
 } from "./controller.js";
 import {
+	broadcastNotificationSchema,
 	createNotificationSchema,
 	getNotificationsQuerySchema,
 	notificationIdSchema,
@@ -33,6 +35,19 @@ router.post(
 	authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MANAGER),
 	validateRequest(createNotificationSchema),
 	createNotificationController,
+);
+
+router.post(
+	"/broadcast",
+	authenticate,
+	authorize(
+		UserRole.SUPER_ADMIN,
+		UserRole.ADMIN,
+		UserRole.MANAGER,
+		UserRole.TEACHER,
+	),
+	validateRequest(broadcastNotificationSchema),
+	broadcastNotificationController,
 );
 
 router.patch("/read-all", authenticate, markAllReadController);

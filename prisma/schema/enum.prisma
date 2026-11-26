@@ -112,6 +112,9 @@ enum SchoolStatus {
 enum AdmissionPaymentMethod {
   CASH
   ONLINE
+  BKASH
+  NAGAD
+  ROCKET
 }
 
 enum AdmissionPaymentStatus {
@@ -159,8 +162,23 @@ enum EnrollmentStatus {
 }
 
 enum HefzWing {
+  NOORANI
+  QAIDA
+  AMPARA
   NAJERA
   HEFZ
+}
+
+enum ResidentialType {
+  NON_RESIDENTIAL
+  RESIDENTIAL
+  DAY_CARE
+}
+
+enum AcademicGroup {
+  SCIENCE
+  ARTS
+  COMMERCE
 }
 
 enum HefzEnrollmentStatus {

@@ -1,0 +1,29 @@
+model ClassDiary {
+  id            Int       @id @default(autoincrement())
+  schoolId      Int
+  classId       Int
+  sectionId     Int?
+  subjectId     Int?
+  teacherId     Int?
+  createdById   Int
+  diaryDate     DateTime
+  title         String?
+  classwork     String    @db.Text
+  homework      String?   @db.Text
+  dueDate       DateTime?
+  attachmentUrl String?
+
+  school    School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  class     SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section   Section?    @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  subject   Subject?    @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  teacher   Teacher?    @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  createdBy User        @relation("ClassDiaryAuthor", fields: [createdById], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId, diaryDate])
+  @@index([schoolId, classId, sectionId, diaryDate])
+  @@map("class_diaries")
+}

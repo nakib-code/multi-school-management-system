@@ -38,6 +38,11 @@ export type Attendance = Prisma.AttendanceModel
  */
 export type AuditLog = Prisma.AuditLogModel
 /**
+ * Model ClassDiary
+ * 
+ */
+export type ClassDiary = Prisma.ClassDiaryModel
+/**
  * Model ClassRoutine
  * 
  */

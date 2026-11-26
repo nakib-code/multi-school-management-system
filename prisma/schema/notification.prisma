@@ -8,6 +8,8 @@ enum NotificationType {
   PAYMENT
   SUBSCRIPTION
   ROUTINE
+  DIARY
+  EMERGENCY
   ANNOUNCEMENT
   SYSTEM
 }

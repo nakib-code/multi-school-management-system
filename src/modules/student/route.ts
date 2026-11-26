@@ -47,7 +47,12 @@ router.get(
 router.get(
 	"/schools/:schoolId/students/:id",
 	authenticate,
-	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
+	authorize(
+		UserRole.ADMIN,
+		UserRole.MANAGER,
+		UserRole.TEACHER,
+		UserRole.GUARDIAN,
+	),
 	requireSchoolAccess,
 	getStudentByIdController,
 );
@@ -55,7 +60,7 @@ router.get(
 router.patch(
 	"/schools/:schoolId/students/:id",
 	authenticate,
-	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.GUARDIAN),
 	requireSchoolAccess,
 	validateRequest(updateStudentSchema),
 	updateStudentController,

@@ -5,9 +5,15 @@ model Enrollment {
   classId   Int
   sectionId Int?
 
-  academicYear String
-  rollNumber   Int?
-  status       EnrollmentStatus @default(ACTIVE)
+  academicYear  String
+  rollNumber    Int?
+  shift         String?
+  academicGroup AcademicGroup?
+  boardName     String?
+  boardRollNo   String?
+  boardRegNo    String?
+  fourthSubject String?
+  status        EnrollmentStatus @default(ACTIVE)
 
   school  School      @relation(fields: [schoolId], references: [id])
   student Student     @relation(fields: [studentId], references: [id])

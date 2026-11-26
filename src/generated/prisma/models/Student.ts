@@ -45,11 +45,54 @@ export type StudentMinAggregateOutputType = {
   studentId: string | null
   firstName: string | null
   lastName: string | null
+  nameBangla: string | null
   dateOfBirth: Date | null
   gender: string | null
   phone: string | null
   address: string | null
   admissionDate: Date | null
+  residentialType: $Enums.ResidentialType | null
+  shift: string | null
+  quranWing: $Enums.HefzWing | null
+  birthRegNo: string | null
+  bloodGroup: string | null
+  religion: string | null
+  nationality: string | null
+  studentPhotoUrl: string | null
+  fatherName: string | null
+  fatherPhone: string | null
+  fatherOccupation: string | null
+  fatherNid: string | null
+  motherName: string | null
+  motherPhone: string | null
+  motherOccupation: string | null
+  motherNid: string | null
+  emergencyContactName: string | null
+  emergencyContactPhone: string | null
+  presentAddress: string | null
+  permanentAddress: string | null
+  authorizedPickupName: string | null
+  authorizedPickupRelation: string | null
+  authorizedPickupPhone: string | null
+  authorizedPickupNid: string | null
+  pickupPersonPhotoUrl: string | null
+  academicGroup: $Enums.AcademicGroup | null
+  boardName: string | null
+  boardRollNo: string | null
+  boardRegNo: string | null
+  fourthSubject: string | null
+  previousSchool: string | null
+  previousClass: string | null
+  tcNumber: string | null
+  tcDate: Date | null
+  allergies: string | null
+  medicalConditions: string | null
+  medications: string | null
+  healthNotes: string | null
+  birthCertificateUrl: string | null
+  guardianNidUrl: string | null
+  previousTcUrl: string | null
+  marksheetUrl: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -62,11 +105,54 @@ export type StudentMaxAggregateOutputType = {
   studentId: string | null
   firstName: string | null
   lastName: string | null
+  nameBangla: string | null
   dateOfBirth: Date | null
   gender: string | null
   phone: string | null
   address: string | null
   admissionDate: Date | null
+  residentialType: $Enums.ResidentialType | null
+  shift: string | null
+  quranWing: $Enums.HefzWing | null
+  birthRegNo: string | null
+  bloodGroup: string | null
+  religion: string | null
+  nationality: string | null
+  studentPhotoUrl: string | null
+  fatherName: string | null
+  fatherPhone: string | null
+  fatherOccupation: string | null
+  fatherNid: string | null
+  motherName: string | null
+  motherPhone: string | null
+  motherOccupation: string | null
+  motherNid: string | null
+  emergencyContactName: string | null
+  emergencyContactPhone: string | null
+  presentAddress: string | null
+  permanentAddress: string | null
+  authorizedPickupName: string | null
+  authorizedPickupRelation: string | null
+  authorizedPickupPhone: string | null
+  authorizedPickupNid: string | null
+  pickupPersonPhotoUrl: string | null
+  academicGroup: $Enums.AcademicGroup | null
+  boardName: string | null
+  boardRollNo: string | null
+  boardRegNo: string | null
+  fourthSubject: string | null
+  previousSchool: string | null
+  previousClass: string | null
+  tcNumber: string | null
+  tcDate: Date | null
+  allergies: string | null
+  medicalConditions: string | null
+  medications: string | null
+  healthNotes: string | null
+  birthCertificateUrl: string | null
+  guardianNidUrl: string | null
+  previousTcUrl: string | null
+  marksheetUrl: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -79,11 +165,54 @@ export type StudentCountAggregateOutputType = {
   studentId: number
   firstName: number
   lastName: number
+  nameBangla: number
   dateOfBirth: number
   gender: number
   phone: number
   address: number
   admissionDate: number
+  residentialType: number
+  shift: number
+  quranWing: number
+  birthRegNo: number
+  bloodGroup: number
+  religion: number
+  nationality: number
+  studentPhotoUrl: number
+  fatherName: number
+  fatherPhone: number
+  fatherOccupation: number
+  fatherNid: number
+  motherName: number
+  motherPhone: number
+  motherOccupation: number
+  motherNid: number
+  emergencyContactName: number
+  emergencyContactPhone: number
+  presentAddress: number
+  permanentAddress: number
+  authorizedPickupName: number
+  authorizedPickupRelation: number
+  authorizedPickupPhone: number
+  authorizedPickupNid: number
+  pickupPersonPhotoUrl: number
+  academicGroup: number
+  boardName: number
+  boardRollNo: number
+  boardRegNo: number
+  fourthSubject: number
+  previousSchool: number
+  previousClass: number
+  tcNumber: number
+  tcDate: number
+  allergies: number
+  medicalConditions: number
+  medications: number
+  healthNotes: number
+  birthCertificateUrl: number
+  guardianNidUrl: number
+  previousTcUrl: number
+  marksheetUrl: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -110,11 +239,54 @@ export type StudentMinAggregateInputType = {
   studentId?: true
   firstName?: true
   lastName?: true
+  nameBangla?: true
   dateOfBirth?: true
   gender?: true
   phone?: true
   address?: true
   admissionDate?: true
+  residentialType?: true
+  shift?: true
+  quranWing?: true
+  birthRegNo?: true
+  bloodGroup?: true
+  religion?: true
+  nationality?: true
+  studentPhotoUrl?: true
+  fatherName?: true
+  fatherPhone?: true
+  fatherOccupation?: true
+  fatherNid?: true
+  motherName?: true
+  motherPhone?: true
+  motherOccupation?: true
+  motherNid?: true
+  emergencyContactName?: true
+  emergencyContactPhone?: true
+  presentAddress?: true
+  permanentAddress?: true
+  authorizedPickupName?: true
+  authorizedPickupRelation?: true
+  authorizedPickupPhone?: true
+  authorizedPickupNid?: true
+  pickupPersonPhotoUrl?: true
+  academicGroup?: true
+  boardName?: true
+  boardRollNo?: true
+  boardRegNo?: true
+  fourthSubject?: true
+  previousSchool?: true
+  previousClass?: true
+  tcNumber?: true
+  tcDate?: true
+  allergies?: true
+  medicalConditions?: true
+  medications?: true
+  healthNotes?: true
+  birthCertificateUrl?: true
+  guardianNidUrl?: true
+  previousTcUrl?: true
+  marksheetUrl?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -127,11 +299,54 @@ export type StudentMaxAggregateInputType = {
   studentId?: true
   firstName?: true
   lastName?: true
+  nameBangla?: true
   dateOfBirth?: true
   gender?: true
   phone?: true
   address?: true
   admissionDate?: true
+  residentialType?: true
+  shift?: true
+  quranWing?: true
+  birthRegNo?: true
+  bloodGroup?: true
+  religion?: true
+  nationality?: true
+  studentPhotoUrl?: true
+  fatherName?: true
+  fatherPhone?: true
+  fatherOccupation?: true
+  fatherNid?: true
+  motherName?: true
+  motherPhone?: true
+  motherOccupation?: true
+  motherNid?: true
+  emergencyContactName?: true
+  emergencyContactPhone?: true
+  presentAddress?: true
+  permanentAddress?: true
+  authorizedPickupName?: true
+  authorizedPickupRelation?: true
+  authorizedPickupPhone?: true
+  authorizedPickupNid?: true
+  pickupPersonPhotoUrl?: true
+  academicGroup?: true
+  boardName?: true
+  boardRollNo?: true
+  boardRegNo?: true
+  fourthSubject?: true
+  previousSchool?: true
+  previousClass?: true
+  tcNumber?: true
+  tcDate?: true
+  allergies?: true
+  medicalConditions?: true
+  medications?: true
+  healthNotes?: true
+  birthCertificateUrl?: true
+  guardianNidUrl?: true
+  previousTcUrl?: true
+  marksheetUrl?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -144,11 +359,54 @@ export type StudentCountAggregateInputType = {
   studentId?: true
   firstName?: true
   lastName?: true
+  nameBangla?: true
   dateOfBirth?: true
   gender?: true
   phone?: true
   address?: true
   admissionDate?: true
+  residentialType?: true
+  shift?: true
+  quranWing?: true
+  birthRegNo?: true
+  bloodGroup?: true
+  religion?: true
+  nationality?: true
+  studentPhotoUrl?: true
+  fatherName?: true
+  fatherPhone?: true
+  fatherOccupation?: true
+  fatherNid?: true
+  motherName?: true
+  motherPhone?: true
+  motherOccupation?: true
+  motherNid?: true
+  emergencyContactName?: true
+  emergencyContactPhone?: true
+  presentAddress?: true
+  permanentAddress?: true
+  authorizedPickupName?: true
+  authorizedPickupRelation?: true
+  authorizedPickupPhone?: true
+  authorizedPickupNid?: true
+  pickupPersonPhotoUrl?: true
+  academicGroup?: true
+  boardName?: true
+  boardRollNo?: true
+  boardRegNo?: true
+  fourthSubject?: true
+  previousSchool?: true
+  previousClass?: true
+  tcNumber?: true
+  tcDate?: true
+  allergies?: true
+  medicalConditions?: true
+  medications?: true
+  healthNotes?: true
+  birthCertificateUrl?: true
+  guardianNidUrl?: true
+  previousTcUrl?: true
+  marksheetUrl?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -248,11 +506,54 @@ export type StudentGroupByOutputType = {
   studentId: string
   firstName: string
   lastName: string | null
+  nameBangla: string | null
   dateOfBirth: Date | null
   gender: string | null
   phone: string | null
   address: string | null
   admissionDate: Date
+  residentialType: $Enums.ResidentialType
+  shift: string | null
+  quranWing: $Enums.HefzWing | null
+  birthRegNo: string | null
+  bloodGroup: string | null
+  religion: string | null
+  nationality: string | null
+  studentPhotoUrl: string | null
+  fatherName: string | null
+  fatherPhone: string | null
+  fatherOccupation: string | null
+  fatherNid: string | null
+  motherName: string | null
+  motherPhone: string | null
+  motherOccupation: string | null
+  motherNid: string | null
+  emergencyContactName: string | null
+  emergencyContactPhone: string | null
+  presentAddress: string | null
+  permanentAddress: string | null
+  authorizedPickupName: string | null
+  authorizedPickupRelation: string | null
+  authorizedPickupPhone: string | null
+  authorizedPickupNid: string | null
+  pickupPersonPhotoUrl: string | null
+  academicGroup: $Enums.AcademicGroup | null
+  boardName: string | null
+  boardRollNo: string | null
+  boardRegNo: string | null
+  fourthSubject: string | null
+  previousSchool: string | null
+  previousClass: string | null
+  tcNumber: string | null
+  tcDate: Date | null
+  allergies: string | null
+  medicalConditions: string | null
+  medications: string | null
+  healthNotes: string | null
+  birthCertificateUrl: string | null
+  guardianNidUrl: string | null
+  previousTcUrl: string | null
+  marksheetUrl: string | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -288,11 +589,54 @@ export type StudentWhereInput = {
   studentId?: Prisma.StringFilter<"Student"> | string
   firstName?: Prisma.StringFilter<"Student"> | string
   lastName?: Prisma.StringNullableFilter<"Student"> | string | null
+  nameBangla?: Prisma.StringNullableFilter<"Student"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
   gender?: Prisma.StringNullableFilter<"Student"> | string | null
   phone?: Prisma.StringNullableFilter<"Student"> | string | null
   address?: Prisma.StringNullableFilter<"Student"> | string | null
   admissionDate?: Prisma.DateTimeFilter<"Student"> | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFilter<"Student"> | $Enums.ResidentialType
+  shift?: Prisma.StringNullableFilter<"Student"> | string | null
+  quranWing?: Prisma.EnumHefzWingNullableFilter<"Student"> | $Enums.HefzWing | null
+  birthRegNo?: Prisma.StringNullableFilter<"Student"> | string | null
+  bloodGroup?: Prisma.StringNullableFilter<"Student"> | string | null
+  religion?: Prisma.StringNullableFilter<"Student"> | string | null
+  nationality?: Prisma.StringNullableFilter<"Student"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherName?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherOccupation?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherNid?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherName?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherOccupation?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherNid?: Prisma.StringNullableFilter<"Student"> | string | null
+  emergencyContactName?: Prisma.StringNullableFilter<"Student"> | string | null
+  emergencyContactPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  presentAddress?: Prisma.StringNullableFilter<"Student"> | string | null
+  permanentAddress?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupName?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupRelation?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupNid?: Prisma.StringNullableFilter<"Student"> | string | null
+  pickupPersonPhotoUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableFilter<"Student"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableFilter<"Student"> | string | null
+  boardRollNo?: Prisma.StringNullableFilter<"Student"> | string | null
+  boardRegNo?: Prisma.StringNullableFilter<"Student"> | string | null
+  fourthSubject?: Prisma.StringNullableFilter<"Student"> | string | null
+  previousSchool?: Prisma.StringNullableFilter<"Student"> | string | null
+  previousClass?: Prisma.StringNullableFilter<"Student"> | string | null
+  tcNumber?: Prisma.StringNullableFilter<"Student"> | string | null
+  tcDate?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
+  allergies?: Prisma.StringNullableFilter<"Student"> | string | null
+  medicalConditions?: Prisma.StringNullableFilter<"Student"> | string | null
+  medications?: Prisma.StringNullableFilter<"Student"> | string | null
+  healthNotes?: Prisma.StringNullableFilter<"Student"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  guardianNidUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  previousTcUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  marksheetUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   isActive?: Prisma.BoolFilter<"Student"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Student"> | Date | string
@@ -313,11 +657,54 @@ export type StudentOrderByWithRelationInput = {
   studentId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
+  nameBangla?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   admissionDate?: Prisma.SortOrder
+  residentialType?: Prisma.SortOrder
+  shift?: Prisma.SortOrderInput | Prisma.SortOrder
+  quranWing?: Prisma.SortOrderInput | Prisma.SortOrder
+  birthRegNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  religion?: Prisma.SortOrderInput | Prisma.SortOrder
+  nationality?: Prisma.SortOrderInput | Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherName?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherOccupation?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherName?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherOccupation?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrderInput | Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  presentAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  permanentAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupName?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupRelation?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupPersonPhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardName?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousSchool?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousClass?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  allergies?: Prisma.SortOrderInput | Prisma.SortOrder
+  medicalConditions?: Prisma.SortOrderInput | Prisma.SortOrder
+  medications?: Prisma.SortOrderInput | Prisma.SortOrder
+  healthNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianNidUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousTcUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  marksheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -341,11 +728,54 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   schoolId?: Prisma.IntFilter<"Student"> | number
   firstName?: Prisma.StringFilter<"Student"> | string
   lastName?: Prisma.StringNullableFilter<"Student"> | string | null
+  nameBangla?: Prisma.StringNullableFilter<"Student"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
   gender?: Prisma.StringNullableFilter<"Student"> | string | null
   phone?: Prisma.StringNullableFilter<"Student"> | string | null
   address?: Prisma.StringNullableFilter<"Student"> | string | null
   admissionDate?: Prisma.DateTimeFilter<"Student"> | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFilter<"Student"> | $Enums.ResidentialType
+  shift?: Prisma.StringNullableFilter<"Student"> | string | null
+  quranWing?: Prisma.EnumHefzWingNullableFilter<"Student"> | $Enums.HefzWing | null
+  birthRegNo?: Prisma.StringNullableFilter<"Student"> | string | null
+  bloodGroup?: Prisma.StringNullableFilter<"Student"> | string | null
+  religion?: Prisma.StringNullableFilter<"Student"> | string | null
+  nationality?: Prisma.StringNullableFilter<"Student"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherName?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherOccupation?: Prisma.StringNullableFilter<"Student"> | string | null
+  fatherNid?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherName?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherOccupation?: Prisma.StringNullableFilter<"Student"> | string | null
+  motherNid?: Prisma.StringNullableFilter<"Student"> | string | null
+  emergencyContactName?: Prisma.StringNullableFilter<"Student"> | string | null
+  emergencyContactPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  presentAddress?: Prisma.StringNullableFilter<"Student"> | string | null
+  permanentAddress?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupName?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupRelation?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupPhone?: Prisma.StringNullableFilter<"Student"> | string | null
+  authorizedPickupNid?: Prisma.StringNullableFilter<"Student"> | string | null
+  pickupPersonPhotoUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableFilter<"Student"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableFilter<"Student"> | string | null
+  boardRollNo?: Prisma.StringNullableFilter<"Student"> | string | null
+  boardRegNo?: Prisma.StringNullableFilter<"Student"> | string | null
+  fourthSubject?: Prisma.StringNullableFilter<"Student"> | string | null
+  previousSchool?: Prisma.StringNullableFilter<"Student"> | string | null
+  previousClass?: Prisma.StringNullableFilter<"Student"> | string | null
+  tcNumber?: Prisma.StringNullableFilter<"Student"> | string | null
+  tcDate?: Prisma.DateTimeNullableFilter<"Student"> | Date | string | null
+  allergies?: Prisma.StringNullableFilter<"Student"> | string | null
+  medicalConditions?: Prisma.StringNullableFilter<"Student"> | string | null
+  medications?: Prisma.StringNullableFilter<"Student"> | string | null
+  healthNotes?: Prisma.StringNullableFilter<"Student"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  guardianNidUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  previousTcUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  marksheetUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   isActive?: Prisma.BoolFilter<"Student"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Student"> | Date | string
@@ -366,11 +796,54 @@ export type StudentOrderByWithAggregationInput = {
   studentId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrderInput | Prisma.SortOrder
+  nameBangla?: Prisma.SortOrderInput | Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrderInput | Prisma.SortOrder
   gender?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
   admissionDate?: Prisma.SortOrder
+  residentialType?: Prisma.SortOrder
+  shift?: Prisma.SortOrderInput | Prisma.SortOrder
+  quranWing?: Prisma.SortOrderInput | Prisma.SortOrder
+  birthRegNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  religion?: Prisma.SortOrderInput | Prisma.SortOrder
+  nationality?: Prisma.SortOrderInput | Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherName?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherOccupation?: Prisma.SortOrderInput | Prisma.SortOrder
+  fatherNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherName?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherOccupation?: Prisma.SortOrderInput | Prisma.SortOrder
+  motherNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrderInput | Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  presentAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  permanentAddress?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupName?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupRelation?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupPhone?: Prisma.SortOrderInput | Prisma.SortOrder
+  authorizedPickupNid?: Prisma.SortOrderInput | Prisma.SortOrder
+  pickupPersonPhotoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardName?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrderInput | Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousSchool?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousClass?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  tcDate?: Prisma.SortOrderInput | Prisma.SortOrder
+  allergies?: Prisma.SortOrderInput | Prisma.SortOrder
+  medicalConditions?: Prisma.SortOrderInput | Prisma.SortOrder
+  medications?: Prisma.SortOrderInput | Prisma.SortOrder
+  healthNotes?: Prisma.SortOrderInput | Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  guardianNidUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  previousTcUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  marksheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -391,11 +864,54 @@ export type StudentScalarWhereWithAggregatesInput = {
   studentId?: Prisma.StringWithAggregatesFilter<"Student"> | string
   firstName?: Prisma.StringWithAggregatesFilter<"Student"> | string
   lastName?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  nameBangla?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   dateOfBirth?: Prisma.DateTimeNullableWithAggregatesFilter<"Student"> | Date | string | null
   gender?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   admissionDate?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
+  residentialType?: Prisma.EnumResidentialTypeWithAggregatesFilter<"Student"> | $Enums.ResidentialType
+  shift?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  quranWing?: Prisma.EnumHefzWingNullableWithAggregatesFilter<"Student"> | $Enums.HefzWing | null
+  birthRegNo?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  bloodGroup?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  religion?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  nationality?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  studentPhotoUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  fatherName?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  fatherPhone?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  fatherOccupation?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  fatherNid?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  motherName?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  motherPhone?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  motherOccupation?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  motherNid?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  emergencyContactName?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  emergencyContactPhone?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  presentAddress?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  permanentAddress?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  authorizedPickupName?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  authorizedPickupRelation?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  authorizedPickupPhone?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  authorizedPickupNid?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  pickupPersonPhotoUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  academicGroup?: Prisma.EnumAcademicGroupNullableWithAggregatesFilter<"Student"> | $Enums.AcademicGroup | null
+  boardName?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  boardRollNo?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  boardRegNo?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  fourthSubject?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  previousSchool?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  previousClass?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  tcNumber?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  tcDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Student"> | Date | string | null
+  allergies?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  medicalConditions?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  medications?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  healthNotes?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  birthCertificateUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  guardianNidUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  previousTcUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  marksheetUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Student"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
@@ -406,11 +922,54 @@ export type StudentCreateInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -431,11 +990,54 @@ export type StudentUncheckedCreateInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -453,11 +1055,54 @@ export type StudentUpdateInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -478,11 +1123,54 @@ export type StudentUncheckedUpdateInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -502,11 +1190,54 @@ export type StudentCreateManyInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -517,11 +1248,54 @@ export type StudentUpdateManyMutationInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -534,11 +1308,54 @@ export type StudentUncheckedUpdateManyInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -556,11 +1373,54 @@ export type StudentCountOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  nameBangla?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   admissionDate?: Prisma.SortOrder
+  residentialType?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  quranWing?: Prisma.SortOrder
+  birthRegNo?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  religion?: Prisma.SortOrder
+  nationality?: Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrder
+  fatherName?: Prisma.SortOrder
+  fatherPhone?: Prisma.SortOrder
+  fatherOccupation?: Prisma.SortOrder
+  fatherNid?: Prisma.SortOrder
+  motherName?: Prisma.SortOrder
+  motherPhone?: Prisma.SortOrder
+  motherOccupation?: Prisma.SortOrder
+  motherNid?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  presentAddress?: Prisma.SortOrder
+  permanentAddress?: Prisma.SortOrder
+  authorizedPickupName?: Prisma.SortOrder
+  authorizedPickupRelation?: Prisma.SortOrder
+  authorizedPickupPhone?: Prisma.SortOrder
+  authorizedPickupNid?: Prisma.SortOrder
+  pickupPersonPhotoUrl?: Prisma.SortOrder
+  academicGroup?: Prisma.SortOrder
+  boardName?: Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrder
+  previousSchool?: Prisma.SortOrder
+  previousClass?: Prisma.SortOrder
+  tcNumber?: Prisma.SortOrder
+  tcDate?: Prisma.SortOrder
+  allergies?: Prisma.SortOrder
+  medicalConditions?: Prisma.SortOrder
+  medications?: Prisma.SortOrder
+  healthNotes?: Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrder
+  guardianNidUrl?: Prisma.SortOrder
+  previousTcUrl?: Prisma.SortOrder
+  marksheetUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -579,11 +1439,54 @@ export type StudentMaxOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  nameBangla?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   admissionDate?: Prisma.SortOrder
+  residentialType?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  quranWing?: Prisma.SortOrder
+  birthRegNo?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  religion?: Prisma.SortOrder
+  nationality?: Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrder
+  fatherName?: Prisma.SortOrder
+  fatherPhone?: Prisma.SortOrder
+  fatherOccupation?: Prisma.SortOrder
+  fatherNid?: Prisma.SortOrder
+  motherName?: Prisma.SortOrder
+  motherPhone?: Prisma.SortOrder
+  motherOccupation?: Prisma.SortOrder
+  motherNid?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  presentAddress?: Prisma.SortOrder
+  permanentAddress?: Prisma.SortOrder
+  authorizedPickupName?: Prisma.SortOrder
+  authorizedPickupRelation?: Prisma.SortOrder
+  authorizedPickupPhone?: Prisma.SortOrder
+  authorizedPickupNid?: Prisma.SortOrder
+  pickupPersonPhotoUrl?: Prisma.SortOrder
+  academicGroup?: Prisma.SortOrder
+  boardName?: Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrder
+  previousSchool?: Prisma.SortOrder
+  previousClass?: Prisma.SortOrder
+  tcNumber?: Prisma.SortOrder
+  tcDate?: Prisma.SortOrder
+  allergies?: Prisma.SortOrder
+  medicalConditions?: Prisma.SortOrder
+  medications?: Prisma.SortOrder
+  healthNotes?: Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrder
+  guardianNidUrl?: Prisma.SortOrder
+  previousTcUrl?: Prisma.SortOrder
+  marksheetUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -596,11 +1499,54 @@ export type StudentMinOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   firstName?: Prisma.SortOrder
   lastName?: Prisma.SortOrder
+  nameBangla?: Prisma.SortOrder
   dateOfBirth?: Prisma.SortOrder
   gender?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   address?: Prisma.SortOrder
   admissionDate?: Prisma.SortOrder
+  residentialType?: Prisma.SortOrder
+  shift?: Prisma.SortOrder
+  quranWing?: Prisma.SortOrder
+  birthRegNo?: Prisma.SortOrder
+  bloodGroup?: Prisma.SortOrder
+  religion?: Prisma.SortOrder
+  nationality?: Prisma.SortOrder
+  studentPhotoUrl?: Prisma.SortOrder
+  fatherName?: Prisma.SortOrder
+  fatherPhone?: Prisma.SortOrder
+  fatherOccupation?: Prisma.SortOrder
+  fatherNid?: Prisma.SortOrder
+  motherName?: Prisma.SortOrder
+  motherPhone?: Prisma.SortOrder
+  motherOccupation?: Prisma.SortOrder
+  motherNid?: Prisma.SortOrder
+  emergencyContactName?: Prisma.SortOrder
+  emergencyContactPhone?: Prisma.SortOrder
+  presentAddress?: Prisma.SortOrder
+  permanentAddress?: Prisma.SortOrder
+  authorizedPickupName?: Prisma.SortOrder
+  authorizedPickupRelation?: Prisma.SortOrder
+  authorizedPickupPhone?: Prisma.SortOrder
+  authorizedPickupNid?: Prisma.SortOrder
+  pickupPersonPhotoUrl?: Prisma.SortOrder
+  academicGroup?: Prisma.SortOrder
+  boardName?: Prisma.SortOrder
+  boardRollNo?: Prisma.SortOrder
+  boardRegNo?: Prisma.SortOrder
+  fourthSubject?: Prisma.SortOrder
+  previousSchool?: Prisma.SortOrder
+  previousClass?: Prisma.SortOrder
+  tcNumber?: Prisma.SortOrder
+  tcDate?: Prisma.SortOrder
+  allergies?: Prisma.SortOrder
+  medicalConditions?: Prisma.SortOrder
+  medications?: Prisma.SortOrder
+  healthNotes?: Prisma.SortOrder
+  birthCertificateUrl?: Prisma.SortOrder
+  guardianNidUrl?: Prisma.SortOrder
+  previousTcUrl?: Prisma.SortOrder
+  marksheetUrl?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -752,11 +1698,54 @@ export type StudentCreateWithoutAttendancesInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -776,11 +1765,54 @@ export type StudentUncheckedCreateWithoutAttendancesInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -813,11 +1845,54 @@ export type StudentUpdateWithoutAttendancesInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -837,11 +1912,54 @@ export type StudentUncheckedUpdateWithoutAttendancesInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -858,11 +1976,54 @@ export type StudentCreateWithoutEnrollmentsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -882,11 +2043,54 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -919,11 +2123,54 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -943,11 +2190,54 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -964,11 +2254,54 @@ export type StudentCreateWithoutGuardiansInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -988,11 +2321,54 @@ export type StudentUncheckedCreateWithoutGuardiansInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1025,11 +2401,54 @@ export type StudentUpdateWithoutGuardiansInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1049,11 +2468,54 @@ export type StudentUncheckedUpdateWithoutGuardiansInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1070,11 +2532,54 @@ export type StudentCreateWithoutHefzEnrollmentsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1094,11 +2599,54 @@ export type StudentUncheckedCreateWithoutHefzEnrollmentsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1131,11 +2679,54 @@ export type StudentUpdateWithoutHefzEnrollmentsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1155,11 +2746,54 @@ export type StudentUncheckedUpdateWithoutHefzEnrollmentsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1176,11 +2810,54 @@ export type StudentCreateWithoutResultsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1200,11 +2877,54 @@ export type StudentUncheckedCreateWithoutResultsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1237,11 +2957,54 @@ export type StudentUpdateWithoutResultsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1261,11 +3024,54 @@ export type StudentUncheckedUpdateWithoutResultsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1282,11 +3088,54 @@ export type StudentCreateWithoutFeesInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1306,11 +3155,54 @@ export type StudentUncheckedCreateWithoutFeesInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1343,11 +3235,54 @@ export type StudentUpdateWithoutFeesInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1367,11 +3302,54 @@ export type StudentUncheckedUpdateWithoutFeesInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1388,11 +3366,54 @@ export type StudentCreateWithoutPaymentsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1412,11 +3433,54 @@ export type StudentUncheckedCreateWithoutPaymentsInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1449,11 +3513,54 @@ export type StudentUpdateWithoutPaymentsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1473,11 +3580,54 @@ export type StudentUncheckedUpdateWithoutPaymentsInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1494,11 +3644,54 @@ export type StudentCreateWithoutUserInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1517,11 +3710,54 @@ export type StudentUncheckedCreateWithoutUserInput = {
   studentId: string
   firstName: string
   lastName?: string | null
+  nameBangla?: string | null
   dateOfBirth?: Date | string | null
   gender?: string | null
   phone?: string | null
   address?: string | null
   admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1555,11 +3791,54 @@ export type StudentUpdateWithoutUserInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1578,11 +3857,54 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   studentId?: Prisma.StringFieldUpdateOperationsInput | string
   firstName?: Prisma.StringFieldUpdateOperationsInput | string
   lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1687,11 +4009,54 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   studentId?: boolean
   firstName?: boolean
   lastName?: boolean
+  nameBangla?: boolean
   dateOfBirth?: boolean
   gender?: boolean
   phone?: boolean
   address?: boolean
   admissionDate?: boolean
+  residentialType?: boolean
+  shift?: boolean
+  quranWing?: boolean
+  birthRegNo?: boolean
+  bloodGroup?: boolean
+  religion?: boolean
+  nationality?: boolean
+  studentPhotoUrl?: boolean
+  fatherName?: boolean
+  fatherPhone?: boolean
+  fatherOccupation?: boolean
+  fatherNid?: boolean
+  motherName?: boolean
+  motherPhone?: boolean
+  motherOccupation?: boolean
+  motherNid?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  presentAddress?: boolean
+  permanentAddress?: boolean
+  authorizedPickupName?: boolean
+  authorizedPickupRelation?: boolean
+  authorizedPickupPhone?: boolean
+  authorizedPickupNid?: boolean
+  pickupPersonPhotoUrl?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
+  previousSchool?: boolean
+  previousClass?: boolean
+  tcNumber?: boolean
+  tcDate?: boolean
+  allergies?: boolean
+  medicalConditions?: boolean
+  medications?: boolean
+  healthNotes?: boolean
+  birthCertificateUrl?: boolean
+  guardianNidUrl?: boolean
+  previousTcUrl?: boolean
+  marksheetUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1713,11 +4078,54 @@ export type StudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   studentId?: boolean
   firstName?: boolean
   lastName?: boolean
+  nameBangla?: boolean
   dateOfBirth?: boolean
   gender?: boolean
   phone?: boolean
   address?: boolean
   admissionDate?: boolean
+  residentialType?: boolean
+  shift?: boolean
+  quranWing?: boolean
+  birthRegNo?: boolean
+  bloodGroup?: boolean
+  religion?: boolean
+  nationality?: boolean
+  studentPhotoUrl?: boolean
+  fatherName?: boolean
+  fatherPhone?: boolean
+  fatherOccupation?: boolean
+  fatherNid?: boolean
+  motherName?: boolean
+  motherPhone?: boolean
+  motherOccupation?: boolean
+  motherNid?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  presentAddress?: boolean
+  permanentAddress?: boolean
+  authorizedPickupName?: boolean
+  authorizedPickupRelation?: boolean
+  authorizedPickupPhone?: boolean
+  authorizedPickupNid?: boolean
+  pickupPersonPhotoUrl?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
+  previousSchool?: boolean
+  previousClass?: boolean
+  tcNumber?: boolean
+  tcDate?: boolean
+  allergies?: boolean
+  medicalConditions?: boolean
+  medications?: boolean
+  healthNotes?: boolean
+  birthCertificateUrl?: boolean
+  guardianNidUrl?: boolean
+  previousTcUrl?: boolean
+  marksheetUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1731,11 +4139,54 @@ export type StudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   studentId?: boolean
   firstName?: boolean
   lastName?: boolean
+  nameBangla?: boolean
   dateOfBirth?: boolean
   gender?: boolean
   phone?: boolean
   address?: boolean
   admissionDate?: boolean
+  residentialType?: boolean
+  shift?: boolean
+  quranWing?: boolean
+  birthRegNo?: boolean
+  bloodGroup?: boolean
+  religion?: boolean
+  nationality?: boolean
+  studentPhotoUrl?: boolean
+  fatherName?: boolean
+  fatherPhone?: boolean
+  fatherOccupation?: boolean
+  fatherNid?: boolean
+  motherName?: boolean
+  motherPhone?: boolean
+  motherOccupation?: boolean
+  motherNid?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  presentAddress?: boolean
+  permanentAddress?: boolean
+  authorizedPickupName?: boolean
+  authorizedPickupRelation?: boolean
+  authorizedPickupPhone?: boolean
+  authorizedPickupNid?: boolean
+  pickupPersonPhotoUrl?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
+  previousSchool?: boolean
+  previousClass?: boolean
+  tcNumber?: boolean
+  tcDate?: boolean
+  allergies?: boolean
+  medicalConditions?: boolean
+  medications?: boolean
+  healthNotes?: boolean
+  birthCertificateUrl?: boolean
+  guardianNidUrl?: boolean
+  previousTcUrl?: boolean
+  marksheetUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1749,17 +4200,60 @@ export type StudentSelectScalar = {
   studentId?: boolean
   firstName?: boolean
   lastName?: boolean
+  nameBangla?: boolean
   dateOfBirth?: boolean
   gender?: boolean
   phone?: boolean
   address?: boolean
   admissionDate?: boolean
+  residentialType?: boolean
+  shift?: boolean
+  quranWing?: boolean
+  birthRegNo?: boolean
+  bloodGroup?: boolean
+  religion?: boolean
+  nationality?: boolean
+  studentPhotoUrl?: boolean
+  fatherName?: boolean
+  fatherPhone?: boolean
+  fatherOccupation?: boolean
+  fatherNid?: boolean
+  motherName?: boolean
+  motherPhone?: boolean
+  motherOccupation?: boolean
+  motherNid?: boolean
+  emergencyContactName?: boolean
+  emergencyContactPhone?: boolean
+  presentAddress?: boolean
+  permanentAddress?: boolean
+  authorizedPickupName?: boolean
+  authorizedPickupRelation?: boolean
+  authorizedPickupPhone?: boolean
+  authorizedPickupNid?: boolean
+  pickupPersonPhotoUrl?: boolean
+  academicGroup?: boolean
+  boardName?: boolean
+  boardRollNo?: boolean
+  boardRegNo?: boolean
+  fourthSubject?: boolean
+  previousSchool?: boolean
+  previousClass?: boolean
+  tcNumber?: boolean
+  tcDate?: boolean
+  allergies?: boolean
+  medicalConditions?: boolean
+  medications?: boolean
+  healthNotes?: boolean
+  birthCertificateUrl?: boolean
+  guardianNidUrl?: boolean
+  previousTcUrl?: boolean
+  marksheetUrl?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "studentId" | "firstName" | "lastName" | "dateOfBirth" | "gender" | "phone" | "address" | "admissionDate" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
+export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "studentId" | "firstName" | "lastName" | "nameBangla" | "dateOfBirth" | "gender" | "phone" | "address" | "admissionDate" | "residentialType" | "shift" | "quranWing" | "birthRegNo" | "bloodGroup" | "religion" | "nationality" | "studentPhotoUrl" | "fatherName" | "fatherPhone" | "fatherOccupation" | "fatherNid" | "motherName" | "motherPhone" | "motherOccupation" | "motherNid" | "emergencyContactName" | "emergencyContactPhone" | "presentAddress" | "permanentAddress" | "authorizedPickupName" | "authorizedPickupRelation" | "authorizedPickupPhone" | "authorizedPickupNid" | "pickupPersonPhotoUrl" | "academicGroup" | "boardName" | "boardRollNo" | "boardRegNo" | "fourthSubject" | "previousSchool" | "previousClass" | "tcNumber" | "tcDate" | "allergies" | "medicalConditions" | "medications" | "healthNotes" | "birthCertificateUrl" | "guardianNidUrl" | "previousTcUrl" | "marksheetUrl" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
 export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Student$userArgs<ExtArgs>
   guardians?: boolean | Prisma.Student$guardiansArgs<ExtArgs>
@@ -1797,11 +4291,54 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     studentId: string
     firstName: string
     lastName: string | null
+    nameBangla: string | null
     dateOfBirth: Date | null
     gender: string | null
     phone: string | null
     address: string | null
     admissionDate: Date
+    residentialType: $Enums.ResidentialType
+    shift: string | null
+    quranWing: $Enums.HefzWing | null
+    birthRegNo: string | null
+    bloodGroup: string | null
+    religion: string | null
+    nationality: string | null
+    studentPhotoUrl: string | null
+    fatherName: string | null
+    fatherPhone: string | null
+    fatherOccupation: string | null
+    fatherNid: string | null
+    motherName: string | null
+    motherPhone: string | null
+    motherOccupation: string | null
+    motherNid: string | null
+    emergencyContactName: string | null
+    emergencyContactPhone: string | null
+    presentAddress: string | null
+    permanentAddress: string | null
+    authorizedPickupName: string | null
+    authorizedPickupRelation: string | null
+    authorizedPickupPhone: string | null
+    authorizedPickupNid: string | null
+    pickupPersonPhotoUrl: string | null
+    academicGroup: $Enums.AcademicGroup | null
+    boardName: string | null
+    boardRollNo: string | null
+    boardRegNo: string | null
+    fourthSubject: string | null
+    previousSchool: string | null
+    previousClass: string | null
+    tcNumber: string | null
+    tcDate: Date | null
+    allergies: string | null
+    medicalConditions: string | null
+    medications: string | null
+    healthNotes: string | null
+    birthCertificateUrl: string | null
+    guardianNidUrl: string | null
+    previousTcUrl: string | null
+    marksheetUrl: string | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -2242,11 +4779,54 @@ export interface StudentFieldRefs {
   readonly studentId: Prisma.FieldRef<"Student", 'String'>
   readonly firstName: Prisma.FieldRef<"Student", 'String'>
   readonly lastName: Prisma.FieldRef<"Student", 'String'>
+  readonly nameBangla: Prisma.FieldRef<"Student", 'String'>
   readonly dateOfBirth: Prisma.FieldRef<"Student", 'DateTime'>
   readonly gender: Prisma.FieldRef<"Student", 'String'>
   readonly phone: Prisma.FieldRef<"Student", 'String'>
   readonly address: Prisma.FieldRef<"Student", 'String'>
   readonly admissionDate: Prisma.FieldRef<"Student", 'DateTime'>
+  readonly residentialType: Prisma.FieldRef<"Student", 'ResidentialType'>
+  readonly shift: Prisma.FieldRef<"Student", 'String'>
+  readonly quranWing: Prisma.FieldRef<"Student", 'HefzWing'>
+  readonly birthRegNo: Prisma.FieldRef<"Student", 'String'>
+  readonly bloodGroup: Prisma.FieldRef<"Student", 'String'>
+  readonly religion: Prisma.FieldRef<"Student", 'String'>
+  readonly nationality: Prisma.FieldRef<"Student", 'String'>
+  readonly studentPhotoUrl: Prisma.FieldRef<"Student", 'String'>
+  readonly fatherName: Prisma.FieldRef<"Student", 'String'>
+  readonly fatherPhone: Prisma.FieldRef<"Student", 'String'>
+  readonly fatherOccupation: Prisma.FieldRef<"Student", 'String'>
+  readonly fatherNid: Prisma.FieldRef<"Student", 'String'>
+  readonly motherName: Prisma.FieldRef<"Student", 'String'>
+  readonly motherPhone: Prisma.FieldRef<"Student", 'String'>
+  readonly motherOccupation: Prisma.FieldRef<"Student", 'String'>
+  readonly motherNid: Prisma.FieldRef<"Student", 'String'>
+  readonly emergencyContactName: Prisma.FieldRef<"Student", 'String'>
+  readonly emergencyContactPhone: Prisma.FieldRef<"Student", 'String'>
+  readonly presentAddress: Prisma.FieldRef<"Student", 'String'>
+  readonly permanentAddress: Prisma.FieldRef<"Student", 'String'>
+  readonly authorizedPickupName: Prisma.FieldRef<"Student", 'String'>
+  readonly authorizedPickupRelation: Prisma.FieldRef<"Student", 'String'>
+  readonly authorizedPickupPhone: Prisma.FieldRef<"Student", 'String'>
+  readonly authorizedPickupNid: Prisma.FieldRef<"Student", 'String'>
+  readonly pickupPersonPhotoUrl: Prisma.FieldRef<"Student", 'String'>
+  readonly academicGroup: Prisma.FieldRef<"Student", 'AcademicGroup'>
+  readonly boardName: Prisma.FieldRef<"Student", 'String'>
+  readonly boardRollNo: Prisma.FieldRef<"Student", 'String'>
+  readonly boardRegNo: Prisma.FieldRef<"Student", 'String'>
+  readonly fourthSubject: Prisma.FieldRef<"Student", 'String'>
+  readonly previousSchool: Prisma.FieldRef<"Student", 'String'>
+  readonly previousClass: Prisma.FieldRef<"Student", 'String'>
+  readonly tcNumber: Prisma.FieldRef<"Student", 'String'>
+  readonly tcDate: Prisma.FieldRef<"Student", 'DateTime'>
+  readonly allergies: Prisma.FieldRef<"Student", 'String'>
+  readonly medicalConditions: Prisma.FieldRef<"Student", 'String'>
+  readonly medications: Prisma.FieldRef<"Student", 'String'>
+  readonly healthNotes: Prisma.FieldRef<"Student", 'String'>
+  readonly birthCertificateUrl: Prisma.FieldRef<"Student", 'String'>
+  readonly guardianNidUrl: Prisma.FieldRef<"Student", 'String'>
+  readonly previousTcUrl: Prisma.FieldRef<"Student", 'String'>
+  readonly marksheetUrl: Prisma.FieldRef<"Student", 'String'>
   readonly isActive: Prisma.FieldRef<"Student", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Student", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Student", 'DateTime'>

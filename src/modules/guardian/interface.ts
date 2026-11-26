@@ -1,11 +1,12 @@
 export interface CreateGuardianInput {
 	name: string;
-	email: string;
-	password: string;
-	phone?: string;
+	phone: string;
+	email?: string;
+	password?: string;
 	relation?: string;
 	occupation?: string;
 	address?: string;
+	nid?: string;
 	studentIds?: number[];
 }
 
@@ -15,6 +16,7 @@ export interface UpdateGuardianInput {
 	relation?: string | null;
 	occupation?: string | null;
 	address?: string | null;
+	nid?: string | null;
 }
 
 export interface LinkGuardianStudentInput {

@@ -49,6 +49,7 @@ model School {
   hefzDailyLogs      HefzDailyLog[]
   notifications      Notification[]
   classRoutines      ClassRoutine[]
+  classDiaries       ClassDiary[]
   platformAuditLogs  PlatformAuditLog[]
   uploadedFiles      UploadedFile[]
 

@@ -7,6 +7,7 @@ import {
 	approveAdmission,
 	confirmCashPayment,
 	createAdmission,
+	createPublicAdmissionBySlug,
 	getAdmissionById,
 	getAdmissions,
 	initiateOnlinePayment,
@@ -33,6 +34,26 @@ export const createAdmissionController = async (
 		...req.body,
 		schoolId,
 	});
+
+	return sendResponse(res, {
+		statusCode: 201,
+		success: true,
+		message: "Admission application created successfully",
+		data: result,
+	});
+};
+
+export const createPublicSlugAdmissionController = async (
+	req: Request,
+	res: Response,
+) => {
+	const slug = String(req.params.slug ?? "").trim();
+
+	if (!slug) {
+		throw new AppError(400, "Invalid school slug");
+	}
+
+	const result = await createPublicAdmissionBySlug(slug, req.body);
 
 	return sendResponse(res, {
 		statusCode: 201,
@@ -275,7 +296,12 @@ export const initiateOnlinePaymentController = async (
 export const trackAdmissionController = async (req: Request, res: Response) => {
 	const result = await trackAdmission({
 		applicationNo: String(req.body.applicationNo ?? ""),
-		studentEmail: String(req.body.studentEmail ?? ""),
+		...(req.body.guardianPhone
+			? { guardianPhone: String(req.body.guardianPhone) }
+			: {}),
+		...(req.body.studentEmail
+			? { studentEmail: String(req.body.studentEmail) }
+			: {}),
 	});
 
 	return sendResponse(res, {

@@ -16,6 +16,8 @@ export const attendanceSchoolParamsSchema = z.object({
 		.object({
 			studentId: z.coerce.number().int().positive().optional(),
 			enrollmentId: z.coerce.number().int().positive().optional(),
+			classId: z.coerce.number().int().positive().optional(),
+			sectionId: z.coerce.number().int().positive().optional(),
 			status: z.nativeEnum(AttendanceStatus).optional(),
 			fromDate: z.coerce.date().optional(),
 			toDate: z.coerce.date().optional(),

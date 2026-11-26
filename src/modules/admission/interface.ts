@@ -1,40 +1,62 @@
+import type {
+	AcademicGroup,
+	AdmissionPaymentMethod,
+	HefzWing,
+	ResidentialType,
+} from "../../generated/prisma/client.js";
+
 export interface CreateAdmissionInput {
 	schoolId: number;
 
-	// Student Information
+	// Stage 1 — Required Student Information
 	studentName: string;
-	studentEmail: string;
-	password: string;
-	dateOfBirth?: string;
-	gender?: string;
-	bloodGroup?: string;
-	previousSchool?: string;
-	previousClass?: string;
+	dateOfBirth: string;
+	gender: string;
+	residentialType?: ResidentialType;
 
-	// Guardian Information
-	guardianName?: string;
-	guardianEmail?: string;
-	guardianPhone?: string;
+	// Stage 1 — Required Academic Information
+	classId: number;
+	sectionId?: number;
+	academicYear: string;
+	shift?: string;
+	academicGroup?: AcademicGroup;
+	group?: string;
+	quranWing?: HefzWing;
+
+	// Stage 1 — Required Guardian Information
+	guardianName: string;
+	guardianPhone: string;
 	guardianRelationship?: string;
+	guardianEmail?: string;
 	guardianNid?: string;
 	guardianOccupation?: string;
 
-	// Address
+	// Optional Student Login (Not forced)
+	studentEmail?: string;
+	password?: string;
+
+	// Stage 2 — Optional Details
+	nameBangla?: string;
+	birthRegNo?: string;
+	bloodGroup?: string;
+	previousSchool?: string;
+	previousClass?: string;
+	fatherName?: string;
+	motherName?: string;
 	address?: string;
+	presentAddress?: string;
+	permanentAddress?: string;
 
-	// Application Information
-	classId: number;
-	academicYear: string;
-	shift?: string;
-	group?: string;
-
-	// Documents
+	// Optional Documents
 	studentPhotoUrl?: string;
 	birthCertificateUrl?: string;
 	previousCertificateUrl?: string;
+	guardianNidUrl?: string;
+	previousTcUrl?: string;
+	marksheetUrl?: string;
 
-	// Payment
-	paymentMethod: "CASH" | "ONLINE";
+	// Optional Payment (only when school admission fee is enabled)
+	paymentMethod?: AdmissionPaymentMethod;
 }
 
 export interface VerifyStudentEmailInput {
@@ -52,7 +74,8 @@ export interface InitiateOnlinePaymentInput {
 
 export interface TrackAdmissionInput {
 	applicationNo: string;
-	studentEmail: string;
+	studentEmail?: string;
+	guardianPhone?: string;
 }
 
 export interface GetAdmissionsQuery {

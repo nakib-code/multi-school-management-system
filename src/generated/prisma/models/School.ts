@@ -455,6 +455,7 @@ export type SchoolWhereInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   classRoutines?: Prisma.ClassRoutineListRelationFilter
+  classDiaries?: Prisma.ClassDiaryListRelationFilter
   platformAuditLogs?: Prisma.PlatformAuditLogListRelationFilter
   uploadedFiles?: Prisma.UploadedFileListRelationFilter
   pageContents?: Prisma.SchoolPageContentListRelationFilter
@@ -522,6 +523,7 @@ export type SchoolOrderByWithRelationInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   classRoutines?: Prisma.ClassRoutineOrderByRelationAggregateInput
+  classDiaries?: Prisma.ClassDiaryOrderByRelationAggregateInput
   platformAuditLogs?: Prisma.PlatformAuditLogOrderByRelationAggregateInput
   uploadedFiles?: Prisma.UploadedFileOrderByRelationAggregateInput
   pageContents?: Prisma.SchoolPageContentOrderByRelationAggregateInput
@@ -592,6 +594,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   hefzDailyLogs?: Prisma.HefzDailyLogListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   classRoutines?: Prisma.ClassRoutineListRelationFilter
+  classDiaries?: Prisma.ClassDiaryListRelationFilter
   platformAuditLogs?: Prisma.PlatformAuditLogListRelationFilter
   uploadedFiles?: Prisma.UploadedFileListRelationFilter
   pageContents?: Prisma.SchoolPageContentListRelationFilter
@@ -733,6 +736,7 @@ export type SchoolCreateInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -799,6 +803,7 @@ export type SchoolUncheckedCreateInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -864,6 +869,7 @@ export type SchoolUpdateInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -930,6 +936,7 @@ export type SchoolUncheckedUpdateInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1224,6 +1231,20 @@ export type SchoolUpdateOneRequiredWithoutAuditLogsNestedInput = {
   upsert?: Prisma.SchoolUpsertWithoutAuditLogsInput
   connect?: Prisma.SchoolWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.SchoolUpdateWithoutAuditLogsInput>, Prisma.SchoolUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type SchoolCreateNestedOneWithoutClassDiariesInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutClassDiariesInput, Prisma.SchoolUncheckedCreateWithoutClassDiariesInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutClassDiariesInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutClassDiariesNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutClassDiariesInput, Prisma.SchoolUncheckedCreateWithoutClassDiariesInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutClassDiariesInput
+  upsert?: Prisma.SchoolUpsertWithoutClassDiariesInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutClassDiariesInput, Prisma.SchoolUpdateWithoutClassDiariesInput>, Prisma.SchoolUncheckedUpdateWithoutClassDiariesInput>
 }
 
 export type SchoolCreateNestedOneWithoutClassRoutinesInput = {
@@ -1728,6 +1749,7 @@ export type SchoolCreateWithoutAdmissionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -1793,6 +1815,7 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -1873,6 +1896,7 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -1938,6 +1962,7 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2002,6 +2027,7 @@ export type SchoolCreateWithoutAdmissionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -2067,6 +2093,7 @@ export type SchoolUncheckedCreateWithoutAdmissionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2147,6 +2174,7 @@ export type SchoolUpdateWithoutAdmissionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -2212,6 +2240,7 @@ export type SchoolUncheckedUpdateWithoutAdmissionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2276,6 +2305,7 @@ export type SchoolCreateWithoutAttendancesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -2341,6 +2371,7 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2421,6 +2452,7 @@ export type SchoolUpdateWithoutAttendancesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -2486,6 +2518,7 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2550,6 +2583,7 @@ export type SchoolCreateWithoutAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -2615,6 +2649,7 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2695,6 +2730,7 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -2752,6 +2788,285 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
+  classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutClassDiariesInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  selectedPackage?: Prisma.PackageCreateNestedOneWithoutSelectedSchoolsInput
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
+  classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
+  uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutClassDiariesInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  selectedPackageId?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
+  classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutClassDiariesInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutClassDiariesInput, Prisma.SchoolUncheckedCreateWithoutClassDiariesInput>
+}
+
+export type SchoolUpsertWithoutClassDiariesInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutClassDiariesInput, Prisma.SchoolUncheckedUpdateWithoutClassDiariesInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutClassDiariesInput, Prisma.SchoolUncheckedCreateWithoutClassDiariesInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutClassDiariesInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutClassDiariesInput, Prisma.SchoolUncheckedUpdateWithoutClassDiariesInput>
+}
+
+export type SchoolUpdateWithoutClassDiariesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  selectedPackage?: Prisma.PackageUpdateOneWithoutSelectedSchoolsNestedInput
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
+  classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
+  uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutClassDiariesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedPackageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
   admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
@@ -2824,6 +3139,7 @@ export type SchoolCreateWithoutClassRoutinesInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -2889,6 +3205,7 @@ export type SchoolUncheckedCreateWithoutClassRoutinesInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -2969,6 +3286,7 @@ export type SchoolUpdateWithoutClassRoutinesInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -3034,6 +3352,7 @@ export type SchoolUncheckedUpdateWithoutClassRoutinesInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3098,6 +3417,7 @@ export type SchoolCreateWithoutClassesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -3163,6 +3483,7 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3243,6 +3564,7 @@ export type SchoolUpdateWithoutClassesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -3308,6 +3630,7 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3372,6 +3695,7 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -3437,6 +3761,7 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3517,6 +3842,7 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -3582,6 +3908,7 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3646,6 +3973,7 @@ export type SchoolCreateWithoutExamsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -3711,6 +4039,7 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -3791,6 +4120,7 @@ export type SchoolUpdateWithoutExamsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -3856,6 +4186,7 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3920,6 +4251,7 @@ export type SchoolCreateWithoutGuardiansInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -3985,6 +4317,7 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4065,6 +4398,7 @@ export type SchoolUpdateWithoutGuardiansInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -4130,6 +4464,7 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4194,6 +4529,7 @@ export type SchoolCreateWithoutHefzDailyLogsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -4259,6 +4595,7 @@ export type SchoolUncheckedCreateWithoutHefzDailyLogsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4339,6 +4676,7 @@ export type SchoolUpdateWithoutHefzDailyLogsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -4404,6 +4742,7 @@ export type SchoolUncheckedUpdateWithoutHefzDailyLogsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4468,6 +4807,7 @@ export type SchoolCreateWithoutHefzEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -4533,6 +4873,7 @@ export type SchoolUncheckedCreateWithoutHefzEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4613,6 +4954,7 @@ export type SchoolUpdateWithoutHefzEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -4678,6 +5020,7 @@ export type SchoolUncheckedUpdateWithoutHefzEnrollmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4742,6 +5085,7 @@ export type SchoolCreateWithoutManagersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -4807,6 +5151,7 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -4887,6 +5232,7 @@ export type SchoolUpdateWithoutManagersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -4952,6 +5298,7 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5016,6 +5363,7 @@ export type SchoolCreateWithoutNotificationsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -5081,6 +5429,7 @@ export type SchoolUncheckedCreateWithoutNotificationsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5161,6 +5510,7 @@ export type SchoolUpdateWithoutNotificationsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -5226,6 +5576,7 @@ export type SchoolUncheckedUpdateWithoutNotificationsInput = {
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5290,6 +5641,7 @@ export type SchoolCreateWithoutSelectedPackageInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -5355,6 +5707,7 @@ export type SchoolUncheckedCreateWithoutSelectedPackageInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5483,6 +5836,7 @@ export type SchoolCreateWithoutPlatformAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
@@ -5548,6 +5902,7 @@ export type SchoolUncheckedCreateWithoutPlatformAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
@@ -5628,6 +5983,7 @@ export type SchoolUpdateWithoutPlatformAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
@@ -5693,6 +6049,7 @@ export type SchoolUncheckedUpdateWithoutPlatformAuditLogsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5756,6 +6113,7 @@ export type SchoolCreateWithoutResultsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -5821,6 +6179,7 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -5901,6 +6260,7 @@ export type SchoolUpdateWithoutResultsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -5966,6 +6326,7 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6030,6 +6391,7 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -6095,6 +6457,7 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -6175,6 +6538,7 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -6240,6 +6604,7 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6305,6 +6670,7 @@ export type SchoolCreateWithoutContactMessagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -6370,6 +6736,7 @@ export type SchoolUncheckedCreateWithoutContactMessagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -6450,6 +6817,7 @@ export type SchoolUpdateWithoutContactMessagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -6515,6 +6883,7 @@ export type SchoolUncheckedUpdateWithoutContactMessagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6579,6 +6948,7 @@ export type SchoolCreateWithoutGalleryImagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -6644,6 +7014,7 @@ export type SchoolUncheckedCreateWithoutGalleryImagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -6724,6 +7095,7 @@ export type SchoolUpdateWithoutGalleryImagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -6789,6 +7161,7 @@ export type SchoolUncheckedUpdateWithoutGalleryImagesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6853,6 +7226,7 @@ export type SchoolCreateWithoutNoticesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -6918,6 +7292,7 @@ export type SchoolUncheckedCreateWithoutNoticesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -6998,6 +7373,7 @@ export type SchoolUpdateWithoutNoticesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -7063,6 +7439,7 @@ export type SchoolUncheckedUpdateWithoutNoticesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7127,6 +7504,7 @@ export type SchoolCreateWithoutPageContentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
@@ -7192,6 +7570,7 @@ export type SchoolUncheckedCreateWithoutPageContentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
@@ -7272,6 +7651,7 @@ export type SchoolUpdateWithoutPageContentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
@@ -7337,6 +7717,7 @@ export type SchoolUncheckedUpdateWithoutPageContentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7400,6 +7781,7 @@ export type SchoolCreateWithoutSchoolSettingInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -7465,6 +7847,7 @@ export type SchoolUncheckedCreateWithoutSchoolSettingInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -7545,6 +7928,7 @@ export type SchoolUpdateWithoutSchoolSettingInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -7610,6 +7994,7 @@ export type SchoolUncheckedUpdateWithoutSchoolSettingInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7674,6 +8059,7 @@ export type SchoolCreateWithoutSubscriptionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -7739,6 +8125,7 @@ export type SchoolUncheckedCreateWithoutSubscriptionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -7819,6 +8206,7 @@ export type SchoolUpdateWithoutSubscriptionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -7884,6 +8272,7 @@ export type SchoolUncheckedUpdateWithoutSubscriptionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7948,6 +8337,7 @@ export type SchoolCreateWithoutSectionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -8013,6 +8403,7 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -8093,6 +8484,7 @@ export type SchoolUpdateWithoutSectionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -8158,6 +8550,7 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8222,6 +8615,7 @@ export type SchoolCreateWithoutStudentFeesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -8287,6 +8681,7 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -8367,6 +8762,7 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -8432,6 +8828,7 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8496,6 +8893,7 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -8561,6 +8959,7 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -8641,6 +9040,7 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -8706,6 +9106,7 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8770,6 +9171,7 @@ export type SchoolCreateWithoutSubjectsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -8835,6 +9237,7 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -8915,6 +9318,7 @@ export type SchoolUpdateWithoutSubjectsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -8980,6 +9384,7 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9044,6 +9449,7 @@ export type SchoolCreateWithoutSubscriptionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -9109,6 +9515,7 @@ export type SchoolUncheckedCreateWithoutSubscriptionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -9189,6 +9596,7 @@ export type SchoolUpdateWithoutSubscriptionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -9254,6 +9662,7 @@ export type SchoolUncheckedUpdateWithoutSubscriptionPaymentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9318,6 +9727,7 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -9383,6 +9793,7 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -9463,6 +9874,7 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -9528,6 +9940,7 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9592,6 +10005,7 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -9657,6 +10071,7 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -9737,6 +10152,7 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -9802,6 +10218,7 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9866,6 +10283,7 @@ export type SchoolCreateWithoutTeachersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -9931,6 +10349,7 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -10011,6 +10430,7 @@ export type SchoolUpdateWithoutTeachersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -10076,6 +10496,7 @@ export type SchoolUncheckedUpdateWithoutTeachersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10141,6 +10562,7 @@ export type SchoolCreateWithoutUploadedFilesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
@@ -10206,6 +10628,7 @@ export type SchoolUncheckedCreateWithoutUploadedFilesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
   notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
@@ -10286,6 +10709,7 @@ export type SchoolUpdateWithoutUploadedFilesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
@@ -10351,6 +10775,7 @@ export type SchoolUncheckedUpdateWithoutUploadedFilesInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10414,6 +10839,7 @@ export type SchoolCreateWithoutUsersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
@@ -10479,6 +10905,7 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
   pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
@@ -10559,6 +10986,7 @@ export type SchoolUpdateWithoutUsersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -10624,6 +11052,7 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10721,6 +11150,7 @@ export type SchoolUpdateWithoutSelectedPackageInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
@@ -10786,6 +11216,7 @@ export type SchoolUncheckedUpdateWithoutSelectedPackageInput = {
   hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
   platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10858,6 +11289,7 @@ export type SchoolCountOutputType = {
   hefzDailyLogs: number
   notifications: number
   classRoutines: number
+  classDiaries: number
   platformAuditLogs: number
   uploadedFiles: number
   pageContents: number
@@ -10892,6 +11324,7 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   hefzDailyLogs?: boolean | SchoolCountOutputTypeCountHefzDailyLogsArgs
   notifications?: boolean | SchoolCountOutputTypeCountNotificationsArgs
   classRoutines?: boolean | SchoolCountOutputTypeCountClassRoutinesArgs
+  classDiaries?: boolean | SchoolCountOutputTypeCountClassDiariesArgs
   platformAuditLogs?: boolean | SchoolCountOutputTypeCountPlatformAuditLogsArgs
   uploadedFiles?: boolean | SchoolCountOutputTypeCountUploadedFilesArgs
   pageContents?: boolean | SchoolCountOutputTypeCountPageContentsArgs
@@ -11088,6 +11521,13 @@ export type SchoolCountOutputTypeCountClassRoutinesArgs<ExtArgs extends runtime.
 /**
  * SchoolCountOutputType without action
  */
+export type SchoolCountOutputTypeCountClassDiariesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClassDiaryWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
 export type SchoolCountOutputTypeCountPlatformAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.PlatformAuditLogWhereInput
 }
@@ -11187,6 +11627,7 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   hefzDailyLogs?: boolean | Prisma.School$hefzDailyLogsArgs<ExtArgs>
   notifications?: boolean | Prisma.School$notificationsArgs<ExtArgs>
   classRoutines?: boolean | Prisma.School$classRoutinesArgs<ExtArgs>
+  classDiaries?: boolean | Prisma.School$classDiariesArgs<ExtArgs>
   platformAuditLogs?: boolean | Prisma.School$platformAuditLogsArgs<ExtArgs>
   uploadedFiles?: boolean | Prisma.School$uploadedFilesArgs<ExtArgs>
   pageContents?: boolean | Prisma.School$pageContentsArgs<ExtArgs>
@@ -11329,6 +11770,7 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   hefzDailyLogs?: boolean | Prisma.School$hefzDailyLogsArgs<ExtArgs>
   notifications?: boolean | Prisma.School$notificationsArgs<ExtArgs>
   classRoutines?: boolean | Prisma.School$classRoutinesArgs<ExtArgs>
+  classDiaries?: boolean | Prisma.School$classDiariesArgs<ExtArgs>
   platformAuditLogs?: boolean | Prisma.School$platformAuditLogsArgs<ExtArgs>
   uploadedFiles?: boolean | Prisma.School$uploadedFilesArgs<ExtArgs>
   pageContents?: boolean | Prisma.School$pageContentsArgs<ExtArgs>
@@ -11374,6 +11816,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     hefzDailyLogs: Prisma.$HefzDailyLogPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     classRoutines: Prisma.$ClassRoutinePayload<ExtArgs>[]
+    classDiaries: Prisma.$ClassDiaryPayload<ExtArgs>[]
     platformAuditLogs: Prisma.$PlatformAuditLogPayload<ExtArgs>[]
     uploadedFiles: Prisma.$UploadedFilePayload<ExtArgs>[]
     pageContents: Prisma.$SchoolPageContentPayload<ExtArgs>[]
@@ -11834,6 +12277,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   hefzDailyLogs<T extends Prisma.School$hefzDailyLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$hefzDailyLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HefzDailyLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.School$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   classRoutines<T extends Prisma.School$classRoutinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$classRoutinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassRoutinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  classDiaries<T extends Prisma.School$classDiariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$classDiariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassDiaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   platformAuditLogs<T extends Prisma.School$platformAuditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$platformAuditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlatformAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   uploadedFiles<T extends Prisma.School$uploadedFilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$uploadedFilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UploadedFilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pageContents<T extends Prisma.School$pageContentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$pageContentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolPageContentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -12936,6 +13380,30 @@ export type School$classRoutinesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.ClassRoutineScalarFieldEnum | Prisma.ClassRoutineScalarFieldEnum[]
+}
+
+/**
+ * School.classDiaries
+ */
+export type School$classDiariesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClassDiary
+   */
+  select?: Prisma.ClassDiarySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClassDiary
+   */
+  omit?: Prisma.ClassDiaryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassDiaryInclude<ExtArgs> | null
+  where?: Prisma.ClassDiaryWhereInput
+  orderBy?: Prisma.ClassDiaryOrderByWithRelationInput | Prisma.ClassDiaryOrderByWithRelationInput[]
+  cursor?: Prisma.ClassDiaryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClassDiaryScalarFieldEnum | Prisma.ClassDiaryScalarFieldEnum[]
 }
 
 /**

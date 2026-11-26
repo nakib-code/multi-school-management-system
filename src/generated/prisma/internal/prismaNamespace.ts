@@ -401,6 +401,7 @@ export const ModelName = {
   AdmissionPayment: 'AdmissionPayment',
   Attendance: 'Attendance',
   AuditLog: 'AuditLog',
+  ClassDiary: 'ClassDiary',
   ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
   Enrollment: 'Enrollment',
@@ -450,7 +451,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "classDiary" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -747,6 +748,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AuditLogCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AuditLogCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClassDiary: {
+      payload: Prisma.$ClassDiaryPayload<ExtArgs>
+      fields: Prisma.ClassDiaryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClassDiaryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClassDiaryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>
+        }
+        findFirst: {
+          args: Prisma.ClassDiaryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClassDiaryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>
+        }
+        findMany: {
+          args: Prisma.ClassDiaryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>[]
+        }
+        create: {
+          args: Prisma.ClassDiaryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>
+        }
+        createMany: {
+          args: Prisma.ClassDiaryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClassDiaryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>[]
+        }
+        delete: {
+          args: Prisma.ClassDiaryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>
+        }
+        update: {
+          args: Prisma.ClassDiaryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClassDiaryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClassDiaryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClassDiaryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClassDiaryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassDiaryPayload>
+        }
+        aggregate: {
+          args: Prisma.ClassDiaryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClassDiary>
+        }
+        groupBy: {
+          args: Prisma.ClassDiaryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClassDiaryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClassDiaryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClassDiaryCountAggregateOutputType> | number
         }
       }
     }
@@ -3312,11 +3387,14 @@ export const AdmissionScalarFieldEnum = {
   sectionId: 'sectionId',
   applicationNo: 'applicationNo',
   studentName: 'studentName',
+  nameBangla: 'nameBangla',
   studentEmail: 'studentEmail',
   passwordHash: 'passwordHash',
   dateOfBirth: 'dateOfBirth',
   gender: 'gender',
   bloodGroup: 'bloodGroup',
+  birthRegNo: 'birthRegNo',
+  residentialType: 'residentialType',
   previousSchool: 'previousSchool',
   previousClass: 'previousClass',
   guardianName: 'guardianName',
@@ -3325,13 +3403,22 @@ export const AdmissionScalarFieldEnum = {
   guardianRelationship: 'guardianRelationship',
   guardianNid: 'guardianNid',
   guardianOccupation: 'guardianOccupation',
+  fatherName: 'fatherName',
+  motherName: 'motherName',
   address: 'address',
+  presentAddress: 'presentAddress',
+  permanentAddress: 'permanentAddress',
   academicYear: 'academicYear',
   shift: 'shift',
   group: 'group',
+  academicGroup: 'academicGroup',
+  quranWing: 'quranWing',
   studentPhotoUrl: 'studentPhotoUrl',
   birthCertificateUrl: 'birthCertificateUrl',
   previousCertificateUrl: 'previousCertificateUrl',
+  guardianNidUrl: 'guardianNidUrl',
+  previousTcUrl: 'previousTcUrl',
+  marksheetUrl: 'marksheetUrl',
   status: 'status',
   studentEmailVerified: 'studentEmailVerified',
   reviewedAt: 'reviewedAt',
@@ -3394,6 +3481,27 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const ClassDiaryScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  classId: 'classId',
+  sectionId: 'sectionId',
+  subjectId: 'subjectId',
+  teacherId: 'teacherId',
+  createdById: 'createdById',
+  diaryDate: 'diaryDate',
+  title: 'title',
+  classwork: 'classwork',
+  homework: 'homework',
+  dueDate: 'dueDate',
+  attachmentUrl: 'attachmentUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassDiaryScalarFieldEnum = (typeof ClassDiaryScalarFieldEnum)[keyof typeof ClassDiaryScalarFieldEnum]
+
+
 export const ClassRoutineScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -3436,6 +3544,12 @@ export const EnrollmentScalarFieldEnum = {
   sectionId: 'sectionId',
   academicYear: 'academicYear',
   rollNumber: 'rollNumber',
+  shift: 'shift',
+  academicGroup: 'academicGroup',
+  boardName: 'boardName',
+  boardRollNo: 'boardRollNo',
+  boardRegNo: 'boardRegNo',
+  fourthSubject: 'fourthSubject',
   status: 'status',
   enrolledAt: 'enrolledAt',
   createdAt: 'createdAt',
@@ -3470,6 +3584,7 @@ export const GuardianScalarFieldEnum = {
   relation: 'relation',
   occupation: 'occupation',
   address: 'address',
+  nid: 'nid',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3865,11 +3980,54 @@ export const StudentScalarFieldEnum = {
   studentId: 'studentId',
   firstName: 'firstName',
   lastName: 'lastName',
+  nameBangla: 'nameBangla',
   dateOfBirth: 'dateOfBirth',
   gender: 'gender',
   phone: 'phone',
   address: 'address',
   admissionDate: 'admissionDate',
+  residentialType: 'residentialType',
+  shift: 'shift',
+  quranWing: 'quranWing',
+  birthRegNo: 'birthRegNo',
+  bloodGroup: 'bloodGroup',
+  religion: 'religion',
+  nationality: 'nationality',
+  studentPhotoUrl: 'studentPhotoUrl',
+  fatherName: 'fatherName',
+  fatherPhone: 'fatherPhone',
+  fatherOccupation: 'fatherOccupation',
+  fatherNid: 'fatherNid',
+  motherName: 'motherName',
+  motherPhone: 'motherPhone',
+  motherOccupation: 'motherOccupation',
+  motherNid: 'motherNid',
+  emergencyContactName: 'emergencyContactName',
+  emergencyContactPhone: 'emergencyContactPhone',
+  presentAddress: 'presentAddress',
+  permanentAddress: 'permanentAddress',
+  authorizedPickupName: 'authorizedPickupName',
+  authorizedPickupRelation: 'authorizedPickupRelation',
+  authorizedPickupPhone: 'authorizedPickupPhone',
+  authorizedPickupNid: 'authorizedPickupNid',
+  pickupPersonPhotoUrl: 'pickupPersonPhotoUrl',
+  academicGroup: 'academicGroup',
+  boardName: 'boardName',
+  boardRollNo: 'boardRollNo',
+  boardRegNo: 'boardRegNo',
+  fourthSubject: 'fourthSubject',
+  previousSchool: 'previousSchool',
+  previousClass: 'previousClass',
+  tcNumber: 'tcNumber',
+  tcDate: 'tcDate',
+  allergies: 'allergies',
+  medicalConditions: 'medicalConditions',
+  medications: 'medications',
+  healthNotes: 'healthNotes',
+  birthCertificateUrl: 'birthCertificateUrl',
+  guardianNidUrl: 'guardianNidUrl',
+  previousTcUrl: 'previousTcUrl',
+  marksheetUrl: 'marksheetUrl',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -4100,6 +4258,48 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
+ * Reference to a field of type 'ResidentialType'
+ */
+export type EnumResidentialTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResidentialType'>
+    
+
+
+/**
+ * Reference to a field of type 'ResidentialType[]'
+ */
+export type ListEnumResidentialTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ResidentialType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AcademicGroup'
+ */
+export type EnumAcademicGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AcademicGroup'>
+    
+
+
+/**
+ * Reference to a field of type 'AcademicGroup[]'
+ */
+export type ListEnumAcademicGroupFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AcademicGroup[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzWing'
+ */
+export type EnumHefzWingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzWing'>
+    
+
+
+/**
+ * Reference to a field of type 'HefzWing[]'
+ */
+export type ListEnumHefzWingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzWing[]'>
+    
+
+
+/**
  * Reference to a field of type 'AdmissionStatus'
  */
 export type EnumAdmissionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdmissionStatus'>
@@ -4271,20 +4471,6 @@ export type EnumHefzAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputT
  * Reference to a field of type 'HefzAttendanceStatus[]'
  */
 export type ListEnumHefzAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzAttendanceStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'HefzWing'
- */
-export type EnumHefzWingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzWing'>
-    
-
-
-/**
- * Reference to a field of type 'HefzWing[]'
- */
-export type ListEnumHefzWingFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HefzWing[]'>
     
 
 
@@ -4722,6 +4908,7 @@ export type GlobalOmitConfig = {
   admissionPayment?: Prisma.AdmissionPaymentOmit
   attendance?: Prisma.AttendanceOmit
   auditLog?: Prisma.AuditLogOmit
+  classDiary?: Prisma.ClassDiaryOmit
   classRoutine?: Prisma.ClassRoutineOmit
   schoolClass?: Prisma.SchoolClassOmit
   enrollment?: Prisma.EnrollmentOmit

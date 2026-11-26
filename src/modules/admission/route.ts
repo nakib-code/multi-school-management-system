@@ -13,6 +13,7 @@ import {
 	approveAdmissionController,
 	confirmCashPaymentController,
 	createAdmissionController,
+	createPublicSlugAdmissionController,
 	getAdmissionByIdController,
 	getAdmissionsController,
 	initiateOnlinePaymentController,
@@ -24,6 +25,7 @@ import {
 import {
 	confirmCashPaymentSchema,
 	createAdmissionSchema,
+	createPublicSlugAdmissionSchema,
 	getAdmissionsSchema,
 	rejectAdmissionSchema,
 	trackAdmissionSchema,
@@ -41,6 +43,12 @@ router.post(
 	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(createAdmissionSchema),
 	createAdmissionController,
+);
+
+router.post(
+	"/public/schools/:slug/admissions",
+	validateRequest(createPublicSlugAdmissionSchema),
+	createPublicSlugAdmissionController,
 );
 
 router.post(

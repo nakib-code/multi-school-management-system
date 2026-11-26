@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 
+import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedTeacherId } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
 import type { TeacherAssignmentFilterQuery } from "./interface.js";
 import {
@@ -38,7 +40,7 @@ export const createTeacherAssignmentController = async (
 };
 
 export const getTeacherAssignmentsController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -47,10 +49,23 @@ export const getTeacherAssignmentsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: TeacherAssignmentFilterQuery }
 			| undefined;
-		const result = await getTeacherAssignments(
-			schoolId,
-			validated?.query ?? {},
-		);
+		const query: TeacherAssignmentFilterQuery = { ...(validated?.query ?? {}) };
+
+		if (req.user) {
+			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
+			if (scopedTeacherId !== null) {
+				if (scopedTeacherId < 0) {
+					return sendResponse(res, {
+						statusCode: 200,
+						message: "Teacher assignments retrieved successfully",
+						data: [],
+					});
+				}
+				query.teacherId = scopedTeacherId;
+			}
+		}
+
+		const result = await getTeacherAssignments(schoolId, query);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Teacher assignments retrieved successfully",

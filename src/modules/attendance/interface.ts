@@ -26,6 +26,8 @@ export interface UpdateAttendanceInput {
 export interface AttendanceFilterQuery {
 	studentId?: number;
 	enrollmentId?: number;
+	classId?: number;
+	sectionId?: number;
 	status?: AttendanceStatus;
 	fromDate?: Date;
 	toDate?: Date;

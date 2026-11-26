@@ -26,6 +26,7 @@ model Teacher {
   salaryPayments  SalaryPayment[]
   hefzEnrollments HefzEnrollment[]
   classRoutines   ClassRoutine[]
+  classDiaries    ClassDiary[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

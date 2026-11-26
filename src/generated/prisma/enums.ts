@@ -177,7 +177,10 @@ export type SchoolStatus = (typeof SchoolStatus)[keyof typeof SchoolStatus]
 
 export const AdmissionPaymentMethod = {
   CASH: 'CASH',
-  ONLINE: 'ONLINE'
+  ONLINE: 'ONLINE',
+  BKASH: 'BKASH',
+  NAGAD: 'NAGAD',
+  ROCKET: 'ROCKET'
 } as const
 
 export type AdmissionPaymentMethod = (typeof AdmissionPaymentMethod)[keyof typeof AdmissionPaymentMethod]
@@ -249,11 +252,32 @@ export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof Enrollment
 
 
 export const HefzWing = {
+  NOORANI: 'NOORANI',
+  QAIDA: 'QAIDA',
+  AMPARA: 'AMPARA',
   NAJERA: 'NAJERA',
   HEFZ: 'HEFZ'
 } as const
 
 export type HefzWing = (typeof HefzWing)[keyof typeof HefzWing]
+
+
+export const ResidentialType = {
+  NON_RESIDENTIAL: 'NON_RESIDENTIAL',
+  RESIDENTIAL: 'RESIDENTIAL',
+  DAY_CARE: 'DAY_CARE'
+} as const
+
+export type ResidentialType = (typeof ResidentialType)[keyof typeof ResidentialType]
+
+
+export const AcademicGroup = {
+  SCIENCE: 'SCIENCE',
+  ARTS: 'ARTS',
+  COMMERCE: 'COMMERCE'
+} as const
+
+export type AcademicGroup = (typeof AcademicGroup)[keyof typeof AcademicGroup]
 
 
 export const HefzEnrollmentStatus = {
@@ -295,6 +319,8 @@ export const NotificationType = {
   PAYMENT: 'PAYMENT',
   SUBSCRIPTION: 'SUBSCRIPTION',
   ROUTINE: 'ROUTINE',
+  DIARY: 'DIARY',
+  EMERGENCY: 'EMERGENCY',
   ANNOUNCEMENT: 'ANNOUNCEMENT',
   SYSTEM: 'SYSTEM'
 } as const

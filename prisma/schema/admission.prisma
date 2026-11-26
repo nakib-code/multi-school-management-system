@@ -12,35 +12,47 @@ model Admission {
   applicationNo String @unique
 
   // Student Information
-  studentName    String
-  studentEmail   String
-  passwordHash   String
-  dateOfBirth    DateTime?
-  gender         String?
-  bloodGroup     String?
-  previousSchool String?
-  previousClass  String?
+  studentName     String
+  nameBangla      String?
+  studentEmail    String?
+  passwordHash    String?
+  dateOfBirth     DateTime?
+  gender          String?
+  bloodGroup      String?
+  birthRegNo      String?
+  residentialType ResidentialType @default(NON_RESIDENTIAL)
+  previousSchool  String?
+  previousClass   String?
 
-  // Guardian Information
+  // Guardian & Parent Information
   guardianName         String?
   guardianEmail        String?
   guardianPhone        String?
   guardianRelationship String?
   guardianNid          String?
   guardianOccupation   String?
+  fatherName           String?
+  motherName           String?
 
   // Address
-  address String?
+  address          String?
+  presentAddress   String?
+  permanentAddress String?
 
   // Application Information
-  academicYear String
-  shift        String?
-  group        String?
+  academicYear  String
+  shift         String?
+  group         String?
+  academicGroup AcademicGroup?
+  quranWing     HefzWing?
 
   // Documents
   studentPhotoUrl        String?
   birthCertificateUrl    String?
   previousCertificateUrl String?
+  guardianNidUrl         String?
+  previousTcUrl          String?
+  marksheetUrl           String?
 
   // Admission Status
   status               AdmissionStatus @default(PENDING)

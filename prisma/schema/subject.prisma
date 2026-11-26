@@ -17,6 +17,7 @@ model Subject {
   teacherAssignments TeacherAssignment[]
   results            Result[]
   classRoutines      ClassRoutine[]
+  classDiaries       ClassDiary[]
 
   @@unique([schoolId, code])
   @@index([schoolId])

@@ -1,23 +1,136 @@
+import type {
+	AcademicGroup,
+	HefzWing,
+	ResidentialType,
+	UserRole,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
 
 export interface CreateStudentInput {
-	firstName: string;
-	lastName?: string | undefined;
-	dateOfBirth?: Date | undefined;
-	gender?: string | undefined;
-	phone?: string | undefined;
-	address?: string | undefined;
-	studentId?: string | undefined;
-	guardianName?: string | undefined;
-	guardianPhone?: string | undefined;
-	guardianEmail?: string | undefined;
-	guardianRelation?: string | undefined;
-	guardianOccupation?: string | undefined;
-	guardianAddress?: string | undefined;
-	guardianPassword?: string | undefined;
+	// Stage 1 — Required
+	studentName?: string;
+	firstName?: string;
+	lastName?: string;
+	dateOfBirth: Date;
+	gender: string;
+	residentialType?: ResidentialType;
+	academicYear: string;
+	classId: number;
+	sectionId?: number;
+	rollNumber?: number;
+	shift?: string;
+	academicGroup?: AcademicGroup;
+	quranWing?: HefzWing;
+	ustadId?: number;
+	phone?: string;
+	studentId?: string;
+
+	// Guardian Onboarding
+	guardianName: string;
+	guardianPhone: string;
+	guardianRelation?: string;
+	guardianEmail?: string;
+	guardianNid?: string;
+	guardianOccupation?: string;
+	guardianAddress?: string;
+	guardianPassword?: string;
+
+	// Stage 2 — Optional
+	nameBangla?: string;
+	birthRegNo?: string;
+	bloodGroup?: string;
+	religion?: string;
+	nationality?: string;
+	studentPhotoUrl?: string;
+	fatherName?: string;
+	fatherPhone?: string;
+	fatherOccupation?: string;
+	fatherNid?: string;
+	motherName?: string;
+	motherPhone?: string;
+	motherOccupation?: string;
+	motherNid?: string;
+	emergencyContactName?: string;
+	emergencyContactPhone?: string;
+	address?: string;
+	presentAddress?: string;
+	permanentAddress?: string;
+	authorizedPickupName?: string;
+	authorizedPickupRelation?: string;
+	authorizedPickupPhone?: string;
+	authorizedPickupNid?: string;
+	pickupPersonPhotoUrl?: string;
+	boardName?: string;
+	boardRollNo?: string;
+	boardRegNo?: string;
+	fourthSubject?: string;
+	previousSchool?: string;
+	previousClass?: string;
+	tcNumber?: string;
+	tcDate?: Date;
+	allergies?: string;
+	medicalConditions?: string;
+	medications?: string;
+	healthNotes?: string;
+	birthCertificateUrl?: string;
+	guardianNidUrl?: string;
+	previousTcUrl?: string;
+	marksheetUrl?: string;
 }
+
+export type UpdateStudentInput = Partial<{
+	firstName: string;
+	lastName: string | null;
+	nameBangla: string | null;
+	dateOfBirth: Date | null;
+	gender: string | null;
+	phone: string | null;
+	residentialType: ResidentialType;
+	shift: string | null;
+	quranWing: HefzWing | null;
+	birthRegNo: string | null;
+	bloodGroup: string | null;
+	religion: string | null;
+	nationality: string | null;
+	studentPhotoUrl: string | null;
+	fatherName: string | null;
+	fatherPhone: string | null;
+	fatherOccupation: string | null;
+	fatherNid: string | null;
+	motherName: string | null;
+	motherPhone: string | null;
+	motherOccupation: string | null;
+	motherNid: string | null;
+	emergencyContactName: string | null;
+	emergencyContactPhone: string | null;
+	address: string | null;
+	presentAddress: string | null;
+	permanentAddress: string | null;
+	authorizedPickupName: string | null;
+	authorizedPickupRelation: string | null;
+	authorizedPickupPhone: string | null;
+	authorizedPickupNid: string | null;
+	pickupPersonPhotoUrl: string | null;
+	academicGroup: AcademicGroup | null;
+	boardName: string | null;
+	boardRollNo: string | null;
+	boardRegNo: string | null;
+	fourthSubject: string | null;
+	previousSchool: string | null;
+	previousClass: string | null;
+	tcNumber: string | null;
+	tcDate: Date | null;
+	allergies: string | null;
+	medicalConditions: string | null;
+	medications: string | null;
+	healthNotes: string | null;
+	birthCertificateUrl: string | null;
+	guardianNidUrl: string | null;
+	previousTcUrl: string | null;
+	marksheetUrl: string | null;
+}>;
 
 const generateStudentCode = (schoolId: number) => {
 	const rand = Math.floor(1000 + Math.random() * 9000);
@@ -25,41 +138,255 @@ const generateStudentCode = (schoolId: number) => {
 	return `STD-${schoolId}-${ts}${rand}`;
 };
 
+const fullStudentInclude = {
+	user: {
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			phone: true,
+			role: true,
+			status: true,
+			schoolId: true,
+		},
+	},
+	guardians: {
+		select: {
+			isPrimary: true,
+			guardian: {
+				select: {
+					id: true,
+					relation: true,
+					occupation: true,
+					address: true,
+					nid: true,
+					user: {
+						select: {
+							id: true,
+							name: true,
+							phone: true,
+							email: true,
+						},
+					},
+				},
+			},
+		},
+	},
+	enrollments: {
+		orderBy: { createdAt: "desc" as const },
+		select: {
+			id: true,
+			academicYear: true,
+			rollNumber: true,
+			shift: true,
+			academicGroup: true,
+			boardName: true,
+			boardRollNo: true,
+			boardRegNo: true,
+			fourthSubject: true,
+			status: true,
+			enrolledAt: true,
+			class: { select: { id: true, name: true, code: true } },
+			section: { select: { id: true, name: true, code: true } },
+		},
+	},
+	hefzEnrollments: {
+		orderBy: { createdAt: "desc" as const },
+		select: {
+			id: true,
+			wing: true,
+			currentPara: true,
+			currentSurah: true,
+			startDate: true,
+			status: true,
+			ustad: {
+				select: {
+					id: true,
+					employeeId: true,
+					firstName: true,
+					lastName: true,
+				},
+			},
+		},
+	},
+};
+
 export const createStudent = async (
 	schoolId: number,
 	input: CreateStudentInput,
 ) => {
-	const school = await prisma.school.findUnique({
-		where: { id: schoolId },
-		select: { id: true, status: true },
-	});
+	const [school, schoolClass] = await Promise.all([
+		prisma.school.findUnique({
+			where: { id: schoolId },
+			select: { id: true, status: true },
+		}),
+		prisma.schoolClass.findFirst({
+			where: { id: input.classId, schoolId, isActive: true },
+			select: { id: true, name: true, code: true },
+		}),
+	]);
 
 	if (!school) {
 		throw new AppError(404, "School not found");
 	}
+	if (!schoolClass) {
+		throw new AppError(404, "Selected class not found or inactive");
+	}
+
+	if (input.sectionId !== undefined) {
+		const section = await prisma.section.findFirst({
+			where: { id: input.sectionId, schoolId, classId: input.classId },
+			select: { id: true },
+		});
+		if (!section) {
+			throw new AppError(404, "Selected section not found for this class");
+		}
+	}
+
+	// Derive firstName / lastName from studentName or firstName
+	let firstName = input.firstName?.trim() || "";
+	let lastName = input.lastName?.trim() || undefined;
+	if (!firstName && input.studentName?.trim()) {
+		const parts = input.studentName.trim().split(/\s+/);
+		firstName = parts[0] ?? input.studentName.trim();
+		if (parts.length > 1) {
+			lastName = parts.slice(1).join(" ");
+		}
+	}
 
 	const generatedCode = input.studentId?.trim() || generateStudentCode(schoolId);
+	const cleanPhone = input.guardianPhone.trim();
+	const relUpper = (input.guardianRelation?.trim() || "FATHER").toUpperCase();
 
 	return prisma.$transaction(async (tx) => {
-		// 1. Create Student WITHOUT requiring email or User login account
+		// 1. Create Student WITHOUT requiring student email or User login
 		const student = await tx.student.create({
 			data: {
 				schoolId,
 				studentId: generatedCode,
-				firstName: input.firstName.trim(),
-				...(input.lastName !== undefined && {
-					lastName: input.lastName.trim(),
-				}),
-				...(input.dateOfBirth !== undefined && {
-					dateOfBirth: input.dateOfBirth,
-				}),
-				...(input.gender !== undefined && { gender: input.gender.trim() }),
-				...(input.phone !== undefined && { phone: input.phone.trim() }),
-				...(input.address !== undefined && { address: input.address.trim() }),
+				firstName,
+				...(lastName ? { lastName } : {}),
+				...(input.nameBangla ? { nameBangla: input.nameBangla } : {}),
+				dateOfBirth: input.dateOfBirth,
+				gender: input.gender.trim().toUpperCase(),
+				phone: input.phone?.trim() || cleanPhone,
+				residentialType: input.residentialType ?? "NON_RESIDENTIAL",
+				shift: (input.shift?.trim() || "MORNING").toUpperCase(),
+				...(input.academicGroup ? { academicGroup: input.academicGroup } : {}),
+				...(input.quranWing ? { quranWing: input.quranWing } : {}),
+				...(input.birthRegNo ? { birthRegNo: input.birthRegNo } : {}),
+				...(input.bloodGroup ? { bloodGroup: input.bloodGroup } : {}),
+				...(input.religion ? { religion: input.religion } : {}),
+				...(input.nationality ? { nationality: input.nationality } : {}),
+				...(input.studentPhotoUrl
+					? { studentPhotoUrl: input.studentPhotoUrl }
+					: {}),
+				...(input.fatherName || relUpper === "FATHER"
+					? { fatherName: input.fatherName ?? input.guardianName.trim() }
+					: {}),
+				...(input.fatherPhone || relUpper === "FATHER"
+					? { fatherPhone: input.fatherPhone ?? cleanPhone }
+					: {}),
+				...(input.fatherOccupation || (relUpper === "FATHER" && input.guardianOccupation)
+					? { fatherOccupation: input.fatherOccupation ?? input.guardianOccupation }
+					: {}),
+				...(input.fatherNid || (relUpper === "FATHER" && input.guardianNid)
+					? { fatherNid: input.fatherNid ?? input.guardianNid }
+					: {}),
+				...(input.motherName || relUpper === "MOTHER"
+					? { motherName: input.motherName ?? input.guardianName.trim() }
+					: {}),
+				...(input.motherPhone || relUpper === "MOTHER"
+					? { motherPhone: input.motherPhone ?? cleanPhone }
+					: {}),
+				...(input.motherOccupation || (relUpper === "MOTHER" && input.guardianOccupation)
+					? { motherOccupation: input.motherOccupation ?? input.guardianOccupation }
+					: {}),
+				...(input.motherNid || (relUpper === "MOTHER" && input.guardianNid)
+					? { motherNid: input.motherNid ?? input.guardianNid }
+					: {}),
+				...(input.emergencyContactName
+					? { emergencyContactName: input.emergencyContactName }
+					: {}),
+				...(input.emergencyContactPhone
+					? { emergencyContactPhone: input.emergencyContactPhone }
+					: {}),
+				...(input.presentAddress || input.address
+					? {
+							address: input.presentAddress ?? input.address,
+							presentAddress: input.presentAddress ?? input.address,
+						}
+					: {}),
+				...(input.permanentAddress
+					? { permanentAddress: input.permanentAddress }
+					: {}),
+				...(input.authorizedPickupName
+					? { authorizedPickupName: input.authorizedPickupName }
+					: {}),
+				...(input.authorizedPickupRelation
+					? { authorizedPickupRelation: input.authorizedPickupRelation }
+					: {}),
+				...(input.authorizedPickupPhone
+					? { authorizedPickupPhone: input.authorizedPickupPhone }
+					: {}),
+				...(input.authorizedPickupNid
+					? { authorizedPickupNid: input.authorizedPickupNid }
+					: {}),
+				...(input.pickupPersonPhotoUrl
+					? { pickupPersonPhotoUrl: input.pickupPersonPhotoUrl }
+					: {}),
+				...(input.boardName ? { boardName: input.boardName } : {}),
+				...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
+				...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
+				...(input.fourthSubject ? { fourthSubject: input.fourthSubject } : {}),
+				...(input.previousSchool ? { previousSchool: input.previousSchool } : {}),
+				...(input.previousClass ? { previousClass: input.previousClass } : {}),
+				...(input.tcNumber ? { tcNumber: input.tcNumber } : {}),
+				...(input.tcDate ? { tcDate: input.tcDate } : {}),
+				...(input.allergies ? { allergies: input.allergies } : {}),
+				...(input.medicalConditions
+					? { medicalConditions: input.medicalConditions }
+					: {}),
+				...(input.medications ? { medications: input.medications } : {}),
+				...(input.healthNotes ? { healthNotes: input.healthNotes } : {}),
+				...(input.birthCertificateUrl
+					? { birthCertificateUrl: input.birthCertificateUrl }
+					: {}),
+				...(input.guardianNidUrl
+					? { guardianNidUrl: input.guardianNidUrl }
+					: {}),
+				...(input.previousTcUrl ? { previousTcUrl: input.previousTcUrl } : {}),
+				...(input.marksheetUrl ? { marksheetUrl: input.marksheetUrl } : {}),
 				isActive: true,
 			},
 		});
 
+		// 2. Atomically Create Academic Enrollment
+		const enrollment = await tx.enrollment.create({
+			data: {
+				schoolId,
+				studentId: student.id,
+				classId: input.classId,
+				...(input.sectionId !== undefined ? { sectionId: input.sectionId } : {}),
+				academicYear: input.academicYear.trim(),
+				...(input.rollNumber !== undefined
+					? { rollNumber: input.rollNumber }
+					: {}),
+				shift: (input.shift?.trim() || "MORNING").toUpperCase(),
+				...(input.academicGroup ? { academicGroup: input.academicGroup } : {}),
+				...(input.boardName ? { boardName: input.boardName } : {}),
+				...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
+				...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
+				...(input.fourthSubject ? { fourthSubject: input.fourthSubject } : {}),
+				status: "ACTIVE",
+			},
+			include: {
+				class: { select: { id: true, name: true, code: true } },
+				section: { select: { id: true, name: true, code: true } },
+			},
+		});
+
+		// 3. Guardian-Centric Onboarding by (schoolId, guardianPhone)
 		let guardianSummary: {
 			guardianId: number;
 			name: string;
@@ -69,148 +396,152 @@ export const createStudent = async (
 			defaultPassword?: string;
 		} | null = null;
 
-		// 2. Combined Guardian Onboarding by (schoolId, phone)
-		if (input.guardianPhone?.trim()) {
-			const cleanPhone = input.guardianPhone.trim();
+		const existingGuardian = await tx.guardian.findFirst({
+			where: {
+				schoolId,
+				user: { phone: cleanPhone },
+			},
+			include: {
+				user: {
+					select: { id: true, name: true, email: true, phone: true },
+				},
+			},
+		});
 
-			const existingGuardian = await tx.guardian.findFirst({
+		if (existingGuardian) {
+			await tx.guardianStudent.upsert({
 				where: {
-					schoolId,
-					user: {
-						phone: cleanPhone,
+					guardianId_studentId: {
+						guardianId: existingGuardian.id,
+						studentId: student.id,
 					},
 				},
-				include: {
-					user: {
-						select: {
-							id: true,
-							name: true,
-							email: true,
-							phone: true,
-						},
-					},
+				update: { isPrimary: true },
+				create: {
+					guardianId: existingGuardian.id,
+					studentId: student.id,
+					isPrimary: true,
 				},
 			});
 
-			if (existingGuardian) {
-				await tx.guardianStudent.upsert({
-					where: {
-						guardianId_studentId: {
-							guardianId: existingGuardian.id,
-							studentId: student.id,
-						},
-					},
-					update: {},
-					create: {
-						guardianId: existingGuardian.id,
-						studentId: student.id,
-						isPrimary: true,
-					},
+			if (input.guardianNid && !existingGuardian.nid) {
+				await tx.guardian.update({
+					where: { id: existingGuardian.id },
+					data: { nid: input.guardianNid.trim() },
 				});
+			}
 
-				guardianSummary = {
-					guardianId: existingGuardian.id,
-					name: existingGuardian.user.name,
-					phone: existingGuardian.user.phone ?? cleanPhone,
-					email: existingGuardian.user.email,
-					isExistingGuardian: true,
-				};
-			} else {
-				const digits = cleanPhone.replace(/\D/g, "");
-				const defaultPassword =
-					input.guardianPassword?.trim() ||
-					`Madrasa@${digits.slice(-4) || "1234"}`;
-				const passwordHash = await hashPassword(defaultPassword);
-				const guardianEmail =
-					input.guardianEmail?.trim().toLowerCase() ||
-					`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
-				const guardianName =
-					input.guardianName?.trim() || `Guardian of ${input.firstName.trim()}`;
+			guardianSummary = {
+				guardianId: existingGuardian.id,
+				name: existingGuardian.user.name,
+				phone: existingGuardian.user.phone ?? cleanPhone,
+				email: existingGuardian.user.email,
+				isExistingGuardian: true,
+			};
+		} else {
+			const digits = cleanPhone.replace(/\D/g, "");
+			const defaultPassword =
+				input.guardianPassword?.trim() ||
+				`Madrasa@${digits.slice(-4) || "1234"}`;
+			const passwordHash = await hashPassword(defaultPassword);
 
-				const guardianUser = await tx.user.create({
-					data: {
-						name: guardianName,
-						email: guardianEmail,
-						phone: cleanPhone,
-						passwordHash,
-						role: "GUARDIAN",
-						status: "ACTIVE",
-						schoolId,
-						mustChangePassword: true,
-					},
-				});
+			let guardianEmail =
+				input.guardianEmail?.trim().toLowerCase() ||
+				`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
 
-				const guardian = await tx.guardian.create({
-					data: {
-						userId: guardianUser.id,
-						schoolId,
-						relation: input.guardianRelation?.trim() || "Father",
-						...(input.guardianOccupation !== undefined && {
-							occupation: input.guardianOccupation.trim(),
-						}),
-						...(input.guardianAddress !== undefined && {
-							address: input.guardianAddress.trim(),
-						}),
-					},
-				});
+			const existingEmailUser = await tx.user.findUnique({
+				where: { email: guardianEmail },
+				select: { id: true },
+			});
+			if (existingEmailUser) {
+				guardianEmail = `guardian.${schoolId}.${digits || Date.now()}.${Math.floor(100 + Math.random() * 900)}@madrasaos.local`;
+			}
 
-				await tx.guardianStudent.create({
-					data: {
-						guardianId: guardian.id,
-						studentId: student.id,
-						isPrimary: true,
-					},
-				});
-
-				guardianSummary = {
-					guardianId: guardian.id,
-					name: guardianUser.name,
+			const guardianUser = await tx.user.create({
+				data: {
+					name: input.guardianName.trim(),
+					email: guardianEmail,
 					phone: cleanPhone,
-					email: guardianUser.email,
-					isExistingGuardian: false,
-					defaultPassword,
-				};
+					passwordHash,
+					role: "GUARDIAN",
+					status: "ACTIVE",
+					schoolId,
+					mustChangePassword: true,
+				},
+			});
+
+			const guardian = await tx.guardian.create({
+				data: {
+					userId: guardianUser.id,
+					schoolId,
+					relation: relUpper,
+					...(input.guardianOccupation
+						? { occupation: input.guardianOccupation.trim() }
+						: {}),
+					...(input.guardianAddress || input.presentAddress
+						? {
+								address: (
+									input.guardianAddress ??
+									input.presentAddress ??
+									""
+								).trim(),
+							}
+						: {}),
+					...(input.guardianNid ? { nid: input.guardianNid.trim() } : {}),
+				},
+			});
+
+			await tx.guardianStudent.create({
+				data: {
+					guardianId: guardian.id,
+					studentId: student.id,
+					isPrimary: true,
+				},
+			});
+
+			guardianSummary = {
+				guardianId: guardian.id,
+				name: guardianUser.name,
+				phone: cleanPhone,
+				email: guardianUser.email,
+				isExistingGuardian: false,
+				defaultPassword,
+			};
+		}
+
+		// 4. Optional Initial Hefz Enrollment if quranWing + ustadId provided
+		let hefzEnrollment = null;
+		if (input.quranWing && input.ustadId) {
+			const ustad = await tx.teacher.findFirst({
+				where: { id: input.ustadId, schoolId },
+				select: { id: true },
+			});
+			if (ustad) {
+				hefzEnrollment = await tx.hefzEnrollment.create({
+					data: {
+						schoolId,
+						studentId: student.id,
+						ustadId: ustad.id,
+						wing: input.quranWing,
+						status: "ACTIVE",
+					},
+				});
 			}
 		}
 
 		return {
 			student,
+			enrollment,
 			guardian: guardianSummary,
+			hefzEnrollment,
 		};
 	});
 };
 
 export const getMyStudentProfile = async (userId: number, schoolId: number) => {
 	const student = await prisma.student.findFirst({
-		where: {
-			userId,
-			schoolId,
-			isActive: true,
-		},
-		select: {
-			id: true,
-			studentId: true,
-			firstName: true,
-			lastName: true,
-			dateOfBirth: true,
-			gender: true,
-			phone: true,
-			address: true,
-			admissionDate: true,
-			isActive: true,
-
-			user: {
-				select: {
-					id: true,
-					name: true,
-					email: true,
-					phone: true,
-					role: true,
-					status: true,
-					schoolId: true,
-				},
-			},
-		},
+		where: { userId, schoolId, isActive: true },
+		include: fullStudentInclude,
 	});
 
 	if (!student) {
@@ -234,36 +565,14 @@ export const getAllStudents = async (
 		...(search
 			? {
 					OR: [
-						{
-							firstName: {
-								contains: search,
-								mode: "insensitive" as const,
-							},
-						},
-						{
-							lastName: {
-								contains: search,
-								mode: "insensitive" as const,
-							},
-						},
-						{
-							studentId: {
-								contains: search,
-								mode: "insensitive" as const,
-							},
-						},
-						{
-							phone: {
-								contains: search,
-								mode: "insensitive" as const,
-							},
-						},
+						{ firstName: { contains: search, mode: "insensitive" as const } },
+						{ lastName: { contains: search, mode: "insensitive" as const } },
+						{ nameBangla: { contains: search, mode: "insensitive" as const } },
+						{ studentId: { contains: search, mode: "insensitive" as const } },
+						{ phone: { contains: search, mode: "insensitive" as const } },
 						{
 							user: {
-								email: {
-									contains: search,
-									mode: "insensitive" as const,
-								},
+								email: { contains: search, mode: "insensitive" as const },
 							},
 						},
 					],
@@ -276,18 +585,22 @@ export const getAllStudents = async (
 			where,
 			skip,
 			take: limit,
-			orderBy: {
-				createdAt: "desc",
-			},
+			orderBy: { createdAt: "desc" },
 			select: {
 				id: true,
 				studentId: true,
 				firstName: true,
 				lastName: true,
+				nameBangla: true,
 				dateOfBirth: true,
 				gender: true,
 				phone: true,
 				address: true,
+				residentialType: true,
+				shift: true,
+				academicGroup: true,
+				quranWing: true,
+				studentPhotoUrl: true,
 				admissionDate: true,
 				isActive: true,
 				user: {
@@ -300,6 +613,19 @@ export const getAllStudents = async (
 						status: true,
 					},
 				},
+				enrollments: {
+					where: { status: "ACTIVE" },
+					orderBy: { createdAt: "desc" },
+					take: 1,
+					select: {
+						id: true,
+						academicYear: true,
+						rollNumber: true,
+						academicGroup: true,
+						class: { select: { id: true, name: true, code: true } },
+						section: { select: { id: true, name: true, code: true } },
+					},
+				},
 				guardians: {
 					select: {
 						isPrimary: true,
@@ -307,12 +633,9 @@ export const getAllStudents = async (
 							select: {
 								id: true,
 								relation: true,
+								nid: true,
 								user: {
-									select: {
-										name: true,
-										phone: true,
-										email: true,
-									},
+									select: { name: true, phone: true, email: true },
 								},
 							},
 						},
@@ -334,53 +657,40 @@ export const getAllStudents = async (
 	};
 };
 
-export const getStudentById = async (schoolId: number, studentId: number) => {
-	const student = await prisma.student.findFirst({
+const assertGuardianOwnsStudent = async (
+	schoolId: number,
+	userId: number,
+	studentId: number,
+) => {
+	const guardian = await prisma.guardian.findFirst({
+		where: { userId, schoolId },
+		select: { id: true },
+	});
+	if (!guardian) {
+		throw new AppError(403, "Guardian profile not found in this school");
+	}
+	const link = await prisma.guardianStudent.findUnique({
 		where: {
-			id: studentId,
-			schoolId,
+			guardianId_studentId: { guardianId: guardian.id, studentId },
 		},
-		select: {
-			id: true,
-			studentId: true,
-			firstName: true,
-			lastName: true,
-			dateOfBirth: true,
-			gender: true,
-			phone: true,
-			address: true,
-			admissionDate: true,
-			isActive: true,
-			user: {
-				select: {
-					id: true,
-					name: true,
-					email: true,
-					phone: true,
-					role: true,
-					status: true,
-				},
-			},
-			guardians: {
-				select: {
-					isPrimary: true,
-					guardian: {
-						select: {
-							id: true,
-							relation: true,
-							occupation: true,
-							user: {
-								select: {
-									name: true,
-									phone: true,
-									email: true,
-								},
-							},
-						},
-					},
-				},
-			},
-		},
+	});
+	if (!link) {
+		throw new AppError(403, "You are not authorized to access this student");
+	}
+};
+
+export const getStudentById = async (
+	schoolId: number,
+	studentId: number,
+	requester?: { userId: number; role: UserRole },
+) => {
+	if (requester?.role === "GUARDIAN") {
+		await assertGuardianOwnsStudent(schoolId, requester.userId, studentId);
+	}
+
+	const student = await prisma.student.findFirst({
+		where: { id: studentId, schoolId },
+		include: fullStudentInclude,
 	});
 
 	if (!student) {
@@ -393,56 +703,75 @@ export const getStudentById = async (schoolId: number, studentId: number) => {
 export const updateStudent = async (
 	schoolId: number,
 	studentId: number,
-	data: {
-		firstName?: string;
-		lastName?: string;
-		dateOfBirth?: Date;
-		gender?: string;
-		phone?: string;
-		address?: string;
-	},
+	data: UpdateStudentInput,
+	requester?: { userId: number; role: UserRole },
 ) => {
+	if (requester?.role === "GUARDIAN") {
+		await assertGuardianOwnsStudent(schoolId, requester.userId, studentId);
+	}
+
 	const student = await prisma.student.findFirst({
-		where: {
-			id: studentId,
-			schoolId,
-		},
+		where: { id: studentId, schoolId },
 	});
 
 	if (!student) {
 		throw new AppError(404, "Student not found");
 	}
 
-	const updatedStudent = await prisma.student.update({
-		where: {
-			id: student.id,
-		},
-		data,
-		select: {
-			id: true,
-			studentId: true,
-			firstName: true,
-			lastName: true,
-			dateOfBirth: true,
-			gender: true,
-			phone: true,
-			address: true,
-			admissionDate: true,
-			isActive: true,
-			user: {
-				select: {
-					id: true,
-					name: true,
-					email: true,
-					phone: true,
-					role: true,
-					status: true,
-				},
+	return prisma.$transaction(async (tx) => {
+		const updatedStudent = await tx.student.update({
+			where: { id: student.id },
+			data: {
+				...data,
+				...(data.presentAddress !== undefined && data.address === undefined
+					? { address: data.presentAddress }
+					: {}),
 			},
-		},
-	});
+			include: fullStudentInclude,
+		});
 
-	return updatedStudent;
+		// Sync academic/board fields to latest active Enrollment if provided
+		const hasEnrollmentUpdates =
+			data.academicGroup !== undefined ||
+			data.shift !== undefined ||
+			data.boardName !== undefined ||
+			data.boardRollNo !== undefined ||
+			data.boardRegNo !== undefined ||
+			data.fourthSubject !== undefined;
+
+		if (hasEnrollmentUpdates) {
+			const latestEnrollment = await tx.enrollment.findFirst({
+				where: { studentId: student.id, schoolId, status: "ACTIVE" },
+				orderBy: { createdAt: "desc" },
+				select: { id: true },
+			});
+			if (latestEnrollment) {
+				await tx.enrollment.update({
+					where: { id: latestEnrollment.id },
+					data: {
+						...(data.academicGroup !== undefined
+							? { academicGroup: data.academicGroup }
+							: {}),
+						...(data.shift !== undefined ? { shift: data.shift } : {}),
+						...(data.boardName !== undefined
+							? { boardName: data.boardName }
+							: {}),
+						...(data.boardRollNo !== undefined
+							? { boardRollNo: data.boardRollNo }
+							: {}),
+						...(data.boardRegNo !== undefined
+							? { boardRegNo: data.boardRegNo }
+							: {}),
+						...(data.fourthSubject !== undefined
+							? { fourthSubject: data.fourthSubject }
+							: {}),
+					},
+				});
+			}
+		}
+
+		return updatedStudent;
+	});
 };
 
 export const deactivateStudent = async (
@@ -450,10 +779,7 @@ export const deactivateStudent = async (
 	studentId: number,
 ) => {
 	const student = await prisma.student.findFirst({
-		where: {
-			id: studentId,
-			schoolId,
-		},
+		where: { id: studentId, schoolId },
 	});
 
 	if (!student) {
@@ -464,39 +790,26 @@ export const deactivateStudent = async (
 		throw new AppError(400, "Student is already inactive");
 	}
 
-	const result = await prisma.$transaction(async (tx) => {
+	return prisma.$transaction(async (tx) => {
 		const updatedStudent = await tx.student.update({
-			where: {
-				id: student.id,
-			},
-			data: {
-				isActive: false,
-			},
+			where: { id: student.id },
+			data: { isActive: false },
 		});
 
 		if (student.userId !== null) {
 			await tx.user.update({
-				where: {
-					id: student.userId,
-				},
-				data: {
-					status: "INACTIVE",
-				},
+				where: { id: student.userId },
+				data: { status: "INACTIVE" },
 			});
 		}
 
 		return updatedStudent;
 	});
-
-	return result;
 };
 
 export const activateStudent = async (schoolId: number, studentId: number) => {
 	const student = await prisma.student.findFirst({
-		where: {
-			id: studentId,
-			schoolId,
-		},
+		where: { id: studentId, schoolId },
 	});
 
 	if (!student) {
@@ -507,29 +820,19 @@ export const activateStudent = async (schoolId: number, studentId: number) => {
 		throw new AppError(400, "Student is already active");
 	}
 
-	const result = await prisma.$transaction(async (tx) => {
+	return prisma.$transaction(async (tx) => {
 		const updatedStudent = await tx.student.update({
-			where: {
-				id: student.id,
-			},
-			data: {
-				isActive: true,
-			},
+			where: { id: student.id },
+			data: { isActive: true },
 		});
 
 		if (student.userId !== null) {
 			await tx.user.update({
-				where: {
-					id: student.userId,
-				},
-				data: {
-					status: "ACTIVE",
-				},
+				where: { id: student.userId },
+				data: { status: "ACTIVE" },
 			});
 		}
 
 		return updatedStudent;
 	});
-
-	return result;
 };
