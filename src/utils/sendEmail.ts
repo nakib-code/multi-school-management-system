@@ -21,6 +21,28 @@ export const sendVerificationEmail = async (
 	});
 };
 
+export const sendTeacherVerificationEmail = async (
+	email: string,
+	teacherName: string,
+	code: string,
+): Promise<void> => {
+	await transporter.sendMail({
+		from: env.email_sender,
+		to: email,
+		subject: "MadrasaOS — Teacher Account Email Verification",
+		text: `Assalamu Alaikum ${teacherName}, your teacher account verification code is: ${code}. This code will expire in 10 minutes.`,
+		html: `
+      <div style="font-family:sans-serif;max-width:520px;margin:0 auto;">
+        <h2>Teacher Account Verification</h2>
+        <p>Assalamu Alaikum <strong>${teacherName}</strong>,</p>
+        <p>Your 6-digit verification code to activate your teacher account is:</p>
+        <h1 style="letter-spacing:6px;font-size:32px;color:#061842;">${code}</h1>
+        <p>This code will expire in <strong>10 minutes</strong>. Please share it with your school administrator or enter it to complete verification.</p>
+      </div>
+    `,
+	});
+};
+
 export const sendPasswordResetEmail = async (
 	email: string,
 	resetUrl: string,

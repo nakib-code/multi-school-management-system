@@ -3,7 +3,7 @@ export interface CreateTeacherInput {
 
 	name: string;
 	email: string;
-	password: string;
+	password?: string;
 
 	employeeId: string;
 
@@ -24,4 +24,9 @@ export interface VerifyTeacherEmailInput {
 	schoolId: number;
 	teacherId: number;
 	code: string;
+}
+
+export interface ResetTeacherPasswordInput {
+	password: string;
+	mustChangePassword?: boolean;
 }

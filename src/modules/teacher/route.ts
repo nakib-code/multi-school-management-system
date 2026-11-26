@@ -9,11 +9,17 @@ import {
 	deactivateTeacherController,
 	getTeacherByIdController,
 	getTeachersController,
+	resendTeacherOtpController,
+	resetTeacherPasswordController,
 	updateTeacherController,
 	verifyTeacherEmailController,
 } from "./controller.js";
 
-import { createTeacherSchema, verifyTeacherEmailSchema } from "./validation.js";
+import {
+	createTeacherSchema,
+	resetTeacherPasswordSchema,
+	verifyTeacherEmailSchema,
+} from "./validation.js";
 
 const router = Router();
 
@@ -33,6 +39,23 @@ router.patch(
 	requireSchoolAccess,
 	validateRequest(verifyTeacherEmailSchema),
 	verifyTeacherEmailController,
+);
+
+router.post(
+	"/schools/:schoolId/teachers/:id/resend-otp",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	resendTeacherOtpController,
+);
+
+router.post(
+	"/schools/:schoolId/teachers/:id/reset-password",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(resetTeacherPasswordSchema),
+	resetTeacherPasswordController,
 );
 
 router.get(

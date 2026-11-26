@@ -9,6 +9,8 @@ import {
 	deactivateTeacher,
 	getTeacherById,
 	getTeachers,
+	resendTeacherOtp,
+	resetTeacherPassword,
 	updateTeacher,
 	verifyTeacherEmail,
 } from "./service.js";
@@ -65,6 +67,54 @@ export const verifyTeacherEmailController = async (
 	return sendResponse(res, {
 		statusCode: 200,
 		message: "Teacher email verified successfully",
+		data: result,
+	});
+};
+
+export const resendTeacherOtpController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
+	if (!req.user) {
+		throw new AppError(401, "Authentication required");
+	}
+
+	const schoolId = Number(req.params.schoolId);
+	const teacherId = Number(req.params.id);
+
+	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+		throw new AppError(400, "Invalid school or teacher ID");
+	}
+
+	const result = await resendTeacherOtp(schoolId, teacherId);
+
+	return sendResponse(res, {
+		statusCode: 200,
+		message: "Verification OTP resent successfully",
+		data: result,
+	});
+};
+
+export const resetTeacherPasswordController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
+	if (!req.user) {
+		throw new AppError(401, "Authentication required");
+	}
+
+	const schoolId = Number(req.params.schoolId);
+	const teacherId = Number(req.params.id);
+
+	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+		throw new AppError(400, "Invalid school or teacher ID");
+	}
+
+	const result = await resetTeacherPassword(schoolId, teacherId, req.body);
+
+	return sendResponse(res, {
+		statusCode: 200,
+		message: "Teacher password reset successfully",
 		data: result,
 	});
 };
