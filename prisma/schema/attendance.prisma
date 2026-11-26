@@ -9,18 +9,103 @@ model Attendance {
 
   markedBy Int
 
-  school       School     @relation(fields: [schoolId], references: [id])
-  student      Student    @relation(fields: [studentId], references: [id])
-  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id])
-  markedByUser User       @relation(fields: [markedBy], references: [id])
+  school       School              @relation(fields: [schoolId], references: [id])
+  student      Student             @relation(fields: [studentId], references: [id])
+  enrollment   Enrollment          @relation(fields: [enrollmentId], references: [id])
+  markedByUser User                @relation(fields: [markedBy], references: [id])
+  histories    AttendanceHistory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@unique([studentId, date])
   @@index([schoolId])
+  @@index([schoolId, date])
   @@index([studentId])
   @@index([enrollmentId])
   @@index([date])
   @@map("attendances")
+}
+
+model SchoolHoliday {
+  id       Int      @id @default(autoincrement())
+  schoolId Int
+  date     DateTime
+  title    String
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, date])
+  @@index([schoolId, date])
+  @@map("school_holidays")
+}
+
+model AttendanceHistory {
+  id           Int               @id @default(autoincrement())
+  attendanceId Int
+  schoolId     Int
+  oldStatus    AttendanceStatus?
+  newStatus    AttendanceStatus
+  oldRemarks   String?
+  newRemarks   String?
+  changedBy    Int
+  changedAt    DateTime          @default(now())
+
+  attendance    Attendance @relation(fields: [attendanceId], references: [id], onDelete: Cascade)
+  school        School     @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  changedByUser User       @relation("AttendanceHistoryActor", fields: [changedBy], references: [id])
+
+  @@index([attendanceId])
+  @@index([schoolId, changedAt])
+  @@map("attendance_histories")
+}
+
+model LeaveRequest {
+  id          Int                @id @default(autoincrement())
+  schoolId    Int
+  studentId   Int
+  requestedBy Int
+  fromDate    DateTime
+  toDate      DateTime
+  reason      String
+  status      LeaveRequestStatus @default(PENDING)
+  reviewedBy  Int?
+  reviewNote  String?
+  reviewedAt  DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  school          School  @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  student         Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  requestedByUser User    @relation("LeaveRequestRequester", fields: [requestedBy], references: [id])
+  reviewedByUser  User?   @relation("LeaveRequestReviewer", fields: [reviewedBy], references: [id])
+
+  @@index([schoolId, status])
+  @@index([schoolId, studentId, fromDate, toDate])
+  @@map("leave_requests")
+}
+
+model MonthlyReport {
+  id          Int       @id @default(autoincrement())
+  schoolId    Int
+  month       String
+  classId     Int
+  sectionId   Int?
+  publishedAt DateTime?
+  publishedBy Int?
+
+  school          School      @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  class           SchoolClass @relation(fields: [classId], references: [id], onDelete: Cascade)
+  section         Section?    @relation(fields: [sectionId], references: [id], onDelete: SetNull)
+  publishedByUser User?       @relation("MonthlyReportPublisher", fields: [publishedBy], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, month, classId, sectionId])
+  @@index([schoolId, month])
+  @@map("monthly_reports")
 }

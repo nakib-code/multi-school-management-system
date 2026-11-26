@@ -644,6 +644,7 @@ export type StudentWhereInput = {
   guardians?: Prisma.GuardianStudentListRelationFilter
   enrollments?: Prisma.EnrollmentListRelationFilter
   attendances?: Prisma.AttendanceListRelationFilter
+  leaveRequests?: Prisma.LeaveRequestListRelationFilter
   results?: Prisma.ResultListRelationFilter
   fees?: Prisma.StudentFeeListRelationFilter
   payments?: Prisma.StudentPaymentListRelationFilter
@@ -712,6 +713,7 @@ export type StudentOrderByWithRelationInput = {
   guardians?: Prisma.GuardianStudentOrderByRelationAggregateInput
   enrollments?: Prisma.EnrollmentOrderByRelationAggregateInput
   attendances?: Prisma.AttendanceOrderByRelationAggregateInput
+  leaveRequests?: Prisma.LeaveRequestOrderByRelationAggregateInput
   results?: Prisma.ResultOrderByRelationAggregateInput
   fees?: Prisma.StudentFeeOrderByRelationAggregateInput
   payments?: Prisma.StudentPaymentOrderByRelationAggregateInput
@@ -783,6 +785,7 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   guardians?: Prisma.GuardianStudentListRelationFilter
   enrollments?: Prisma.EnrollmentListRelationFilter
   attendances?: Prisma.AttendanceListRelationFilter
+  leaveRequests?: Prisma.LeaveRequestListRelationFilter
   results?: Prisma.ResultListRelationFilter
   fees?: Prisma.StudentFeeListRelationFilter
   payments?: Prisma.StudentPaymentListRelationFilter
@@ -977,6 +980,7 @@ export type StudentCreateInput = {
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
@@ -1044,6 +1048,7 @@ export type StudentUncheckedCreateInput = {
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
@@ -1110,6 +1115,7 @@ export type StudentUpdateInput = {
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
@@ -1177,6 +1183,7 @@ export type StudentUncheckedUpdateInput = {
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -1577,6 +1584,20 @@ export type StudentUpdateOneRequiredWithoutAttendancesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutAttendancesInput, Prisma.StudentUpdateWithoutAttendancesInput>, Prisma.StudentUncheckedUpdateWithoutAttendancesInput>
 }
 
+export type StudentCreateNestedOneWithoutLeaveRequestsInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutLeaveRequestsInput, Prisma.StudentUncheckedCreateWithoutLeaveRequestsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutLeaveRequestsInput
+  connect?: Prisma.StudentWhereUniqueInput
+}
+
+export type StudentUpdateOneRequiredWithoutLeaveRequestsNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentCreateWithoutLeaveRequestsInput, Prisma.StudentUncheckedCreateWithoutLeaveRequestsInput>
+  connectOrCreate?: Prisma.StudentCreateOrConnectWithoutLeaveRequestsInput
+  upsert?: Prisma.StudentUpsertWithoutLeaveRequestsInput
+  connect?: Prisma.StudentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutLeaveRequestsInput, Prisma.StudentUpdateWithoutLeaveRequestsInput>, Prisma.StudentUncheckedUpdateWithoutLeaveRequestsInput>
+}
+
 export type StudentCreateNestedOneWithoutEnrollmentsInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutEnrollmentsInput, Prisma.StudentUncheckedCreateWithoutEnrollmentsInput>
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutEnrollmentsInput
@@ -1752,6 +1773,7 @@ export type StudentCreateWithoutAttendancesInput = {
   user?: Prisma.UserCreateNestedOneWithoutStudentInput
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
@@ -1818,6 +1840,7 @@ export type StudentUncheckedCreateWithoutAttendancesInput = {
   updatedAt?: Date | string
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
@@ -1899,6 +1922,7 @@ export type StudentUpdateWithoutAttendancesInput = {
   user?: Prisma.UserUpdateOneWithoutStudentNestedInput
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
@@ -1965,6 +1989,289 @@ export type StudentUncheckedUpdateWithoutAttendancesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
+  fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
+  payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentCreateWithoutLeaveRequestsInput = {
+  schoolId: number
+  studentId: string
+  firstName: string
+  lastName?: string | null
+  nameBangla?: string | null
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  phone?: string | null
+  address?: string | null
+  admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutStudentInput
+  guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  results?: Prisma.ResultCreateNestedManyWithoutStudentInput
+  fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
+  payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
+}
+
+export type StudentUncheckedCreateWithoutLeaveRequestsInput = {
+  id?: number
+  userId?: number | null
+  schoolId: number
+  studentId: string
+  firstName: string
+  lastName?: string | null
+  nameBangla?: string | null
+  dateOfBirth?: Date | string | null
+  gender?: string | null
+  phone?: string | null
+  address?: string | null
+  admissionDate?: Date | string
+  residentialType?: $Enums.ResidentialType
+  shift?: string | null
+  quranWing?: $Enums.HefzWing | null
+  birthRegNo?: string | null
+  bloodGroup?: string | null
+  religion?: string | null
+  nationality?: string | null
+  studentPhotoUrl?: string | null
+  fatherName?: string | null
+  fatherPhone?: string | null
+  fatherOccupation?: string | null
+  fatherNid?: string | null
+  motherName?: string | null
+  motherPhone?: string | null
+  motherOccupation?: string | null
+  motherNid?: string | null
+  emergencyContactName?: string | null
+  emergencyContactPhone?: string | null
+  presentAddress?: string | null
+  permanentAddress?: string | null
+  authorizedPickupName?: string | null
+  authorizedPickupRelation?: string | null
+  authorizedPickupPhone?: string | null
+  authorizedPickupNid?: string | null
+  pickupPersonPhotoUrl?: string | null
+  academicGroup?: $Enums.AcademicGroup | null
+  boardName?: string | null
+  boardRollNo?: string | null
+  boardRegNo?: string | null
+  fourthSubject?: string | null
+  previousSchool?: string | null
+  previousClass?: string | null
+  tcNumber?: string | null
+  tcDate?: Date | string | null
+  allergies?: string | null
+  medicalConditions?: string | null
+  medications?: string | null
+  healthNotes?: string | null
+  birthCertificateUrl?: string | null
+  guardianNidUrl?: string | null
+  previousTcUrl?: string | null
+  marksheetUrl?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
+  fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
+  payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
+}
+
+export type StudentCreateOrConnectWithoutLeaveRequestsInput = {
+  where: Prisma.StudentWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentCreateWithoutLeaveRequestsInput, Prisma.StudentUncheckedCreateWithoutLeaveRequestsInput>
+}
+
+export type StudentUpsertWithoutLeaveRequestsInput = {
+  update: Prisma.XOR<Prisma.StudentUpdateWithoutLeaveRequestsInput, Prisma.StudentUncheckedUpdateWithoutLeaveRequestsInput>
+  create: Prisma.XOR<Prisma.StudentCreateWithoutLeaveRequestsInput, Prisma.StudentUncheckedCreateWithoutLeaveRequestsInput>
+  where?: Prisma.StudentWhereInput
+}
+
+export type StudentUpdateToOneWithWhereWithoutLeaveRequestsInput = {
+  where?: Prisma.StudentWhereInput
+  data: Prisma.XOR<Prisma.StudentUpdateWithoutLeaveRequestsInput, Prisma.StudentUncheckedUpdateWithoutLeaveRequestsInput>
+}
+
+export type StudentUpdateWithoutLeaveRequestsInput = {
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutStudentNestedInput
+  guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
+  fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
+  payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
+}
+
+export type StudentUncheckedUpdateWithoutLeaveRequestsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nameBangla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dateOfBirth?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  gender?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  admissionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  residentialType?: Prisma.EnumResidentialTypeFieldUpdateOperationsInput | $Enums.ResidentialType
+  shift?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  quranWing?: Prisma.NullableEnumHefzWingFieldUpdateOperationsInput | $Enums.HefzWing | null
+  birthRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bloodGroup?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  religion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nationality?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  studentPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fatherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherOccupation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motherNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emergencyContactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  permanentAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupRelation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  authorizedPickupNid?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  pickupPersonPhotoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicGroup?: Prisma.NullableEnumAcademicGroupFieldUpdateOperationsInput | $Enums.AcademicGroup | null
+  boardName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRollNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  boardRegNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fourthSubject?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousSchool?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousClass?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tcDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  allergies?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalConditions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medications?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  healthNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  birthCertificateUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -2030,6 +2337,7 @@ export type StudentCreateWithoutEnrollmentsInput = {
   user?: Prisma.UserCreateNestedOneWithoutStudentInput
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
@@ -2096,6 +2404,7 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   updatedAt?: Date | string
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
@@ -2177,6 +2486,7 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   user?: Prisma.UserUpdateOneWithoutStudentNestedInput
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
@@ -2243,6 +2553,7 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -2308,6 +2619,7 @@ export type StudentCreateWithoutGuardiansInput = {
   user?: Prisma.UserCreateNestedOneWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
@@ -2374,6 +2686,7 @@ export type StudentUncheckedCreateWithoutGuardiansInput = {
   updatedAt?: Date | string
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
@@ -2455,6 +2768,7 @@ export type StudentUpdateWithoutGuardiansInput = {
   user?: Prisma.UserUpdateOneWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
@@ -2521,6 +2835,7 @@ export type StudentUncheckedUpdateWithoutGuardiansInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -2587,6 +2902,7 @@ export type StudentCreateWithoutHefzEnrollmentsInput = {
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
@@ -2653,6 +2969,7 @@ export type StudentUncheckedCreateWithoutHefzEnrollmentsInput = {
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
@@ -2734,6 +3051,7 @@ export type StudentUpdateWithoutHefzEnrollmentsInput = {
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
@@ -2800,6 +3118,7 @@ export type StudentUncheckedUpdateWithoutHefzEnrollmentsInput = {
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -2865,6 +3184,7 @@ export type StudentCreateWithoutResultsInput = {
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
   hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
@@ -2931,6 +3251,7 @@ export type StudentUncheckedCreateWithoutResultsInput = {
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
@@ -3012,6 +3333,7 @@ export type StudentUpdateWithoutResultsInput = {
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
   hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
@@ -3078,6 +3400,7 @@ export type StudentUncheckedUpdateWithoutResultsInput = {
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
@@ -3143,6 +3466,7 @@ export type StudentCreateWithoutFeesInput = {
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
   hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
@@ -3209,6 +3533,7 @@ export type StudentUncheckedCreateWithoutFeesInput = {
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
@@ -3290,6 +3615,7 @@ export type StudentUpdateWithoutFeesInput = {
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
   hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
@@ -3356,6 +3682,7 @@ export type StudentUncheckedUpdateWithoutFeesInput = {
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
@@ -3421,6 +3748,7 @@ export type StudentCreateWithoutPaymentsInput = {
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutStudentInput
@@ -3487,6 +3815,7 @@ export type StudentUncheckedCreateWithoutPaymentsInput = {
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutStudentInput
@@ -3568,6 +3897,7 @@ export type StudentUpdateWithoutPaymentsInput = {
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutStudentNestedInput
@@ -3634,6 +3964,7 @@ export type StudentUncheckedUpdateWithoutPaymentsInput = {
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutStudentNestedInput
@@ -3698,6 +4029,7 @@ export type StudentCreateWithoutUserInput = {
   guardians?: Prisma.GuardianStudentCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutStudentInput
@@ -3764,6 +4096,7 @@ export type StudentUncheckedCreateWithoutUserInput = {
   guardians?: Prisma.GuardianStudentUncheckedCreateNestedManyWithoutStudentInput
   enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutStudentInput
   attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutStudentInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutStudentInput
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutStudentInput
   fees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutStudentInput
   payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutStudentInput
@@ -3845,6 +4178,7 @@ export type StudentUpdateWithoutUserInput = {
   guardians?: Prisma.GuardianStudentUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutStudentNestedInput
@@ -3911,6 +4245,7 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   guardians?: Prisma.GuardianStudentUncheckedUpdateManyWithoutStudentNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutStudentNestedInput
   attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutStudentNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutStudentNestedInput
   results?: Prisma.ResultUncheckedUpdateManyWithoutStudentNestedInput
   fees?: Prisma.StudentFeeUncheckedUpdateManyWithoutStudentNestedInput
   payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutStudentNestedInput
@@ -3926,6 +4261,7 @@ export type StudentCountOutputType = {
   guardians: number
   enrollments: number
   attendances: number
+  leaveRequests: number
   results: number
   fees: number
   payments: number
@@ -3936,6 +4272,7 @@ export type StudentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   guardians?: boolean | StudentCountOutputTypeCountGuardiansArgs
   enrollments?: boolean | StudentCountOutputTypeCountEnrollmentsArgs
   attendances?: boolean | StudentCountOutputTypeCountAttendancesArgs
+  leaveRequests?: boolean | StudentCountOutputTypeCountLeaveRequestsArgs
   results?: boolean | StudentCountOutputTypeCountResultsArgs
   fees?: boolean | StudentCountOutputTypeCountFeesArgs
   payments?: boolean | StudentCountOutputTypeCountPaymentsArgs
@@ -3971,6 +4308,13 @@ export type StudentCountOutputTypeCountEnrollmentsArgs<ExtArgs extends runtime.T
  */
 export type StudentCountOutputTypeCountAttendancesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.AttendanceWhereInput
+}
+
+/**
+ * StudentCountOutputType without action
+ */
+export type StudentCountOutputTypeCountLeaveRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeaveRequestWhereInput
 }
 
 /**
@@ -4064,6 +4408,7 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   guardians?: boolean | Prisma.Student$guardiansArgs<ExtArgs>
   enrollments?: boolean | Prisma.Student$enrollmentsArgs<ExtArgs>
   attendances?: boolean | Prisma.Student$attendancesArgs<ExtArgs>
+  leaveRequests?: boolean | Prisma.Student$leaveRequestsArgs<ExtArgs>
   results?: boolean | Prisma.Student$resultsArgs<ExtArgs>
   fees?: boolean | Prisma.Student$feesArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
@@ -4259,6 +4604,7 @@ export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   guardians?: boolean | Prisma.Student$guardiansArgs<ExtArgs>
   enrollments?: boolean | Prisma.Student$enrollmentsArgs<ExtArgs>
   attendances?: boolean | Prisma.Student$attendancesArgs<ExtArgs>
+  leaveRequests?: boolean | Prisma.Student$leaveRequestsArgs<ExtArgs>
   results?: boolean | Prisma.Student$resultsArgs<ExtArgs>
   fees?: boolean | Prisma.Student$feesArgs<ExtArgs>
   payments?: boolean | Prisma.Student$paymentsArgs<ExtArgs>
@@ -4279,6 +4625,7 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     guardians: Prisma.$GuardianStudentPayload<ExtArgs>[]
     enrollments: Prisma.$EnrollmentPayload<ExtArgs>[]
     attendances: Prisma.$AttendancePayload<ExtArgs>[]
+    leaveRequests: Prisma.$LeaveRequestPayload<ExtArgs>[]
     results: Prisma.$ResultPayload<ExtArgs>[]
     fees: Prisma.$StudentFeePayload<ExtArgs>[]
     payments: Prisma.$StudentPaymentPayload<ExtArgs>[]
@@ -4740,6 +5087,7 @@ export interface Prisma__StudentClient<T, Null = never, ExtArgs extends runtime.
   guardians<T extends Prisma.Student$guardiansArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$guardiansArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GuardianStudentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   enrollments<T extends Prisma.Student$enrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$enrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attendances<T extends Prisma.Student$attendancesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$attendancesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leaveRequests<T extends Prisma.Student$leaveRequestsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$leaveRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   results<T extends Prisma.Student$resultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fees<T extends Prisma.Student$feesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$feesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Student$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Student$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5319,6 +5667,30 @@ export type Student$attendancesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
+}
+
+/**
+ * Student.leaveRequests
+ */
+export type Student$leaveRequestsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeaveRequest
+   */
+  select?: Prisma.LeaveRequestSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeaveRequest
+   */
+  omit?: Prisma.LeaveRequestOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeaveRequestInclude<ExtArgs> | null
+  where?: Prisma.LeaveRequestWhereInput
+  orderBy?: Prisma.LeaveRequestOrderByWithRelationInput | Prisma.LeaveRequestOrderByWithRelationInput[]
+  cursor?: Prisma.LeaveRequestWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeaveRequestScalarFieldEnum | Prisma.LeaveRequestScalarFieldEnum[]
 }
 
 /**

@@ -8,7 +8,7 @@
 		"seed": "tsx src/seed.ts",
 		"build": "tsup",
 		"start": "node dist/server.js",
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "tsx --test src/modules/attendance/__tests__/attendance.test.ts",
 		"format:check": "npx @biomejs/biome format ./src",
 		"format:fix": "npx @biomejs/biome format ./src --write",
 		"lint:check": "npx @biomejs/biome lint ./src",

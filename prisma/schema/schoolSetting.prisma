@@ -22,6 +22,9 @@ model SchoolSetting {
   rocketType            MobileAccountType @default(PERSONAL)
   feePaymentInstruction String?           @db.Text
 
+  // Attendance Settings (0=Sunday ... 5=Friday, 6=Saturday; default Friday)
+  weeklyOffDays Int[] @default([5])
+
   school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

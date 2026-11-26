@@ -12,6 +12,12 @@ enum AttendanceStatus {
   EXCUSED
 }
 
+enum LeaveRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
 enum AuditAction {
   CREATE
   UPDATE

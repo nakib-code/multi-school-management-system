@@ -54,6 +54,10 @@ export const ModelName = {
   Admission: 'Admission',
   AdmissionPayment: 'AdmissionPayment',
   Attendance: 'Attendance',
+  SchoolHoliday: 'SchoolHoliday',
+  AttendanceHistory: 'AttendanceHistory',
+  LeaveRequest: 'LeaveRequest',
+  MonthlyReport: 'MonthlyReport',
   AuditLog: 'AuditLog',
   ClassDiary: 'ClassDiary',
   ClassRoutine: 'ClassRoutine',
@@ -191,6 +195,67 @@ export const AttendanceScalarFieldEnum = {
 } as const
 
 export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
+
+
+export const SchoolHolidayScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  date: 'date',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolHolidayScalarFieldEnum = (typeof SchoolHolidayScalarFieldEnum)[keyof typeof SchoolHolidayScalarFieldEnum]
+
+
+export const AttendanceHistoryScalarFieldEnum = {
+  id: 'id',
+  attendanceId: 'attendanceId',
+  schoolId: 'schoolId',
+  oldStatus: 'oldStatus',
+  newStatus: 'newStatus',
+  oldRemarks: 'oldRemarks',
+  newRemarks: 'newRemarks',
+  changedBy: 'changedBy',
+  changedAt: 'changedAt'
+} as const
+
+export type AttendanceHistoryScalarFieldEnum = (typeof AttendanceHistoryScalarFieldEnum)[keyof typeof AttendanceHistoryScalarFieldEnum]
+
+
+export const LeaveRequestScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  requestedBy: 'requestedBy',
+  fromDate: 'fromDate',
+  toDate: 'toDate',
+  reason: 'reason',
+  status: 'status',
+  reviewedBy: 'reviewedBy',
+  reviewNote: 'reviewNote',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LeaveRequestScalarFieldEnum = (typeof LeaveRequestScalarFieldEnum)[keyof typeof LeaveRequestScalarFieldEnum]
+
+
+export const MonthlyReportScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  month: 'month',
+  classId: 'classId',
+  sectionId: 'sectionId',
+  publishedAt: 'publishedAt',
+  publishedBy: 'publishedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MonthlyReportScalarFieldEnum = (typeof MonthlyReportScalarFieldEnum)[keyof typeof MonthlyReportScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {
@@ -621,6 +686,7 @@ export const SchoolSettingScalarFieldEnum = {
   rocketNumber: 'rocketNumber',
   rocketType: 'rocketType',
   feePaymentInstruction: 'feePaymentInstruction',
+  weeklyOffDays: 'weeklyOffDays',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

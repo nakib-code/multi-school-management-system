@@ -78,6 +78,7 @@ model Student {
   guardians       GuardianStudent[]
   enrollments     Enrollment[]
   attendances     Attendance[]
+  leaveRequests   LeaveRequest[]
   results         Result[]
   fees            StudentFee[]
   payments        StudentPayment[]

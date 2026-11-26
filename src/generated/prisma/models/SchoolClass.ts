@@ -252,6 +252,7 @@ export type SchoolClassWhereInput = {
   admissions?: Prisma.AdmissionListRelationFilter
   classRoutines?: Prisma.ClassRoutineListRelationFilter
   classDiaries?: Prisma.ClassDiaryListRelationFilter
+  monthlyReports?: Prisma.MonthlyReportListRelationFilter
 }
 
 export type SchoolClassOrderByWithRelationInput = {
@@ -271,6 +272,7 @@ export type SchoolClassOrderByWithRelationInput = {
   admissions?: Prisma.AdmissionOrderByRelationAggregateInput
   classRoutines?: Prisma.ClassRoutineOrderByRelationAggregateInput
   classDiaries?: Prisma.ClassDiaryOrderByRelationAggregateInput
+  monthlyReports?: Prisma.MonthlyReportOrderByRelationAggregateInput
 }
 
 export type SchoolClassWhereUniqueInput = Prisma.AtLeast<{
@@ -294,6 +296,7 @@ export type SchoolClassWhereUniqueInput = Prisma.AtLeast<{
   admissions?: Prisma.AdmissionListRelationFilter
   classRoutines?: Prisma.ClassRoutineListRelationFilter
   classDiaries?: Prisma.ClassDiaryListRelationFilter
+  monthlyReports?: Prisma.MonthlyReportListRelationFilter
 }, "id" | "schoolId_code">
 
 export type SchoolClassOrderByWithAggregationInput = {
@@ -341,6 +344,7 @@ export type SchoolClassCreateInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateInput = {
@@ -359,6 +363,7 @@ export type SchoolClassUncheckedCreateInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUpdateInput = {
@@ -376,6 +381,7 @@ export type SchoolClassUpdateInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateInput = {
@@ -394,6 +400,7 @@ export type SchoolClassUncheckedUpdateInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateManyInput = {
@@ -502,6 +509,20 @@ export type SchoolClassUpdateOneRequiredWithoutAdmissionsNestedInput = {
   upsert?: Prisma.SchoolClassUpsertWithoutAdmissionsInput
   connect?: Prisma.SchoolClassWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolClassUpdateToOneWithWhereWithoutAdmissionsInput, Prisma.SchoolClassUpdateWithoutAdmissionsInput>, Prisma.SchoolClassUncheckedUpdateWithoutAdmissionsInput>
+}
+
+export type SchoolClassCreateNestedOneWithoutMonthlyReportsInput = {
+  create?: Prisma.XOR<Prisma.SchoolClassCreateWithoutMonthlyReportsInput, Prisma.SchoolClassUncheckedCreateWithoutMonthlyReportsInput>
+  connectOrCreate?: Prisma.SchoolClassCreateOrConnectWithoutMonthlyReportsInput
+  connect?: Prisma.SchoolClassWhereUniqueInput
+}
+
+export type SchoolClassUpdateOneRequiredWithoutMonthlyReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolClassCreateWithoutMonthlyReportsInput, Prisma.SchoolClassUncheckedCreateWithoutMonthlyReportsInput>
+  connectOrCreate?: Prisma.SchoolClassCreateOrConnectWithoutMonthlyReportsInput
+  upsert?: Prisma.SchoolClassUpsertWithoutMonthlyReportsInput
+  connect?: Prisma.SchoolClassWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolClassUpdateToOneWithWhereWithoutMonthlyReportsInput, Prisma.SchoolClassUpdateWithoutMonthlyReportsInput>, Prisma.SchoolClassUncheckedUpdateWithoutMonthlyReportsInput>
 }
 
 export type SchoolClassCreateNestedOneWithoutClassDiariesInput = {
@@ -644,6 +665,7 @@ export type SchoolClassCreateWithoutAdmissionsInput = {
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutAdmissionsInput = {
@@ -661,6 +683,7 @@ export type SchoolClassUncheckedCreateWithoutAdmissionsInput = {
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutAdmissionsInput = {
@@ -693,6 +716,7 @@ export type SchoolClassUpdateWithoutAdmissionsInput = {
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutAdmissionsInput = {
@@ -708,6 +732,93 @@ export type SchoolClassUncheckedUpdateWithoutAdmissionsInput = {
   teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutClassNestedInput
   enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutClassNestedInput
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
+  classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
+}
+
+export type SchoolClassCreateWithoutMonthlyReportsInput = {
+  name: string
+  code: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutClassesInput
+  sections?: Prisma.SectionCreateNestedManyWithoutClassInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutClassInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutClassInput
+  exams?: Prisma.ExamCreateNestedManyWithoutClassInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
+  classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+}
+
+export type SchoolClassUncheckedCreateWithoutMonthlyReportsInput = {
+  id?: number
+  schoolId: number
+  name: string
+  code: string
+  description?: string | null
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutClassInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutClassInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutClassInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
+  classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+}
+
+export type SchoolClassCreateOrConnectWithoutMonthlyReportsInput = {
+  where: Prisma.SchoolClassWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolClassCreateWithoutMonthlyReportsInput, Prisma.SchoolClassUncheckedCreateWithoutMonthlyReportsInput>
+}
+
+export type SchoolClassUpsertWithoutMonthlyReportsInput = {
+  update: Prisma.XOR<Prisma.SchoolClassUpdateWithoutMonthlyReportsInput, Prisma.SchoolClassUncheckedUpdateWithoutMonthlyReportsInput>
+  create: Prisma.XOR<Prisma.SchoolClassCreateWithoutMonthlyReportsInput, Prisma.SchoolClassUncheckedCreateWithoutMonthlyReportsInput>
+  where?: Prisma.SchoolClassWhereInput
+}
+
+export type SchoolClassUpdateToOneWithWhereWithoutMonthlyReportsInput = {
+  where?: Prisma.SchoolClassWhereInput
+  data: Prisma.XOR<Prisma.SchoolClassUpdateWithoutMonthlyReportsInput, Prisma.SchoolClassUncheckedUpdateWithoutMonthlyReportsInput>
+}
+
+export type SchoolClassUpdateWithoutMonthlyReportsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutClassesNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutClassNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutClassNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutClassNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
+  classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+}
+
+export type SchoolClassUncheckedUpdateWithoutMonthlyReportsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutClassNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutClassNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutClassNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
 }
@@ -726,6 +837,7 @@ export type SchoolClassCreateWithoutClassDiariesInput = {
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutClassDiariesInput = {
@@ -743,6 +855,7 @@ export type SchoolClassUncheckedCreateWithoutClassDiariesInput = {
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutClassDiariesInput = {
@@ -775,6 +888,7 @@ export type SchoolClassUpdateWithoutClassDiariesInput = {
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutClassDiariesInput = {
@@ -792,6 +906,7 @@ export type SchoolClassUncheckedUpdateWithoutClassDiariesInput = {
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateWithoutClassRoutinesInput = {
@@ -808,6 +923,7 @@ export type SchoolClassCreateWithoutClassRoutinesInput = {
   exams?: Prisma.ExamCreateNestedManyWithoutClassInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutClassRoutinesInput = {
@@ -825,6 +941,7 @@ export type SchoolClassUncheckedCreateWithoutClassRoutinesInput = {
   exams?: Prisma.ExamUncheckedCreateNestedManyWithoutClassInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutClassRoutinesInput = {
@@ -857,6 +974,7 @@ export type SchoolClassUpdateWithoutClassRoutinesInput = {
   exams?: Prisma.ExamUpdateManyWithoutClassNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutClassRoutinesInput = {
@@ -874,6 +992,7 @@ export type SchoolClassUncheckedUpdateWithoutClassRoutinesInput = {
   exams?: Prisma.ExamUncheckedUpdateManyWithoutClassNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateWithoutEnrollmentsInput = {
@@ -890,6 +1009,7 @@ export type SchoolClassCreateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutEnrollmentsInput = {
@@ -907,6 +1027,7 @@ export type SchoolClassUncheckedCreateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutEnrollmentsInput = {
@@ -939,6 +1060,7 @@ export type SchoolClassUpdateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutEnrollmentsInput = {
@@ -956,6 +1078,7 @@ export type SchoolClassUncheckedUpdateWithoutEnrollmentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateWithoutExamsInput = {
@@ -972,6 +1095,7 @@ export type SchoolClassCreateWithoutExamsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutExamsInput = {
@@ -989,6 +1113,7 @@ export type SchoolClassUncheckedCreateWithoutExamsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutExamsInput = {
@@ -1021,6 +1146,7 @@ export type SchoolClassUpdateWithoutExamsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutExamsInput = {
@@ -1038,6 +1164,7 @@ export type SchoolClassUncheckedUpdateWithoutExamsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateWithoutSchoolInput = {
@@ -1054,6 +1181,7 @@ export type SchoolClassCreateWithoutSchoolInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutSchoolInput = {
@@ -1071,6 +1199,7 @@ export type SchoolClassUncheckedCreateWithoutSchoolInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutSchoolInput = {
@@ -1127,6 +1256,7 @@ export type SchoolClassCreateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutSectionsInput = {
@@ -1144,6 +1274,7 @@ export type SchoolClassUncheckedCreateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutSectionsInput = {
@@ -1176,6 +1307,7 @@ export type SchoolClassUpdateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutSectionsInput = {
@@ -1193,6 +1325,7 @@ export type SchoolClassUncheckedUpdateWithoutSectionsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateWithoutTeacherAssignmentsInput = {
@@ -1209,6 +1342,7 @@ export type SchoolClassCreateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassUncheckedCreateWithoutTeacherAssignmentsInput = {
@@ -1226,6 +1360,7 @@ export type SchoolClassUncheckedCreateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutClassInput
   classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutClassInput
   classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutClassInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutClassInput
 }
 
 export type SchoolClassCreateOrConnectWithoutTeacherAssignmentsInput = {
@@ -1258,6 +1393,7 @@ export type SchoolClassUpdateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutTeacherAssignmentsInput = {
@@ -1275,6 +1411,7 @@ export type SchoolClassUncheckedUpdateWithoutTeacherAssignmentsInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassCreateManySchoolInput = {
@@ -1301,6 +1438,7 @@ export type SchoolClassUpdateWithoutSchoolInput = {
   admissions?: Prisma.AdmissionUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateWithoutSchoolInput = {
@@ -1318,6 +1456,7 @@ export type SchoolClassUncheckedUpdateWithoutSchoolInput = {
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutClassNestedInput
   classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutClassNestedInput
   classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutClassNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutClassNestedInput
 }
 
 export type SchoolClassUncheckedUpdateManyWithoutSchoolInput = {
@@ -1343,6 +1482,7 @@ export type SchoolClassCountOutputType = {
   admissions: number
   classRoutines: number
   classDiaries: number
+  monthlyReports: number
 }
 
 export type SchoolClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1353,6 +1493,7 @@ export type SchoolClassCountOutputTypeSelect<ExtArgs extends runtime.Types.Exten
   admissions?: boolean | SchoolClassCountOutputTypeCountAdmissionsArgs
   classRoutines?: boolean | SchoolClassCountOutputTypeCountClassRoutinesArgs
   classDiaries?: boolean | SchoolClassCountOutputTypeCountClassDiariesArgs
+  monthlyReports?: boolean | SchoolClassCountOutputTypeCountMonthlyReportsArgs
 }
 
 /**
@@ -1414,6 +1555,13 @@ export type SchoolClassCountOutputTypeCountClassDiariesArgs<ExtArgs extends runt
   where?: Prisma.ClassDiaryWhereInput
 }
 
+/**
+ * SchoolClassCountOutputType without action
+ */
+export type SchoolClassCountOutputTypeCountMonthlyReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MonthlyReportWhereInput
+}
+
 
 export type SchoolClassSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1432,6 +1580,7 @@ export type SchoolClassSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   admissions?: boolean | Prisma.SchoolClass$admissionsArgs<ExtArgs>
   classRoutines?: boolean | Prisma.SchoolClass$classRoutinesArgs<ExtArgs>
   classDiaries?: boolean | Prisma.SchoolClass$classDiariesArgs<ExtArgs>
+  monthlyReports?: boolean | Prisma.SchoolClass$monthlyReportsArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolClassCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["schoolClass"]>
 
@@ -1480,6 +1629,7 @@ export type SchoolClassInclude<ExtArgs extends runtime.Types.Extensions.Internal
   admissions?: boolean | Prisma.SchoolClass$admissionsArgs<ExtArgs>
   classRoutines?: boolean | Prisma.SchoolClass$classRoutinesArgs<ExtArgs>
   classDiaries?: boolean | Prisma.SchoolClass$classDiariesArgs<ExtArgs>
+  monthlyReports?: boolean | Prisma.SchoolClass$monthlyReportsArgs<ExtArgs>
   _count?: boolean | Prisma.SchoolClassCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SchoolClassIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1500,6 +1650,7 @@ export type $SchoolClassPayload<ExtArgs extends runtime.Types.Extensions.Interna
     admissions: Prisma.$AdmissionPayload<ExtArgs>[]
     classRoutines: Prisma.$ClassRoutinePayload<ExtArgs>[]
     classDiaries: Prisma.$ClassDiaryPayload<ExtArgs>[]
+    monthlyReports: Prisma.$MonthlyReportPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1912,6 +2063,7 @@ export interface Prisma__SchoolClassClient<T, Null = never, ExtArgs extends runt
   admissions<T extends Prisma.SchoolClass$admissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClass$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   classRoutines<T extends Prisma.SchoolClass$classRoutinesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClass$classRoutinesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassRoutinePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   classDiaries<T extends Prisma.SchoolClass$classDiariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClass$classDiariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassDiaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  monthlyReports<T extends Prisma.SchoolClass$monthlyReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClass$monthlyReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MonthlyReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2515,6 +2667,30 @@ export type SchoolClass$classDiariesArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.ClassDiaryScalarFieldEnum | Prisma.ClassDiaryScalarFieldEnum[]
+}
+
+/**
+ * SchoolClass.monthlyReports
+ */
+export type SchoolClass$monthlyReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the MonthlyReport
+   */
+  select?: Prisma.MonthlyReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the MonthlyReport
+   */
+  omit?: Prisma.MonthlyReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.MonthlyReportInclude<ExtArgs> | null
+  where?: Prisma.MonthlyReportWhereInput
+  orderBy?: Prisma.MonthlyReportOrderByWithRelationInput | Prisma.MonthlyReportOrderByWithRelationInput[]
+  cursor?: Prisma.MonthlyReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.MonthlyReportScalarFieldEnum | Prisma.MonthlyReportScalarFieldEnum[]
 }
 
 /**

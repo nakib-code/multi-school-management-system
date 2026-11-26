@@ -24,6 +24,10 @@ model User {
   manager  Manager?
 
   markedAttendances            Attendance[]
+  attendanceHistoriesChanged   AttendanceHistory[]   @relation("AttendanceHistoryActor")
+  leaveRequestsCreated         LeaveRequest[]        @relation("LeaveRequestRequester")
+  leaveRequestsReviewed        LeaveRequest[]        @relation("LeaveRequestReviewer")
+  monthlyReportsPublished      MonthlyReport[]       @relation("MonthlyReportPublisher")
   receivedAdmissionPayments    AdmissionPayment[]
   verifiedStudentPayments      StudentPayment[]      @relation("StudentPaymentVerifier")
   verifiedSubscriptionPayments SubscriptionPayment[] @relation("SubscriptionPaymentVerifier")

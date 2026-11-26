@@ -21,6 +21,7 @@ model Section {
   admissions         Admission[]
   classRoutines      ClassRoutine[]
   classDiaries       ClassDiary[]
+  monthlyReports     MonthlyReport[]
 
   @@unique([classId, code])
   @@index([schoolId])

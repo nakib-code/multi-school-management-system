@@ -57,6 +57,26 @@ export type AdmissionPayment = Prisma.AdmissionPaymentModel
  */
 export type Attendance = Prisma.AttendanceModel
 /**
+ * Model SchoolHoliday
+ * 
+ */
+export type SchoolHoliday = Prisma.SchoolHolidayModel
+/**
+ * Model AttendanceHistory
+ * 
+ */
+export type AttendanceHistory = Prisma.AttendanceHistoryModel
+/**
+ * Model LeaveRequest
+ * 
+ */
+export type LeaveRequest = Prisma.LeaveRequestModel
+/**
+ * Model MonthlyReport
+ * 
+ */
+export type MonthlyReport = Prisma.MonthlyReportModel
+/**
  * Model AuditLog
  * 
  */

@@ -400,6 +400,10 @@ export const ModelName = {
   Admission: 'Admission',
   AdmissionPayment: 'AdmissionPayment',
   Attendance: 'Attendance',
+  SchoolHoliday: 'SchoolHoliday',
+  AttendanceHistory: 'AttendanceHistory',
+  LeaveRequest: 'LeaveRequest',
+  MonthlyReport: 'MonthlyReport',
   AuditLog: 'AuditLog',
   ClassDiary: 'ClassDiary',
   ClassRoutine: 'ClassRoutine',
@@ -451,7 +455,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "auditLog" | "classDiary" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -674,6 +678,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.AttendanceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.AttendanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    SchoolHoliday: {
+      payload: Prisma.$SchoolHolidayPayload<ExtArgs>
+      fields: Prisma.SchoolHolidayFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolHolidayFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolHolidayFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolHolidayFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolHolidayFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>
+        }
+        findMany: {
+          args: Prisma.SchoolHolidayFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>[]
+        }
+        create: {
+          args: Prisma.SchoolHolidayCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>
+        }
+        createMany: {
+          args: Prisma.SchoolHolidayCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolHolidayCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolHolidayDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>
+        }
+        update: {
+          args: Prisma.SchoolHolidayUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolHolidayDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolHolidayUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolHolidayUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolHolidayUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolHolidayPayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolHolidayAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolHoliday>
+        }
+        groupBy: {
+          args: Prisma.SchoolHolidayGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolHolidayGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolHolidayCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolHolidayCountAggregateOutputType> | number
+        }
+      }
+    }
+    AttendanceHistory: {
+      payload: Prisma.$AttendanceHistoryPayload<ExtArgs>
+      fields: Prisma.AttendanceHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AttendanceHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AttendanceHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.AttendanceHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AttendanceHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.AttendanceHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.AttendanceHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.AttendanceHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AttendanceHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.AttendanceHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>
+        }
+        update: {
+          args: Prisma.AttendanceHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.AttendanceHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AttendanceHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AttendanceHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.AttendanceHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendanceHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.AttendanceHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAttendanceHistory>
+        }
+        groupBy: {
+          args: Prisma.AttendanceHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AttendanceHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AttendanceHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AttendanceHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
+    LeaveRequest: {
+      payload: Prisma.$LeaveRequestPayload<ExtArgs>
+      fields: Prisma.LeaveRequestFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeaveRequestFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeaveRequestFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+        }
+        findFirst: {
+          args: Prisma.LeaveRequestFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeaveRequestFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+        }
+        findMany: {
+          args: Prisma.LeaveRequestFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>[]
+        }
+        create: {
+          args: Prisma.LeaveRequestCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+        }
+        createMany: {
+          args: Prisma.LeaveRequestCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeaveRequestCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>[]
+        }
+        delete: {
+          args: Prisma.LeaveRequestDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+        }
+        update: {
+          args: Prisma.LeaveRequestUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeaveRequestDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeaveRequestUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeaveRequestUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>[]
+        }
+        upsert: {
+          args: Prisma.LeaveRequestUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeaveRequestPayload>
+        }
+        aggregate: {
+          args: Prisma.LeaveRequestAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeaveRequest>
+        }
+        groupBy: {
+          args: Prisma.LeaveRequestGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaveRequestGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeaveRequestCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeaveRequestCountAggregateOutputType> | number
+        }
+      }
+    }
+    MonthlyReport: {
+      payload: Prisma.$MonthlyReportPayload<ExtArgs>
+      fields: Prisma.MonthlyReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.MonthlyReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.MonthlyReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>
+        }
+        findFirst: {
+          args: Prisma.MonthlyReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.MonthlyReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>
+        }
+        findMany: {
+          args: Prisma.MonthlyReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>[]
+        }
+        create: {
+          args: Prisma.MonthlyReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>
+        }
+        createMany: {
+          args: Prisma.MonthlyReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.MonthlyReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>[]
+        }
+        delete: {
+          args: Prisma.MonthlyReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>
+        }
+        update: {
+          args: Prisma.MonthlyReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.MonthlyReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.MonthlyReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.MonthlyReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.MonthlyReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$MonthlyReportPayload>
+        }
+        aggregate: {
+          args: Prisma.MonthlyReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateMonthlyReport>
+        }
+        groupBy: {
+          args: Prisma.MonthlyReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonthlyReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.MonthlyReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.MonthlyReportCountAggregateOutputType> | number
         }
       }
     }
@@ -3465,6 +3765,67 @@ export const AttendanceScalarFieldEnum = {
 export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
 
 
+export const SchoolHolidayScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  date: 'date',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolHolidayScalarFieldEnum = (typeof SchoolHolidayScalarFieldEnum)[keyof typeof SchoolHolidayScalarFieldEnum]
+
+
+export const AttendanceHistoryScalarFieldEnum = {
+  id: 'id',
+  attendanceId: 'attendanceId',
+  schoolId: 'schoolId',
+  oldStatus: 'oldStatus',
+  newStatus: 'newStatus',
+  oldRemarks: 'oldRemarks',
+  newRemarks: 'newRemarks',
+  changedBy: 'changedBy',
+  changedAt: 'changedAt'
+} as const
+
+export type AttendanceHistoryScalarFieldEnum = (typeof AttendanceHistoryScalarFieldEnum)[keyof typeof AttendanceHistoryScalarFieldEnum]
+
+
+export const LeaveRequestScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  studentId: 'studentId',
+  requestedBy: 'requestedBy',
+  fromDate: 'fromDate',
+  toDate: 'toDate',
+  reason: 'reason',
+  status: 'status',
+  reviewedBy: 'reviewedBy',
+  reviewNote: 'reviewNote',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LeaveRequestScalarFieldEnum = (typeof LeaveRequestScalarFieldEnum)[keyof typeof LeaveRequestScalarFieldEnum]
+
+
+export const MonthlyReportScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  month: 'month',
+  classId: 'classId',
+  sectionId: 'sectionId',
+  publishedAt: 'publishedAt',
+  publishedBy: 'publishedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MonthlyReportScalarFieldEnum = (typeof MonthlyReportScalarFieldEnum)[keyof typeof MonthlyReportScalarFieldEnum]
+
+
 export const AuditLogScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -3893,6 +4254,7 @@ export const SchoolSettingScalarFieldEnum = {
   rocketNumber: 'rocketNumber',
   rocketType: 'rocketType',
   feePaymentInstruction: 'feePaymentInstruction',
+  weeklyOffDays: 'weeklyOffDays',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -4373,6 +4735,20 @@ export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'AttendanceStatus[]'
  */
 export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LeaveRequestStatus'
+ */
+export type EnumLeaveRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeaveRequestStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LeaveRequestStatus[]'
+ */
+export type ListEnumLeaveRequestStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LeaveRequestStatus[]'>
     
 
 
@@ -4907,6 +5283,10 @@ export type GlobalOmitConfig = {
   admission?: Prisma.AdmissionOmit
   admissionPayment?: Prisma.AdmissionPaymentOmit
   attendance?: Prisma.AttendanceOmit
+  schoolHoliday?: Prisma.SchoolHolidayOmit
+  attendanceHistory?: Prisma.AttendanceHistoryOmit
+  leaveRequest?: Prisma.LeaveRequestOmit
+  monthlyReport?: Prisma.MonthlyReportOmit
   auditLog?: Prisma.AuditLogOmit
   classDiary?: Prisma.ClassDiaryOmit
   classRoutine?: Prisma.ClassRoutineOmit

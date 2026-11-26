@@ -18,6 +18,7 @@ model SchoolClass {
   admissions         Admission[]
   classRoutines      ClassRoutine[]
   classDiaries       ClassDiary[]
+  monthlyReports     MonthlyReport[]
 
   @@unique([schoolId, code])
   @@index([schoolId])

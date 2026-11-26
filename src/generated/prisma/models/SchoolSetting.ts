@@ -30,12 +30,14 @@ export type SchoolSettingAvgAggregateOutputType = {
   id: number | null
   schoolId: number | null
   admissionFee: runtime.Decimal | null
+  weeklyOffDays: number | null
 }
 
 export type SchoolSettingSumAggregateOutputType = {
   id: number | null
   schoolId: number | null
   admissionFee: runtime.Decimal | null
+  weeklyOffDays: number[]
 }
 
 export type SchoolSettingMinAggregateOutputType = {
@@ -97,6 +99,7 @@ export type SchoolSettingCountAggregateOutputType = {
   rocketNumber: number
   rocketType: number
   feePaymentInstruction: number
+  weeklyOffDays: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -107,12 +110,14 @@ export type SchoolSettingAvgAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  weeklyOffDays?: true
 }
 
 export type SchoolSettingSumAggregateInputType = {
   id?: true
   schoolId?: true
   admissionFee?: true
+  weeklyOffDays?: true
 }
 
 export type SchoolSettingMinAggregateInputType = {
@@ -174,6 +179,7 @@ export type SchoolSettingCountAggregateInputType = {
   rocketNumber?: true
   rocketType?: true
   feePaymentInstruction?: true
+  weeklyOffDays?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -282,6 +288,7 @@ export type SchoolSettingGroupByOutputType = {
   rocketNumber: string | null
   rocketType: $Enums.MobileAccountType
   feePaymentInstruction: string | null
+  weeklyOffDays: number[]
   createdAt: Date
   updatedAt: Date
   _count: SchoolSettingCountAggregateOutputType | null
@@ -326,6 +333,7 @@ export type SchoolSettingWhereInput = {
   rocketNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  weeklyOffDays?: Prisma.IntNullableListFilter<"SchoolSetting">
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -348,6 +356,7 @@ export type SchoolSettingOrderByWithRelationInput = {
   rocketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrderInput | Prisma.SortOrder
+  weeklyOffDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
@@ -373,6 +382,7 @@ export type SchoolSettingWhereUniqueInput = Prisma.AtLeast<{
   rocketNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  weeklyOffDays?: Prisma.IntNullableListFilter<"SchoolSetting">
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -395,6 +405,7 @@ export type SchoolSettingOrderByWithAggregationInput = {
   rocketNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrderInput | Prisma.SortOrder
+  weeklyOffDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolSettingCountOrderByAggregateInput
@@ -424,6 +435,7 @@ export type SchoolSettingScalarWhereWithAggregatesInput = {
   rocketNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
   rocketType?: Prisma.EnumMobileAccountTypeWithAggregatesFilter<"SchoolSetting"> | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  weeklyOffDays?: Prisma.IntNullableListFilter<"SchoolSetting">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
 }
@@ -443,6 +455,7 @@ export type SchoolSettingCreateInput = {
   rocketNumber?: string | null
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
+  weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutSchoolSettingInput
@@ -465,6 +478,7 @@ export type SchoolSettingUncheckedCreateInput = {
   rocketNumber?: string | null
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
+  weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -484,6 +498,7 @@ export type SchoolSettingUpdateInput = {
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutSchoolSettingNestedInput
@@ -506,6 +521,7 @@ export type SchoolSettingUncheckedUpdateInput = {
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -527,6 +543,7 @@ export type SchoolSettingCreateManyInput = {
   rocketNumber?: string | null
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
+  weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -546,6 +563,7 @@ export type SchoolSettingUpdateManyMutationInput = {
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -567,6 +585,7 @@ export type SchoolSettingUncheckedUpdateManyInput = {
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -574,6 +593,14 @@ export type SchoolSettingUncheckedUpdateManyInput = {
 export type SchoolSettingNullableScalarRelationFilter = {
   is?: Prisma.SchoolSettingWhereInput | null
   isNot?: Prisma.SchoolSettingWhereInput | null
+}
+
+export type IntNullableListFilter<$PrismaModel = never> = {
+  equals?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  has?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  hasEvery?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  hasSome?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type SchoolSettingCountOrderByAggregateInput = {
@@ -593,6 +620,7 @@ export type SchoolSettingCountOrderByAggregateInput = {
   rocketNumber?: Prisma.SortOrder
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrder
+  weeklyOffDays?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -601,6 +629,7 @@ export type SchoolSettingAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  weeklyOffDays?: Prisma.SortOrder
 }
 
 export type SchoolSettingMaxOrderByAggregateInput = {
@@ -649,6 +678,7 @@ export type SchoolSettingSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
   admissionFee?: Prisma.SortOrder
+  weeklyOffDays?: Prisma.SortOrder
 }
 
 export type SchoolSettingCreateNestedOneWithoutSchoolInput = {
@@ -683,6 +713,15 @@ export type SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolSettingUpdateToOneWithWhereWithoutSchoolInput, Prisma.SchoolSettingUpdateWithoutSchoolInput>, Prisma.SchoolSettingUncheckedUpdateWithoutSchoolInput>
 }
 
+export type SchoolSettingCreateweeklyOffDaysInput = {
+  set: number[]
+}
+
+export type SchoolSettingUpdateweeklyOffDaysInput = {
+  set?: number[]
+  push?: number | number[]
+}
+
 export type SchoolSettingCreateWithoutSchoolInput = {
   admissionFee?: runtime.Decimal | runtime.DecimalJsLike | number | string
   hasGeneralSection?: boolean
@@ -698,6 +737,7 @@ export type SchoolSettingCreateWithoutSchoolInput = {
   rocketNumber?: string | null
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
+  weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -718,6 +758,7 @@ export type SchoolSettingUncheckedCreateWithoutSchoolInput = {
   rocketNumber?: string | null
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
+  weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -753,6 +794,7 @@ export type SchoolSettingUpdateWithoutSchoolInput = {
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -773,6 +815,7 @@ export type SchoolSettingUncheckedUpdateWithoutSchoolInput = {
   rocketNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -796,6 +839,7 @@ export type SchoolSettingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   rocketNumber?: boolean
   rocketType?: boolean
   feePaymentInstruction?: boolean
+  weeklyOffDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -818,6 +862,7 @@ export type SchoolSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   rocketNumber?: boolean
   rocketType?: boolean
   feePaymentInstruction?: boolean
+  weeklyOffDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -840,6 +885,7 @@ export type SchoolSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   rocketNumber?: boolean
   rocketType?: boolean
   feePaymentInstruction?: boolean
+  weeklyOffDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -862,11 +908,12 @@ export type SchoolSettingSelectScalar = {
   rocketNumber?: boolean
   rocketType?: boolean
   feePaymentInstruction?: boolean
+  weeklyOffDays?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
+export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "weeklyOffDays" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
 export type SchoolSettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
 }
@@ -899,6 +946,7 @@ export type $SchoolSettingPayload<ExtArgs extends runtime.Types.Extensions.Inter
     rocketNumber: string | null
     rocketType: $Enums.MobileAccountType
     feePaymentInstruction: string | null
+    weeklyOffDays: number[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["schoolSetting"]>
@@ -1341,6 +1389,7 @@ export interface SchoolSettingFieldRefs {
   readonly rocketNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
   readonly rocketType: Prisma.FieldRef<"SchoolSetting", 'MobileAccountType'>
   readonly feePaymentInstruction: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly weeklyOffDays: Prisma.FieldRef<"SchoolSetting", 'Int[]'>
   readonly createdAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
 }
