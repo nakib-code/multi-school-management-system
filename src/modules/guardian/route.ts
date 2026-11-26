@@ -10,6 +10,7 @@ import {
 	getGuardianByIdController,
 	getGuardiansController,
 	linkStudentToGuardianController,
+	resetGuardianPasswordController,
 	unlinkStudentFromGuardianController,
 	updateGuardianController,
 } from "./controller.js";
@@ -19,6 +20,7 @@ import {
 	guardianSchoolParamsSchema,
 	guardianStudentParamsSchema,
 	linkGuardianStudentSchema,
+	resetGuardianPasswordSchema,
 	updateGuardianSchema,
 } from "./validation.js";
 
@@ -76,6 +78,15 @@ router.delete(
 	requireSchoolAccess,
 	validateRequest(guardianStudentParamsSchema),
 	unlinkStudentFromGuardianController,
+);
+
+router.post(
+	"/schools/:schoolId/guardians/:id/reset-password",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(resetGuardianPasswordSchema),
+	resetGuardianPasswordController,
 );
 
 router.delete(

@@ -23,3 +23,8 @@ export interface LinkGuardianStudentInput {
 	studentId: number;
 	isPrimary?: boolean;
 }
+
+export interface ResetGuardianPasswordInput {
+	password?: string;
+	mustChangePassword?: boolean;
+}

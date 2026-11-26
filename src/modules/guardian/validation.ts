@@ -92,3 +92,18 @@ export const linkGuardianStudentSchema = z.object({
 		isPrimary: z.boolean().optional(),
 	}),
 });
+
+export const resetGuardianPasswordSchema = z.object({
+	params: z.object({ schoolId: schoolIdParam, id: idParam }),
+	body: z.object({
+		password: z.preprocess(
+			emptyToUndefined,
+			z
+				.string()
+				.min(6, "Password must be at least 6 characters")
+				.max(100)
+				.optional(),
+		),
+		mustChangePassword: z.boolean().optional().default(true),
+	}),
+});

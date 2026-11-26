@@ -8,6 +8,7 @@ import {
 	getGuardianById,
 	getGuardians,
 	linkStudentToGuardian,
+	resetGuardianPassword,
 	unlinkStudentFromGuardian,
 	updateGuardian,
 } from "./service.js";
@@ -126,6 +127,25 @@ export const unlinkStudentFromGuardianController = async (
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student unlinked from guardian successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const resetGuardianPasswordController = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
+		const id = parsePositiveInt(req.params.id, "guardian ID");
+		const result = await resetGuardianPassword(schoolId, id, req.body);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Guardian password reset successfully",
 			data: result,
 		});
 	} catch (error) {

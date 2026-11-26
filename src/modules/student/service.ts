@@ -7,6 +7,11 @@ import type {
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
+import {
+	generateTemporaryPassword,
+	getPhoneLookupVariants,
+	normalizePhone,
+} from "../../utils/phone.js";
 
 export interface CreateStudentInput {
 	// Stage 1 — Required
@@ -255,7 +260,8 @@ export const createStudent = async (
 	}
 
 	const generatedCode = input.studentId?.trim() || generateStudentCode(schoolId);
-	const cleanPhone = input.guardianPhone.trim();
+	const cleanPhone = normalizePhone(input.guardianPhone);
+	const phoneVariants = getPhoneLookupVariants(input.guardianPhone);
 	const relUpper = (input.guardianRelation?.trim() || "FATHER").toUpperCase();
 
 	return prisma.$transaction(async (tx) => {
@@ -394,12 +400,13 @@ export const createStudent = async (
 			email: string;
 			isExistingGuardian: boolean;
 			defaultPassword?: string;
+			temporaryPassword?: string;
 		} | null = null;
 
 		const existingGuardian = await tx.guardian.findFirst({
 			where: {
 				schoolId,
-				user: { phone: cleanPhone },
+				user: { phone: { in: phoneVariants } },
 			},
 			include: {
 				user: {
@@ -441,8 +448,7 @@ export const createStudent = async (
 		} else {
 			const digits = cleanPhone.replace(/\D/g, "");
 			const defaultPassword =
-				input.guardianPassword?.trim() ||
-				`Madrasa@${digits.slice(-4) || "1234"}`;
+				input.guardianPassword?.trim() || generateTemporaryPassword();
 			const passwordHash = await hashPassword(defaultPassword);
 
 			let guardianEmail =
@@ -506,6 +512,7 @@ export const createStudent = async (
 				email: guardianUser.email,
 				isExistingGuardian: false,
 				defaultPassword,
+				temporaryPassword: defaultPassword,
 			};
 		}
 

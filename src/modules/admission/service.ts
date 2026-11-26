@@ -11,6 +11,11 @@ import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 import { hashPassword } from "../../utils/password.js";
 import {
+	generateTemporaryPassword,
+	getPhoneLookupVariants,
+	normalizePhone,
+} from "../../utils/phone.js";
+import {
 	deleteVerificationCode,
 	getVerificationCode,
 } from "../../utils/verificationCode.js";
@@ -21,8 +26,6 @@ import type {
 	TrackAdmissionInput,
 	VerifyStudentEmailInput,
 } from "./interface.js";
-
-const normalizePhone = (phone: string): string => phone.trim();
 
 const parseAcademicGroup = (
 	academicGroup?: string | null,
@@ -561,6 +564,7 @@ export const trackAdmission = async ({
 	const normalizedApplicationNo = applicationNo.trim().toUpperCase();
 	const normalizedEmail = studentEmail?.trim().toLowerCase();
 	const cleanPhone = guardianPhone?.trim();
+	const phoneVariants = cleanPhone ? getPhoneLookupVariants(cleanPhone) : [];
 
 	if (!normalizedApplicationNo) {
 		throw new AppError(400, "Application number is required");
@@ -574,12 +578,12 @@ export const trackAdmission = async ({
 		...(cleanPhone && normalizedEmail
 			? {
 					OR: [
-						{ guardianPhone: cleanPhone },
+						{ guardianPhone: { in: phoneVariants } },
 						{ studentEmail: normalizedEmail },
 					],
 				}
 			: cleanPhone
-				? { guardianPhone: cleanPhone }
+				? { guardianPhone: { in: phoneVariants } }
 				: { studentEmail: normalizedEmail ?? null }),
 	};
 
@@ -901,14 +905,16 @@ export const approveAdmission = async (
 				phone: string;
 				email: string;
 				isExistingGuardian: boolean;
+				temporaryPassword?: string;
 			} | null = null;
 
 			if (admission.guardianPhone?.trim()) {
-				const cleanPhone = admission.guardianPhone.trim();
+				const cleanPhone = normalizePhone(admission.guardianPhone);
+				const phoneVariants = getPhoneLookupVariants(admission.guardianPhone);
 				const existingGuardian = await tx.guardian.findFirst({
 					where: {
 						schoolId,
-						user: { phone: cleanPhone },
+						user: { phone: { in: phoneVariants } },
 					},
 					include: {
 						user: {
@@ -949,7 +955,7 @@ export const approveAdmission = async (
 					};
 				} else {
 					const digits = cleanPhone.replace(/\D/g, "");
-					const defaultPassword = `Madrasa@${digits.slice(-4) || "1234"}`;
+					const defaultPassword = generateTemporaryPassword();
 					const gPasswordHash = await hashPassword(defaultPassword);
 
 					let guardianEmail =
@@ -1008,6 +1014,7 @@ export const approveAdmission = async (
 						phone: cleanPhone,
 						email: guardianUser.email,
 						isExistingGuardian: false,
+						temporaryPassword: defaultPassword,
 					};
 				}
 			}

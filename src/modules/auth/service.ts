@@ -3,6 +3,7 @@ import { DEFAULT_SCHOOL_FEATURES } from "../../middleware/schoolFeature.js";
 import AppError from "../../utils/appError.js";
 import { generateToken } from "../../utils/jwt.js";
 import { comparePassword } from "../../utils/password.js";
+import { getPhoneLookupVariants } from "../../utils/phone.js";
 import type { LoginInput } from "./interface.js";
 
 const buildSchoolSettingPayload = (
@@ -50,11 +51,12 @@ const buildSchoolSettingPayload = (
 export const login = async (payload: LoginInput) => {
 	const identifier = payload.email.trim();
 	const normalizedEmail = identifier.toLowerCase();
+	const phoneVariants = getPhoneLookupVariants(identifier);
 	const { password } = payload;
 
 	const user = await prisma.user.findFirst({
 		where: {
-			OR: [{ email: normalizedEmail }, { phone: identifier }],
+			OR: [{ email: normalizedEmail }, { phone: { in: phoneVariants } }],
 		},
 		include: {
 			school: {
