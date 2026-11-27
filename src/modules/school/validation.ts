@@ -56,6 +56,24 @@ export const rejectSchoolSchema = z.object({
 	}),
 });
 
+export const updateSchoolProfileSchema = z.object({
+	params: z.object({
+		id: z.coerce.number().int().positive("School ID must be a positive number"),
+	}),
+	body: z.object({
+		name: z.string().trim().min(2).max(150).optional(),
+		email: z.string().trim().email().nullable().optional(),
+		phone: z.string().trim().max(30).nullable().optional(),
+		address: z.string().trim().max(500).nullable().optional(),
+		logo: z
+			.string()
+			.trim()
+			.url("Logo must be a valid URL")
+			.nullable()
+			.optional(),
+	}),
+});
+
 export const schoolIdParamsSchema = z.object({
 	params: z.object({
 		id: z.coerce.number().int().positive("School ID must be a positive number"),

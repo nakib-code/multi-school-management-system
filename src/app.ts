@@ -5,6 +5,7 @@ import swaggerUi from "swagger-ui-express";
 
 import env from "./config/env.js";
 import { swaggerSpec } from "./config/swagger.js";
+import { getExternalWebsiteOrigins } from "./lib/corsOrigins.js";
 
 import { errorHandler } from "./middleware/errorHandler.js";
 import { notFound } from "./middleware/notFound.js";
@@ -16,20 +17,19 @@ import { authRoutes } from "./modules/auth/route.js";
 import { classRoutes } from "./modules/class/route.js";
 import { classDiaryRoutes } from "./modules/class-diary/route.js";
 import { classRoutineRoutes } from "./modules/class-routine/route.js";
-import { notificationRoutes } from "./modules/notification/route.js";
-import { platformAuditLogRoutes } from "./modules/platform-audit-log/route.js";
-import { platformSettingRoutes } from "./modules/platformSetting/route.js";
-import { uploadRoutes } from "./modules/upload/route.js";
 import { dashboardRoutes } from "./modules/dashboard/route.js";
 import { enrollmentRoutes } from "./modules/enrollment/route.js";
 import { examRoutes } from "./modules/exam/route.js";
 import { guardianRoutes } from "./modules/guardian/route.js";
 import { hefzRoutes } from "./modules/hefz/route.js";
 import { managerRoutes } from "./modules/manager/route.js";
+import { notificationRoutes } from "./modules/notification/route.js";
 import { packageRouter } from "./modules/package/package.route.js";
 import { paymentRoutes } from "./modules/payment/route.js";
+import { platformAuditLogRoutes } from "./modules/platform-audit-log/route.js";
+import { platformSettingRoutes } from "./modules/platformSetting/route.js";
 import { publicRoutes } from "./modules/public/route.js";
-import { reportRoutes } from "./modules/report/route.js";
+import { reportRoutes, schoolReportRoutes } from "./modules/report/route.js";
 import { resultRoutes } from "./modules/result/route.js";
 import { salaryPaymentRoutes } from "./modules/salary-payment/route.js";
 import { schoolRoutes } from "./modules/school/route.js";
@@ -44,6 +44,7 @@ import { subscriptionPaymentRoutes } from "./modules/subscriptionPayment/route.j
 import { teacherRoutes } from "./modules/teacher/route.js";
 import { teacherAssignmentRoutes } from "./modules/teacher-assignment/route.js";
 import { teacherSalaryRoutes } from "./modules/teacher-salary/route.js";
+import { uploadRoutes } from "./modules/upload/route.js";
 import { userRoutes } from "./modules/user/route.js";
 
 const app = express();
@@ -63,15 +64,24 @@ app.use(
 	cors({
 		origin: (origin, callback) => {
 			if (!origin) return callback(null, true);
-			const normalized = origin.replace(/\/$/, "");
+			const normalized = origin.replace(/\/$/, "").toLowerCase();
 			if (
-				allowedOrigins.includes(normalized) ||
-				(!isProduction && normalized === "http://localhost:3000") ||
+				allowedOrigins.some((o) => o.toLowerCase() === normalized) ||
+				(!isProduction &&
+					(normalized === "http://localhost:3000" ||
+						normalized === "http://localhost:3001")) ||
 				allowedPreviewPattern.test(normalized)
 			) {
 				return callback(null, true);
 			}
-			return callback(null, false);
+			getExternalWebsiteOrigins()
+				.then((externalOrigins) => {
+					if (externalOrigins.has(normalized)) {
+						return callback(null, true);
+					}
+					return callback(null, false);
+				})
+				.catch(() => callback(null, false));
 		},
 		credentials: true,
 	}),
@@ -115,6 +125,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/packages", packageRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 app.use("/api/v1/reports", reportRoutes);
+app.use("/api/v1", schoolReportRoutes);
 app.use("/api/v1", classRoutes);
 app.use("/api/v1", sectionRoutes);
 app.use("/api/v1", subjectRoutes);

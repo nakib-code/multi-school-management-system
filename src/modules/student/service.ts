@@ -236,8 +236,44 @@ export const createStudent = async (
 	if (!school) {
 		throw new AppError(404, "School not found");
 	}
+	if (school.status !== "ACTIVE") {
+		throw new AppError(403, "School is not active");
+	}
 	if (!schoolClass) {
 		throw new AppError(404, "Selected class not found or inactive");
+	}
+
+	// Enforce active subscription & package student limit
+	const now = new Date();
+	const activeSubscription = await prisma.schoolSubscription.findFirst({
+		where: {
+			schoolId,
+			status: "ACTIVE",
+			startDate: { lte: now },
+			endDate: { gte: now },
+			package: { isActive: true },
+		},
+		include: {
+			package: {
+				select: { id: true, name: true, studentLimit: true },
+			},
+		},
+		orderBy: { startDate: "desc" },
+	});
+
+	if (!activeSubscription) {
+		throw new AppError(403, "School does not have an active subscription");
+	}
+
+	const currentStudentCount = await prisma.student.count({
+		where: { schoolId, isActive: true },
+	});
+
+	if (currentStudentCount >= activeSubscription.package.studentLimit) {
+		throw new AppError(
+			403,
+			`Student limit reached for ${activeSubscription.package.name} package. Maximum allowed students: ${activeSubscription.package.studentLimit}`,
+		);
 	}
 
 	if (input.sectionId !== undefined) {
@@ -930,4 +966,53 @@ export const activateStudent = async (schoolId: number, studentId: number) => {
 
 		return updatedStudent;
 	});
+};
+
+export const resetStudentPassword = async (
+	schoolId: number,
+	studentId: number,
+	newPassword?: string,
+) => {
+	const student = await prisma.student.findFirst({
+		where: { id: studentId, schoolId },
+		include: {
+			user: { select: { id: true, name: true, email: true, phone: true } },
+		},
+	});
+
+	if (!student) {
+		throw new AppError(404, "Student not found");
+	}
+	if (!student.user) {
+		throw new AppError(
+			400,
+			"This student does not have a portal login account",
+		);
+	}
+
+	const rawPassword = newPassword?.trim() || generateTemporaryPassword();
+	if (rawPassword.length < 6) {
+		throw new AppError(400, "Password must be at least 6 characters");
+	}
+
+	const passwordHash = await hashPassword(rawPassword);
+	const changedAt = new Date(Math.floor(Date.now() / 1000) * 1000);
+
+	await prisma.user.update({
+		where: { id: student.user.id },
+		data: {
+			passwordHash,
+			passwordChangedAt: changedAt,
+			mustChangePassword: true,
+		},
+	});
+
+	return {
+		studentId: student.id,
+		studentCode: student.studentId,
+		name: student.user.name,
+		email: student.user.email,
+		phone: student.user.phone,
+		temporaryPassword: rawPassword,
+	};
 };

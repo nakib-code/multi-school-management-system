@@ -4255,6 +4255,11 @@ export const SchoolSettingScalarFieldEnum = {
   rocketType: 'rocketType',
   feePaymentInstruction: 'feePaymentInstruction',
   weeklyOffDays: 'weeklyOffDays',
+  externalWebsiteUrl: 'externalWebsiteUrl',
+  websiteConnectionKeyHash: 'websiteConnectionKeyHash',
+  websiteConnectionKeyPreview: 'websiteConnectionKeyPreview',
+  landingAdminEmail: 'landingAdminEmail',
+  landingAdminPasswordHash: 'landingAdminPasswordHash',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

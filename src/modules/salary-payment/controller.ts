@@ -4,6 +4,7 @@ import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import { resolveScopedTeacherId } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
+import { recordSchoolAudit } from "../audit-log/service.js";
 import type { SalaryPaymentFilterQuery } from "./interface.js";
 import {
 	createSalaryPayment,
@@ -33,6 +34,16 @@ export const createSalaryPaymentController = async (
 			req.user.userId,
 			req.body,
 		);
+		await recordSchoolAudit({
+			schoolId,
+			userId: req.user.userId,
+			action: "CREATE",
+			entity: "SalaryPayment",
+			entityId: result.id,
+			description: `Recorded teacher salary payment #${result.id}`,
+			ipAddress: req.ip ?? null,
+			userAgent: req.headers["user-agent"] ?? null,
+		});
 		return sendResponse(res, {
 			statusCode: 201,
 			message: "Salary payment recorded successfully",
@@ -82,7 +93,10 @@ export const getSalaryPaymentByIdController = async (
 		if (req.user) {
 			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
 			if (scopedTeacherId !== null && result.teacherId !== scopedTeacherId) {
-				throw new AppError(403, "You do not have permission to view this salary payment");
+				throw new AppError(
+					403,
+					"You do not have permission to view this salary payment",
+				);
 			}
 		}
 		return sendResponse(res, {

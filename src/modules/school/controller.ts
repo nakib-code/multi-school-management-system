@@ -1,7 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-
-import type { AuthRequest } from "../../middleware/auth.js";
 import { AuditAction } from "../../generated/prisma/client.js";
+import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { createNotification } from "../notification/service.js";
@@ -14,11 +13,13 @@ import {
 	deleteSchool,
 	getPublicSchoolById,
 	getPublicSchools,
+	getSchoolProfile,
 	getSchools,
 	getSchoolUserSummary,
 	getSchoolUsers,
 	rejectSchool,
 	unblockSchool,
+	updateSchoolProfile,
 	verifyAdminEmail,
 } from "./service.js";
 
@@ -382,4 +383,52 @@ export const getPublicSchoolsController = async (
 		message: "Schools fetched successfully",
 		data: result,
 	});
+};
+
+export const getSchoolProfileController = async (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const schoolId = Number(req.params.id);
+		if (!Number.isInteger(schoolId) || schoolId <= 0) {
+			throw new AppError(400, "Invalid school ID");
+		}
+		if (req.user?.role !== "SUPER_ADMIN" && req.user?.schoolId !== schoolId) {
+			throw new AppError(403, "You do not have access to this school");
+		}
+		const result = await getSchoolProfile(schoolId);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "School profile retrieved successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const updateSchoolProfileController = async (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const schoolId = Number(req.params.id);
+		if (!Number.isInteger(schoolId) || schoolId <= 0) {
+			throw new AppError(400, "Invalid school ID");
+		}
+		if (req.user?.schoolId !== schoolId) {
+			throw new AppError(403, "You do not have access to this school");
+		}
+		const result = await updateSchoolProfile(schoolId, req.body);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "School profile updated successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
 };

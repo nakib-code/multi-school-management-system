@@ -1,12 +1,10 @@
 import { Router } from "express";
 
 import { UserRole } from "../../generated/prisma/enums.js";
-
 import { authenticate, authorize } from "../../middleware/auth.js";
-
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { requireSchoolFeature } from "../../middleware/schoolFeature.js";
-
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
@@ -18,7 +16,10 @@ import {
 	getAdmissionsController,
 	initiateOnlinePaymentController,
 	rejectAdmissionController,
+	rejectOnlinePaymentController,
+	submitOnlinePaymentTrxController,
 	trackAdmissionController,
+	verifyOnlinePaymentController,
 	verifyStudentEmailController,
 } from "./controller.js";
 
@@ -28,11 +29,28 @@ import {
 	createPublicSlugAdmissionSchema,
 	getAdmissionsSchema,
 	rejectAdmissionSchema,
+	rejectOnlinePaymentSchema,
+	submitOnlinePaymentTrxSchema,
 	trackAdmissionSchema,
+	verifyOnlinePaymentSchema,
 	verifyStudentEmailSchema,
 } from "./validation.js";
 
 const router = Router();
+
+const publicAdmissionLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 20,
+	keyPrefix: "public-admission",
+	message: "Too many admission requests. Please try again later.",
+});
+
+const admissionTrackLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 30,
+	keyPrefix: "admission-track",
+	message: "Too many tracking requests. Please try again later.",
+});
 
 // ====================================================
 // Public Admission
@@ -40,6 +58,7 @@ const router = Router();
 
 router.post(
 	"/schools/:schoolId/admissions",
+	publicAdmissionLimiter,
 	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(createAdmissionSchema),
 	createAdmissionController,
@@ -47,12 +66,14 @@ router.post(
 
 router.post(
 	"/public/schools/:slug/admissions",
+	publicAdmissionLimiter,
 	validateRequest(createPublicSlugAdmissionSchema),
 	createPublicSlugAdmissionController,
 );
 
 router.post(
 	"/admissions/verify-email",
+	publicAdmissionLimiter,
 	validateRequest(verifyStudentEmailSchema),
 	verifyStudentEmailController,
 );
@@ -61,7 +82,6 @@ router.post(
 // School Admission Management
 // ====================================================
 
-// Get Admissions
 router.get(
 	"/schools/:schoolId/admissions",
 	authenticate,
@@ -72,7 +92,6 @@ router.get(
 	getAdmissionsController,
 );
 
-// Get Admission By ID
 router.get(
 	"/schools/:schoolId/admissions/:id",
 	authenticate,
@@ -82,7 +101,6 @@ router.get(
 	getAdmissionByIdController,
 );
 
-// Approve Admission
 router.patch(
 	"/schools/:schoolId/admissions/:id/approve",
 	authenticate,
@@ -92,7 +110,6 @@ router.patch(
 	approveAdmissionController,
 );
 
-// Reject Admission
 router.patch(
 	"/schools/:schoolId/admissions/:id/reject",
 	authenticate,
@@ -118,22 +135,51 @@ router.patch(
 );
 
 // ====================================================
-// Online Payment
+// Online Payment (Initiate, Applicant TrxID Submit, Admin Verify/Reject)
 // ====================================================
 
 router.post(
 	"/schools/:schoolId/admissions/:id/payment/online/initiate",
+	publicAdmissionLimiter,
 	initiateOnlinePaymentController,
 );
 
+router.patch(
+	"/schools/:schoolId/admissions/:id/payment/verify-online",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
+	validateRequest(verifyOnlinePaymentSchema),
+	verifyOnlinePaymentController,
+);
+
+router.patch(
+	"/schools/:schoolId/admissions/:id/payment/reject-online",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	requireSchoolFeature("hasOnlineAdmission"),
+	validateRequest(rejectOnlinePaymentSchema),
+	rejectOnlinePaymentController,
+);
+
 // ====================================================
-// Public Admission Tracking
+// Public Admission Tracking & TrxID Submission
 // ====================================================
 
 router.post(
 	"/admissions/track",
+	admissionTrackLimiter,
 	validateRequest(trackAdmissionSchema),
 	trackAdmissionController,
+);
+
+router.post(
+	"/admissions/track/payment",
+	admissionTrackLimiter,
+	validateRequest(submitOnlinePaymentTrxSchema),
+	submitOnlinePaymentTrxController,
 );
 
 export const admissionRoutes = router;

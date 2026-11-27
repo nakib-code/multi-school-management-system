@@ -7,14 +7,18 @@ import {
 	getAdmissionFeeController,
 	getSchoolFeaturesController,
 	getSchoolPaymentMethodsController,
+	getWebsiteConnectionController,
+	rotateWebsiteConnectionKeyController,
 	updateAdmissionFeeController,
 	updateSchoolFeaturesController,
 	updateSchoolPaymentMethodsController,
+	updateWebsiteConnectionController,
 } from "./controller.js";
 import {
 	updateAdmissionFeeSchema,
 	updateSchoolFeaturesSchema,
 	updateSchoolPaymentMethodsSchema,
+	updateWebsiteConnectionSchema,
 } from "./validation.js";
 
 const router = Router();
@@ -55,7 +59,6 @@ router.get(
 		UserRole.GUARDIAN,
 		UserRole.STUDENT,
 	),
-	requireSchoolAccess,
 	getSchoolFeaturesController,
 );
 
@@ -99,6 +102,35 @@ router.patch(
 	requireSchoolAccess,
 	validateRequest(updateSchoolPaymentMethodsSchema),
 	updateSchoolPaymentMethodsController,
+);
+
+// ======================================================
+// EXTERNAL WEBSITE CONNECTION & LANDING ADMIN CREDENTIALS
+// ======================================================
+
+router.get(
+	"/schools/:schoolId/settings/website-connection",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	getWebsiteConnectionController,
+);
+
+router.patch(
+	"/schools/:schoolId/settings/website-connection",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+	validateRequest(updateWebsiteConnectionSchema),
+	updateWebsiteConnectionController,
+);
+
+router.post(
+	"/schools/:schoolId/settings/website-connection/rotate-key",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+	rotateWebsiteConnectionKeyController,
 );
 
 export const schoolSettingRoutes = router;

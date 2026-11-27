@@ -830,3 +830,70 @@ export const getPublicSchools = async ({
 		},
 	};
 };
+
+export const getSchoolProfile = async (schoolId: number) => {
+	const school = await prisma.school.findUnique({
+		where: { id: schoolId },
+		select: {
+			id: true,
+			name: true,
+			code: true,
+			email: true,
+			phone: true,
+			address: true,
+			logo: true,
+			status: true,
+		},
+	});
+
+	if (!school) {
+		throw new AppError(404, "School not found");
+	}
+
+	return school;
+};
+
+export const updateSchoolProfile = async (
+	schoolId: number,
+	input: {
+		name?: string | undefined;
+		email?: string | null | undefined;
+		phone?: string | null | undefined;
+		address?: string | null | undefined;
+		logo?: string | null | undefined;
+	},
+) => {
+	const existing = await prisma.school.findUnique({
+		where: { id: schoolId },
+		select: { id: true, status: true },
+	});
+
+	if (!existing) {
+		throw new AppError(404, "School not found");
+	}
+
+	if (existing.status !== "ACTIVE") {
+		throw new AppError(400, "School is not active");
+	}
+
+	return prisma.school.update({
+		where: { id: schoolId },
+		data: {
+			...(input.name !== undefined ? { name: input.name } : {}),
+			...(input.email !== undefined ? { email: input.email } : {}),
+			...(input.phone !== undefined ? { phone: input.phone } : {}),
+			...(input.address !== undefined ? { address: input.address } : {}),
+			...(input.logo !== undefined ? { logo: input.logo } : {}),
+		},
+		select: {
+			id: true,
+			name: true,
+			code: true,
+			email: true,
+			phone: true,
+			address: true,
+			logo: true,
+			status: true,
+		},
+	});
+};

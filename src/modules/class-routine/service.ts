@@ -1,4 +1,8 @@
-import type { DayOfWeek, Prisma, UserRole } from "../../generated/prisma/client.js";
+import type {
+	DayOfWeek,
+	Prisma,
+	UserRole,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 
@@ -75,7 +79,8 @@ async function assertNoRoutineConflicts(input: {
 		if (
 			input.roomNumber &&
 			r.roomNumber &&
-			input.roomNumber.trim().toLowerCase() === r.roomNumber.trim().toLowerCase()
+			input.roomNumber.trim().toLowerCase() ===
+				r.roomNumber.trim().toLowerCase()
 		) {
 			throw new AppError(
 				409,

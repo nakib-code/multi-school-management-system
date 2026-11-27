@@ -57,6 +57,11 @@ export type SchoolSettingMinAggregateOutputType = {
   rocketNumber: string | null
   rocketType: $Enums.MobileAccountType | null
   feePaymentInstruction: string | null
+  externalWebsiteUrl: string | null
+  websiteConnectionKeyHash: string | null
+  websiteConnectionKeyPreview: string | null
+  landingAdminEmail: string | null
+  landingAdminPasswordHash: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -78,6 +83,11 @@ export type SchoolSettingMaxAggregateOutputType = {
   rocketNumber: string | null
   rocketType: $Enums.MobileAccountType | null
   feePaymentInstruction: string | null
+  externalWebsiteUrl: string | null
+  websiteConnectionKeyHash: string | null
+  websiteConnectionKeyPreview: string | null
+  landingAdminEmail: string | null
+  landingAdminPasswordHash: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -100,6 +110,11 @@ export type SchoolSettingCountAggregateOutputType = {
   rocketType: number
   feePaymentInstruction: number
   weeklyOffDays: number
+  externalWebsiteUrl: number
+  websiteConnectionKeyHash: number
+  websiteConnectionKeyPreview: number
+  landingAdminEmail: number
+  landingAdminPasswordHash: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -137,6 +152,11 @@ export type SchoolSettingMinAggregateInputType = {
   rocketNumber?: true
   rocketType?: true
   feePaymentInstruction?: true
+  externalWebsiteUrl?: true
+  websiteConnectionKeyHash?: true
+  websiteConnectionKeyPreview?: true
+  landingAdminEmail?: true
+  landingAdminPasswordHash?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -158,6 +178,11 @@ export type SchoolSettingMaxAggregateInputType = {
   rocketNumber?: true
   rocketType?: true
   feePaymentInstruction?: true
+  externalWebsiteUrl?: true
+  websiteConnectionKeyHash?: true
+  websiteConnectionKeyPreview?: true
+  landingAdminEmail?: true
+  landingAdminPasswordHash?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -180,6 +205,11 @@ export type SchoolSettingCountAggregateInputType = {
   rocketType?: true
   feePaymentInstruction?: true
   weeklyOffDays?: true
+  externalWebsiteUrl?: true
+  websiteConnectionKeyHash?: true
+  websiteConnectionKeyPreview?: true
+  landingAdminEmail?: true
+  landingAdminPasswordHash?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -289,6 +319,11 @@ export type SchoolSettingGroupByOutputType = {
   rocketType: $Enums.MobileAccountType
   feePaymentInstruction: string | null
   weeklyOffDays: number[]
+  externalWebsiteUrl: string | null
+  websiteConnectionKeyHash: string | null
+  websiteConnectionKeyPreview: string | null
+  landingAdminEmail: string | null
+  landingAdminPasswordHash: string | null
   createdAt: Date
   updatedAt: Date
   _count: SchoolSettingCountAggregateOutputType | null
@@ -334,6 +369,11 @@ export type SchoolSettingWhereInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   weeklyOffDays?: Prisma.IntNullableListFilter<"SchoolSetting">
+  externalWebsiteUrl?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  websiteConnectionKeyHash?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  websiteConnectionKeyPreview?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  landingAdminEmail?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  landingAdminPasswordHash?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -357,6 +397,11 @@ export type SchoolSettingOrderByWithRelationInput = {
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrderInput | Prisma.SortOrder
   weeklyOffDays?: Prisma.SortOrder
+  externalWebsiteUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  websiteConnectionKeyHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  websiteConnectionKeyPreview?: Prisma.SortOrderInput | Prisma.SortOrder
+  landingAdminEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  landingAdminPasswordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   school?: Prisma.SchoolOrderByWithRelationInput
@@ -383,6 +428,11 @@ export type SchoolSettingWhereUniqueInput = Prisma.AtLeast<{
   rocketType?: Prisma.EnumMobileAccountTypeFilter<"SchoolSetting"> | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   weeklyOffDays?: Prisma.IntNullableListFilter<"SchoolSetting">
+  externalWebsiteUrl?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  websiteConnectionKeyHash?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  websiteConnectionKeyPreview?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  landingAdminEmail?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
+  landingAdminPasswordHash?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SchoolSetting"> | Date | string
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
@@ -406,6 +456,11 @@ export type SchoolSettingOrderByWithAggregationInput = {
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrderInput | Prisma.SortOrder
   weeklyOffDays?: Prisma.SortOrder
+  externalWebsiteUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  websiteConnectionKeyHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  websiteConnectionKeyPreview?: Prisma.SortOrderInput | Prisma.SortOrder
+  landingAdminEmail?: Prisma.SortOrderInput | Prisma.SortOrder
+  landingAdminPasswordHash?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.SchoolSettingCountOrderByAggregateInput
@@ -436,6 +491,11 @@ export type SchoolSettingScalarWhereWithAggregatesInput = {
   rocketType?: Prisma.EnumMobileAccountTypeWithAggregatesFilter<"SchoolSetting"> | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
   weeklyOffDays?: Prisma.IntNullableListFilter<"SchoolSetting">
+  externalWebsiteUrl?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  websiteConnectionKeyHash?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  websiteConnectionKeyPreview?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  landingAdminEmail?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
+  landingAdminPasswordHash?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SchoolSetting"> | Date | string
 }
@@ -456,6 +516,11 @@ export type SchoolSettingCreateInput = {
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
   weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: string | null
+  websiteConnectionKeyHash?: string | null
+  websiteConnectionKeyPreview?: string | null
+  landingAdminEmail?: string | null
+  landingAdminPasswordHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutSchoolSettingInput
@@ -479,6 +544,11 @@ export type SchoolSettingUncheckedCreateInput = {
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
   weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: string | null
+  websiteConnectionKeyHash?: string | null
+  websiteConnectionKeyPreview?: string | null
+  landingAdminEmail?: string | null
+  landingAdminPasswordHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -499,6 +569,11 @@ export type SchoolSettingUpdateInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyPreview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutSchoolSettingNestedInput
@@ -522,6 +597,11 @@ export type SchoolSettingUncheckedUpdateInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyPreview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -544,6 +624,11 @@ export type SchoolSettingCreateManyInput = {
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
   weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: string | null
+  websiteConnectionKeyHash?: string | null
+  websiteConnectionKeyPreview?: string | null
+  landingAdminEmail?: string | null
+  landingAdminPasswordHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -564,6 +649,11 @@ export type SchoolSettingUpdateManyMutationInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyPreview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -586,6 +676,11 @@ export type SchoolSettingUncheckedUpdateManyInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyPreview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -621,6 +716,11 @@ export type SchoolSettingCountOrderByAggregateInput = {
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrder
   weeklyOffDays?: Prisma.SortOrder
+  externalWebsiteUrl?: Prisma.SortOrder
+  websiteConnectionKeyHash?: Prisma.SortOrder
+  websiteConnectionKeyPreview?: Prisma.SortOrder
+  landingAdminEmail?: Prisma.SortOrder
+  landingAdminPasswordHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -649,6 +749,11 @@ export type SchoolSettingMaxOrderByAggregateInput = {
   rocketNumber?: Prisma.SortOrder
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrder
+  externalWebsiteUrl?: Prisma.SortOrder
+  websiteConnectionKeyHash?: Prisma.SortOrder
+  websiteConnectionKeyPreview?: Prisma.SortOrder
+  landingAdminEmail?: Prisma.SortOrder
+  landingAdminPasswordHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -670,6 +775,11 @@ export type SchoolSettingMinOrderByAggregateInput = {
   rocketNumber?: Prisma.SortOrder
   rocketType?: Prisma.SortOrder
   feePaymentInstruction?: Prisma.SortOrder
+  externalWebsiteUrl?: Prisma.SortOrder
+  websiteConnectionKeyHash?: Prisma.SortOrder
+  websiteConnectionKeyPreview?: Prisma.SortOrder
+  landingAdminEmail?: Prisma.SortOrder
+  landingAdminPasswordHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -738,6 +848,11 @@ export type SchoolSettingCreateWithoutSchoolInput = {
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
   weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: string | null
+  websiteConnectionKeyHash?: string | null
+  websiteConnectionKeyPreview?: string | null
+  landingAdminEmail?: string | null
+  landingAdminPasswordHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -759,6 +874,11 @@ export type SchoolSettingUncheckedCreateWithoutSchoolInput = {
   rocketType?: $Enums.MobileAccountType
   feePaymentInstruction?: string | null
   weeklyOffDays?: Prisma.SchoolSettingCreateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: string | null
+  websiteConnectionKeyHash?: string | null
+  websiteConnectionKeyPreview?: string | null
+  landingAdminEmail?: string | null
+  landingAdminPasswordHash?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -795,6 +915,11 @@ export type SchoolSettingUpdateWithoutSchoolInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyPreview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -816,6 +941,11 @@ export type SchoolSettingUncheckedUpdateWithoutSchoolInput = {
   rocketType?: Prisma.EnumMobileAccountTypeFieldUpdateOperationsInput | $Enums.MobileAccountType
   feePaymentInstruction?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   weeklyOffDays?: Prisma.SchoolSettingUpdateweeklyOffDaysInput | number[]
+  externalWebsiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  websiteConnectionKeyPreview?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  landingAdminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -840,6 +970,11 @@ export type SchoolSettingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   rocketType?: boolean
   feePaymentInstruction?: boolean
   weeklyOffDays?: boolean
+  externalWebsiteUrl?: boolean
+  websiteConnectionKeyHash?: boolean
+  websiteConnectionKeyPreview?: boolean
+  landingAdminEmail?: boolean
+  landingAdminPasswordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -863,6 +998,11 @@ export type SchoolSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   rocketType?: boolean
   feePaymentInstruction?: boolean
   weeklyOffDays?: boolean
+  externalWebsiteUrl?: boolean
+  websiteConnectionKeyHash?: boolean
+  websiteConnectionKeyPreview?: boolean
+  landingAdminEmail?: boolean
+  landingAdminPasswordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -886,6 +1026,11 @@ export type SchoolSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   rocketType?: boolean
   feePaymentInstruction?: boolean
   weeklyOffDays?: boolean
+  externalWebsiteUrl?: boolean
+  websiteConnectionKeyHash?: boolean
+  websiteConnectionKeyPreview?: boolean
+  landingAdminEmail?: boolean
+  landingAdminPasswordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -909,11 +1054,16 @@ export type SchoolSettingSelectScalar = {
   rocketType?: boolean
   feePaymentInstruction?: boolean
   weeklyOffDays?: boolean
+  externalWebsiteUrl?: boolean
+  websiteConnectionKeyHash?: boolean
+  websiteConnectionKeyPreview?: boolean
+  landingAdminEmail?: boolean
+  landingAdminPasswordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "weeklyOffDays" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
+export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "weeklyOffDays" | "externalWebsiteUrl" | "websiteConnectionKeyHash" | "websiteConnectionKeyPreview" | "landingAdminEmail" | "landingAdminPasswordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
 export type SchoolSettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
 }
@@ -947,6 +1097,11 @@ export type $SchoolSettingPayload<ExtArgs extends runtime.Types.Extensions.Inter
     rocketType: $Enums.MobileAccountType
     feePaymentInstruction: string | null
     weeklyOffDays: number[]
+    externalWebsiteUrl: string | null
+    websiteConnectionKeyHash: string | null
+    websiteConnectionKeyPreview: string | null
+    landingAdminEmail: string | null
+    landingAdminPasswordHash: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["schoolSetting"]>
@@ -1390,6 +1545,11 @@ export interface SchoolSettingFieldRefs {
   readonly rocketType: Prisma.FieldRef<"SchoolSetting", 'MobileAccountType'>
   readonly feePaymentInstruction: Prisma.FieldRef<"SchoolSetting", 'String'>
   readonly weeklyOffDays: Prisma.FieldRef<"SchoolSetting", 'Int[]'>
+  readonly externalWebsiteUrl: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly websiteConnectionKeyHash: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly websiteConnectionKeyPreview: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly landingAdminEmail: Prisma.FieldRef<"SchoolSetting", 'String'>
+  readonly landingAdminPasswordHash: Prisma.FieldRef<"SchoolSetting", 'String'>
   readonly createdAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SchoolSetting", 'DateTime'>
 }

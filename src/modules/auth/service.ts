@@ -3,7 +3,7 @@ import { DEFAULT_SCHOOL_FEATURES } from "../../middleware/schoolFeature.js";
 import AppError from "../../utils/appError.js";
 import { generateToken } from "../../utils/jwt.js";
 import { comparePassword, hashPassword } from "../../utils/password.js";
-import { getPhoneLookupVariants } from "../../utils/phone.js";
+import { getPhoneLookupVariants, normalizePhone } from "../../utils/phone.js";
 import type { LoginInput } from "./interface.js";
 
 const buildSchoolSettingPayload = (
@@ -11,7 +11,6 @@ const buildSchoolSettingPayload = (
 	setting?: {
 		hasGeneralSection: boolean;
 		hasHefzSection: boolean;
-		hasPublicWebsite: boolean;
 		hasOnlineAdmission: boolean;
 		hasTeacherPayroll: boolean;
 		smsEnabled: boolean;
@@ -31,8 +30,6 @@ const buildSchoolSettingPayload = (
 			setting?.hasGeneralSection ?? DEFAULT_SCHOOL_FEATURES.hasGeneralSection,
 		hasHefzSection:
 			setting?.hasHefzSection ?? DEFAULT_SCHOOL_FEATURES.hasHefzSection,
-		hasPublicWebsite:
-			setting?.hasPublicWebsite ?? DEFAULT_SCHOOL_FEATURES.hasPublicWebsite,
 		hasOnlineAdmission:
 			setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission,
 		hasTeacherPayroll:
@@ -253,6 +250,7 @@ export const getMe = async (userId: number) => {
 		name: user.name,
 		email: user.email,
 		phone: user.phone,
+		avatarUrl: user.avatarUrl,
 		role: user.role,
 		status: user.status,
 		schoolId: user.schoolId,
@@ -260,6 +258,68 @@ export const getMe = async (userId: number) => {
 		schoolSetting: buildSchoolSettingPayload(
 			user.schoolId,
 			user.school?.schoolSetting,
+		),
+	};
+};
+
+export const updateMe = async (
+	userId: number,
+	payload: {
+		name?: string | undefined;
+		phone?: string | null | undefined;
+		avatarUrl?: string | null | undefined;
+	},
+) => {
+	const existing = await prisma.user.findUnique({
+		where: { id: userId },
+		select: { id: true, status: true },
+	});
+
+	if (!existing) {
+		throw new AppError(404, "User not found");
+	}
+	if (existing.status !== "ACTIVE") {
+		throw new AppError(403, "Your account is not active");
+	}
+
+	let normalizedPhone: string | null | undefined;
+	if (payload.phone !== undefined) {
+		if (payload.phone === null || payload.phone.trim() === "") {
+			normalizedPhone = null;
+		} else {
+			normalizedPhone = normalizePhone(payload.phone) ?? payload.phone.trim();
+		}
+	}
+
+	const updated = await prisma.user.update({
+		where: { id: userId },
+		data: {
+			...(payload.name !== undefined ? { name: payload.name.trim() } : {}),
+			...(normalizedPhone !== undefined ? { phone: normalizedPhone } : {}),
+			...(payload.avatarUrl !== undefined
+				? { avatarUrl: payload.avatarUrl }
+				: {}),
+		},
+		include: {
+			school: {
+				include: { schoolSetting: true },
+			},
+		},
+	});
+
+	return {
+		id: updated.id,
+		name: updated.name,
+		email: updated.email,
+		phone: updated.phone,
+		avatarUrl: updated.avatarUrl,
+		role: updated.role,
+		status: updated.status,
+		schoolId: updated.schoolId,
+		mustChangePassword: updated.mustChangePassword,
+		schoolSetting: buildSchoolSettingPayload(
+			updated.schoolId,
+			updated.school?.schoolSetting,
 		),
 	};
 };

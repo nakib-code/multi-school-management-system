@@ -25,6 +25,13 @@ model SchoolSetting {
   // Attendance Settings (0=Sunday ... 5=Friday, 6=Saturday; default Friday)
   weeklyOffDays Int[] @default([5])
 
+  // External Custom School Website Connection & Landing Admin Credentials
+  externalWebsiteUrl          String?
+  websiteConnectionKeyHash    String?
+  websiteConnectionKeyPreview String?
+  landingAdminEmail           String?
+  landingAdminPasswordHash    String?
+
   school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())

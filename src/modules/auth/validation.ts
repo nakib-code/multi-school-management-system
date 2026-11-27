@@ -55,6 +55,29 @@ export const resetPasswordSchema = z.object({
 	}),
 });
 
+export const updateMeSchema = z.object({
+	body: z.object({
+		name: z
+			.string()
+			.trim()
+			.min(2, "Name must be at least 2 characters")
+			.max(100, "Name must be less than 100 characters")
+			.optional(),
+		phone: z
+			.string()
+			.trim()
+			.max(30, "Phone number is too long")
+			.nullable()
+			.optional(),
+		avatarUrl: z
+			.string()
+			.trim()
+			.url("Avatar must be a valid URL")
+			.nullable()
+			.optional(),
+	}),
+});
+
 export const changePasswordSchema = z.object({
 	body: z
 		.object({

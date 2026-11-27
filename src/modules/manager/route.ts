@@ -9,6 +9,7 @@ import {
 	deleteManagerController,
 	getManagerByIdController,
 	getManagersController,
+	resetManagerPasswordController,
 	updateManagerController,
 } from "./controller.js";
 import {
@@ -63,6 +64,15 @@ router.delete(
 	requireSchoolAccess,
 	validateRequest(managerParamsSchema),
 	deleteManagerController,
+);
+
+router.post(
+	"/schools/:schoolId/managers/:id/reset-password",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+	validateRequest(managerParamsSchema),
+	resetManagerPasswordController,
 );
 
 export const managerRoutes = router;

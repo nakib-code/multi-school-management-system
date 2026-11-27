@@ -4,6 +4,7 @@ import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import { resolveScopedStudentIds } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
+import { recordSchoolAudit } from "../audit-log/service.js";
 import type { StudentPaymentFilterQuery } from "./interface.js";
 import {
 	getStudentPaymentById,
@@ -116,6 +117,16 @@ export const verifyStudentPaymentController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "student payment ID");
 		const result = await verifyStudentPayment(schoolId, id, req.user.userId);
+		await recordSchoolAudit({
+			schoolId,
+			userId: req.user.userId,
+			action: "APPROVE",
+			entity: "StudentPayment",
+			entityId: id,
+			description: `Verified student fee payment #${id}`,
+			ipAddress: req.ip ?? null,
+			userAgent: req.headers["user-agent"] ?? null,
+		});
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student payment verified successfully",
@@ -141,6 +152,16 @@ export const rejectStudentPaymentController = async (
 			req.user.userId,
 			req.body,
 		);
+		await recordSchoolAudit({
+			schoolId,
+			userId: req.user.userId,
+			action: "REJECT",
+			entity: "StudentPayment",
+			entityId: id,
+			description: `Rejected student fee payment #${id}`,
+			ipAddress: req.ip ?? null,
+			userAgent: req.headers["user-agent"] ?? null,
+		});
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student payment rejected successfully",

@@ -22,7 +22,6 @@ export const updateSchoolFeaturesSchema = z.object({
 	body: z.object({
 		hasGeneralSection: z.boolean().optional(),
 		hasHefzSection: z.boolean().optional(),
-		hasPublicWebsite: z.boolean().optional(),
 		hasOnlineAdmission: z.boolean().optional(),
 		hasTeacherPayroll: z.boolean().optional(),
 		smsEnabled: z.boolean().optional(),
@@ -38,5 +37,32 @@ export const updateSchoolPaymentMethodsSchema = z.object({
 		rocketNumber: nullablePhoneSchema,
 		rocketType: z.enum(mobileAccountTypes).optional(),
 		feePaymentInstruction: z.string().trim().max(2000).nullable().optional(),
+	}),
+});
+
+export const updateWebsiteConnectionSchema = z.object({
+	body: z.object({
+		externalWebsiteUrl: z
+			.string()
+			.trim()
+			.max(300, "Website URL is too long")
+			.nullable()
+			.optional(),
+		landingAdminEmail: z
+			.union([
+				z.string().trim().email("Please provide a valid admin email"),
+				z.literal(""),
+				z.null(),
+			])
+			.optional(),
+		landingAdminPassword: z
+			.union([
+				z
+					.string()
+					.min(6, "Landing admin password must be at least 6 characters")
+					.max(100),
+				z.literal(""),
+			])
+			.optional(),
 	}),
 });

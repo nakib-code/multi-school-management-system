@@ -172,3 +172,47 @@ export const deleteManager = async (schoolId: number, id: number) => {
 		return updated;
 	});
 };
+
+export const resetManagerPassword = async (
+	schoolId: number,
+	managerId: number,
+	newPassword?: string,
+) => {
+	const manager = await prisma.manager.findFirst({
+		where: { id: managerId, schoolId },
+		include: {
+			user: { select: { id: true, name: true, email: true, phone: true } },
+		},
+	});
+
+	if (!manager) {
+		throw new AppError(404, "Manager not found");
+	}
+
+	const rawPassword =
+		newPassword?.trim() ||
+		`Mgr@${Math.random().toString(36).slice(-4).toUpperCase()}${Math.floor(1000 + Math.random() * 9000)}`;
+	if (rawPassword.length < 6) {
+		throw new AppError(400, "Password must be at least 6 characters");
+	}
+
+	const passwordHash = await hashPassword(rawPassword);
+	const changedAt = new Date(Math.floor(Date.now() / 1000) * 1000);
+
+	await prisma.user.update({
+		where: { id: manager.user.id },
+		data: {
+			passwordHash,
+			passwordChangedAt: changedAt,
+			mustChangePassword: true,
+		},
+	});
+
+	return {
+		managerId: manager.id,
+		name: manager.user.name,
+		email: manager.user.email,
+		phone: manager.user.phone,
+		temporaryPassword: rawPassword,
+	};
+};

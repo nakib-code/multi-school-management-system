@@ -3,6 +3,7 @@ import type { Request, Response } from "express";
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
+import { recordSchoolAudit } from "../audit-log/service.js";
 import {
 	approveAdmission,
 	confirmCashPayment,
@@ -12,7 +13,10 @@ import {
 	getAdmissions,
 	initiateOnlinePayment,
 	rejectAdmission,
+	rejectOnlineAdmissionPayment,
+	submitOnlinePaymentTrx,
 	trackAdmission,
+	verifyOnlineAdmissionPayment,
 	verifyStudentEmail,
 } from "./service.js";
 
@@ -176,6 +180,17 @@ export const approveAdmissionController = async (
 
 	const result = await approveAdmission(schoolId, admissionId, req.user.userId);
 
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user.userId,
+		action: "APPROVE",
+		entity: "Admission",
+		entityId: admissionId,
+		description: `Approved admission ${result.applicationNo} (${result.studentName})`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	});
+
 	return sendResponse(res, {
 		statusCode: 200,
 		success: true,
@@ -213,6 +228,17 @@ export const rejectAdmissionController = async (
 		req.user.userId,
 		req.body.rejectionReason,
 	);
+
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user.userId,
+		action: "REJECT",
+		entity: "Admission",
+		entityId: admissionId,
+		description: `Rejected admission ${result.applicationNo}: ${req.body.rejectionReason}`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	});
 
 	return sendResponse(res, {
 		statusCode: 200,
@@ -308,6 +334,109 @@ export const trackAdmissionController = async (req: Request, res: Response) => {
 		statusCode: 200,
 		success: true,
 		message: "Admission application fetched successfully",
+		data: result,
+	});
+};
+
+// ==================================================
+// Submit Online Payment TrxID (Public Tracking)
+// ==================================================
+
+export const submitOnlinePaymentTrxController = async (
+	req: Request,
+	res: Response,
+) => {
+	const result = await submitOnlinePaymentTrx({
+		applicationNo: String(req.body.applicationNo ?? ""),
+		guardianPhone: req.body.guardianPhone
+			? String(req.body.guardianPhone)
+			: undefined,
+		studentEmail: req.body.studentEmail
+			? String(req.body.studentEmail)
+			: undefined,
+		paymentMethod: req.body.paymentMethod,
+		transactionId: String(req.body.transactionId ?? ""),
+		senderPhone: req.body.senderPhone
+			? String(req.body.senderPhone)
+			: undefined,
+	});
+
+	return sendResponse(res, {
+		statusCode: 200,
+		success: true,
+		message: "Transaction ID submitted for verification",
+		data: result,
+	});
+};
+
+// ==================================================
+// Verify Online Payment (Admin / Manager)
+// ==================================================
+
+export const verifyOnlinePaymentController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
+	const schoolId = Number(req.params.schoolId);
+	const admissionId = Number(req.params.id);
+
+	if (!Number.isInteger(schoolId) || schoolId <= 0) {
+		throw new AppError(400, "Invalid school ID");
+	}
+	if (!Number.isInteger(admissionId) || admissionId <= 0) {
+		throw new AppError(400, "Invalid admission ID");
+	}
+	if (!req.user?.userId) {
+		throw new AppError(401, "Unauthorized");
+	}
+
+	const result = await verifyOnlineAdmissionPayment(
+		schoolId,
+		admissionId,
+		req.user.userId,
+		{ remarks: req.body?.remarks },
+	);
+
+	return sendResponse(res, {
+		statusCode: 200,
+		success: true,
+		message: "Online payment verified successfully",
+		data: result,
+	});
+};
+
+// ==================================================
+// Reject Online Payment (Admin / Manager)
+// ==================================================
+
+export const rejectOnlinePaymentController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
+	const schoolId = Number(req.params.schoolId);
+	const admissionId = Number(req.params.id);
+
+	if (!Number.isInteger(schoolId) || schoolId <= 0) {
+		throw new AppError(400, "Invalid school ID");
+	}
+	if (!Number.isInteger(admissionId) || admissionId <= 0) {
+		throw new AppError(400, "Invalid admission ID");
+	}
+	if (!req.user?.userId) {
+		throw new AppError(401, "Unauthorized");
+	}
+
+	const result = await rejectOnlineAdmissionPayment(
+		schoolId,
+		admissionId,
+		req.user.userId,
+		{ remarks: String(req.body?.remarks ?? "") },
+	);
+
+	return sendResponse(res, {
+		statusCode: 200,
+		success: true,
+		message: "Online payment rejected",
 		data: result,
 	});
 };

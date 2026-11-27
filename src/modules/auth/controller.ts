@@ -6,7 +6,7 @@ import AppError from "../../utils/appError.js";
 
 import sendResponse from "../../utils/sendResponse.js";
 
-import { changePassword, getMe, login } from "./service.js";
+import { changePassword, getMe, login, updateMe } from "./service.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -88,6 +88,26 @@ export const changePasswordController = async (
 			statusCode: 200,
 			message: "Password changed successfully",
 			data: result.user,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const updateMeController = async (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		if (!req.user) {
+			throw new AppError(401, "Authentication required");
+		}
+		const result = await updateMe(req.user.userId, req.body);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Profile updated successfully",
+			data: result,
 		});
 	} catch (error) {
 		next(error);

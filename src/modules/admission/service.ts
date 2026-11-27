@@ -172,7 +172,8 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 	)}`;
 
 	const admissionFeeAmount = setting ? Number(setting.admissionFee) : 0;
-	const hasAdmissionFee = Number.isFinite(admissionFeeAmount) && admissionFeeAmount > 0;
+	const hasAdmissionFee =
+		Number.isFinite(admissionFeeAmount) && admissionFeeAmount > 0;
 
 	const result = await prisma.$transaction(async (tx) => {
 		const admission = await tx.admission.create({
@@ -189,7 +190,8 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 				...(passwordHash ? { passwordHash } : {}),
 				dateOfBirth: new Date(dateOfBirth),
 				gender: gender.trim().toUpperCase(),
-				residentialType: (residentialType ?? "NON_RESIDENTIAL") as ResidentialType,
+				residentialType: (residentialType ??
+					"NON_RESIDENTIAL") as ResidentialType,
 				...(birthRegNo ? { birthRegNo: birthRegNo.trim() } : {}),
 				...(bloodGroup ? { bloodGroup: bloodGroup.trim() } : {}),
 				...(previousSchool ? { previousSchool: previousSchool.trim() } : {}),
@@ -198,22 +200,32 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 				// Guardian & Parents
 				guardianName: guardianName.trim(),
 				guardianPhone: cleanGuardianPhone,
-				guardianRelationship: (guardianRelationship?.trim() || "FATHER").toUpperCase(),
-				...(guardianEmail ? { guardianEmail: guardianEmail.trim().toLowerCase() } : {}),
+				guardianRelationship: (
+					guardianRelationship?.trim() || "FATHER"
+				).toUpperCase(),
+				...(guardianEmail
+					? { guardianEmail: guardianEmail.trim().toLowerCase() }
+					: {}),
 				...(guardianNid ? { guardianNid: guardianNid.trim() } : {}),
-				...(guardianOccupation ? { guardianOccupation: guardianOccupation.trim() } : {}),
+				...(guardianOccupation
+					? { guardianOccupation: guardianOccupation.trim() }
+					: {}),
 				...(fatherName ? { fatherName: fatherName.trim() } : {}),
 				...(motherName ? { motherName: motherName.trim() } : {}),
 
 				// Address
 				...(address ? { address: address.trim() } : {}),
 				...(presentAddress ? { presentAddress: presentAddress.trim() } : {}),
-				...(permanentAddress ? { permanentAddress: permanentAddress.trim() } : {}),
+				...(permanentAddress
+					? { permanentAddress: permanentAddress.trim() }
+					: {}),
 
 				// Application
 				academicYear: academicYear.trim(),
 				shift: (shift?.trim() || "MORNING").toUpperCase(),
-				...(resolvedGroup ? { academicGroup: resolvedGroup, group: resolvedGroup } : {}),
+				...(resolvedGroup
+					? { academicGroup: resolvedGroup, group: resolvedGroup }
+					: {}),
 				...(quranWing ? { quranWing: quranWing as HefzWing } : {}),
 
 				// Documents
@@ -817,9 +829,13 @@ export const approveAdmission = async (
 					firstName,
 					lastName,
 					...(admission.nameBangla ? { nameBangla: admission.nameBangla } : {}),
-					...(admission.dateOfBirth ? { dateOfBirth: admission.dateOfBirth } : {}),
+					...(admission.dateOfBirth
+						? { dateOfBirth: admission.dateOfBirth }
+						: {}),
 					...(admission.gender ? { gender: admission.gender } : {}),
-					...(admission.guardianPhone ? { phone: admission.guardianPhone } : {}),
+					...(admission.guardianPhone
+						? { phone: admission.guardianPhone }
+						: {}),
 					...(admission.address || admission.presentAddress
 						? { address: admission.presentAddress ?? admission.address }
 						: {}),
@@ -1268,5 +1284,259 @@ export const initiateOnlinePayment = async (
 		},
 		message:
 			"Please send the admission fee via bKash, Nagad, or Rocket and submit your transaction ID for manual verification.",
+	};
+};
+
+/**
+ * Public: Submit Online Payment TrxID via Application Tracking
+ */
+export const submitOnlinePaymentTrx = async (input: {
+	applicationNo: string;
+	guardianPhone?: string | undefined;
+	studentEmail?: string | undefined;
+	paymentMethod: "BKASH" | "NAGAD" | "ROCKET";
+	transactionId: string;
+	senderPhone?: string | undefined;
+}) => {
+	const normalizedApplicationNo = input.applicationNo.trim().toUpperCase();
+	const normalizedEmail = input.studentEmail?.trim().toLowerCase();
+	const cleanPhone = input.guardianPhone?.trim();
+	const phoneVariants = cleanPhone ? getPhoneLookupVariants(cleanPhone) : [];
+	const trxId = input.transactionId.trim().toUpperCase();
+
+	if (!normalizedEmail && !cleanPhone) {
+		throw new AppError(400, "Guardian phone or student email is required");
+	}
+
+	const where: Prisma.AdmissionWhereInput = {
+		applicationNo: normalizedApplicationNo,
+		...(cleanPhone && normalizedEmail
+			? {
+					OR: [
+						{ guardianPhone: { in: phoneVariants } },
+						{ studentEmail: normalizedEmail },
+					],
+				}
+			: cleanPhone
+				? { guardianPhone: { in: phoneVariants } }
+				: { studentEmail: normalizedEmail ?? null }),
+	};
+
+	const admission = await prisma.admission.findFirst({
+		where,
+		include: { payment: true },
+	});
+
+	if (!admission) {
+		throw new AppError(404, "Admission application not found");
+	}
+
+	if (admission.status !== "PENDING") {
+		throw new AppError(
+			400,
+			"Payment can only be submitted for pending admissions",
+		);
+	}
+
+	if (!admission.payment) {
+		throw new AppError(404, "Admission payment record not found");
+	}
+
+	if (admission.payment.paymentMethod === "CASH") {
+		throw new AppError(400, "This admission is configured for cash payment");
+	}
+
+	if (admission.payment.status === "PAID") {
+		throw new AppError(400, "Admission payment is already verified");
+	}
+
+	const duplicateTrx = await prisma.admissionPayment.findFirst({
+		where: {
+			transactionId: trxId,
+			id: { not: admission.payment.id },
+		},
+		select: { id: true },
+	});
+
+	if (duplicateTrx) {
+		throw new AppError(409, "This transaction ID has already been used");
+	}
+
+	const remarks = input.senderPhone?.trim()
+		? `Sender: ${input.senderPhone.trim()}`
+		: null;
+
+	const payment = await prisma.admissionPayment.update({
+		where: { id: admission.payment.id },
+		data: {
+			paymentMethod: input.paymentMethod,
+			transactionId: trxId,
+			status: "PENDING",
+			...(remarks !== null ? { remarks } : {}),
+		},
+		select: {
+			id: true,
+			admissionId: true,
+			schoolId: true,
+			amount: true,
+			paymentMethod: true,
+			status: true,
+			transactionId: true,
+			paidAt: true,
+			remarks: true,
+			updatedAt: true,
+		},
+	});
+
+	return {
+		...payment,
+		amount: Number(payment.amount),
+	};
+};
+
+/**
+ * Verify Online Admission Payment (Admin / Manager)
+ */
+export const verifyOnlineAdmissionPayment = async (
+	schoolId: number,
+	admissionId: number,
+	userId: number,
+	input: { remarks?: string | undefined },
+) => {
+	const admission = await prisma.admission.findFirst({
+		where: { id: admissionId, schoolId },
+		include: { payment: true },
+	});
+
+	if (!admission) {
+		throw new AppError(404, "Admission not found");
+	}
+
+	if (admission.status !== "PENDING") {
+		throw new AppError(
+			400,
+			"Only pending admissions can receive payment verification",
+		);
+	}
+
+	if (!admission.payment) {
+		throw new AppError(404, "Admission payment not found");
+	}
+
+	if (admission.payment.paymentMethod === "CASH") {
+		throw new AppError(400, "Use cash confirmation for cash payments");
+	}
+
+	if (admission.payment.status === "PAID") {
+		throw new AppError(400, "Online payment is already verified");
+	}
+
+	if (!admission.payment.transactionId) {
+		throw new AppError(400, "Applicant has not submitted a transaction ID yet");
+	}
+
+	const mergedRemarks = input.remarks?.trim()
+		? admission.payment.remarks
+			? `${admission.payment.remarks} | Verified: ${input.remarks.trim()}`
+			: input.remarks.trim()
+		: admission.payment.remarks;
+
+	const payment = await prisma.admissionPayment.update({
+		where: { id: admission.payment.id },
+		data: {
+			status: "PAID",
+			paidAt: new Date(),
+			receivedBy: userId,
+			remarks: mergedRemarks,
+		},
+		select: {
+			id: true,
+			admissionId: true,
+			schoolId: true,
+			amount: true,
+			paymentMethod: true,
+			status: true,
+			transactionId: true,
+			paidAt: true,
+			receivedBy: true,
+			remarks: true,
+			updatedAt: true,
+		},
+	});
+
+	return {
+		...payment,
+		amount: Number(payment.amount),
+	};
+};
+
+/**
+ * Reject Online Admission Payment (Admin / Manager)
+ */
+export const rejectOnlineAdmissionPayment = async (
+	schoolId: number,
+	admissionId: number,
+	userId: number,
+	input: { remarks: string },
+) => {
+	const admission = await prisma.admission.findFirst({
+		where: { id: admissionId, schoolId },
+		include: { payment: true },
+	});
+
+	if (!admission) {
+		throw new AppError(404, "Admission not found");
+	}
+
+	if (admission.status !== "PENDING") {
+		throw new AppError(
+			400,
+			"Only pending admissions can have payments rejected",
+		);
+	}
+
+	if (!admission.payment) {
+		throw new AppError(404, "Admission payment not found");
+	}
+
+	if (admission.payment.paymentMethod === "CASH") {
+		throw new AppError(400, "This admission is using cash payment");
+	}
+
+	if (admission.payment.status === "PAID") {
+		throw new AppError(400, "Verified payment cannot be rejected");
+	}
+
+	const prevTrx = admission.payment.transactionId;
+	const reasonNote = prevTrx
+		? `Rejected: ${input.remarks.trim()} (prev TrxID: ${prevTrx})`
+		: `Rejected: ${input.remarks.trim()}`;
+
+	const payment = await prisma.admissionPayment.update({
+		where: { id: admission.payment.id },
+		data: {
+			status: "FAILED",
+			transactionId: null,
+			receivedBy: userId,
+			remarks: reasonNote,
+		},
+		select: {
+			id: true,
+			admissionId: true,
+			schoolId: true,
+			amount: true,
+			paymentMethod: true,
+			status: true,
+			transactionId: true,
+			paidAt: true,
+			receivedBy: true,
+			remarks: true,
+			updatedAt: true,
+		},
+	});
+
+	return {
+		...payment,
+		amount: Number(payment.amount),
 	};
 };

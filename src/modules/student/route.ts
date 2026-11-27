@@ -12,6 +12,7 @@ import {
 	getAllStudentsController,
 	getMyStudentProfileController,
 	getStudentByIdController,
+	resetStudentPasswordController,
 	updateStudentController,
 } from "./controller.js";
 
@@ -80,6 +81,14 @@ router.patch(
 	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
 	activateStudentController,
+);
+
+router.post(
+	"/schools/:schoolId/students/:id/reset-password",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+	resetStudentPasswordController,
 );
 
 export const studentRoutes = router;

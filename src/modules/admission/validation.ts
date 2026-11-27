@@ -24,10 +24,7 @@ export const createAdmissionBodySchema = z.object({
 		.min(2, "Student name must be at least 2 characters")
 		.max(150),
 
-	dateOfBirth: z
-		.string()
-		.trim()
-		.min(4, "Date of birth is required"),
+	dateOfBirth: z.string().trim().min(4, "Date of birth is required"),
 
 	gender: z.enum(["MALE", "FEMALE", "OTHER"]),
 
@@ -63,11 +60,7 @@ export const createAdmissionBodySchema = z.object({
 	),
 
 	// Stage 1 — Required Guardian Info
-	guardianName: z
-		.string()
-		.trim()
-		.min(2, "Guardian name is required")
-		.max(150),
+	guardianName: z.string().trim().min(2, "Guardian name is required").max(150),
 
 	guardianPhone: z
 		.string()
@@ -88,7 +81,11 @@ export const createAdmissionBodySchema = z.object({
 	studentEmail: optionalEmail,
 	password: z.preprocess(
 		emptyToUndefined,
-		z.string().min(6, "Password must be at least 6 characters").max(100).optional(),
+		z
+			.string()
+			.min(6, "Password must be at least 6 characters")
+			.max(100)
+			.optional(),
 	),
 
 	// Stage 2 — Optional Details
@@ -195,4 +192,51 @@ export const trackAdmissionSchema = z.object({
 		.refine((data) => Boolean(data.guardianPhone || data.studentEmail), {
 			message: "Guardian phone or student email is required",
 		}),
+});
+
+export const submitOnlinePaymentTrxSchema = z.object({
+	body: z
+		.object({
+			applicationNo: z
+				.string()
+				.trim()
+				.min(1, "Application number is required")
+				.max(100),
+			guardianPhone: optionalString(30),
+			studentEmail: optionalEmail,
+			paymentMethod: z.enum(["BKASH", "NAGAD", "ROCKET"]),
+			transactionId: z
+				.string()
+				.trim()
+				.min(4, "Transaction ID must be at least 4 characters")
+				.max(100),
+			senderPhone: optionalString(30),
+		})
+		.refine((data) => Boolean(data.guardianPhone || data.studentEmail), {
+			message: "Guardian phone or student email is required",
+		}),
+});
+
+export const verifyOnlinePaymentSchema = z.object({
+	body: z.object({
+		remarks: z.string().trim().max(500).optional(),
+	}),
+	params: z.object({
+		schoolId: z.coerce.number().int().positive("Invalid school ID"),
+		id: z.coerce.number().int().positive("Invalid admission ID"),
+	}),
+});
+
+export const rejectOnlinePaymentSchema = z.object({
+	body: z.object({
+		remarks: z
+			.string()
+			.trim()
+			.min(3, "Rejection reason must be at least 3 characters")
+			.max(500),
+	}),
+	params: z.object({
+		schoolId: z.coerce.number().int().positive("Invalid school ID"),
+		id: z.coerce.number().int().positive("Invalid admission ID"),
+	}),
 });

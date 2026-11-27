@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
@@ -10,11 +11,13 @@ import {
 	deleteSchoolController,
 	getPublicSchoolByIdController,
 	getPublicSchoolsController,
+	getSchoolProfileController,
 	getSchoolsController,
 	getSchoolUserSummaryController,
 	getSchoolUsersController,
 	rejectSchoolController,
 	unblockSchoolController,
+	updateSchoolProfileController,
 	verifyAdminEmailController,
 } from "./controller.js";
 
@@ -23,10 +26,25 @@ import {
 	getSchoolUsersSchema,
 	rejectSchoolSchema,
 	schoolIdParamsSchema,
+	updateSchoolProfileSchema,
 	verifyAdminEmailSchema,
 } from "./validation.js";
 
 const router = Router();
+
+const schoolRegisterLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 10,
+	keyPrefix: "school-register",
+	message: "Too many school registration attempts. Please try again later.",
+});
+
+const verifyEmailLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 15,
+	keyPrefix: "school-verify-email",
+	message: "Too many verification attempts. Please try again later.",
+});
 
 /**
  * =========================================================
@@ -36,14 +54,38 @@ const router = Router();
 
 router.post(
 	"/register",
+	schoolRegisterLimiter,
 	validateRequest(createSchoolSchema),
 	createSchoolController,
 );
 
 router.post(
 	"/verify-admin-email",
+	verifyEmailLimiter,
 	validateRequest(verifyAdminEmailSchema),
 	verifyAdminEmailController,
+);
+
+/**
+ * =========================================================
+ * SCHOOL ADMIN / MANAGER - OWN SCHOOL PROFILE & LOGO
+ * =========================================================
+ */
+
+router.get(
+	"/:id/profile",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.SUPER_ADMIN),
+	validateRequest(schoolIdParamsSchema),
+	getSchoolProfileController,
+);
+
+router.patch(
+	"/:id/profile",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	validateRequest(updateSchoolProfileSchema),
+	updateSchoolProfileController,
 );
 
 /**

@@ -1,8 +1,7 @@
 import type { NextFunction, Response } from "express";
-
-import type { AuthRequest } from "../../middleware/auth.js";
 import { AuditAction } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
+import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { createNotification } from "../notification/service.js";
@@ -99,7 +98,11 @@ export const verifySubscriptionPaymentController = async (
 		});
 
 		const schoolAdmin = await prisma.user.findFirst({
-			where: { schoolId: result.payment.schoolId, role: "ADMIN", status: "ACTIVE" },
+			where: {
+				schoolId: result.payment.schoolId,
+				role: "ADMIN",
+				status: "ACTIVE",
+			},
 			select: { id: true },
 		});
 		if (schoolAdmin) {

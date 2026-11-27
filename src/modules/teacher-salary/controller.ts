@@ -78,7 +78,10 @@ export const getTeacherSalaryByIdController = async (
 		if (req.user) {
 			const scopedTeacherId = await resolveScopedTeacherId(schoolId, req.user);
 			if (scopedTeacherId !== null && result.teacherId !== scopedTeacherId) {
-				throw new AppError(403, "You do not have permission to view this salary record");
+				throw new AppError(
+					403,
+					"You do not have permission to view this salary record",
+				);
 			}
 		}
 		return sendResponse(res, {

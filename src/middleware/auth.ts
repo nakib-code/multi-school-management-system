@@ -56,7 +56,10 @@ export const authenticate = async (
 			decoded.iat * 1000 < dbUser.passwordChangedAt.getTime()
 		) {
 			return next(
-				new AppError(401, "Password was recently changed. Please sign in again."),
+				new AppError(
+					401,
+					"Password was recently changed. Please sign in again.",
+				),
 			);
 		}
 

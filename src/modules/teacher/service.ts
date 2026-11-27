@@ -166,7 +166,11 @@ export const createTeacher = async (input: CreateTeacherInput) => {
 
 	const verificationCode = generateVerificationCode();
 
-	await saveTeacherVerificationCode(schoolId, normalizedEmail, verificationCode);
+	await saveTeacherVerificationCode(
+		schoolId,
+		normalizedEmail,
+		verificationCode,
+	);
 
 	try {
 		await sendTeacherVerificationEmail(
@@ -304,7 +308,10 @@ export const resendTeacherOtp = async (schoolId: number, teacherId: number) => {
 	}
 
 	if (teacher.user.status !== "PENDING") {
-		throw new AppError(400, "OTP can only be resent for pending teacher accounts");
+		throw new AppError(
+			400,
+			"OTP can only be resent for pending teacher accounts",
+		);
 	}
 
 	const remainingSeconds = await getTeacherOtpCooldownRemaining(

@@ -82,3 +82,34 @@ export const getAuditLogById = async (schoolId: number, id: number) => {
 	if (!log) throw new AppError(404, "Audit log not found");
 	return log;
 };
+
+/**
+ * Fire-and-forget helper for automatically recording school-level audit logs.
+ */
+export const recordSchoolAudit = async (params: {
+	schoolId: number;
+	userId?: number | null;
+	action: CreateAuditLogInput["action"];
+	entity: string;
+	entityId?: number | null;
+	description?: string | null;
+	ipAddress?: string | null;
+	userAgent?: string | null;
+}) => {
+	try {
+		await prisma.auditLog.create({
+			data: {
+				schoolId: params.schoolId,
+				action: params.action,
+				entity: params.entity,
+				...(params.entityId != null ? { entityId: params.entityId } : {}),
+				...(params.description ? { description: params.description } : {}),
+				...(params.userId != null ? { userId: params.userId } : {}),
+				...(params.ipAddress ? { ipAddress: params.ipAddress } : {}),
+				...(params.userAgent ? { userAgent: params.userAgent } : {}),
+			},
+		});
+	} catch (error) {
+		console.error("[recordSchoolAudit] Failed to write audit log:", error);
+	}
+};

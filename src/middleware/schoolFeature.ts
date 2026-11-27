@@ -6,7 +6,6 @@ import type { AuthRequest } from "./auth.js";
 export type SchoolFeatureKey =
 	| "hasGeneralSection"
 	| "hasHefzSection"
-	| "hasPublicWebsite"
 	| "hasOnlineAdmission"
 	| "hasTeacherPayroll"
 	| "smsEnabled";
@@ -14,7 +13,6 @@ export type SchoolFeatureKey =
 export interface SchoolFeatureFlags {
 	hasGeneralSection: boolean;
 	hasHefzSection: boolean;
-	hasPublicWebsite: boolean;
 	hasOnlineAdmission: boolean;
 	hasTeacherPayroll: boolean;
 	smsEnabled: boolean;
@@ -23,7 +21,6 @@ export interface SchoolFeatureFlags {
 export const DEFAULT_SCHOOL_FEATURES: SchoolFeatureFlags = {
 	hasGeneralSection: true,
 	hasHefzSection: true,
-	hasPublicWebsite: false,
 	hasOnlineAdmission: false,
 	hasTeacherPayroll: false,
 	smsEnabled: false,
@@ -32,7 +29,6 @@ export const DEFAULT_SCHOOL_FEATURES: SchoolFeatureFlags = {
 const FEATURE_LABELS: Record<SchoolFeatureKey, string> = {
 	hasGeneralSection: "General / Kindergarten Section",
 	hasHefzSection: "Hefz & Najera Tracking",
-	hasPublicWebsite: "Public School Website",
 	hasOnlineAdmission: "Online Admissions",
 	hasTeacherPayroll: "Teacher Payroll & Salaries",
 	smsEnabled: "SMS Notifications",
@@ -58,7 +54,6 @@ export const requireSchoolFeature = (featureKey: SchoolFeatureKey) => {
 				select: {
 					hasGeneralSection: true,
 					hasHefzSection: true,
-					hasPublicWebsite: true,
 					hasOnlineAdmission: true,
 					hasTeacherPayroll: true,
 					smsEnabled: true,

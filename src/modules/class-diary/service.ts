@@ -337,7 +337,12 @@ export const updateClassDiary = async (
 		if (!teacherId || teacherId < 0) {
 			throw new AppError(403, "Teacher profile not found in this school");
 		}
-		await assertTeacherAssigned(schoolId, teacherId, nextClassId, nextSectionId);
+		await assertTeacherAssigned(
+			schoolId,
+			teacherId,
+			nextClassId,
+			nextSectionId,
+		);
 	}
 
 	return prisma.classDiary.update({

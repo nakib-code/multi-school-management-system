@@ -8,15 +8,15 @@
 		"seed": "tsx src/seed.ts",
 		"build": "tsup",
 		"start": "node dist/server.js",
-		"test": "tsx --test src/modules/attendance/__tests__/attendance.test.ts",
+		"test": "tsx --test src/modules/attendance/__tests__/attendance.test.ts src/modules/auth/__tests__/core-flows.test.ts",
 		"format:check": "npx @biomejs/biome format ./src",
 		"format:fix": "npx @biomejs/biome format ./src --write",
 		"lint:check": "npx @biomejs/biome lint ./src",
 		"lint:fix": "npx @biomejs/biome lint ./src --fix",
 		"check": "npx @biomejs/biome check .",
 		"fix": "npx @biomejs/biome check . --write",
-	    "postinstall": "prisma generate"
-			},
+		"postinstall": "prisma generate"
+	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",

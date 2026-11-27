@@ -1,22 +1,88 @@
 import { Router } from "express";
-import { requireSchoolFeature } from "../../middleware/schoolFeature.js";
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { getActiveClasses } from "../class/service.js";
+import {
+	verifyLandingAdminLogin,
+	verifyWebsiteConnection,
+} from "../schoolSetting/service.js";
 import { getActiveSections } from "../section/service.js";
-
-import * as PublicController from "./controller.js";
 
 const router = Router();
 
+const websiteVerifyLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 30,
+	keyPrefix: "public-website-verify",
+	message: "Too many connection attempts. Please try again later.",
+});
+
+const landingAdminLoginLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 15,
+	keyPrefix: "public-website-admin-login",
+	message: "Too many login attempts. Please try again in 15 minutes.",
+});
+
 // ============================================
-// ⚠️ IMPORTANT: resolve route must come BEFORE /schools/:schoolId
+// External Website Handshake & Admin Login
 // ============================================
 
-router.get("/schools/resolve", PublicController.resolveSchool);
+router.post(
+	"/website/verify-connection",
+	websiteVerifyLimiter,
+	async (req, res, next) => {
+		try {
+			const schoolId = Number(req.body?.schoolId);
+			const connectionKey = String(req.body?.connectionKey ?? "");
+			const result = await verifyWebsiteConnection(schoolId, connectionKey);
+
+			return sendResponse(res, {
+				statusCode: 200,
+				message: "External website connected successfully",
+				data: result,
+			});
+		} catch (error) {
+			next(error);
+		}
+	},
+);
+
+router.post(
+	"/website/admin-login",
+	landingAdminLoginLimiter,
+	async (req, res, next) => {
+		try {
+			const schoolId = Number(req.body?.schoolId);
+			const connectionKey = String(req.body?.connectionKey ?? "");
+			const email = String(req.body?.email ?? "");
+			const password = String(req.body?.password ?? "");
+
+			if (!email.trim() || !password) {
+				throw new AppError(400, "Email and password are required");
+			}
+
+			const result = await verifyLandingAdminLogin({
+				schoolId,
+				connectionKey,
+				email,
+				password,
+			});
+
+			return sendResponse(res, {
+				statusCode: 200,
+				message: "Landing admin authenticated successfully",
+				data: result,
+			});
+		} catch (error) {
+			next(error);
+		}
+	},
+);
 
 // ============================================
-// Public Active Classes
+// Public Active Classes (for Online Admissions)
 // ============================================
 
 router.get("/schools/:schoolId/classes/active", async (req, res, next) => {
@@ -40,7 +106,7 @@ router.get("/schools/:schoolId/classes/active", async (req, res, next) => {
 });
 
 // ============================================
-// Public Active Sections
+// Public Active Sections (for Online Admissions)
 // ============================================
 
 router.get("/schools/:schoolId/sections/active", async (req, res, next) => {
@@ -69,41 +135,5 @@ router.get("/schools/:schoolId/sections/active", async (req, res, next) => {
 		next(error);
 	}
 });
-
-// ============================================
-// School-scoped public data
-// ============================================
-
-router.get(
-	"/schools/:schoolId/page/:slug",
-	requireSchoolFeature("hasPublicWebsite"),
-	PublicController.getPageContent,
-);
-router.get(
-	"/schools/:schoolId/notices",
-	requireSchoolFeature("hasPublicWebsite"),
-	PublicController.getNotices,
-);
-router.get(
-	"/schools/:schoolId/notices/:id",
-	requireSchoolFeature("hasPublicWebsite"),
-	PublicController.getNoticeById,
-);
-router.get(
-	"/schools/:schoolId/gallery",
-	requireSchoolFeature("hasPublicWebsite"),
-	PublicController.getGallery,
-);
-router.get(
-	"/schools/:schoolId/stats",
-	requireSchoolFeature("hasPublicWebsite"),
-	PublicController.getStats,
-);
-
-router.post(
-	"/schools/:schoolId/contact",
-	requireSchoolFeature("hasPublicWebsite"),
-	PublicController.submitContact,
-);
 
 export const publicRoutes = router;

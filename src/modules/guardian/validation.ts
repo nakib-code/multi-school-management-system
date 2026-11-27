@@ -61,10 +61,7 @@ export const createGuardianSchema = z.object({
 			emptyToUndefined,
 			z.string().trim().max(300).optional(),
 		),
-		nid: z.preprocess(
-			emptyToUndefined,
-			z.string().trim().max(50).optional(),
-		),
+		nid: z.preprocess(emptyToUndefined, z.string().trim().max(50).optional()),
 		studentIds: z.array(z.coerce.number().int().positive()).optional(),
 	}),
 });

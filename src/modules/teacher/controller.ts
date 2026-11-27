@@ -3,6 +3,7 @@ import type { Response } from "express";
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
+import { recordSchoolAudit } from "../audit-log/service.js";
 
 import {
 	createTeacher,
@@ -82,7 +83,12 @@ export const resendTeacherOtpController = async (
 	const schoolId = Number(req.params.schoolId);
 	const teacherId = Number(req.params.id);
 
-	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+	if (
+		!schoolId ||
+		Number.isNaN(schoolId) ||
+		!teacherId ||
+		Number.isNaN(teacherId)
+	) {
 		throw new AppError(400, "Invalid school or teacher ID");
 	}
 
@@ -106,7 +112,12 @@ export const resetTeacherPasswordController = async (
 	const schoolId = Number(req.params.schoolId);
 	const teacherId = Number(req.params.id);
 
-	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+	if (
+		!schoolId ||
+		Number.isNaN(schoolId) ||
+		!teacherId ||
+		Number.isNaN(teacherId)
+	) {
 		throw new AppError(400, "Invalid school or teacher ID");
 	}
 
@@ -146,7 +157,12 @@ export const getTeacherByIdController = async (
 ) => {
 	const schoolId = Number(req.params.schoolId);
 	const teacherId = Number(req.params.id);
-	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+	if (
+		!schoolId ||
+		Number.isNaN(schoolId) ||
+		!teacherId ||
+		Number.isNaN(teacherId)
+	) {
 		throw new AppError(400, "Invalid school or teacher ID");
 	}
 	const teacher = await getTeacherById(schoolId, teacherId);
@@ -163,7 +179,12 @@ export const updateTeacherController = async (
 ) => {
 	const schoolId = Number(req.params.schoolId);
 	const teacherId = Number(req.params.id);
-	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+	if (
+		!schoolId ||
+		Number.isNaN(schoolId) ||
+		!teacherId ||
+		Number.isNaN(teacherId)
+	) {
 		throw new AppError(400, "Invalid school or teacher ID");
 	}
 	const teacher = await updateTeacher(schoolId, teacherId, req.body);
@@ -180,10 +201,25 @@ export const deactivateTeacherController = async (
 ) => {
 	const schoolId = Number(req.params.schoolId);
 	const teacherId = Number(req.params.id);
-	if (!schoolId || Number.isNaN(schoolId) || !teacherId || Number.isNaN(teacherId)) {
+	if (
+		!schoolId ||
+		Number.isNaN(schoolId) ||
+		!teacherId ||
+		Number.isNaN(teacherId)
+	) {
 		throw new AppError(400, "Invalid school or teacher ID");
 	}
 	const teacher = await deactivateTeacher(schoolId, teacherId);
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user?.userId ?? null,
+		action: "DELETE",
+		entity: "Teacher",
+		entityId: teacherId,
+		description: `Deactivated teacher #${teacherId}`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	});
 	return sendResponse(res, {
 		statusCode: 200,
 		message: "Teacher deactivated successfully",

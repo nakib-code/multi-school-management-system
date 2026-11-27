@@ -4,6 +4,7 @@ import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
 
+import { recordSchoolAudit } from "../audit-log/service.js";
 import {
 	activateStudent,
 	createStudent,
@@ -11,6 +12,7 @@ import {
 	getAllStudents,
 	getMyStudentProfile,
 	getStudentById,
+	resetStudentPassword,
 	updateStudent,
 } from "./service.js";
 
@@ -120,13 +122,24 @@ export const updateStudentController = async (
 };
 
 export const deactivateStudentController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 ) => {
 	const schoolId = Number(req.params.schoolId);
 	const studentId = Number(req.params.id);
 
 	const result = await deactivateStudent(schoolId, studentId);
+
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user?.userId ?? null,
+		action: "DELETE",
+		entity: "Student",
+		entityId: studentId,
+		description: `Deactivated student #${studentId}`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	});
 
 	sendResponse(res, {
 		statusCode: 200,
@@ -147,6 +160,45 @@ export const activateStudentController = async (
 	sendResponse(res, {
 		statusCode: 200,
 		message: "Student activated successfully",
+		data: result,
+	});
+};
+
+export const resetStudentPasswordController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
+	const schoolId = Number(req.params.schoolId);
+	const studentId = Number(req.params.id);
+
+	if (!Number.isInteger(schoolId) || schoolId <= 0) {
+		throw new AppError(400, "Invalid school ID");
+	}
+	if (!Number.isInteger(studentId) || studentId <= 0) {
+		throw new AppError(400, "Invalid student ID");
+	}
+
+	const newPassword =
+		typeof req.body?.newPassword === "string"
+			? req.body.newPassword
+			: undefined;
+
+	const result = await resetStudentPassword(schoolId, studentId, newPassword);
+
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user?.userId ?? null,
+		action: "UPDATE",
+		entity: "Student",
+		entityId: studentId,
+		description: `Reset portal password for student ${result.name}`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	});
+
+	return sendResponse(res, {
+		statusCode: 200,
+		message: "Student password reset successfully",
 		data: result,
 	});
 };

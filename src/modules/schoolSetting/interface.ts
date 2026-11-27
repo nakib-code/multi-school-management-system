@@ -10,7 +10,6 @@ export interface UpdateAdmissionFeeInput {
 export interface UpdateSchoolFeaturesInput {
 	hasGeneralSection?: boolean | undefined;
 	hasHefzSection?: boolean | undefined;
-	hasPublicWebsite?: boolean | undefined;
 	hasOnlineAdmission?: boolean | undefined;
 	hasTeacherPayroll?: boolean | undefined;
 	smsEnabled?: boolean | undefined;
@@ -24,4 +23,10 @@ export interface UpdateSchoolPaymentMethodsInput {
 	rocketNumber?: string | null | undefined;
 	rocketType?: MobileAccountType | undefined;
 	feePaymentInstruction?: string | null | undefined;
+}
+
+export interface UpdateWebsiteConnectionInput {
+	externalWebsiteUrl?: string | null | undefined;
+	landingAdminEmail?: string | null | undefined;
+	landingAdminPassword?: string | undefined;
 }

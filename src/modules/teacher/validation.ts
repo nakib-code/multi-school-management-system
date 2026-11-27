@@ -24,10 +24,7 @@ export const createTeacherSchema = z.object({
 			z.string().trim().max(100).optional(),
 		),
 
-		phone: z.preprocess(
-			emptyToUndefined,
-			z.string().trim().max(20).optional(),
-		),
+		phone: z.preprocess(emptyToUndefined, z.string().trim().max(20).optional()),
 		address: z.preprocess(
 			emptyToUndefined,
 			z.string().trim().max(500).optional(),
