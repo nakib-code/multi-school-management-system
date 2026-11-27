@@ -73,12 +73,18 @@ export const getNotificationsController = async (
 		string,
 		unknown
 	>;
-	const result = await getUserNotifications(req.user.userId, req.user.schoolId, {
-		page: q.page ? Number(q.page) : 1,
-		limit: q.limit ? Number(q.limit) : 15,
-		...(typeof q.isRead === "boolean" ? { isRead: q.isRead } : {}),
-		...(typeof q.type === "string" ? { type: q.type as NotificationType } : {}),
-	});
+	const result = await getUserNotifications(
+		req.user.userId,
+		req.user.schoolId,
+		{
+			page: q.page ? Number(q.page) : 1,
+			limit: q.limit ? Number(q.limit) : 15,
+			...(typeof q.isRead === "boolean" ? { isRead: q.isRead } : {}),
+			...(typeof q.type === "string"
+				? { type: q.type as NotificationType }
+				: {}),
+		},
+	);
 	return sendResponse(res, {
 		statusCode: 200,
 		message: "Notifications retrieved successfully",

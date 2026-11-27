@@ -61,7 +61,11 @@ export const getHefzEnrollmentsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: HefzEnrollmentFilterQuery }
 			| undefined;
-		const result = await getHefzEnrollments(schoolId, validated?.query ?? {});
+		const result = await getHefzEnrollments(
+			schoolId,
+			validated?.query ?? {},
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Hefz/Najera enrollments retrieved successfully",
@@ -80,7 +84,11 @@ export const getHefzEnrollmentByIdController = async (
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "Hefz enrollment ID");
-		const result = await getHefzEnrollmentById(schoolId, id);
+		const result = await getHefzEnrollmentById(
+			schoolId,
+			id,
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Hefz/Najera enrollment retrieved successfully",
@@ -99,7 +107,12 @@ export const updateHefzEnrollmentController = async (
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "Hefz enrollment ID");
-		const result = await updateHefzEnrollment(schoolId, id, req.body);
+		const result = await updateHefzEnrollment(
+			schoolId,
+			id,
+			req.body,
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Hefz/Najera enrollment updated successfully",
@@ -138,7 +151,11 @@ export const upsertHefzDailyLogController = async (
 ) => {
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
-		const result = await upsertHefzDailyLog(schoolId, req.body);
+		const result = await upsertHefzDailyLog(
+			schoolId,
+			req.body,
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 201,
 			message: "Hefz daily log saved successfully",
@@ -159,7 +176,11 @@ export const getHefzDailyLogsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: HefzDailyLogFilterQuery }
 			| undefined;
-		const result = await getHefzDailyLogs(schoolId, validated?.query ?? {});
+		const result = await getHefzDailyLogs(
+			schoolId,
+			validated?.query ?? {},
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Hefz daily logs retrieved successfully",
@@ -178,7 +199,11 @@ export const getHefzDailyLogByIdController = async (
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "Hefz daily log ID");
-		const result = await getHefzDailyLogById(schoolId, id);
+		const result = await getHefzDailyLogById(
+			schoolId,
+			id,
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Hefz daily log retrieved successfully",
@@ -197,7 +222,12 @@ export const updateHefzDailyLogController = async (
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "Hefz daily log ID");
-		const result = await updateHefzDailyLog(schoolId, id, req.body);
+		const result = await updateHefzDailyLog(
+			schoolId,
+			id,
+			req.body,
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Hefz daily log updated successfully",

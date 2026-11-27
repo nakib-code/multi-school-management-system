@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
@@ -48,6 +49,13 @@ import {
 } from "./validation.js";
 
 const router = Router();
+
+const leaveRequestLimiter = createRateLimiter({
+	windowMs: 15 * 60 * 1000,
+	max: 15,
+	keyPrefix: "leave-request",
+	message: "Too many leave requests submitted. Please try again later.",
+});
 
 const ALL_SCHOOL_ROLES = [
 	UserRole.ADMIN,
@@ -230,6 +238,7 @@ router.post(
 	authenticate,
 	authorize(UserRole.GUARDIAN),
 	requireSchoolAccess,
+	leaveRequestLimiter,
 	validateRequest(createLeaveRequestSchema),
 	createLeaveRequestController,
 );

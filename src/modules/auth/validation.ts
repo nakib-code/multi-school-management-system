@@ -24,7 +24,10 @@ export const signupSchema = z.object({
 
 export const loginSchema = z.object({
 	body: z.object({
-		email: z.string().trim().min(3, "Please provide your email or phone number"),
+		email: z
+			.string()
+			.trim()
+			.min(3, "Please provide your email or phone number"),
 
 		password: z.string().min(1, "Password is required"),
 	}),
@@ -50,4 +53,23 @@ export const resetPasswordSchema = z.object({
 			.min(8, "Password must be at least 8 characters")
 			.max(100, "Password must be less than 100 characters"),
 	}),
+});
+
+export const changePasswordSchema = z.object({
+	body: z
+		.object({
+			currentPassword: z.string().min(1, "Current password is required"),
+			newPassword: z
+				.string()
+				.min(8, "New password must be at least 8 characters")
+				.max(100, "New password must be less than 100 characters")
+				.regex(
+					/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+					"New password must contain at least one uppercase letter, one lowercase letter, and one number",
+				),
+		})
+		.refine((data) => data.currentPassword !== data.newPassword, {
+			message: "New password must be different from current password",
+			path: ["newPassword"],
+		}),
 });

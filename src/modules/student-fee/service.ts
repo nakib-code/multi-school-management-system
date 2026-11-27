@@ -68,11 +68,31 @@ export const createStudentFee = async (
 export const getStudentFees = async (
 	schoolId: number,
 	query: StudentFeeFilterQuery,
+	allowedStudentIds?: number[] | null,
 ) => {
+	if (allowedStudentIds !== null && allowedStudentIds !== undefined) {
+		if (allowedStudentIds.length === 0) return [];
+		if (
+			query.studentId !== undefined &&
+			!allowedStudentIds.includes(query.studentId)
+		) {
+			return [];
+		}
+	}
+
 	return prisma.studentFee.findMany({
 		where: {
 			schoolId,
-			...(query.studentId !== undefined ? { studentId: query.studentId } : {}),
+			...(allowedStudentIds !== null && allowedStudentIds !== undefined
+				? {
+						studentId:
+							query.studentId !== undefined
+								? query.studentId
+								: { in: allowedStudentIds },
+					}
+				: query.studentId !== undefined
+					? { studentId: query.studentId }
+					: {}),
 			...(query.enrollmentId !== undefined
 				? { enrollmentId: query.enrollmentId }
 				: {}),

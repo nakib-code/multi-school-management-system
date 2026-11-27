@@ -6,7 +6,7 @@ import AppError from "../../utils/appError.js";
 
 import sendResponse from "../../utils/sendResponse.js";
 
-import { getMe, login } from "./service.js";
+import { changePassword, getMe, login } from "./service.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -71,4 +71,25 @@ export const logoutController = (_req: Request, res: Response) => {
 		message: "Logout successful",
 		data: null,
 	});
+};
+
+export const changePasswordController = async (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		if (!req.user) {
+			throw new AppError(401, "Authentication required");
+		}
+		const result = await changePassword(req.user.userId, req.body);
+		res.cookie("accessToken", result.token, cookieOptions);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Password changed successfully",
+			data: result.user,
+		});
+	} catch (error) {
+		next(error);
+	}
 };

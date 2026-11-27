@@ -2,7 +2,7 @@ import { prisma } from "../../lib/prisma.js";
 import { DEFAULT_SCHOOL_FEATURES } from "../../middleware/schoolFeature.js";
 import AppError from "../../utils/appError.js";
 import { generateToken } from "../../utils/jwt.js";
-import { comparePassword } from "../../utils/password.js";
+import { comparePassword, hashPassword } from "../../utils/password.js";
 import { getPhoneLookupVariants } from "../../utils/phone.js";
 import type { LoginInput } from "./interface.js";
 
@@ -261,5 +261,72 @@ export const getMe = async (userId: number) => {
 			user.schoolId,
 			user.school?.schoolSetting,
 		),
+	};
+};
+
+export const changePassword = async (
+	userId: number,
+	payload: { currentPassword: string; newPassword: string },
+) => {
+	const user = await prisma.user.findUnique({
+		where: { id: userId },
+		include: {
+			school: {
+				include: { schoolSetting: true },
+			},
+		},
+	});
+
+	if (!user) {
+		throw new AppError(404, "User not found");
+	}
+
+	if (user.status !== "ACTIVE") {
+		throw new AppError(403, "Your account is not active");
+	}
+
+	const isValid = await comparePassword(
+		payload.currentPassword,
+		user.passwordHash,
+	);
+	if (!isValid) {
+		throw new AppError(400, "Current password is incorrect");
+	}
+
+	const newHash = await hashPassword(payload.newPassword);
+	// Align passwordChangedAt to whole seconds so the newly issued JWT's iat is >= passwordChangedAt
+	const changedAt = new Date(Math.floor(Date.now() / 1000) * 1000);
+
+	await prisma.user.update({
+		where: { id: user.id },
+		data: {
+			passwordHash: newHash,
+			passwordChangedAt: changedAt,
+			mustChangePassword: false,
+		},
+	});
+
+	const token = generateToken({
+		userId: user.id,
+		role: user.role,
+		...(user.schoolId !== null && { schoolId: user.schoolId }),
+	});
+
+	return {
+		token,
+		user: {
+			id: user.id,
+			name: user.name,
+			email: user.email,
+			phone: user.phone,
+			role: user.role,
+			status: user.status,
+			schoolId: user.schoolId,
+			mustChangePassword: false,
+			schoolSetting: buildSchoolSettingPayload(
+				user.schoolId,
+				user.school?.schoolSetting,
+			),
+		},
 	};
 };

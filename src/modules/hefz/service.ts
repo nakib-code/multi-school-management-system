@@ -7,6 +7,7 @@ import {
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedTeacherId } from "../../utils/ownershipScope.js";
 import type {
 	CreateHefzDailyLogInput,
 	CreateHefzEnrollmentInput,
@@ -116,26 +117,91 @@ export const createHefzEnrollment = async (
 	});
 };
 
+const buildTeacherHefzScopeWhere = async (
+	schoolId: number,
+	actor?: { userId: number; role: UserRole },
+): Promise<{
+	teacherId: number;
+	where: Prisma.HefzEnrollmentWhereInput;
+} | null> => {
+	if (actor?.role !== UserRole.TEACHER) return null;
+
+	const teacherId = await resolveScopedTeacherId(schoolId, actor);
+	if (!teacherId || teacherId < 0) {
+		return { teacherId: -1, where: { id: -1 } };
+	}
+
+	const assignments = await prisma.teacherAssignment.findMany({
+		where: { schoolId, teacherId, isActive: true },
+		select: { classId: true, sectionId: true },
+	});
+
+	const orConditions: Prisma.HefzEnrollmentWhereInput[] = [
+		{ ustadId: teacherId },
+	];
+
+	if (assignments.length > 0) {
+		orConditions.push({
+			student: {
+				enrollments: {
+					some: {
+						schoolId,
+						status: "ACTIVE",
+						OR: assignments.map((a) => ({
+							classId: a.classId,
+							OR: [{ sectionId: a.sectionId }, { sectionId: null }],
+						})),
+					},
+				},
+			},
+		});
+	}
+
+	return { teacherId, where: { OR: orConditions } };
+};
+
 export const getHefzEnrollments = async (
 	schoolId: number,
 	query: HefzEnrollmentFilterQuery,
+	actor?: { userId: number; role: UserRole },
 ) => {
-	return prisma.hefzEnrollment.findMany({
-		where: {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) return [];
+
+	const andConditions: Prisma.HefzEnrollmentWhereInput[] = [
+		{
 			schoolId,
 			...(query.studentId !== undefined ? { studentId: query.studentId } : {}),
 			...(query.ustadId !== undefined ? { ustadId: query.ustadId } : {}),
 			...(query.wing !== undefined ? { wing: query.wing } : {}),
 			...(query.status !== undefined ? { status: query.status } : {}),
 		},
+	];
+	if (teacherScope) {
+		andConditions.push(teacherScope.where);
+	}
+
+	return prisma.hefzEnrollment.findMany({
+		where: { AND: andConditions },
 		include: hefzEnrollmentInclude,
 		orderBy: { createdAt: "desc" },
 	});
 };
 
-export const getHefzEnrollmentById = async (schoolId: number, id: number) => {
+export const getHefzEnrollmentById = async (
+	schoolId: number,
+	id: number,
+	actor?: { userId: number; role: UserRole },
+) => {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) {
+		throw new AppError(403, "Teacher profile not found in this school");
+	}
+
 	const enrollment = await prisma.hefzEnrollment.findFirst({
-		where: { id, schoolId },
+		where: {
+			AND: [{ id, schoolId }, ...(teacherScope ? [teacherScope.where] : [])],
+		},
 		include: {
 			...hefzEnrollmentInclude,
 			dailyLogs: {
@@ -153,11 +219,37 @@ export const updateHefzEnrollment = async (
 	schoolId: number,
 	id: number,
 	payload: UpdateHefzEnrollmentInput,
+	actor?: { userId: number; role: UserRole },
 ) => {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) {
+		throw new AppError(403, "Teacher profile not found in this school");
+	}
+
 	const existing = await prisma.hefzEnrollment.findFirst({
-		where: { id, schoolId },
+		where: {
+			AND: [{ id, schoolId }, ...(teacherScope ? [teacherScope.where] : [])],
+		},
 	});
-	if (!existing) throw new AppError(404, "Hefz enrollment not found");
+	if (!existing) {
+		throw new AppError(
+			teacherScope ? 403 : 404,
+			teacherScope
+				? "You can only update Hefz enrollments assigned to you"
+				: "Hefz enrollment not found",
+		);
+	}
+
+	if (
+		teacherScope &&
+		payload.ustadId !== undefined &&
+		payload.ustadId !== teacherScope.teacherId
+	) {
+		throw new AppError(
+			403,
+			"Teachers cannot reassign a Hefz student to another Ustad",
+		);
+	}
 
 	if (payload.ustadId !== undefined) {
 		const ustad = await prisma.teacher.findFirst({
@@ -199,12 +291,28 @@ export const deleteHefzEnrollment = async (schoolId: number, id: number) => {
 export const upsertHefzDailyLog = async (
 	schoolId: number,
 	payload: CreateHefzDailyLogInput,
+	actor?: { userId: number; role: UserRole },
 ) => {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) {
+		throw new AppError(403, "Teacher profile not found in this school");
+	}
+
 	const enrollment = await prisma.hefzEnrollment.findFirst({
-		where: { id: payload.hefzEnrollmentId, schoolId },
+		where: {
+			AND: [
+				{ id: payload.hefzEnrollmentId, schoolId },
+				...(teacherScope ? [teacherScope.where] : []),
+			],
+		},
 	});
 	if (!enrollment) {
-		throw new AppError(404, "Hefz enrollment not found in this school");
+		throw new AppError(
+			teacherScope ? 403 : 404,
+			teacherScope
+				? "You can only record Hefz daily logs for your assigned students"
+				: "Hefz enrollment not found in this school",
+		);
 	}
 
 	const normalizedDate = normalizeDate(payload.logDate);
@@ -287,7 +395,11 @@ export const upsertHefzDailyLog = async (
 export const getHefzDailyLogs = async (
 	schoolId: number,
 	query: HefzDailyLogFilterQuery,
+	actor?: { userId: number; role: UserRole },
 ) => {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) return [];
+
 	const logDateFilter: { gte?: Date; lte?: Date } = {};
 	if (query.fromDate) logDateFilter.gte = normalizeDate(query.fromDate);
 	if (query.toDate) {
@@ -296,11 +408,13 @@ export const getHefzDailyLogs = async (
 		logDateFilter.lte = end;
 	}
 
-	const enrollmentFilter: Prisma.HefzEnrollmentWhereInput = {};
+	const enrollmentAnd: Prisma.HefzEnrollmentWhereInput[] = [];
 	if (query.studentId !== undefined)
-		enrollmentFilter.studentId = query.studentId;
-	if (query.ustadId !== undefined) enrollmentFilter.ustadId = query.ustadId;
-	if (query.wing !== undefined) enrollmentFilter.wing = query.wing;
+		enrollmentAnd.push({ studentId: query.studentId });
+	if (query.ustadId !== undefined)
+		enrollmentAnd.push({ ustadId: query.ustadId });
+	if (query.wing !== undefined) enrollmentAnd.push({ wing: query.wing });
+	if (teacherScope) enrollmentAnd.push(teacherScope.where);
 
 	return prisma.hefzDailyLog.findMany({
 		where: {
@@ -317,8 +431,8 @@ export const getHefzDailyLogs = async (
 			...(Object.keys(logDateFilter).length > 0
 				? { logDate: logDateFilter }
 				: {}),
-			...(Object.keys(enrollmentFilter).length > 0
-				? { hefzEnrollment: enrollmentFilter }
+			...(enrollmentAnd.length > 0
+				? { hefzEnrollment: { AND: enrollmentAnd } }
 				: {}),
 		},
 		include: hefzDailyLogInclude,
@@ -326,9 +440,22 @@ export const getHefzDailyLogs = async (
 	});
 };
 
-export const getHefzDailyLogById = async (schoolId: number, id: number) => {
+export const getHefzDailyLogById = async (
+	schoolId: number,
+	id: number,
+	actor?: { userId: number; role: UserRole },
+) => {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) {
+		throw new AppError(403, "Teacher profile not found in this school");
+	}
+
 	const log = await prisma.hefzDailyLog.findFirst({
-		where: { id, schoolId },
+		where: {
+			id,
+			schoolId,
+			...(teacherScope ? { hefzEnrollment: teacherScope.where } : {}),
+		},
 		include: hefzDailyLogInclude,
 	});
 	if (!log) throw new AppError(404, "Hefz daily log not found");
@@ -339,11 +466,28 @@ export const updateHefzDailyLog = async (
 	schoolId: number,
 	id: number,
 	payload: UpdateHefzDailyLogInput,
+	actor?: { userId: number; role: UserRole },
 ) => {
+	const teacherScope = await buildTeacherHefzScopeWhere(schoolId, actor);
+	if (teacherScope && teacherScope.teacherId < 0) {
+		throw new AppError(403, "Teacher profile not found in this school");
+	}
+
 	const existing = await prisma.hefzDailyLog.findFirst({
-		where: { id, schoolId },
+		where: {
+			id,
+			schoolId,
+			...(teacherScope ? { hefzEnrollment: teacherScope.where } : {}),
+		},
 	});
-	if (!existing) throw new AppError(404, "Hefz daily log not found");
+	if (!existing) {
+		throw new AppError(
+			teacherScope ? 403 : 404,
+			teacherScope
+				? "You can only edit Hefz daily logs for your assigned students"
+				: "Hefz daily log not found",
+		);
+	}
 
 	return prisma.hefzDailyLog.update({
 		where: { id },

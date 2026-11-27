@@ -49,13 +49,14 @@ export const getStudentFeesController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: StudentFeeFilterQuery }
 			| undefined;
-		let result = await getStudentFees(schoolId, validated?.query ?? {});
-		if (req.user) {
-			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
-			if (allowedStudentIds !== null) {
-				result = result.filter((r) => allowedStudentIds.includes(r.studentId));
-			}
-		}
+		const allowedStudentIds = req.user
+			? await resolveScopedStudentIds(schoolId, req.user)
+			: null;
+		const result = await getStudentFees(
+			schoolId,
+			validated?.query ?? {},
+			allowedStudentIds,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student fees retrieved successfully",
@@ -76,12 +77,18 @@ export const getStudentFeeByIdController = async (
 		const id = parsePositiveInt(req.params.id, "student fee ID");
 		const result = await getStudentFeeById(schoolId, id);
 		if (req.user) {
-			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			const allowedStudentIds = await resolveScopedStudentIds(
+				schoolId,
+				req.user,
+			);
 			if (
 				allowedStudentIds !== null &&
 				!allowedStudentIds.includes(result.studentId)
 			) {
-				throw new AppError(403, "You do not have permission to view this student fee");
+				throw new AppError(
+					403,
+					"You do not have permission to view this student fee",
+				);
 			}
 		}
 		return sendResponse(res, {

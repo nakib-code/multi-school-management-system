@@ -107,7 +107,11 @@ export const createStudentSchema = z.object({
 			studentId: optStr(40),
 
 			// Stage 1 — Required Academic Info
-			academicYear: z.string().trim().min(4, "Academic year is required").max(20),
+			academicYear: z
+				.string()
+				.trim()
+				.min(4, "Academic year is required")
+				.max(20),
 			classId: z.coerce.number().int().positive("Class is required"),
 			sectionId: z.preprocess(
 				emptyToUndefined,
@@ -135,7 +139,11 @@ export const createStudentSchema = z.object({
 			),
 
 			// Stage 1 — Required Guardian Onboarding (No student login required)
-			guardianName: z.string().trim().min(2, "Guardian name is required").max(150),
+			guardianName: z
+				.string()
+				.trim()
+				.min(2, "Guardian name is required")
+				.max(150),
 			guardianPhone: z
 				.string()
 				.trim()

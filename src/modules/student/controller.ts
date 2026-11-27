@@ -53,14 +53,23 @@ export const getMyStudentProfileController = async (
 	});
 };
 
-export const getAllStudentsController = async (req: Request, res: Response) => {
+export const getAllStudentsController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
 	const schoolId = Number(req.params.schoolId);
 	const page = Number(req.query.page) || 1;
 	const limit = Number(req.query.limit) || 10;
 	const search =
 		typeof req.query.search === "string" ? req.query.search.trim() : undefined;
 
-	const result = await getAllStudents(schoolId, page, limit, search);
+	const result = await getAllStudents(
+		schoolId,
+		page,
+		limit,
+		search,
+		req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+	);
 
 	sendResponse(res, {
 		statusCode: 200,
@@ -79,9 +88,7 @@ export const getStudentByIdController = async (
 	const result = await getStudentById(
 		schoolId,
 		studentId,
-		req.user
-			? { userId: req.user.userId, role: req.user.role }
-			: undefined,
+		req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
 	);
 
 	sendResponse(res, {
@@ -102,9 +109,7 @@ export const updateStudentController = async (
 		schoolId,
 		studentId,
 		req.body,
-		req.user
-			? { userId: req.user.userId, role: req.user.role }
-			: undefined,
+		req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
 	);
 
 	sendResponse(res, {

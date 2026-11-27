@@ -118,11 +118,31 @@ export const createResult = async (
 export const getResults = async (
 	schoolId: number,
 	query: ResultFilterQuery,
+	allowedStudentIds?: number[] | null,
 ) => {
+	if (allowedStudentIds !== null && allowedStudentIds !== undefined) {
+		if (allowedStudentIds.length === 0) return [];
+		if (
+			query.studentId !== undefined &&
+			!allowedStudentIds.includes(query.studentId)
+		) {
+			return [];
+		}
+	}
+
 	return prisma.result.findMany({
 		where: {
 			schoolId,
-			...(query.studentId !== undefined ? { studentId: query.studentId } : {}),
+			...(allowedStudentIds !== null && allowedStudentIds !== undefined
+				? {
+						studentId:
+							query.studentId !== undefined
+								? query.studentId
+								: { in: allowedStudentIds },
+					}
+				: query.studentId !== undefined
+					? { studentId: query.studentId }
+					: {}),
 			...(query.examId !== undefined ? { examId: query.examId } : {}),
 			...(query.subjectId !== undefined ? { subjectId: query.subjectId } : {}),
 			...(query.enrollmentId !== undefined

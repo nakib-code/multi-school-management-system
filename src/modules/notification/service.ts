@@ -1,4 +1,7 @@
-import type { NotificationType, Prisma } from "../../generated/prisma/client.js";
+import type {
+	NotificationType,
+	Prisma,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
 
@@ -33,13 +36,18 @@ export const createBulkNotifications = async (input: {
 	type?: NotificationType;
 	metadata?: Record<string, unknown>;
 }) => {
+	if (input.actorRole === "SUPER_ADMIN" || !input.actorSchoolId) {
+		throw new AppError(
+			403,
+			"Notifications can only be sent within an associated school",
+		);
+	}
+
 	const users = await prisma.user.findMany({
 		where: {
 			id: { in: input.recipientIds },
 			status: "ACTIVE",
-			...(input.actorRole !== "SUPER_ADMIN" && input.actorSchoolId
-				? { schoolId: input.actorSchoolId }
-				: {}),
+			schoolId: input.actorSchoolId,
 		},
 		select: { id: true, schoolId: true },
 	});
@@ -76,10 +84,14 @@ export const broadcastNotifications = async (input: {
 	classId?: number;
 	sectionId?: number;
 }) => {
-	const targetSchoolId =
-		input.actorRole === "SUPER_ADMIN"
-			? (input.schoolId ?? input.actorSchoolId)
-			: input.actorSchoolId;
+	if (input.actorRole === "SUPER_ADMIN") {
+		throw new AppError(
+			403,
+			"SUPER_ADMIN cannot broadcast internal school notices across tenants",
+		);
+	}
+
+	const targetSchoolId = input.actorSchoolId;
 
 	if (!targetSchoolId) {
 		throw new AppError(400, "School ID is required for broadcasting notices");
@@ -221,7 +233,9 @@ export const getUserNotifications = async (
 
 	const where: Prisma.NotificationWhereInput = {
 		recipientId: userId,
-		...(schoolId !== undefined ? { OR: [{ schoolId }, { schoolId: null }] } : {}),
+		...(schoolId !== undefined
+			? { OR: [{ schoolId }, { schoolId: null }] }
+			: {}),
 		...(filters.isRead !== undefined ? { isRead: filters.isRead } : {}),
 		...(filters.type ? { type: filters.type } : {}),
 	};

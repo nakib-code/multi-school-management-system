@@ -49,13 +49,14 @@ export const getResultsController = async (
 		const validated = res.locals.validatedRequest as
 			| { query?: ResultFilterQuery }
 			| undefined;
-		let result = await getResults(schoolId, validated?.query ?? {});
-		if (req.user) {
-			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
-			if (allowedStudentIds !== null) {
-				result = result.filter((r) => allowedStudentIds.includes(r.studentId));
-			}
-		}
+		const allowedStudentIds = req.user
+			? await resolveScopedStudentIds(schoolId, req.user)
+			: null;
+		const result = await getResults(
+			schoolId,
+			validated?.query ?? {},
+			allowedStudentIds,
+		);
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Results retrieved successfully",
@@ -76,12 +77,18 @@ export const getResultByIdController = async (
 		const id = parsePositiveInt(req.params.id, "result ID");
 		const result = await getResultById(schoolId, id);
 		if (req.user) {
-			const allowedStudentIds = await resolveScopedStudentIds(schoolId, req.user);
+			const allowedStudentIds = await resolveScopedStudentIds(
+				schoolId,
+				req.user,
+			);
 			if (
 				allowedStudentIds !== null &&
 				!allowedStudentIds.includes(result.studentId)
 			) {
-				throw new AppError(403, "You do not have permission to view this result");
+				throw new AppError(
+					403,
+					"You do not have permission to view this result",
+				);
 			}
 		}
 		return sendResponse(res, {

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { UserRole } from "../../generated/prisma/client.js";
 import { authenticate, authorize } from "../../middleware/auth.js";
+import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
 	broadcastNotificationController,
@@ -20,6 +21,13 @@ import {
 
 const router = Router();
 
+const broadcastLimiter = createRateLimiter({
+	windowMs: 10 * 60 * 1000,
+	max: 15,
+	keyPrefix: "notif-broadcast",
+	message: "Too many broadcast notices sent. Please wait a few minutes.",
+});
+
 router.get(
 	"/",
 	authenticate,
@@ -32,7 +40,7 @@ router.get("/unread-count", authenticate, getUnreadCountController);
 router.post(
 	"/",
 	authenticate,
-	authorize(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MANAGER),
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
 	validateRequest(createNotificationSchema),
 	createNotificationController,
 );
@@ -40,12 +48,8 @@ router.post(
 router.post(
 	"/broadcast",
 	authenticate,
-	authorize(
-		UserRole.SUPER_ADMIN,
-		UserRole.ADMIN,
-		UserRole.MANAGER,
-		UserRole.TEACHER,
-	),
+	authorize(UserRole.ADMIN, UserRole.MANAGER, UserRole.TEACHER),
+	broadcastLimiter,
 	validateRequest(broadcastNotificationSchema),
 	broadcastNotificationController,
 );

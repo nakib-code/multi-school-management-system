@@ -140,11 +140,31 @@ export const submitStudentPayment = async (
 export const getStudentPayments = async (
 	schoolId: number,
 	query: StudentPaymentFilterQuery,
+	allowedStudentIds?: number[] | null,
 ) => {
+	if (allowedStudentIds !== null && allowedStudentIds !== undefined) {
+		if (allowedStudentIds.length === 0) return [];
+		if (
+			query.studentId !== undefined &&
+			!allowedStudentIds.includes(query.studentId)
+		) {
+			return [];
+		}
+	}
+
 	return prisma.studentPayment.findMany({
 		where: {
 			schoolId,
-			...(query.studentId !== undefined ? { studentId: query.studentId } : {}),
+			...(allowedStudentIds !== null && allowedStudentIds !== undefined
+				? {
+						studentId:
+							query.studentId !== undefined
+								? query.studentId
+								: { in: allowedStudentIds },
+					}
+				: query.studentId !== undefined
+					? { studentId: query.studentId }
+					: {}),
 			...(query.feeId !== undefined ? { feeId: query.feeId } : {}),
 			...(query.paymentMethod !== undefined
 				? { paymentMethod: query.paymentMethod }

@@ -34,7 +34,7 @@ router.get(
 router.patch(
 	"/schools/:schoolId/settings/admission-fee",
 	authenticate,
-	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
 	validateRequest(updateAdmissionFeeSchema),
 	updateAdmissionFeeController,
@@ -80,7 +80,7 @@ router.get(
 router.patch(
 	"/school-settings/payment-methods",
 	authenticate,
-	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	authorize(UserRole.ADMIN),
 	validateRequest(updateSchoolPaymentMethodsSchema),
 	updateSchoolPaymentMethodsController,
 );
@@ -95,7 +95,7 @@ router.get(
 router.patch(
 	"/schools/:schoolId/settings/payment-methods",
 	authenticate,
-	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
 	validateRequest(updateSchoolPaymentMethodsSchema),
 	updateSchoolPaymentMethodsController,

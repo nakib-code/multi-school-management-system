@@ -1,11 +1,13 @@
 import type {
 	AcademicGroup,
 	HefzWing,
+	Prisma,
 	ResidentialType,
 	UserRole,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import { resolveScopedTeacherId } from "../../utils/ownershipScope.js";
 import { hashPassword } from "../../utils/password.js";
 import {
 	generateTemporaryPassword,
@@ -259,7 +261,8 @@ export const createStudent = async (
 		}
 	}
 
-	const generatedCode = input.studentId?.trim() || generateStudentCode(schoolId);
+	const generatedCode =
+		input.studentId?.trim() || generateStudentCode(schoolId);
 	const cleanPhone = normalizePhone(input.guardianPhone);
 	const phoneVariants = getPhoneLookupVariants(input.guardianPhone);
 	const relUpper = (input.guardianRelation?.trim() || "FATHER").toUpperCase();
@@ -293,8 +296,12 @@ export const createStudent = async (
 				...(input.fatherPhone || relUpper === "FATHER"
 					? { fatherPhone: input.fatherPhone ?? cleanPhone }
 					: {}),
-				...(input.fatherOccupation || (relUpper === "FATHER" && input.guardianOccupation)
-					? { fatherOccupation: input.fatherOccupation ?? input.guardianOccupation }
+				...(input.fatherOccupation ||
+				(relUpper === "FATHER" && input.guardianOccupation)
+					? {
+							fatherOccupation:
+								input.fatherOccupation ?? input.guardianOccupation,
+						}
 					: {}),
 				...(input.fatherNid || (relUpper === "FATHER" && input.guardianNid)
 					? { fatherNid: input.fatherNid ?? input.guardianNid }
@@ -305,8 +312,12 @@ export const createStudent = async (
 				...(input.motherPhone || relUpper === "MOTHER"
 					? { motherPhone: input.motherPhone ?? cleanPhone }
 					: {}),
-				...(input.motherOccupation || (relUpper === "MOTHER" && input.guardianOccupation)
-					? { motherOccupation: input.motherOccupation ?? input.guardianOccupation }
+				...(input.motherOccupation ||
+				(relUpper === "MOTHER" && input.guardianOccupation)
+					? {
+							motherOccupation:
+								input.motherOccupation ?? input.guardianOccupation,
+						}
 					: {}),
 				...(input.motherNid || (relUpper === "MOTHER" && input.guardianNid)
 					? { motherNid: input.motherNid ?? input.guardianNid }
@@ -345,7 +356,9 @@ export const createStudent = async (
 				...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
 				...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
 				...(input.fourthSubject ? { fourthSubject: input.fourthSubject } : {}),
-				...(input.previousSchool ? { previousSchool: input.previousSchool } : {}),
+				...(input.previousSchool
+					? { previousSchool: input.previousSchool }
+					: {}),
 				...(input.previousClass ? { previousClass: input.previousClass } : {}),
 				...(input.tcNumber ? { tcNumber: input.tcNumber } : {}),
 				...(input.tcDate ? { tcDate: input.tcDate } : {}),
@@ -373,7 +386,9 @@ export const createStudent = async (
 				schoolId,
 				studentId: student.id,
 				classId: input.classId,
-				...(input.sectionId !== undefined ? { sectionId: input.sectionId } : {}),
+				...(input.sectionId !== undefined
+					? { sectionId: input.sectionId }
+					: {}),
 				academicYear: input.academicYear.trim(),
 				...(input.rollNumber !== undefined
 					? { rollNumber: input.rollNumber }
@@ -558,34 +573,89 @@ export const getMyStudentProfile = async (userId: number, schoolId: number) => {
 	return student;
 };
 
+const buildTeacherStudentScopeWhere = async (
+	schoolId: number,
+	requester: { userId: number; role: UserRole },
+): Promise<Prisma.StudentWhereInput | null> => {
+	const teacherId = await resolveScopedTeacherId(schoolId, requester);
+	if (!teacherId || teacherId < 0) return null;
+
+	const assignments = await prisma.teacherAssignment.findMany({
+		where: { schoolId, teacherId, isActive: true },
+		select: { classId: true, sectionId: true },
+	});
+
+	const orConditions: Prisma.StudentWhereInput[] = [
+		{
+			hefzEnrollments: {
+				some: { schoolId, ustadId: teacherId, status: "ACTIVE" },
+			},
+		},
+	];
+
+	if (assignments.length > 0) {
+		orConditions.push({
+			enrollments: {
+				some: {
+					schoolId,
+					status: "ACTIVE",
+					OR: assignments.map((a) => ({
+						classId: a.classId,
+						OR: [{ sectionId: a.sectionId }, { sectionId: null }],
+					})),
+				},
+			},
+		});
+	}
+
+	return { OR: orConditions };
+};
+
 export const getAllStudents = async (
 	schoolId: number,
 	page: number,
 	limit: number,
 	search?: string,
+	requester?: { userId: number; role: UserRole },
 ) => {
 	const skip = (page - 1) * limit;
 
-	const where = {
-		schoolId,
-		isActive: true,
-		...(search
-			? {
-					OR: [
-						{ firstName: { contains: search, mode: "insensitive" as const } },
-						{ lastName: { contains: search, mode: "insensitive" as const } },
-						{ nameBangla: { contains: search, mode: "insensitive" as const } },
-						{ studentId: { contains: search, mode: "insensitive" as const } },
-						{ phone: { contains: search, mode: "insensitive" as const } },
-						{
-							user: {
-								email: { contains: search, mode: "insensitive" as const },
-							},
-						},
-					],
-				}
-			: {}),
-	};
+	const andConditions: Prisma.StudentWhereInput[] = [
+		{ schoolId, isActive: true },
+	];
+
+	if (requester?.role === "TEACHER") {
+		const teacherScope = await buildTeacherStudentScopeWhere(
+			schoolId,
+			requester,
+		);
+		if (!teacherScope) {
+			return {
+				students: [],
+				pagination: { page, limit, total: 0, totalPages: 0 },
+			};
+		}
+		andConditions.push(teacherScope);
+	}
+
+	if (search) {
+		andConditions.push({
+			OR: [
+				{ firstName: { contains: search, mode: "insensitive" } },
+				{ lastName: { contains: search, mode: "insensitive" } },
+				{ nameBangla: { contains: search, mode: "insensitive" } },
+				{ studentId: { contains: search, mode: "insensitive" } },
+				{ phone: { contains: search, mode: "insensitive" } },
+				{
+					user: {
+						email: { contains: search, mode: "insensitive" },
+					},
+				},
+			],
+		});
+	}
+
+	const where: Prisma.StudentWhereInput = { AND: andConditions };
 
 	const [students, total] = await Promise.all([
 		prisma.student.findMany({
@@ -693,6 +763,24 @@ export const getStudentById = async (
 ) => {
 	if (requester?.role === "GUARDIAN") {
 		await assertGuardianOwnsStudent(schoolId, requester.userId, studentId);
+	} else if (requester?.role === "TEACHER") {
+		const teacherScope = await buildTeacherStudentScopeWhere(
+			schoolId,
+			requester,
+		);
+		if (!teacherScope) {
+			throw new AppError(403, "You are not authorized to access this student");
+		}
+		const allowed = await prisma.student.findFirst({
+			where: { AND: [{ id: studentId, schoolId }, teacherScope] },
+			select: { id: true },
+		});
+		if (!allowed) {
+			throw new AppError(
+				403,
+				"You can only view students in your assigned classes or Hefz groups",
+			);
+		}
 	}
 
 	const student = await prisma.student.findFirst({

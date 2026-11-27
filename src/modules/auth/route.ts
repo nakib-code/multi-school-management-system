@@ -1,12 +1,11 @@
 import { Router } from "express";
 import env from "../../config/env.js";
-import { UserRole } from "../../generated/prisma/client.js";
-import { authenticate, authorize } from "../../middleware/auth.js";
+import { authenticate } from "../../middleware/auth.js";
 import { createRateLimiter } from "../../middleware/rateLimit.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import AppError from "../../utils/appError.js";
-import { getSchoolsController } from "../school/controller.js";
 import {
+	changePasswordController,
 	getMeController,
 	loginController,
 	logoutController,
@@ -19,6 +18,7 @@ import {
 } from "./passwordReset.js";
 import { googleAdminLogin } from "./service.js";
 import {
+	changePasswordSchema,
 	forgotPasswordSchema,
 	loginSchema,
 	resetPasswordSchema,
@@ -47,7 +47,8 @@ const passwordResetLimiter = createRateLimiter({
 	windowMs: 15 * 60 * 1000,
 	max: 10,
 	keyPrefix: "password-reset",
-	message: "Too many password recovery attempts. Please try again in 15 minutes.",
+	message:
+		"Too many password recovery attempts. Please try again in 15 minutes.",
 });
 
 router.post(
@@ -75,11 +76,12 @@ router.post(
 	resetPasswordController,
 );
 
-router.get(
-	"/",
+router.post(
+	"/change-password",
 	authenticate,
-	authorize(UserRole.SUPER_ADMIN),
-	getSchoolsController,
+	passwordResetLimiter,
+	validateRequest(changePasswordSchema),
+	changePasswordController,
 );
 
 router.get("/me", authenticate, getMeController);
@@ -127,11 +129,10 @@ router.get("/google/callback", async (req, res, next) => {
 
 		res.cookie("accessToken", result.token, cookieOptions);
 
-		return res.status(200).json({
-			success: true,
-			message: "Google login successful",
-			data: result.user,
-		});
+		const frontendBase = (
+			env.frontend_url?.trim() || "http://localhost:3000"
+		).replace(/\/+$/, "");
+		return res.redirect(`${frontendBase}/dashboard`);
 	} catch (error) {
 		next(error);
 	}

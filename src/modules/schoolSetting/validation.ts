@@ -11,9 +11,7 @@ const nullablePhoneSchema = z
 
 export const updateAdmissionFeeSchema = z.object({
 	body: z.object({
-		admissionFee: z.coerce
-			.number()
-			.min(0, "Admission fee cannot be negative"),
+		admissionFee: z.coerce.number().min(0, "Admission fee cannot be negative"),
 		bkashNumber: nullablePhoneSchema,
 		nagadNumber: nullablePhoneSchema,
 		rocketNumber: nullablePhoneSchema,

@@ -85,7 +85,7 @@ export const uploadFile = async (input: {
 	// Role authorization for school-level branding uploads
 	if (
 		SCHOOL_ADMIN_ONLY_CATEGORIES.has(category) &&
-		!["SUPER_ADMIN", "ADMIN", "MANAGER"].includes(actor.role)
+		!["ADMIN", "MANAGER"].includes(actor.role)
 	) {
 		throw new AppError(
 			403,
@@ -145,7 +145,10 @@ export const uploadFile = async (input: {
 
 	if (!res.ok) {
 		const errText = await res.text().catch(() => "");
-		throw new AppError(502, `Cloud upload failed: ${errText || res.statusText}`);
+		throw new AppError(
+			502,
+			`Cloud upload failed: ${errText || res.statusText}`,
+		);
 	}
 
 	const uploaded = (await res.json()) as {
@@ -195,13 +198,14 @@ export const deleteUploadedFile = async (
 	}
 
 	const isOwner = file.uploadedById === actor.userId;
-	const isSuperAdmin = actor.role === "SUPER_ADMIN";
+	const isPlatformFileForSuperAdmin =
+		actor.role === "SUPER_ADMIN" && file.schoolId === null;
 	const isSameSchoolAdmin =
 		actor.role === "ADMIN" &&
 		actor.schoolId !== undefined &&
 		file.schoolId === actor.schoolId;
 
-	if (!isOwner && !isSuperAdmin && !isSameSchoolAdmin) {
+	if (!isOwner && !isPlatformFileForSuperAdmin && !isSameSchoolAdmin) {
 		throw new AppError(403, "You are not authorized to delete this file");
 	}
 
@@ -238,7 +242,7 @@ export const listMyUploads = async (actor: {
 	return prisma.uploadedFile.findMany({
 		where:
 			actor.role === "SUPER_ADMIN"
-				? {}
+				? { schoolId: null }
 				: actor.role === "ADMIN" && actor.schoolId
 					? { schoolId: actor.schoolId }
 					: { uploadedById: actor.userId },
