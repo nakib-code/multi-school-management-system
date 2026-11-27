@@ -165,52 +165,74 @@ export const verifySubscriptionPayment = async (
 	paymentId: number,
 	verifierUserId: number,
 ) => {
-	const payment = await prisma.subscriptionPayment.findUnique({
-		where: { id: paymentId },
-		include: {
-			subscription: {
-				include: {
-					package: true,
+	return prisma.$transaction(async (tx) => {
+		const payment = await tx.subscriptionPayment.findUnique({
+			where: { id: paymentId },
+			include: {
+				subscription: {
+					include: {
+						package: true,
+					},
 				},
 			},
-		},
-	});
+		});
 
-	if (!payment) {
-		throw new AppError(404, "Subscription payment not found");
-	}
+		if (!payment) {
+			throw new AppError(404, "Subscription payment not found");
+		}
 
-	if (payment.status === SubscriptionPaymentStatus.VERIFIED) {
-		throw new AppError(400, "Subscription payment is already verified");
-	}
+		if (payment.status === SubscriptionPaymentStatus.VERIFIED) {
+			throw new AppError(400, "Subscription payment is already verified");
+		}
 
-	if (payment.status !== SubscriptionPaymentStatus.PENDING) {
-		throw new AppError(
-			400,
-			"Only pending subscription payments can be verified",
+		if (payment.status !== SubscriptionPaymentStatus.PENDING) {
+			throw new AppError(
+				400,
+				"Only pending subscription payments can be verified",
+			);
+		}
+
+		const now = new Date();
+		const claimed = await tx.subscriptionPayment.updateMany({
+			where: {
+				id: paymentId,
+				status: SubscriptionPaymentStatus.PENDING,
+			},
+			data: {
+				status: SubscriptionPaymentStatus.VERIFIED,
+				verifiedById: verifierUserId,
+				verifiedAt: now,
+				rejectionReason: null,
+			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Subscription payment was already processed by another request",
+			);
+		}
+
+		const currentSub = payment.subscription;
+
+		// If renewing an active subscription whose endDate is still in the future, extend from endDate
+		const baseStartDate =
+			currentSub.status === SubscriptionStatus.ACTIVE &&
+			currentSub.endDate > now
+				? currentSub.endDate
+				: now;
+
+		const nextStartDate =
+			currentSub.status === SubscriptionStatus.ACTIVE &&
+			currentSub.endDate > now
+				? currentSub.startDate
+				: now;
+
+		const nextEndDate = calculateSubscriptionEndDate(
+			baseStartDate,
+			currentSub.package.billingCycle,
 		);
-	}
 
-	const now = new Date();
-	const currentSub = payment.subscription;
-
-	// If renewing an active subscription whose endDate is still in the future, extend from endDate
-	const baseStartDate =
-		currentSub.status === SubscriptionStatus.ACTIVE && currentSub.endDate > now
-			? currentSub.endDate
-			: now;
-
-	const nextStartDate =
-		currentSub.status === SubscriptionStatus.ACTIVE && currentSub.endDate > now
-			? currentSub.startDate
-			: now;
-
-	const nextEndDate = calculateSubscriptionEndDate(
-		baseStartDate,
-		currentSub.package.billingCycle,
-	);
-
-	return prisma.$transaction(async (tx) => {
 		// Expire any other currently active subscriptions for the same school
 		await tx.schoolSubscription.updateMany({
 			where: {
@@ -223,17 +245,6 @@ export const verifySubscriptionPayment = async (
 			},
 		});
 
-		const updatedPayment = await tx.subscriptionPayment.update({
-			where: { id: paymentId },
-			data: {
-				status: SubscriptionPaymentStatus.VERIFIED,
-				verifiedById: verifierUserId,
-				verifiedAt: now,
-				rejectionReason: null,
-			},
-			include: subscriptionPaymentInclude,
-		});
-
 		const updatedSubscription = await tx.schoolSubscription.update({
 			where: { id: payment.subscriptionId },
 			data: {
@@ -242,6 +253,11 @@ export const verifySubscriptionPayment = async (
 				endDate: nextEndDate,
 				notes: `Activated/renewed after manual ${payment.paymentMethod} payment verification (TrxID: ${payment.trxId}).`,
 			},
+		});
+
+		const updatedPayment = await tx.subscriptionPayment.findUniqueOrThrow({
+			where: { id: paymentId },
+			include: subscriptionPaymentInclude,
 		});
 
 		return {
@@ -261,43 +277,59 @@ export const rejectSubscriptionPayment = async (
 	verifierUserId: number,
 	payload: RejectSubscriptionPaymentInput,
 ) => {
-	const payment = await prisma.subscriptionPayment.findUnique({
-		where: { id: paymentId },
+	return prisma.$transaction(async (tx) => {
+		const payment = await tx.subscriptionPayment.findUnique({
+			where: { id: paymentId },
+		});
+
+		if (!payment) {
+			throw new AppError(404, "Subscription payment not found");
+		}
+
+		if (payment.status === SubscriptionPaymentStatus.VERIFIED) {
+			throw new AppError(
+				400,
+				"Verified subscription payments cannot be rejected",
+			);
+		}
+
+		if (payment.status !== SubscriptionPaymentStatus.PENDING) {
+			throw new AppError(
+				400,
+				"Only pending subscription payments can be rejected",
+			);
+		}
+
+		const claimed = await tx.subscriptionPayment.updateMany({
+			where: {
+				id: paymentId,
+				status: SubscriptionPaymentStatus.PENDING,
+			},
+			data: {
+				status: SubscriptionPaymentStatus.REJECTED,
+				verifiedById: verifierUserId,
+				verifiedAt: new Date(),
+				rejectionReason: payload.rejectionReason.trim(),
+			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Subscription payment was already processed by another request",
+			);
+		}
+
+		const updated = await tx.subscriptionPayment.findUniqueOrThrow({
+			where: { id: paymentId },
+			include: subscriptionPaymentInclude,
+		});
+
+		return {
+			...updated,
+			paidAmount: Number(updated.paidAmount),
+		};
 	});
-
-	if (!payment) {
-		throw new AppError(404, "Subscription payment not found");
-	}
-
-	if (payment.status === SubscriptionPaymentStatus.VERIFIED) {
-		throw new AppError(
-			400,
-			"Verified subscription payments cannot be rejected",
-		);
-	}
-
-	if (payment.status !== SubscriptionPaymentStatus.PENDING) {
-		throw new AppError(
-			400,
-			"Only pending subscription payments can be rejected",
-		);
-	}
-
-	const updated = await prisma.subscriptionPayment.update({
-		where: { id: paymentId },
-		data: {
-			status: SubscriptionPaymentStatus.REJECTED,
-			verifiedById: verifierUserId,
-			verifiedAt: new Date(),
-			rejectionReason: payload.rejectionReason.trim(),
-		},
-		include: subscriptionPaymentInclude,
-	});
-
-	return {
-		...updated,
-		paidAmount: Number(updated.paidAmount),
-	};
 };
 
 /* ---------- Super Admin: Summary & History ---------- */

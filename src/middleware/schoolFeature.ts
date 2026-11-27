@@ -42,8 +42,21 @@ export const requireSchoolFeature = (featureKey: SchoolFeatureKey) => {
 				return next();
 			}
 
-			const rawSchoolId = req.params.schoolId ?? req.user?.schoolId;
-			const schoolId = Number(rawSchoolId);
+			let schoolId = Number(req.params.schoolId ?? req.user?.schoolId);
+
+			if ((!Number.isInteger(schoolId) || schoolId <= 0) && req.params.slug) {
+				const slug = String(req.params.slug).trim();
+				if (slug) {
+					const schoolBySlug = await prisma.school.findFirst({
+						where: { OR: [{ slug }, { code: slug }] },
+						select: { id: true },
+					});
+					if (!schoolBySlug) {
+						return next(new AppError(404, "School not found"));
+					}
+					schoolId = schoolBySlug.id;
+				}
+			}
 
 			if (!Number.isInteger(schoolId) || schoolId <= 0) {
 				return next(new AppError(400, "Valid school ID is required"));

@@ -406,6 +406,7 @@ export const ModelName = {
   MonthlyReport: 'MonthlyReport',
   AuditLog: 'AuditLog',
   ClassDiary: 'ClassDiary',
+  ClassFeeStructure: 'ClassFeeStructure',
   ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
   Enrollment: 'Enrollment',
@@ -455,7 +456,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1122,6 +1123,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ClassDiaryCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ClassDiaryCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClassFeeStructure: {
+      payload: Prisma.$ClassFeeStructurePayload<ExtArgs>
+      fields: Prisma.ClassFeeStructureFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClassFeeStructureFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClassFeeStructureFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>
+        }
+        findFirst: {
+          args: Prisma.ClassFeeStructureFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClassFeeStructureFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>
+        }
+        findMany: {
+          args: Prisma.ClassFeeStructureFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>[]
+        }
+        create: {
+          args: Prisma.ClassFeeStructureCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>
+        }
+        createMany: {
+          args: Prisma.ClassFeeStructureCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClassFeeStructureCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>[]
+        }
+        delete: {
+          args: Prisma.ClassFeeStructureDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>
+        }
+        update: {
+          args: Prisma.ClassFeeStructureUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>
+        }
+        deleteMany: {
+          args: Prisma.ClassFeeStructureDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClassFeeStructureUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClassFeeStructureUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>[]
+        }
+        upsert: {
+          args: Prisma.ClassFeeStructureUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClassFeeStructurePayload>
+        }
+        aggregate: {
+          args: Prisma.ClassFeeStructureAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClassFeeStructure>
+        }
+        groupBy: {
+          args: Prisma.ClassFeeStructureGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClassFeeStructureGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClassFeeStructureCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClassFeeStructureCountAggregateOutputType> | number
         }
       }
     }
@@ -3724,6 +3799,8 @@ export const AdmissionScalarFieldEnum = {
   reviewedAt: 'reviewedAt',
   reviewedBy: 'reviewedBy',
   rejectionReason: 'rejectionReason',
+  approvedStudentId: 'approvedStudentId',
+  approvedEnrollmentId: 'approvedEnrollmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3739,6 +3816,7 @@ export const AdmissionPaymentScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   status: 'status',
   transactionId: 'transactionId',
+  senderNumber: 'senderNumber',
   paidAt: 'paidAt',
   receivedBy: 'receivedBy',
   remarks: 'remarks',
@@ -3861,6 +3939,22 @@ export const ClassDiaryScalarFieldEnum = {
 } as const
 
 export type ClassDiaryScalarFieldEnum = (typeof ClassDiaryScalarFieldEnum)[keyof typeof ClassDiaryScalarFieldEnum]
+
+
+export const ClassFeeStructureScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  classId: 'classId',
+  feeType: 'feeType',
+  title: 'title',
+  amount: 'amount',
+  academicYear: 'academicYear',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassFeeStructureScalarFieldEnum = (typeof ClassFeeStructureScalarFieldEnum)[keyof typeof ClassFeeStructureScalarFieldEnum]
 
 
 export const ClassRoutineScalarFieldEnum = {
@@ -4308,6 +4402,10 @@ export const StudentFeeScalarFieldEnum = {
   title: 'title',
   amount: 'amount',
   dueDate: 'dueDate',
+  academicYear: 'academicYear',
+  billingMonth: 'billingMonth',
+  examId: 'examId',
+  admissionPaymentId: 'admissionPaymentId',
   status: 'status',
   description: 'description',
   createdAt: 'createdAt',
@@ -4772,6 +4870,20 @@ export type ListEnumAuditActionFieldRefInput<$PrismaModel> = FieldRefInputType<$
 
 
 /**
+ * Reference to a field of type 'FeeType'
+ */
+export type EnumFeeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FeeType'>
+    
+
+
+/**
+ * Reference to a field of type 'FeeType[]'
+ */
+export type ListEnumFeeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FeeType[]'>
+    
+
+
+/**
  * Reference to a field of type 'DayOfWeek'
  */
 export type EnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DayOfWeek'>
@@ -4992,20 +5104,6 @@ export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'SubscriptionStatus[]'
  */
 export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'FeeType'
- */
-export type EnumFeeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FeeType'>
-    
-
-
-/**
- * Reference to a field of type 'FeeType[]'
- */
-export type ListEnumFeeTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FeeType[]'>
     
 
 
@@ -5294,6 +5392,7 @@ export type GlobalOmitConfig = {
   monthlyReport?: Prisma.MonthlyReportOmit
   auditLog?: Prisma.AuditLogOmit
   classDiary?: Prisma.ClassDiaryOmit
+  classFeeStructure?: Prisma.ClassFeeStructureOmit
   classRoutine?: Prisma.ClassRoutineOmit
   schoolClass?: Prisma.SchoolClassOmit
   enrollment?: Prisma.EnrollmentOmit

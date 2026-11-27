@@ -1,4 +1,5 @@
 import { prisma } from "../../lib/prisma.js";
+import AppError from "../../utils/appError.js";
 import type {
 	CreatePackagePayload,
 	UpdatePackagePayload,
@@ -12,7 +13,7 @@ const createPackage = async (payload: CreatePackagePayload) => {
 	});
 
 	if (existingPackage) {
-		throw new Error("A package with this name already exists");
+		throw new AppError(409, "A package with this name already exists");
 	}
 
 	const createdPackage = await prisma.package.create({
@@ -47,7 +48,7 @@ const getPackageById = async (id: number) => {
 	});
 
 	if (!packageData) {
-		throw new Error("Package not found");
+		throw new AppError(404, "Package not found");
 	}
 
 	return packageData;
@@ -61,7 +62,7 @@ const updatePackage = async (id: number, payload: UpdatePackagePayload) => {
 	});
 
 	if (!existingPackage) {
-		throw new Error("Package not found");
+		throw new AppError(404, "Package not found");
 	}
 
 	if (payload.name && payload.name !== existingPackage.name) {
@@ -72,7 +73,7 @@ const updatePackage = async (id: number, payload: UpdatePackagePayload) => {
 		});
 
 		if (duplicatePackage) {
-			throw new Error("A package with this name already exists");
+			throw new AppError(409, "A package with this name already exists");
 		}
 	}
 
@@ -111,7 +112,7 @@ const updatePackageStatus = async (id: number, isActive: boolean) => {
 	});
 
 	if (!existingPackage) {
-		throw new Error("Package not found");
+		throw new AppError(404, "Package not found");
 	}
 
 	return prisma.package.update({

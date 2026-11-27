@@ -251,7 +251,6 @@ export const createStudent = async (
 			status: "ACTIVE",
 			startDate: { lte: now },
 			endDate: { gte: now },
-			package: { isActive: true },
 		},
 		include: {
 			package: {

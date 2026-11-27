@@ -125,8 +125,10 @@ export const FeeType = {
   ADMISSION: 'ADMISSION',
   MONTHLY: 'MONTHLY',
   EXAM: 'EXAM',
+  SESSION: 'SESSION',
   TRANSPORT: 'TRANSPORT',
   LIBRARY: 'LIBRARY',
+  LAB: 'LAB',
   OTHER: 'OTHER'
 } as const
 
@@ -338,6 +340,7 @@ export type NotificationType = (typeof NotificationType)[keyof typeof Notificati
 
 
 export const PaymentMethod = {
+  CASH: 'CASH',
   BKASH: 'BKASH',
   NAGAD: 'NAGAD',
   ROCKET: 'ROCKET'

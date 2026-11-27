@@ -116,6 +116,32 @@ const getMySubscription = async (req: AuthRequest, res: Response) => {
 	});
 };
 
+const getMySubscriptionPayments = async (req: AuthRequest, res: Response) => {
+	if (!req.user) {
+		return res.status(401).json({
+			success: false,
+			message: "Authentication required",
+		});
+	}
+
+	if (req.user.schoolId === undefined) {
+		return res.status(403).json({
+			success: false,
+			message: "You are not associated with any school",
+		});
+	}
+
+	const result = await subscriptionService.getMySubscriptionPayments(
+		req.user.schoolId,
+	);
+
+	return res.status(200).json({
+		success: true,
+		message: "Subscription payment history retrieved successfully",
+		data: result,
+	});
+};
+
 const updateSubscription = async (req: Request, res: Response) => {
 	const { id } = subscriptionIdSchema.parse(req.params);
 
@@ -154,6 +180,7 @@ export const subscriptionController = {
 	getSchoolSubscriptions,
 	selectPackageForAdmin,
 	getMySubscription,
+	getMySubscriptionPayments,
 	updateSubscription,
 	updateSubscriptionStatus,
 };

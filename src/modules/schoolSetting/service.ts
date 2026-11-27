@@ -477,8 +477,11 @@ export const verifyWebsiteConnection = async (
 					admissionFee: true,
 					hasOnlineAdmission: true,
 					bkashNumber: true,
+					bkashType: true,
 					nagadNumber: true,
+					nagadType: true,
 					rocketNumber: true,
+					rocketType: true,
 					feePaymentInstruction: true,
 					websiteConnectionKeyHash: true,
 				},
@@ -512,8 +515,11 @@ export const verifyWebsiteConnection = async (
 			setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission,
 		paymentMethods: {
 			bkashNumber: setting?.bkashNumber ?? null,
+			bkashType: setting?.bkashType ?? "PERSONAL",
 			nagadNumber: setting?.nagadNumber ?? null,
+			nagadType: setting?.nagadType ?? "PERSONAL",
 			rocketNumber: setting?.rocketNumber ?? null,
+			rocketType: setting?.rocketType ?? "PERSONAL",
 			instruction: setting?.feePaymentInstruction ?? null,
 		},
 	};

@@ -13,14 +13,14 @@ const router = Router();
 
 const websiteVerifyLimiter = createRateLimiter({
 	windowMs: 15 * 60 * 1000,
-	max: 30,
+	max: 300,
 	keyPrefix: "public-website-verify",
 	message: "Too many connection attempts. Please try again later.",
 });
 
 const landingAdminLoginLimiter = createRateLimiter({
 	windowMs: 15 * 60 * 1000,
-	max: 15,
+	max: 30,
 	keyPrefix: "public-website-admin-login",
 	message: "Too many login attempts. Please try again in 15 minutes.",
 });

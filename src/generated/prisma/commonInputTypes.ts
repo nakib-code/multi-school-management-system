@@ -399,6 +399,23 @@ export type EnumAuditActionWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAuditActionFilter<$PrismaModel>
 }
 
+export type EnumFeeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel> | $Enums.FeeType
+}
+
+export type EnumFeeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFeeTypeWithAggregatesFilter<$PrismaModel> | $Enums.FeeType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
+}
+
 export type EnumDayOfWeekFilter<$PrismaModel = never> = {
   equals?: $Enums.DayOfWeek | Prisma.EnumDayOfWeekFieldRefInput<$PrismaModel>
   in?: $Enums.DayOfWeek[] | Prisma.ListEnumDayOfWeekFieldRefInput<$PrismaModel>
@@ -722,28 +739,11 @@ export type EnumSubscriptionStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumSubscriptionStatusFilter<$PrismaModel>
 }
 
-export type EnumFeeTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel> | $Enums.FeeType
-}
-
 export type EnumFeeStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.FeeStatus | Prisma.EnumFeeStatusFieldRefInput<$PrismaModel>
   in?: $Enums.FeeStatus[] | Prisma.ListEnumFeeStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.FeeStatus[] | Prisma.ListEnumFeeStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumFeeStatusFilter<$PrismaModel> | $Enums.FeeStatus
-}
-
-export type EnumFeeTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFeeTypeWithAggregatesFilter<$PrismaModel> | $Enums.FeeType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
 }
 
 export type EnumFeeStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -1273,6 +1273,23 @@ export type NestedEnumAuditActionWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumAuditActionFilter<$PrismaModel>
 }
 
+export type NestedEnumFeeTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel> | $Enums.FeeType
+}
+
+export type NestedEnumFeeTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFeeTypeWithAggregatesFilter<$PrismaModel> | $Enums.FeeType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
+}
+
 export type NestedEnumDayOfWeekFilter<$PrismaModel = never> = {
   equals?: $Enums.DayOfWeek | Prisma.EnumDayOfWeekFieldRefInput<$PrismaModel>
   in?: $Enums.DayOfWeek[] | Prisma.ListEnumDayOfWeekFieldRefInput<$PrismaModel>
@@ -1569,28 +1586,11 @@ export type NestedEnumSubscriptionStatusWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumSubscriptionStatusFilter<$PrismaModel>
 }
 
-export type NestedEnumFeeTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel> | $Enums.FeeType
-}
-
 export type NestedEnumFeeStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.FeeStatus | Prisma.EnumFeeStatusFieldRefInput<$PrismaModel>
   in?: $Enums.FeeStatus[] | Prisma.ListEnumFeeStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.FeeStatus[] | Prisma.ListEnumFeeStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumFeeStatusFilter<$PrismaModel> | $Enums.FeeStatus
-}
-
-export type NestedEnumFeeTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.FeeType | Prisma.EnumFeeTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FeeType[] | Prisma.ListEnumFeeTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFeeTypeWithAggregatesFilter<$PrismaModel> | $Enums.FeeType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumFeeTypeFilter<$PrismaModel>
 }
 
 export type NestedEnumFeeStatusWithAggregatesFilter<$PrismaModel = never> = {

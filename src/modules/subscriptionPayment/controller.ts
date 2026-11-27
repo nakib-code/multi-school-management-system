@@ -44,6 +44,38 @@ export const submitManualSubscriptionPaymentController = async (
 			req.body,
 		);
 
+		await recordPlatformAudit({
+			actorId: req.user.userId,
+			action: AuditAction.PAYMENT,
+			entityType: "SubscriptionPayment",
+			entityId: result.id,
+			schoolId: req.user.schoolId,
+			description: `Submitted ${result.paymentMethod} subscription payment (${result.trxId})`,
+			metadata: {
+				paymentMethod: result.paymentMethod,
+				paidAmount: result.paidAmount,
+				subscriptionId,
+			},
+			ipAddress: req.ip ?? null,
+			userAgent: req.headers["user-agent"] ?? null,
+		}).catch(() => {});
+
+		const superAdmins = await prisma.user.findMany({
+			where: { role: "SUPER_ADMIN", status: "ACTIVE" },
+			select: { id: true },
+		});
+		await Promise.all(
+			superAdmins.map((sa) =>
+				createNotification({
+					recipientId: sa.id,
+					schoolId: req.user?.schoolId ?? null,
+					type: "SUBSCRIPTION",
+					title: "New Subscription Payment Submitted",
+					message: `${result.school.name} submitted ৳${result.paidAmount} via ${result.paymentMethod} (TrxID: ${result.trxId}) for verification.`,
+				}).catch(() => {}),
+			),
+		);
+
 		return sendResponse(res, {
 			statusCode: 201,
 			message:
@@ -150,6 +182,24 @@ export const rejectSubscriptionPaymentController = async (
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
 		});
+
+		const schoolAdmin = await prisma.user.findFirst({
+			where: {
+				schoolId: result.schoolId,
+				role: "ADMIN",
+				status: "ACTIVE",
+			},
+			select: { id: true },
+		});
+		if (schoolAdmin) {
+			await createNotification({
+				recipientId: schoolAdmin.id,
+				schoolId: result.schoolId,
+				type: "SUBSCRIPTION",
+				title: "Subscription Payment Rejected",
+				message: `Your ${result.paymentMethod} payment (${result.trxId}) was rejected. Reason: ${result.rejectionReason ?? "Please contact support."}`,
+			}).catch(() => {});
+		}
 
 		return sendResponse(res, {
 			statusCode: 200,

@@ -11,16 +11,20 @@ import {
 	getActiveClassesController,
 	getClassByIdController,
 	getClassesController,
+	getClassFeeStructuresController,
 	toggleClassStatusController,
 	updateClassController,
+	upsertClassFeeStructuresController,
 } from "./controller.js";
 
 import {
 	createClassSchema,
+	getClassFeeStructuresSchema,
 	schoolClassParamsSchema,
 	schoolClassSchoolParamsSchema,
 	toggleClassStatusSchema,
 	updateClassSchema,
+	upsertClassFeeStructuresSchema,
 } from "./validation.js";
 
 const router = Router();
@@ -57,6 +61,25 @@ router.get(
 	requireSchoolAccess,
 	validateRequest(schoolClassSchoolParamsSchema),
 	getActiveClassesController,
+);
+
+// Class Fee Structures (ADMIN / MANAGER read, ADMIN upsert)
+router.get(
+	"/schools/:schoolId/classes/fee-structures",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(getClassFeeStructuresSchema),
+	getClassFeeStructuresController,
+);
+
+router.put(
+	"/schools/:schoolId/classes/:classId/fee-structures",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+	validateRequest(upsertClassFeeStructuresSchema),
+	upsertClassFeeStructuresController,
 );
 
 // Get single

@@ -288,6 +288,7 @@ export type ExamWhereInput = {
   class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
   section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   results?: Prisma.ResultListRelationFilter
+  studentFees?: Prisma.StudentFeeListRelationFilter
 }
 
 export type ExamOrderByWithRelationInput = {
@@ -307,6 +308,7 @@ export type ExamOrderByWithRelationInput = {
   class?: Prisma.SchoolClassOrderByWithRelationInput
   section?: Prisma.SectionOrderByWithRelationInput
   results?: Prisma.ResultOrderByRelationAggregateInput
+  studentFees?: Prisma.StudentFeeOrderByRelationAggregateInput
 }
 
 export type ExamWhereUniqueInput = Prisma.AtLeast<{
@@ -329,6 +331,7 @@ export type ExamWhereUniqueInput = Prisma.AtLeast<{
   class?: Prisma.XOR<Prisma.SchoolClassScalarRelationFilter, Prisma.SchoolClassWhereInput>
   section?: Prisma.XOR<Prisma.SectionNullableScalarRelationFilter, Prisma.SectionWhereInput> | null
   results?: Prisma.ResultListRelationFilter
+  studentFees?: Prisma.StudentFeeListRelationFilter
 }, "id">
 
 export type ExamOrderByWithAggregationInput = {
@@ -382,6 +385,7 @@ export type ExamCreateInput = {
   class: Prisma.SchoolClassCreateNestedOneWithoutExamsInput
   section?: Prisma.SectionCreateNestedOneWithoutExamsInput
   results?: Prisma.ResultCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutExamInput
 }
 
 export type ExamUncheckedCreateInput = {
@@ -398,6 +402,7 @@ export type ExamUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutExamInput
 }
 
 export type ExamUpdateInput = {
@@ -413,6 +418,7 @@ export type ExamUpdateInput = {
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutExamsNestedInput
   section?: Prisma.SectionUpdateOneWithoutExamsNestedInput
   results?: Prisma.ResultUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateInput = {
@@ -429,6 +435,7 @@ export type ExamUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   results?: Prisma.ResultUncheckedUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutExamNestedInput
 }
 
 export type ExamCreateManyInput = {
@@ -544,6 +551,11 @@ export type ExamSumOrderByAggregateInput = {
 export type ExamScalarRelationFilter = {
   is?: Prisma.ExamWhereInput
   isNot?: Prisma.ExamWhereInput
+}
+
+export type ExamNullableScalarRelationFilter = {
+  is?: Prisma.ExamWhereInput | null
+  isNot?: Prisma.ExamWhereInput | null
 }
 
 export type ExamCreateNestedManyWithoutClassInput = {
@@ -694,6 +706,22 @@ export type ExamUncheckedUpdateManyWithoutSectionNestedInput = {
   deleteMany?: Prisma.ExamScalarWhereInput | Prisma.ExamScalarWhereInput[]
 }
 
+export type ExamCreateNestedOneWithoutStudentFeesInput = {
+  create?: Prisma.XOR<Prisma.ExamCreateWithoutStudentFeesInput, Prisma.ExamUncheckedCreateWithoutStudentFeesInput>
+  connectOrCreate?: Prisma.ExamCreateOrConnectWithoutStudentFeesInput
+  connect?: Prisma.ExamWhereUniqueInput
+}
+
+export type ExamUpdateOneWithoutStudentFeesNestedInput = {
+  create?: Prisma.XOR<Prisma.ExamCreateWithoutStudentFeesInput, Prisma.ExamUncheckedCreateWithoutStudentFeesInput>
+  connectOrCreate?: Prisma.ExamCreateOrConnectWithoutStudentFeesInput
+  upsert?: Prisma.ExamUpsertWithoutStudentFeesInput
+  disconnect?: Prisma.ExamWhereInput | boolean
+  delete?: Prisma.ExamWhereInput | boolean
+  connect?: Prisma.ExamWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ExamUpdateToOneWithWhereWithoutStudentFeesInput, Prisma.ExamUpdateWithoutStudentFeesInput>, Prisma.ExamUncheckedUpdateWithoutStudentFeesInput>
+}
+
 export type ExamCreateWithoutClassInput = {
   name: string
   type: $Enums.ExamType
@@ -706,6 +734,7 @@ export type ExamCreateWithoutClassInput = {
   school: Prisma.SchoolCreateNestedOneWithoutExamsInput
   section?: Prisma.SectionCreateNestedOneWithoutExamsInput
   results?: Prisma.ResultCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutExamInput
 }
 
 export type ExamUncheckedCreateWithoutClassInput = {
@@ -721,6 +750,7 @@ export type ExamUncheckedCreateWithoutClassInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutExamInput
 }
 
 export type ExamCreateOrConnectWithoutClassInput = {
@@ -779,6 +809,7 @@ export type ExamCreateWithoutResultsInput = {
   school: Prisma.SchoolCreateNestedOneWithoutExamsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutExamsInput
   section?: Prisma.SectionCreateNestedOneWithoutExamsInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutExamInput
 }
 
 export type ExamUncheckedCreateWithoutResultsInput = {
@@ -794,6 +825,7 @@ export type ExamUncheckedCreateWithoutResultsInput = {
   status?: $Enums.ExamStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutExamInput
 }
 
 export type ExamCreateOrConnectWithoutResultsInput = {
@@ -824,6 +856,7 @@ export type ExamUpdateWithoutResultsInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutExamsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutExamsNestedInput
   section?: Prisma.SectionUpdateOneWithoutExamsNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateWithoutResultsInput = {
@@ -839,6 +872,7 @@ export type ExamUncheckedUpdateWithoutResultsInput = {
   status?: Prisma.EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutExamNestedInput
 }
 
 export type ExamCreateWithoutSchoolInput = {
@@ -853,6 +887,7 @@ export type ExamCreateWithoutSchoolInput = {
   class: Prisma.SchoolClassCreateNestedOneWithoutExamsInput
   section?: Prisma.SectionCreateNestedOneWithoutExamsInput
   results?: Prisma.ResultCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutExamInput
 }
 
 export type ExamUncheckedCreateWithoutSchoolInput = {
@@ -868,6 +903,7 @@ export type ExamUncheckedCreateWithoutSchoolInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutExamInput
 }
 
 export type ExamCreateOrConnectWithoutSchoolInput = {
@@ -908,6 +944,7 @@ export type ExamCreateWithoutSectionInput = {
   school: Prisma.SchoolCreateNestedOneWithoutExamsInput
   class: Prisma.SchoolClassCreateNestedOneWithoutExamsInput
   results?: Prisma.ResultCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutExamInput
 }
 
 export type ExamUncheckedCreateWithoutSectionInput = {
@@ -923,6 +960,7 @@ export type ExamUncheckedCreateWithoutSectionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   results?: Prisma.ResultUncheckedCreateNestedManyWithoutExamInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutExamInput
 }
 
 export type ExamCreateOrConnectWithoutSectionInput = {
@@ -951,6 +989,84 @@ export type ExamUpdateManyWithWhereWithoutSectionInput = {
   data: Prisma.XOR<Prisma.ExamUpdateManyMutationInput, Prisma.ExamUncheckedUpdateManyWithoutSectionInput>
 }
 
+export type ExamCreateWithoutStudentFeesInput = {
+  name: string
+  type: $Enums.ExamType
+  academicYear: string
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.ExamStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutExamsInput
+  class: Prisma.SchoolClassCreateNestedOneWithoutExamsInput
+  section?: Prisma.SectionCreateNestedOneWithoutExamsInput
+  results?: Prisma.ResultCreateNestedManyWithoutExamInput
+}
+
+export type ExamUncheckedCreateWithoutStudentFeesInput = {
+  id?: number
+  schoolId: number
+  classId: number
+  sectionId?: number | null
+  name: string
+  type: $Enums.ExamType
+  academicYear: string
+  startDate: Date | string
+  endDate: Date | string
+  status?: $Enums.ExamStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutExamInput
+}
+
+export type ExamCreateOrConnectWithoutStudentFeesInput = {
+  where: Prisma.ExamWhereUniqueInput
+  create: Prisma.XOR<Prisma.ExamCreateWithoutStudentFeesInput, Prisma.ExamUncheckedCreateWithoutStudentFeesInput>
+}
+
+export type ExamUpsertWithoutStudentFeesInput = {
+  update: Prisma.XOR<Prisma.ExamUpdateWithoutStudentFeesInput, Prisma.ExamUncheckedUpdateWithoutStudentFeesInput>
+  create: Prisma.XOR<Prisma.ExamCreateWithoutStudentFeesInput, Prisma.ExamUncheckedCreateWithoutStudentFeesInput>
+  where?: Prisma.ExamWhereInput
+}
+
+export type ExamUpdateToOneWithWhereWithoutStudentFeesInput = {
+  where?: Prisma.ExamWhereInput
+  data: Prisma.XOR<Prisma.ExamUpdateWithoutStudentFeesInput, Prisma.ExamUncheckedUpdateWithoutStudentFeesInput>
+}
+
+export type ExamUpdateWithoutStudentFeesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutExamsNestedInput
+  class?: Prisma.SchoolClassUpdateOneRequiredWithoutExamsNestedInput
+  section?: Prisma.SectionUpdateOneWithoutExamsNestedInput
+  results?: Prisma.ResultUpdateManyWithoutExamNestedInput
+}
+
+export type ExamUncheckedUpdateWithoutStudentFeesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  classId?: Prisma.IntFieldUpdateOperationsInput | number
+  sectionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumExamTypeFieldUpdateOperationsInput | $Enums.ExamType
+  academicYear?: Prisma.StringFieldUpdateOperationsInput | string
+  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumExamStatusFieldUpdateOperationsInput | $Enums.ExamStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  results?: Prisma.ResultUncheckedUpdateManyWithoutExamNestedInput
+}
+
 export type ExamCreateManyClassInput = {
   id?: number
   schoolId: number
@@ -977,6 +1093,7 @@ export type ExamUpdateWithoutClassInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutExamsNestedInput
   section?: Prisma.SectionUpdateOneWithoutExamsNestedInput
   results?: Prisma.ResultUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateWithoutClassInput = {
@@ -992,6 +1109,7 @@ export type ExamUncheckedUpdateWithoutClassInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   results?: Prisma.ResultUncheckedUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateManyWithoutClassInput = {
@@ -1034,6 +1152,7 @@ export type ExamUpdateWithoutSchoolInput = {
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutExamsNestedInput
   section?: Prisma.SectionUpdateOneWithoutExamsNestedInput
   results?: Prisma.ResultUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateWithoutSchoolInput = {
@@ -1049,6 +1168,7 @@ export type ExamUncheckedUpdateWithoutSchoolInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   results?: Prisma.ResultUncheckedUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateManyWithoutSchoolInput = {
@@ -1091,6 +1211,7 @@ export type ExamUpdateWithoutSectionInput = {
   school?: Prisma.SchoolUpdateOneRequiredWithoutExamsNestedInput
   class?: Prisma.SchoolClassUpdateOneRequiredWithoutExamsNestedInput
   results?: Prisma.ResultUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateWithoutSectionInput = {
@@ -1106,6 +1227,7 @@ export type ExamUncheckedUpdateWithoutSectionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   results?: Prisma.ResultUncheckedUpdateManyWithoutExamNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutExamNestedInput
 }
 
 export type ExamUncheckedUpdateManyWithoutSectionInput = {
@@ -1129,10 +1251,12 @@ export type ExamUncheckedUpdateManyWithoutSectionInput = {
 
 export type ExamCountOutputType = {
   results: number
+  studentFees: number
 }
 
 export type ExamCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   results?: boolean | ExamCountOutputTypeCountResultsArgs
+  studentFees?: boolean | ExamCountOutputTypeCountStudentFeesArgs
 }
 
 /**
@@ -1150,6 +1274,13 @@ export type ExamCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  */
 export type ExamCountOutputTypeCountResultsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ResultWhereInput
+}
+
+/**
+ * ExamCountOutputType without action
+ */
+export type ExamCountOutputTypeCountStudentFeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentFeeWhereInput
 }
 
 
@@ -1170,6 +1301,7 @@ export type ExamSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
   section?: boolean | Prisma.Exam$sectionArgs<ExtArgs>
   results?: boolean | Prisma.Exam$resultsArgs<ExtArgs>
+  studentFees?: boolean | Prisma.Exam$studentFeesArgs<ExtArgs>
   _count?: boolean | Prisma.ExamCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["exam"]>
 
@@ -1230,6 +1362,7 @@ export type ExamInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   class?: boolean | Prisma.SchoolClassDefaultArgs<ExtArgs>
   section?: boolean | Prisma.Exam$sectionArgs<ExtArgs>
   results?: boolean | Prisma.Exam$resultsArgs<ExtArgs>
+  studentFees?: boolean | Prisma.Exam$studentFeesArgs<ExtArgs>
   _count?: boolean | Prisma.ExamCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ExamIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1250,6 +1383,7 @@ export type $ExamPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     class: Prisma.$SchoolClassPayload<ExtArgs>
     section: Prisma.$SectionPayload<ExtArgs> | null
     results: Prisma.$ResultPayload<ExtArgs>[]
+    studentFees: Prisma.$StudentFeePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1662,6 +1796,7 @@ export interface Prisma__ExamClient<T, Null = never, ExtArgs extends runtime.Typ
   class<T extends Prisma.SchoolClassDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolClassDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClassClient<runtime.Types.Result.GetResult<Prisma.$SchoolClassPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   section<T extends Prisma.Exam$sectionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Exam$sectionArgs<ExtArgs>>): Prisma.Prisma__SectionClient<runtime.Types.Result.GetResult<Prisma.$SectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   results<T extends Prisma.Exam$resultsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Exam$resultsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  studentFees<T extends Prisma.Exam$studentFeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Exam$studentFeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2144,6 +2279,30 @@ export type Exam$resultsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.ResultScalarFieldEnum | Prisma.ResultScalarFieldEnum[]
+}
+
+/**
+ * Exam.studentFees
+ */
+export type Exam$studentFeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentFee
+   */
+  select?: Prisma.StudentFeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentFee
+   */
+  omit?: Prisma.StudentFeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentFeeInclude<ExtArgs> | null
+  where?: Prisma.StudentFeeWhereInput
+  orderBy?: Prisma.StudentFeeOrderByWithRelationInput | Prisma.StudentFeeOrderByWithRelationInput[]
+  cursor?: Prisma.StudentFeeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentFeeScalarFieldEnum | Prisma.StudentFeeScalarFieldEnum[]
 }
 
 /**

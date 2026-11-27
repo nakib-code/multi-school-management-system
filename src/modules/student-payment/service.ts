@@ -102,11 +102,76 @@ export const submitStudentPayment = async (
 		throw new AppError(400, "This student fee is already settled");
 	}
 
-	const normalizedTrxId = normalizeTrxId(payload.trxId);
+	if (payload.paymentMethod === PaymentMethod.CASH) {
+		if (
+			requester.role !== UserRole.ADMIN &&
+			requester.role !== UserRole.MANAGER
+		) {
+			throw new AppError(
+				403,
+				"Only School Admins and Managers can record cash counter payments",
+			);
+		}
 
-	// Duplicate TrxID protection across both student and subscription payments
-	const existingTrx = await prisma.studentPayment.findUnique({
-		where: { trxId: normalizedTrxId },
+		const cashTrxId = payload.trxId?.trim()
+			? normalizeTrxId(payload.trxId)
+			: `CASH-${schoolId}-${fee.id}-${Date.now()}`;
+
+		return prisma.$transaction(async (tx) => {
+			const now = new Date();
+			const payment = await tx.studentPayment.create({
+				data: {
+					schoolId,
+					studentId: payload.studentId,
+					feeId: payload.feeId,
+					paymentMethod: PaymentMethod.CASH,
+					senderNumber: payload.senderNumber?.trim() || "OFFICE-CASH",
+					receiverNumber: "OFFICE-COUNTER",
+					trxId: cashTrxId,
+					paidAmount: payload.paidAmount,
+					status: PaymentStatus.VERIFIED,
+					verifiedById: requester.userId,
+					verifiedAt: now,
+					paidAt: payload.paidAt ?? now,
+					...(payload.remarks !== undefined
+						? { remarks: payload.remarks }
+						: {}),
+				},
+				include: studentPaymentInclude,
+			});
+
+			const verifiedSum = await tx.studentPayment.aggregate({
+				where: { feeId: fee.id, status: PaymentStatus.VERIFIED },
+				_sum: { paidAmount: true },
+			});
+
+			const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
+			const feeAmount = Number(fee.amount);
+			const nextFeeStatus =
+				totalVerifiedPaid >= feeAmount
+					? FeeStatus.PAID
+					: totalVerifiedPaid > 0
+						? FeeStatus.PARTIAL
+						: FeeStatus.PENDING;
+
+			await tx.studentFee.update({
+				where: { id: fee.id },
+				data: { status: nextFeeStatus },
+			});
+
+			return payment;
+		});
+	}
+
+	const normalizedTrxId = normalizeTrxId(payload.trxId ?? "");
+
+	// Duplicate TrxID protection for active (non-REJECTED) student payments
+	const existingTrx = await prisma.studentPayment.findFirst({
+		where: {
+			trxId: normalizedTrxId,
+			status: { not: PaymentStatus.REJECTED },
+		},
+		select: { id: true },
 	});
 	if (existingTrx) {
 		throw new AppError(
@@ -119,22 +184,37 @@ export const submitStudentPayment = async (
 		payload.receiverNumber ??
 		(await getSchoolConfiguredReceiverNumber(schoolId, payload.paymentMethod));
 
-	return prisma.studentPayment.create({
-		data: {
-			schoolId,
-			studentId: payload.studentId,
-			feeId: payload.feeId,
-			paymentMethod: payload.paymentMethod,
-			senderNumber: payload.senderNumber.trim(),
-			...(receiverNumber !== undefined ? { receiverNumber } : {}),
-			trxId: normalizedTrxId,
-			paidAmount: payload.paidAmount,
-			status: PaymentStatus.PENDING,
-			...(payload.paidAt !== undefined ? { paidAt: payload.paidAt } : {}),
-			...(payload.remarks !== undefined ? { remarks: payload.remarks } : {}),
-		},
-		include: studentPaymentInclude,
-	});
+	try {
+		return await prisma.studentPayment.create({
+			data: {
+				schoolId,
+				studentId: payload.studentId,
+				feeId: payload.feeId,
+				paymentMethod: payload.paymentMethod,
+				senderNumber: (payload.senderNumber ?? "").trim(),
+				...(receiverNumber !== undefined ? { receiverNumber } : {}),
+				trxId: normalizedTrxId,
+				paidAmount: payload.paidAmount,
+				status: PaymentStatus.PENDING,
+				...(payload.paidAt !== undefined ? { paidAt: payload.paidAt } : {}),
+				...(payload.remarks !== undefined ? { remarks: payload.remarks } : {}),
+			},
+			include: studentPaymentInclude,
+		});
+	} catch (error) {
+		if (
+			typeof error === "object" &&
+			error !== null &&
+			"code" in error &&
+			error.code === "P2002"
+		) {
+			throw new AppError(
+				409,
+				"This transaction ID (trxId) has already been submitted",
+			);
+		}
+		throw error;
+	}
 };
 
 export const getStudentPayments = async (
@@ -190,28 +270,39 @@ export const verifyStudentPayment = async (
 	id: number,
 	verifierUserId: number,
 ) => {
-	const existing = await prisma.studentPayment.findFirst({
-		where: { id, schoolId },
-		include: { fee: true },
-	});
-	if (!existing) throw new AppError(404, "Student payment not found");
-
-	if (existing.status === PaymentStatus.VERIFIED) {
-		throw new AppError(400, "Student payment is already verified");
-	}
-	if (existing.status !== PaymentStatus.PENDING) {
-		throw new AppError(400, "Only pending student payments can be verified");
-	}
-
 	return prisma.$transaction(async (tx) => {
-		const updatedPayment = await tx.studentPayment.update({
-			where: { id },
+		const existing = await tx.studentPayment.findFirst({
+			where: { id, schoolId },
+			include: { fee: true },
+		});
+		if (!existing) throw new AppError(404, "Student payment not found");
+
+		if (existing.status === PaymentStatus.VERIFIED) {
+			throw new AppError(400, "Student payment is already verified");
+		}
+		if (existing.status !== PaymentStatus.PENDING) {
+			throw new AppError(400, "Only pending student payments can be verified");
+		}
+
+		const claimed = await tx.studentPayment.updateMany({
+			where: { id, schoolId, status: PaymentStatus.PENDING },
 			data: {
 				status: PaymentStatus.VERIFIED,
 				verifiedById: verifierUserId,
 				verifiedAt: new Date(),
 				rejectionReason: null,
 			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Student payment was already processed by another request",
+			);
+		}
+
+		const updatedPayment = await tx.studentPayment.findUniqueOrThrow({
+			where: { id },
 			include: studentPaymentInclude,
 		});
 
@@ -254,26 +345,39 @@ export const rejectStudentPayment = async (
 	verifierUserId: number,
 	payload: RejectStudentPaymentInput,
 ) => {
-	const existing = await prisma.studentPayment.findFirst({
-		where: { id, schoolId },
-	});
-	if (!existing) throw new AppError(404, "Student payment not found");
+	return prisma.$transaction(async (tx) => {
+		const existing = await tx.studentPayment.findFirst({
+			where: { id, schoolId },
+		});
+		if (!existing) throw new AppError(404, "Student payment not found");
 
-	if (existing.status === PaymentStatus.VERIFIED) {
-		throw new AppError(400, "Verified student payments cannot be rejected");
-	}
-	if (existing.status !== PaymentStatus.PENDING) {
-		throw new AppError(400, "Only pending student payments can be rejected");
-	}
+		if (existing.status === PaymentStatus.VERIFIED) {
+			throw new AppError(400, "Verified student payments cannot be rejected");
+		}
+		if (existing.status !== PaymentStatus.PENDING) {
+			throw new AppError(400, "Only pending student payments can be rejected");
+		}
 
-	return prisma.studentPayment.update({
-		where: { id },
-		data: {
-			status: PaymentStatus.REJECTED,
-			verifiedById: verifierUserId,
-			verifiedAt: new Date(),
-			rejectionReason: payload.rejectionReason.trim(),
-		},
-		include: studentPaymentInclude,
+		const claimed = await tx.studentPayment.updateMany({
+			where: { id, schoolId, status: PaymentStatus.PENDING },
+			data: {
+				status: PaymentStatus.REJECTED,
+				verifiedById: verifierUserId,
+				verifiedAt: new Date(),
+				rejectionReason: payload.rejectionReason.trim(),
+			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Student payment was already processed by another request",
+			);
+		}
+
+		return tx.studentPayment.findUniqueOrThrow({
+			where: { id },
+			include: studentPaymentInclude,
+		});
 	});
 };

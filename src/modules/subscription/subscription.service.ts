@@ -1,4 +1,5 @@
 import { prisma } from "../../lib/prisma.js";
+import AppError from "../../utils/appError.js";
 
 import type {
 	CreateSubscriptionPayload,
@@ -19,7 +20,7 @@ const createSubscription = async (payload: CreateSubscriptionPayload) => {
 	});
 
 	if (!school) {
-		throw new Error("School not found");
+		throw new AppError(404, "School not found");
 	}
 
 	const packageData = await prisma.package.findUnique({
@@ -29,11 +30,11 @@ const createSubscription = async (payload: CreateSubscriptionPayload) => {
 	});
 
 	if (!packageData) {
-		throw new Error("Package not found");
+		throw new AppError(404, "Package not found");
 	}
 
 	if (!packageData.isActive) {
-		throw new Error("Cannot assign an inactive package");
+		throw new AppError(400, "Cannot assign an inactive package");
 	}
 
 	const existingActiveSubscription = await prisma.schoolSubscription.findFirst({
@@ -44,7 +45,7 @@ const createSubscription = async (payload: CreateSubscriptionPayload) => {
 	});
 
 	if (existingActiveSubscription) {
-		throw new Error("School already has an active subscription");
+		throw new AppError(409, "School already has an active subscription");
 	}
 
 	const subscription = await prisma.schoolSubscription.create({
@@ -91,11 +92,12 @@ const selectPackageForAdmin = async (
 	});
 
 	if (!school) {
-		throw new Error("School not found");
+		throw new AppError(404, "School not found");
 	}
 
 	if (school.status !== "ACTIVE") {
-		throw new Error(
+		throw new AppError(
+			400,
 			"School must be approved before selecting a subscription package",
 		);
 	}
@@ -105,11 +107,11 @@ const selectPackageForAdmin = async (
 	});
 
 	if (!packageData) {
-		throw new Error("Package not found");
+		throw new AppError(404, "Package not found");
 	}
 
 	if (!packageData.isActive) {
-		throw new Error("Cannot select an inactive package");
+		throw new AppError(400, "Cannot select an inactive package");
 	}
 
 	const activeSubscription = await prisma.schoolSubscription.findFirst({
@@ -117,10 +119,25 @@ const selectPackageForAdmin = async (
 			schoolId,
 			status: "ACTIVE",
 		},
+		include: {
+			school: {
+				select: {
+					id: true,
+					name: true,
+					code: true,
+					status: true,
+				},
+			},
+			package: true,
+		},
+		orderBy: {
+			createdAt: "desc",
+		},
 	});
 
-	if (activeSubscription) {
-		throw new Error("School already has an active subscription");
+	// Renewing the same active package: reuse active subscription so payment extends endDate
+	if (activeSubscription && activeSubscription.packageId === packageData.id) {
+		return activeSubscription;
 	}
 
 	const pendingSubscription = await prisma.schoolSubscription.findFirst({
@@ -128,14 +145,40 @@ const selectPackageForAdmin = async (
 			schoolId,
 			status: "PENDING",
 		},
+		include: {
+			payments: {
+				where: { status: "PENDING" },
+				select: { id: true },
+			},
+		},
 		orderBy: {
 			createdAt: "desc",
 		},
 	});
 
-	// Same package already selected.
+	// Same package already selected as pending.
 	if (pendingSubscription && pendingSubscription.packageId === packageData.id) {
-		return pendingSubscription;
+		return prisma.schoolSubscription.findUniqueOrThrow({
+			where: { id: pendingSubscription.id },
+			include: {
+				school: {
+					select: {
+						id: true,
+						name: true,
+						code: true,
+						status: true,
+					},
+				},
+				package: true,
+			},
+		});
+	}
+
+	if (pendingSubscription && pendingSubscription.payments.length > 0) {
+		throw new AppError(
+			409,
+			"You already have a pending payment awaiting verification. Please wait for Super Admin review before switching packages.",
+		);
 	}
 
 	// Cancel previous pending selection.
@@ -234,14 +277,28 @@ const getSubscriptionById = async (id: number) => {
 				},
 			},
 			package: true,
+			payments: {
+				orderBy: { createdAt: "desc" },
+				include: {
+					verifiedBy: {
+						select: { id: true, name: true, role: true },
+					},
+				},
+			},
 		},
 	});
 
 	if (!subscription) {
-		throw new Error("Subscription not found");
+		throw new AppError(404, "Subscription not found");
 	}
 
-	return subscription;
+	return {
+		...subscription,
+		payments: subscription.payments.map((p) => ({
+			...p,
+			paidAmount: Number(p.paidAmount),
+		})),
+	};
 };
 
 // ============================================
@@ -256,7 +313,7 @@ const getSchoolSubscriptions = async (schoolId: number) => {
 	});
 
 	if (!school) {
-		throw new Error("School not found");
+		throw new AppError(404, "School not found");
 	}
 
 	return prisma.schoolSubscription.findMany({
@@ -297,22 +354,150 @@ const getMySubscription = async (schoolId: number) => {
 	});
 
 	if (!school) {
-		throw new Error("School not found");
+		throw new AppError(404, "School not found");
 	}
 
-	return prisma.schoolSubscription.findFirst({
-		where: {
-			schoolId,
-		},
+	const [activeSub, latestSub, activeStudentsCount, recentPayments] =
+		await Promise.all([
+			prisma.schoolSubscription.findFirst({
+				where: { schoolId, status: "ACTIVE" },
+				include: { package: true },
+				orderBy: { createdAt: "desc" },
+			}),
+			prisma.schoolSubscription.findFirst({
+				where: { schoolId },
+				include: { package: true },
+				orderBy: { createdAt: "desc" },
+			}),
+			prisma.student.count({
+				where: { schoolId, isActive: true },
+			}),
+			prisma.subscriptionPayment.findMany({
+				where: { schoolId },
+				include: {
+					subscription: {
+						select: {
+							id: true,
+							status: true,
+							startDate: true,
+							endDate: true,
+							package: {
+								select: {
+									id: true,
+									name: true,
+									price: true,
+									billingCycle: true,
+								},
+							},
+						},
+					},
+				},
+				orderBy: { createdAt: "desc" },
+				take: 20,
+			}),
+		]);
 
-		include: {
-			package: true,
-		},
+	const primarySub = activeSub ?? latestSub;
+	if (!primarySub) {
+		return null;
+	}
 
-		orderBy: {
-			createdAt: "desc",
-		},
+	const pendingUpgrade =
+		activeSub &&
+		latestSub &&
+		latestSub.id !== activeSub.id &&
+		latestSub.status === "PENDING"
+			? latestSub
+			: null;
+
+	return {
+		...primarySub,
+		activeStudentsCount,
+		pendingUpgrade,
+		payments: recentPayments.map((payment) => ({
+			id: payment.id,
+			subscriptionId: payment.subscriptionId,
+			paymentMethod: payment.paymentMethod,
+			senderNumber: payment.senderNumber,
+			receiverNumber: payment.receiverNumber,
+			trxId: payment.trxId,
+			paidAmount: Number(payment.paidAmount),
+			currency: payment.currency,
+			status: payment.status,
+			paidAt: payment.paidAt,
+			verifiedAt: payment.verifiedAt,
+			rejectionReason: payment.rejectionReason,
+			remarks: payment.remarks,
+			createdAt: payment.createdAt,
+			package: {
+				id: payment.subscription.package.id,
+				name: payment.subscription.package.name,
+				price: Number(payment.subscription.package.price),
+				billingCycle: payment.subscription.package.billingCycle,
+			},
+		})),
+	};
+};
+
+const getMySubscriptionPayments = async (schoolId: number) => {
+	const school = await prisma.school.findUnique({
+		where: { id: schoolId },
+		select: { id: true },
 	});
+
+	if (!school) {
+		throw new AppError(404, "School not found");
+	}
+
+	const payments = await prisma.subscriptionPayment.findMany({
+		where: { schoolId },
+		include: {
+			subscription: {
+				select: {
+					id: true,
+					status: true,
+					startDate: true,
+					endDate: true,
+					package: {
+						select: {
+							id: true,
+							name: true,
+							price: true,
+							billingCycle: true,
+						},
+					},
+				},
+			},
+			verifiedBy: {
+				select: { id: true, name: true, role: true },
+			},
+		},
+		orderBy: { createdAt: "desc" },
+	});
+
+	return payments.map((payment) => ({
+		id: payment.id,
+		subscriptionId: payment.subscriptionId,
+		paymentMethod: payment.paymentMethod,
+		senderNumber: payment.senderNumber,
+		receiverNumber: payment.receiverNumber,
+		trxId: payment.trxId,
+		paidAmount: Number(payment.paidAmount),
+		currency: payment.currency,
+		status: payment.status,
+		paidAt: payment.paidAt,
+		verifiedAt: payment.verifiedAt,
+		rejectionReason: payment.rejectionReason,
+		remarks: payment.remarks,
+		createdAt: payment.createdAt,
+		verifiedBy: payment.verifiedBy,
+		package: {
+			id: payment.subscription.package.id,
+			name: payment.subscription.package.name,
+			price: Number(payment.subscription.package.price),
+			billingCycle: payment.subscription.package.billingCycle,
+		},
+	}));
 };
 
 // ============================================
@@ -330,7 +515,7 @@ const updateSubscription = async (
 	});
 
 	if (!existingSubscription) {
-		throw new Error("Subscription not found");
+		throw new AppError(404, "Subscription not found");
 	}
 
 	const startDate = payload.startDate ?? existingSubscription.startDate;
@@ -338,7 +523,7 @@ const updateSubscription = async (
 	const endDate = payload.endDate ?? existingSubscription.endDate;
 
 	if (endDate <= startDate) {
-		throw new Error("End date must be after start date");
+		throw new AppError(400, "End date must be after start date");
 	}
 
 	return prisma.schoolSubscription.update({
@@ -393,7 +578,7 @@ const updateSubscriptionStatus = async (
 	});
 
 	if (!existingSubscription) {
-		throw new Error("Subscription not found");
+		throw new AppError(404, "Subscription not found");
 	}
 
 	return prisma.schoolSubscription.update({
@@ -430,6 +615,7 @@ export const subscriptionService = {
 	getSubscriptionById,
 	getSchoolSubscriptions,
 	getMySubscription,
+	getMySubscriptionPayments,
 	updateSubscription,
 	updateSubscriptionStatus,
 };

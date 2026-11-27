@@ -28,6 +28,7 @@ import {
 	createAdmissionSchema,
 	createPublicSlugAdmissionSchema,
 	getAdmissionsSchema,
+	initiateOnlinePaymentSchema,
 	rejectAdmissionSchema,
 	rejectOnlinePaymentSchema,
 	submitOnlinePaymentTrxSchema,
@@ -67,6 +68,7 @@ router.post(
 router.post(
 	"/public/schools/:slug/admissions",
 	publicAdmissionLimiter,
+	requireSchoolFeature("hasOnlineAdmission"),
 	validateRequest(createPublicSlugAdmissionSchema),
 	createPublicSlugAdmissionController,
 );
@@ -141,6 +143,8 @@ router.patch(
 router.post(
 	"/schools/:schoolId/admissions/:id/payment/online/initiate",
 	publicAdmissionLimiter,
+	requireSchoolFeature("hasOnlineAdmission"),
+	validateRequest(initiateOnlinePaymentSchema),
 	initiateOnlinePaymentController,
 );
 

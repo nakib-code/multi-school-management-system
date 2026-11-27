@@ -5,6 +5,7 @@ import { authenticate, authorize } from "../../middleware/auth.js";
 import { requireSchoolAccess } from "../../middleware/schoolAccess.js";
 import { validateRequest } from "../../middleware/validateRequest.js";
 import {
+	bulkCreateStudentFeesController,
 	createStudentFeeController,
 	deleteStudentFeeController,
 	getStudentFeeByIdController,
@@ -12,6 +13,7 @@ import {
 	updateStudentFeeController,
 } from "./controller.js";
 import {
+	bulkCreateStudentFeesSchema,
 	createStudentFeeSchema,
 	studentFeeParamsSchema,
 	studentFeeSchoolParamsSchema,
@@ -19,6 +21,15 @@ import {
 } from "./validation.js";
 
 const router = Router();
+
+router.post(
+	"/schools/:schoolId/student-fees/bulk",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(bulkCreateStudentFeesSchema),
+	bulkCreateStudentFeesController,
+);
 
 router.post(
 	"/schools/:schoolId/student-fees",

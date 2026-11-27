@@ -7,9 +7,9 @@ export interface CreateStudentPaymentInput {
 	studentId: number;
 	feeId: number;
 	paymentMethod: PaymentMethod;
-	senderNumber: string;
+	senderNumber?: string;
 	receiverNumber?: string;
-	trxId: string;
+	trxId?: string;
 	paidAmount: number;
 	paidAt?: Date;
 	remarks?: string;

@@ -19,6 +19,7 @@ model SchoolClass {
   classRoutines      ClassRoutine[]
   classDiaries       ClassDiary[]
   monthlyReports     MonthlyReport[]
+  feeStructures      ClassFeeStructure[]
 
   @@unique([schoolId, code])
   @@index([schoolId])

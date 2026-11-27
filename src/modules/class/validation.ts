@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { FeeType } from "../../generated/prisma/client.js";
 
 export const schoolClassParamsSchema = z.object({
 	params: z.object({
@@ -82,5 +83,47 @@ export const toggleClassStatusSchema = z.object({
 			.positive("School ID must be a positive number"),
 
 		id: z.coerce.number().int().positive("Class ID must be a positive number"),
+	}),
+});
+
+export const getClassFeeStructuresSchema = z.object({
+	params: z.object({
+		schoolId: z.coerce
+			.number()
+			.int()
+			.positive("School ID must be a positive number"),
+	}),
+	query: z
+		.object({
+			classId: z.coerce.number().int().positive().optional(),
+			academicYear: z.string().trim().min(4).max(20).optional(),
+			feeType: z.nativeEnum(FeeType).optional(),
+		})
+		.optional(),
+});
+
+export const upsertClassFeeStructuresSchema = z.object({
+	params: z.object({
+		schoolId: z.coerce
+			.number()
+			.int()
+			.positive("School ID must be a positive number"),
+		classId: z.coerce
+			.number()
+			.int()
+			.positive("Class ID must be a positive number"),
+	}),
+	body: z.object({
+		academicYear: z.string().trim().min(4).max(20).nullable().optional(),
+		items: z
+			.array(
+				z.object({
+					feeType: z.nativeEnum(FeeType),
+					amount: z.coerce.number().min(0).nullable(),
+					title: z.string().trim().max(150).nullable().optional(),
+					isActive: z.boolean().optional(),
+				}),
+			)
+			.min(1, "At least one fee structure item is required"),
 	}),
 });

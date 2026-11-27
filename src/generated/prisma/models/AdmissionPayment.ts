@@ -50,6 +50,7 @@ export type AdmissionPaymentMinAggregateOutputType = {
   paymentMethod: $Enums.AdmissionPaymentMethod | null
   status: $Enums.AdmissionPaymentStatus | null
   transactionId: string | null
+  senderNumber: string | null
   paidAt: Date | null
   receivedBy: number | null
   remarks: string | null
@@ -65,6 +66,7 @@ export type AdmissionPaymentMaxAggregateOutputType = {
   paymentMethod: $Enums.AdmissionPaymentMethod | null
   status: $Enums.AdmissionPaymentStatus | null
   transactionId: string | null
+  senderNumber: string | null
   paidAt: Date | null
   receivedBy: number | null
   remarks: string | null
@@ -80,6 +82,7 @@ export type AdmissionPaymentCountAggregateOutputType = {
   paymentMethod: number
   status: number
   transactionId: number
+  senderNumber: number
   paidAt: number
   receivedBy: number
   remarks: number
@@ -113,6 +116,7 @@ export type AdmissionPaymentMinAggregateInputType = {
   paymentMethod?: true
   status?: true
   transactionId?: true
+  senderNumber?: true
   paidAt?: true
   receivedBy?: true
   remarks?: true
@@ -128,6 +132,7 @@ export type AdmissionPaymentMaxAggregateInputType = {
   paymentMethod?: true
   status?: true
   transactionId?: true
+  senderNumber?: true
   paidAt?: true
   receivedBy?: true
   remarks?: true
@@ -143,6 +148,7 @@ export type AdmissionPaymentCountAggregateInputType = {
   paymentMethod?: true
   status?: true
   transactionId?: true
+  senderNumber?: true
   paidAt?: true
   receivedBy?: true
   remarks?: true
@@ -245,6 +251,7 @@ export type AdmissionPaymentGroupByOutputType = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status: $Enums.AdmissionPaymentStatus
   transactionId: string | null
+  senderNumber: string | null
   paidAt: Date | null
   receivedBy: number | null
   remarks: string | null
@@ -283,6 +290,7 @@ export type AdmissionPaymentWhereInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
+  senderNumber?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"AdmissionPayment"> | Date | string | null
   receivedBy?: Prisma.IntNullableFilter<"AdmissionPayment"> | number | null
   remarks?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
@@ -291,6 +299,7 @@ export type AdmissionPaymentWhereInput = {
   admission?: Prisma.XOR<Prisma.AdmissionScalarRelationFilter, Prisma.AdmissionWhereInput>
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   receivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  studentFee?: Prisma.XOR<Prisma.StudentFeeNullableScalarRelationFilter, Prisma.StudentFeeWhereInput> | null
 }
 
 export type AdmissionPaymentOrderByWithRelationInput = {
@@ -301,6 +310,7 @@ export type AdmissionPaymentOrderByWithRelationInput = {
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  senderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -309,6 +319,7 @@ export type AdmissionPaymentOrderByWithRelationInput = {
   admission?: Prisma.AdmissionOrderByWithRelationInput
   school?: Prisma.SchoolOrderByWithRelationInput
   receivedByUser?: Prisma.UserOrderByWithRelationInput
+  studentFee?: Prisma.StudentFeeOrderByWithRelationInput
 }
 
 export type AdmissionPaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -322,6 +333,7 @@ export type AdmissionPaymentWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.DecimalFilter<"AdmissionPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentStatus
+  senderNumber?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"AdmissionPayment"> | Date | string | null
   receivedBy?: Prisma.IntNullableFilter<"AdmissionPayment"> | number | null
   remarks?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
@@ -330,6 +342,7 @@ export type AdmissionPaymentWhereUniqueInput = Prisma.AtLeast<{
   admission?: Prisma.XOR<Prisma.AdmissionScalarRelationFilter, Prisma.AdmissionWhereInput>
   school?: Prisma.XOR<Prisma.SchoolScalarRelationFilter, Prisma.SchoolWhereInput>
   receivedByUser?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+  studentFee?: Prisma.XOR<Prisma.StudentFeeNullableScalarRelationFilter, Prisma.StudentFeeWhereInput> | null
 }, "id" | "admissionId" | "transactionId">
 
 export type AdmissionPaymentOrderByWithAggregationInput = {
@@ -340,6 +353,7 @@ export type AdmissionPaymentOrderByWithAggregationInput = {
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  senderNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
   receivedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -363,6 +377,7 @@ export type AdmissionPaymentScalarWhereWithAggregatesInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodWithAggregatesFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusWithAggregatesFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.StringNullableWithAggregatesFilter<"AdmissionPayment"> | string | null
+  senderNumber?: Prisma.StringNullableWithAggregatesFilter<"AdmissionPayment"> | string | null
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AdmissionPayment"> | Date | string | null
   receivedBy?: Prisma.IntNullableWithAggregatesFilter<"AdmissionPayment"> | number | null
   remarks?: Prisma.StringNullableWithAggregatesFilter<"AdmissionPayment"> | string | null
@@ -375,6 +390,7 @@ export type AdmissionPaymentCreateInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   remarks?: string | null
   createdAt?: Date | string
@@ -382,6 +398,7 @@ export type AdmissionPaymentCreateInput = {
   admission: Prisma.AdmissionCreateNestedOneWithoutPaymentInput
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionPaymentsInput
   receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedAdmissionPaymentsInput
+  studentFee?: Prisma.StudentFeeCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentUncheckedCreateInput = {
@@ -392,11 +409,13 @@ export type AdmissionPaymentUncheckedCreateInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   receivedBy?: number | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  studentFee?: Prisma.StudentFeeUncheckedCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentUpdateInput = {
@@ -404,6 +423,7 @@ export type AdmissionPaymentUpdateInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -411,6 +431,7 @@ export type AdmissionPaymentUpdateInput = {
   admission?: Prisma.AdmissionUpdateOneRequiredWithoutPaymentNestedInput
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionPaymentsNestedInput
   receivedByUser?: Prisma.UserUpdateOneWithoutReceivedAdmissionPaymentsNestedInput
+  studentFee?: Prisma.StudentFeeUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentUncheckedUpdateInput = {
@@ -421,11 +442,13 @@ export type AdmissionPaymentUncheckedUpdateInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentFee?: Prisma.StudentFeeUncheckedUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentCreateManyInput = {
@@ -436,6 +459,7 @@ export type AdmissionPaymentCreateManyInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   receivedBy?: number | null
   remarks?: string | null
@@ -448,6 +472,7 @@ export type AdmissionPaymentUpdateManyMutationInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -462,6 +487,7 @@ export type AdmissionPaymentUncheckedUpdateManyInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -482,6 +508,7 @@ export type AdmissionPaymentCountOrderByAggregateInput = {
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   receivedBy?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
@@ -505,6 +532,7 @@ export type AdmissionPaymentMaxOrderByAggregateInput = {
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   receivedBy?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
@@ -520,6 +548,7 @@ export type AdmissionPaymentMinOrderByAggregateInput = {
   paymentMethod?: Prisma.SortOrder
   status?: Prisma.SortOrder
   transactionId?: Prisma.SortOrder
+  senderNumber?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
   receivedBy?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
@@ -635,6 +664,22 @@ export type AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput = {
   deleteMany?: Prisma.AdmissionPaymentScalarWhereInput | Prisma.AdmissionPaymentScalarWhereInput[]
 }
 
+export type AdmissionPaymentCreateNestedOneWithoutStudentFeeInput = {
+  create?: Prisma.XOR<Prisma.AdmissionPaymentCreateWithoutStudentFeeInput, Prisma.AdmissionPaymentUncheckedCreateWithoutStudentFeeInput>
+  connectOrCreate?: Prisma.AdmissionPaymentCreateOrConnectWithoutStudentFeeInput
+  connect?: Prisma.AdmissionPaymentWhereUniqueInput
+}
+
+export type AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput = {
+  create?: Prisma.XOR<Prisma.AdmissionPaymentCreateWithoutStudentFeeInput, Prisma.AdmissionPaymentUncheckedCreateWithoutStudentFeeInput>
+  connectOrCreate?: Prisma.AdmissionPaymentCreateOrConnectWithoutStudentFeeInput
+  upsert?: Prisma.AdmissionPaymentUpsertWithoutStudentFeeInput
+  disconnect?: Prisma.AdmissionPaymentWhereInput | boolean
+  delete?: Prisma.AdmissionPaymentWhereInput | boolean
+  connect?: Prisma.AdmissionPaymentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AdmissionPaymentUpdateToOneWithWhereWithoutStudentFeeInput, Prisma.AdmissionPaymentUpdateWithoutStudentFeeInput>, Prisma.AdmissionPaymentUncheckedUpdateWithoutStudentFeeInput>
+}
+
 export type AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput = {
   create?: Prisma.XOR<Prisma.AdmissionPaymentCreateWithoutReceivedByUserInput, Prisma.AdmissionPaymentUncheckedCreateWithoutReceivedByUserInput> | Prisma.AdmissionPaymentCreateWithoutReceivedByUserInput[] | Prisma.AdmissionPaymentUncheckedCreateWithoutReceivedByUserInput[]
   connectOrCreate?: Prisma.AdmissionPaymentCreateOrConnectWithoutReceivedByUserInput | Prisma.AdmissionPaymentCreateOrConnectWithoutReceivedByUserInput[]
@@ -682,12 +727,14 @@ export type AdmissionPaymentCreateWithoutAdmissionInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionPaymentsInput
   receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedAdmissionPaymentsInput
+  studentFee?: Prisma.StudentFeeCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentUncheckedCreateWithoutAdmissionInput = {
@@ -697,11 +744,13 @@ export type AdmissionPaymentUncheckedCreateWithoutAdmissionInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   receivedBy?: number | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  studentFee?: Prisma.StudentFeeUncheckedCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentCreateOrConnectWithoutAdmissionInput = {
@@ -725,12 +774,14 @@ export type AdmissionPaymentUpdateWithoutAdmissionInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionPaymentsNestedInput
   receivedByUser?: Prisma.UserUpdateOneWithoutReceivedAdmissionPaymentsNestedInput
+  studentFee?: Prisma.StudentFeeUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentUncheckedUpdateWithoutAdmissionInput = {
@@ -740,11 +791,13 @@ export type AdmissionPaymentUncheckedUpdateWithoutAdmissionInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentFee?: Prisma.StudentFeeUncheckedUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentCreateWithoutSchoolInput = {
@@ -752,12 +805,14 @@ export type AdmissionPaymentCreateWithoutSchoolInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   admission: Prisma.AdmissionCreateNestedOneWithoutPaymentInput
   receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedAdmissionPaymentsInput
+  studentFee?: Prisma.StudentFeeCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentUncheckedCreateWithoutSchoolInput = {
@@ -767,11 +822,13 @@ export type AdmissionPaymentUncheckedCreateWithoutSchoolInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   receivedBy?: number | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  studentFee?: Prisma.StudentFeeUncheckedCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentCreateOrConnectWithoutSchoolInput = {
@@ -811,6 +868,7 @@ export type AdmissionPaymentScalarWhereInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFilter<"AdmissionPayment"> | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
+  senderNumber?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
   paidAt?: Prisma.DateTimeNullableFilter<"AdmissionPayment"> | Date | string | null
   receivedBy?: Prisma.IntNullableFilter<"AdmissionPayment"> | number | null
   remarks?: Prisma.StringNullableFilter<"AdmissionPayment"> | string | null
@@ -818,17 +876,97 @@ export type AdmissionPaymentScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"AdmissionPayment"> | Date | string
 }
 
-export type AdmissionPaymentCreateWithoutReceivedByUserInput = {
+export type AdmissionPaymentCreateWithoutStudentFeeInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   admission: Prisma.AdmissionCreateNestedOneWithoutPaymentInput
   school: Prisma.SchoolCreateNestedOneWithoutAdmissionPaymentsInput
+  receivedByUser?: Prisma.UserCreateNestedOneWithoutReceivedAdmissionPaymentsInput
+}
+
+export type AdmissionPaymentUncheckedCreateWithoutStudentFeeInput = {
+  id?: number
+  admissionId: number
+  schoolId: number
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentMethod: $Enums.AdmissionPaymentMethod
+  status?: $Enums.AdmissionPaymentStatus
+  transactionId?: string | null
+  senderNumber?: string | null
+  paidAt?: Date | string | null
+  receivedBy?: number | null
+  remarks?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type AdmissionPaymentCreateOrConnectWithoutStudentFeeInput = {
+  where: Prisma.AdmissionPaymentWhereUniqueInput
+  create: Prisma.XOR<Prisma.AdmissionPaymentCreateWithoutStudentFeeInput, Prisma.AdmissionPaymentUncheckedCreateWithoutStudentFeeInput>
+}
+
+export type AdmissionPaymentUpsertWithoutStudentFeeInput = {
+  update: Prisma.XOR<Prisma.AdmissionPaymentUpdateWithoutStudentFeeInput, Prisma.AdmissionPaymentUncheckedUpdateWithoutStudentFeeInput>
+  create: Prisma.XOR<Prisma.AdmissionPaymentCreateWithoutStudentFeeInput, Prisma.AdmissionPaymentUncheckedCreateWithoutStudentFeeInput>
+  where?: Prisma.AdmissionPaymentWhereInput
+}
+
+export type AdmissionPaymentUpdateToOneWithWhereWithoutStudentFeeInput = {
+  where?: Prisma.AdmissionPaymentWhereInput
+  data: Prisma.XOR<Prisma.AdmissionPaymentUpdateWithoutStudentFeeInput, Prisma.AdmissionPaymentUncheckedUpdateWithoutStudentFeeInput>
+}
+
+export type AdmissionPaymentUpdateWithoutStudentFeeInput = {
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
+  status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  admission?: Prisma.AdmissionUpdateOneRequiredWithoutPaymentNestedInput
+  school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionPaymentsNestedInput
+  receivedByUser?: Prisma.UserUpdateOneWithoutReceivedAdmissionPaymentsNestedInput
+}
+
+export type AdmissionPaymentUncheckedUpdateWithoutStudentFeeInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  admissionId?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
+  status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
+  transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AdmissionPaymentCreateWithoutReceivedByUserInput = {
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  paymentMethod: $Enums.AdmissionPaymentMethod
+  status?: $Enums.AdmissionPaymentStatus
+  transactionId?: string | null
+  senderNumber?: string | null
+  paidAt?: Date | string | null
+  remarks?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  admission: Prisma.AdmissionCreateNestedOneWithoutPaymentInput
+  school: Prisma.SchoolCreateNestedOneWithoutAdmissionPaymentsInput
+  studentFee?: Prisma.StudentFeeCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentUncheckedCreateWithoutReceivedByUserInput = {
@@ -839,10 +977,12 @@ export type AdmissionPaymentUncheckedCreateWithoutReceivedByUserInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   remarks?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  studentFee?: Prisma.StudentFeeUncheckedCreateNestedOneWithoutAdmissionPaymentInput
 }
 
 export type AdmissionPaymentCreateOrConnectWithoutReceivedByUserInput = {
@@ -878,6 +1018,7 @@ export type AdmissionPaymentCreateManySchoolInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   receivedBy?: number | null
   remarks?: string | null
@@ -890,12 +1031,14 @@ export type AdmissionPaymentUpdateWithoutSchoolInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admission?: Prisma.AdmissionUpdateOneRequiredWithoutPaymentNestedInput
   receivedByUser?: Prisma.UserUpdateOneWithoutReceivedAdmissionPaymentsNestedInput
+  studentFee?: Prisma.StudentFeeUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentUncheckedUpdateWithoutSchoolInput = {
@@ -905,11 +1048,13 @@ export type AdmissionPaymentUncheckedUpdateWithoutSchoolInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentFee?: Prisma.StudentFeeUncheckedUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentUncheckedUpdateManyWithoutSchoolInput = {
@@ -919,6 +1064,7 @@ export type AdmissionPaymentUncheckedUpdateManyWithoutSchoolInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   receivedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -934,6 +1080,7 @@ export type AdmissionPaymentCreateManyReceivedByUserInput = {
   paymentMethod: $Enums.AdmissionPaymentMethod
   status?: $Enums.AdmissionPaymentStatus
   transactionId?: string | null
+  senderNumber?: string | null
   paidAt?: Date | string | null
   remarks?: string | null
   createdAt?: Date | string
@@ -945,12 +1092,14 @@ export type AdmissionPaymentUpdateWithoutReceivedByUserInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admission?: Prisma.AdmissionUpdateOneRequiredWithoutPaymentNestedInput
   school?: Prisma.SchoolUpdateOneRequiredWithoutAdmissionPaymentsNestedInput
+  studentFee?: Prisma.StudentFeeUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentUncheckedUpdateWithoutReceivedByUserInput = {
@@ -961,10 +1110,12 @@ export type AdmissionPaymentUncheckedUpdateWithoutReceivedByUserInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  studentFee?: Prisma.StudentFeeUncheckedUpdateOneWithoutAdmissionPaymentNestedInput
 }
 
 export type AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserInput = {
@@ -975,6 +1126,7 @@ export type AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserInput = {
   paymentMethod?: Prisma.EnumAdmissionPaymentMethodFieldUpdateOperationsInput | $Enums.AdmissionPaymentMethod
   status?: Prisma.EnumAdmissionPaymentStatusFieldUpdateOperationsInput | $Enums.AdmissionPaymentStatus
   transactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  senderNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -991,6 +1143,7 @@ export type AdmissionPaymentSelect<ExtArgs extends runtime.Types.Extensions.Inte
   paymentMethod?: boolean
   status?: boolean
   transactionId?: boolean
+  senderNumber?: boolean
   paidAt?: boolean
   receivedBy?: boolean
   remarks?: boolean
@@ -999,6 +1152,7 @@ export type AdmissionPaymentSelect<ExtArgs extends runtime.Types.Extensions.Inte
   admission?: boolean | Prisma.AdmissionDefaultArgs<ExtArgs>
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   receivedByUser?: boolean | Prisma.AdmissionPayment$receivedByUserArgs<ExtArgs>
+  studentFee?: boolean | Prisma.AdmissionPayment$studentFeeArgs<ExtArgs>
 }, ExtArgs["result"]["admissionPayment"]>
 
 export type AdmissionPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1009,6 +1163,7 @@ export type AdmissionPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   paymentMethod?: boolean
   status?: boolean
   transactionId?: boolean
+  senderNumber?: boolean
   paidAt?: boolean
   receivedBy?: boolean
   remarks?: boolean
@@ -1027,6 +1182,7 @@ export type AdmissionPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   paymentMethod?: boolean
   status?: boolean
   transactionId?: boolean
+  senderNumber?: boolean
   paidAt?: boolean
   receivedBy?: boolean
   remarks?: boolean
@@ -1045,6 +1201,7 @@ export type AdmissionPaymentSelectScalar = {
   paymentMethod?: boolean
   status?: boolean
   transactionId?: boolean
+  senderNumber?: boolean
   paidAt?: boolean
   receivedBy?: boolean
   remarks?: boolean
@@ -1052,11 +1209,12 @@ export type AdmissionPaymentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type AdmissionPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "admissionId" | "schoolId" | "amount" | "paymentMethod" | "status" | "transactionId" | "paidAt" | "receivedBy" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["admissionPayment"]>
+export type AdmissionPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "admissionId" | "schoolId" | "amount" | "paymentMethod" | "status" | "transactionId" | "senderNumber" | "paidAt" | "receivedBy" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["admissionPayment"]>
 export type AdmissionPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admission?: boolean | Prisma.AdmissionDefaultArgs<ExtArgs>
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   receivedByUser?: boolean | Prisma.AdmissionPayment$receivedByUserArgs<ExtArgs>
+  studentFee?: boolean | Prisma.AdmissionPayment$studentFeeArgs<ExtArgs>
 }
 export type AdmissionPaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   admission?: boolean | Prisma.AdmissionDefaultArgs<ExtArgs>
@@ -1075,6 +1233,7 @@ export type $AdmissionPaymentPayload<ExtArgs extends runtime.Types.Extensions.In
     admission: Prisma.$AdmissionPayload<ExtArgs>
     school: Prisma.$SchoolPayload<ExtArgs>
     receivedByUser: Prisma.$UserPayload<ExtArgs> | null
+    studentFee: Prisma.$StudentFeePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1084,6 +1243,7 @@ export type $AdmissionPaymentPayload<ExtArgs extends runtime.Types.Extensions.In
     paymentMethod: $Enums.AdmissionPaymentMethod
     status: $Enums.AdmissionPaymentStatus
     transactionId: string | null
+    senderNumber: string | null
     paidAt: Date | null
     receivedBy: number | null
     remarks: string | null
@@ -1486,6 +1646,7 @@ export interface Prisma__AdmissionPaymentClient<T, Null = never, ExtArgs extends
   admission<T extends Prisma.AdmissionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdmissionDefaultArgs<ExtArgs>>): Prisma.Prisma__AdmissionClient<runtime.Types.Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   school<T extends Prisma.SchoolDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SchoolDefaultArgs<ExtArgs>>): Prisma.Prisma__SchoolClient<runtime.Types.Result.GetResult<Prisma.$SchoolPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   receivedByUser<T extends Prisma.AdmissionPayment$receivedByUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdmissionPayment$receivedByUserArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  studentFee<T extends Prisma.AdmissionPayment$studentFeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AdmissionPayment$studentFeeArgs<ExtArgs>>): Prisma.Prisma__StudentFeeClient<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1522,6 +1683,7 @@ export interface AdmissionPaymentFieldRefs {
   readonly paymentMethod: Prisma.FieldRef<"AdmissionPayment", 'AdmissionPaymentMethod'>
   readonly status: Prisma.FieldRef<"AdmissionPayment", 'AdmissionPaymentStatus'>
   readonly transactionId: Prisma.FieldRef<"AdmissionPayment", 'String'>
+  readonly senderNumber: Prisma.FieldRef<"AdmissionPayment", 'String'>
   readonly paidAt: Prisma.FieldRef<"AdmissionPayment", 'DateTime'>
   readonly receivedBy: Prisma.FieldRef<"AdmissionPayment", 'Int'>
   readonly remarks: Prisma.FieldRef<"AdmissionPayment", 'String'>
@@ -1944,6 +2106,25 @@ export type AdmissionPayment$receivedByUserArgs<ExtArgs extends runtime.Types.Ex
    */
   include?: Prisma.UserInclude<ExtArgs> | null
   where?: Prisma.UserWhereInput
+}
+
+/**
+ * AdmissionPayment.studentFee
+ */
+export type AdmissionPayment$studentFeeArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentFee
+   */
+  select?: Prisma.StudentFeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentFee
+   */
+  omit?: Prisma.StudentFeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentFeeInclude<ExtArgs> | null
+  where?: Prisma.StudentFeeWhereInput
 }
 
 /**

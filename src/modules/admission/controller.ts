@@ -108,6 +108,13 @@ export const getAdmissionsController = async (
 			? { search: req.query.search }
 			: {}),
 
+		...(req.query.classId ? { classId: Number(req.query.classId) } : {}),
+
+		...(typeof req.query.academicYear === "string" &&
+		req.query.academicYear.trim()
+			? { academicYear: req.query.academicYear.trim() }
+			: {}),
+
 		...(typeof req.query.status === "string"
 			? { status: req.query.status }
 			: {}),
@@ -305,7 +312,15 @@ export const initiateOnlinePaymentController = async (
 		throw new AppError(400, "Invalid admission ID");
 	}
 
-	const result = await initiateOnlinePayment(schoolId, admissionId);
+	const result = await initiateOnlinePayment(schoolId, admissionId, {
+		applicationNo: String(req.body.applicationNo ?? ""),
+		...(req.body.guardianPhone
+			? { guardianPhone: String(req.body.guardianPhone) }
+			: {}),
+		...(req.body.studentEmail
+			? { studentEmail: String(req.body.studentEmail) }
+			: {}),
+	});
 
 	return sendResponse(res, {
 		statusCode: 200,
@@ -322,6 +337,9 @@ export const initiateOnlinePaymentController = async (
 export const trackAdmissionController = async (req: Request, res: Response) => {
 	const result = await trackAdmission({
 		applicationNo: String(req.body.applicationNo ?? ""),
+		...(req.body.schoolId !== undefined
+			? { schoolId: Number(req.body.schoolId) }
+			: {}),
 		...(req.body.guardianPhone
 			? { guardianPhone: String(req.body.guardianPhone) }
 			: {}),
@@ -348,6 +366,9 @@ export const submitOnlinePaymentTrxController = async (
 ) => {
 	const result = await submitOnlinePaymentTrx({
 		applicationNo: String(req.body.applicationNo ?? ""),
+		...(req.body.schoolId !== undefined
+			? { schoolId: Number(req.body.schoolId) }
+			: {}),
 		guardianPhone: req.body.guardianPhone
 			? String(req.body.guardianPhone)
 			: undefined,

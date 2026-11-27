@@ -129,6 +129,10 @@ describe("Admission Online Payment TrxID Flow", () => {
 	});
 
 	it("verifies and rejects online admission payments cleanly", async () => {
+		let lastUpdateData: Record<string, unknown> = {};
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof prisma) => Promise<unknown>,
+		) => fn(prisma)) as unknown as Record<string, unknown>);
 		stubDelegate("admission", {
 			findFirst: async () => ({
 				id: 10,
@@ -144,17 +148,21 @@ describe("Admission Online Payment TrxID Flow", () => {
 			}),
 		});
 		stubDelegate("admissionPayment", {
-			update: async (args: { data: Record<string, unknown> }) => ({
+			updateMany: async (args: { data: Record<string, unknown> }) => {
+				lastUpdateData = args.data;
+				return { count: 1 };
+			},
+			findUniqueOrThrow: async () => ({
 				id: 50,
 				admissionId: 10,
 				schoolId: 1,
 				amount: 1500,
 				paymentMethod: "BKASH",
-				status: args.data.status,
-				transactionId: args.data.transactionId ?? "TRX999",
-				paidAt: args.data.paidAt ?? null,
-				receivedBy: args.data.receivedBy ?? null,
-				remarks: args.data.remarks ?? null,
+				status: lastUpdateData.status,
+				transactionId: lastUpdateData.transactionId ?? "TRX999",
+				paidAt: lastUpdateData.paidAt ?? null,
+				receivedBy: lastUpdateData.receivedBy ?? null,
+				remarks: lastUpdateData.remarks ?? null,
 				updatedAt: new Date(),
 			}),
 		});

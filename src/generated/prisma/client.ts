@@ -87,6 +87,11 @@ export type AuditLog = Prisma.AuditLogModel
  */
 export type ClassDiary = Prisma.ClassDiaryModel
 /**
+ * Model ClassFeeStructure
+ * 
+ */
+export type ClassFeeStructure = Prisma.ClassFeeStructureModel
+/**
  * Model ClassRoutine
  * 
  */

@@ -2,12 +2,16 @@ import { z } from "zod";
 
 const mobileAccountTypes = ["PERSONAL", "MERCHANT", "AGENT"] as const;
 
-const nullablePhoneSchema = z
-	.string()
-	.trim()
-	.max(30, "Phone number is too long")
-	.nullable()
-	.optional();
+const sanitizePhone = (value: unknown) => {
+	if (typeof value !== "string") return value;
+	const cleaned = value.replace(/[\s-]+/g, "").trim();
+	return cleaned === "" ? null : cleaned;
+};
+
+const nullablePhoneSchema = z.preprocess(
+	sanitizePhone,
+	z.string().max(30, "Phone number is too long").nullable().optional(),
+);
 
 export const updatePlatformSettingSchema = z.object({
 	body: z.object({

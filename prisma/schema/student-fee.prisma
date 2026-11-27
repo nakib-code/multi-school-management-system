@@ -4,18 +4,24 @@ model StudentFee {
   studentId    Int
   enrollmentId Int
 
-  feeType FeeType
-  title   String
-  amount  Decimal  @db.Decimal(10, 2)
-  dueDate DateTime
+  feeType      FeeType
+  title        String
+  amount       Decimal  @db.Decimal(10, 2)
+  dueDate      DateTime
+  academicYear String?
+  billingMonth String?
+  examId       Int?
+  admissionPaymentId Int? @unique
 
   status      FeeStatus @default(PENDING)
   description String?
 
-  school     School           @relation(fields: [schoolId], references: [id])
-  student    Student          @relation(fields: [studentId], references: [id])
-  enrollment Enrollment       @relation(fields: [enrollmentId], references: [id])
-  payments   StudentPayment[]
+  school           School            @relation(fields: [schoolId], references: [id])
+  student          Student           @relation(fields: [studentId], references: [id])
+  enrollment       Enrollment        @relation(fields: [enrollmentId], references: [id])
+  exam             Exam?             @relation(fields: [examId], references: [id], onDelete: SetNull)
+  admissionPayment AdmissionPayment? @relation(fields: [admissionPaymentId], references: [id], onDelete: SetNull)
+  payments         StudentPayment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -25,5 +31,8 @@ model StudentFee {
   @@index([enrollmentId])
   @@index([status])
   @@index([dueDate])
+  @@index([schoolId, feeType, academicYear])
+  @@index([schoolId, billingMonth])
+  @@index([examId])
   @@map("student_fees")
 }

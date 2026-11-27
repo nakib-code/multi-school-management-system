@@ -364,7 +364,6 @@ export type StudentPaymentOrderByWithRelationInput = {
 
 export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: number
-  trxId?: string
   AND?: Prisma.StudentPaymentWhereInput | Prisma.StudentPaymentWhereInput[]
   OR?: Prisma.StudentPaymentWhereInput[]
   NOT?: Prisma.StudentPaymentWhereInput | Prisma.StudentPaymentWhereInput[]
@@ -374,6 +373,7 @@ export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   paymentMethod?: Prisma.EnumPaymentMethodFilter<"StudentPayment"> | $Enums.PaymentMethod
   senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
   receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
+  trxId?: Prisma.StringFilter<"StudentPayment"> | string
   paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
@@ -387,7 +387,7 @@ export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   fee?: Prisma.XOR<Prisma.StudentFeeScalarRelationFilter, Prisma.StudentFeeWhereInput>
   verifiedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "trxId">
+}, "id">
 
 export type StudentPaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

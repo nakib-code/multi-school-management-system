@@ -60,6 +60,7 @@ export const ModelName = {
   MonthlyReport: 'MonthlyReport',
   AuditLog: 'AuditLog',
   ClassDiary: 'ClassDiary',
+  ClassFeeStructure: 'ClassFeeStructure',
   ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
   Enrollment: 'Enrollment',
@@ -156,6 +157,8 @@ export const AdmissionScalarFieldEnum = {
   reviewedAt: 'reviewedAt',
   reviewedBy: 'reviewedBy',
   rejectionReason: 'rejectionReason',
+  approvedStudentId: 'approvedStudentId',
+  approvedEnrollmentId: 'approvedEnrollmentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -171,6 +174,7 @@ export const AdmissionPaymentScalarFieldEnum = {
   paymentMethod: 'paymentMethod',
   status: 'status',
   transactionId: 'transactionId',
+  senderNumber: 'senderNumber',
   paidAt: 'paidAt',
   receivedBy: 'receivedBy',
   remarks: 'remarks',
@@ -293,6 +297,22 @@ export const ClassDiaryScalarFieldEnum = {
 } as const
 
 export type ClassDiaryScalarFieldEnum = (typeof ClassDiaryScalarFieldEnum)[keyof typeof ClassDiaryScalarFieldEnum]
+
+
+export const ClassFeeStructureScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  classId: 'classId',
+  feeType: 'feeType',
+  title: 'title',
+  amount: 'amount',
+  academicYear: 'academicYear',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassFeeStructureScalarFieldEnum = (typeof ClassFeeStructureScalarFieldEnum)[keyof typeof ClassFeeStructureScalarFieldEnum]
 
 
 export const ClassRoutineScalarFieldEnum = {
@@ -740,6 +760,10 @@ export const StudentFeeScalarFieldEnum = {
   title: 'title',
   amount: 'amount',
   dueDate: 'dueDate',
+  academicYear: 'academicYear',
+  billingMonth: 'billingMonth',
+  examId: 'examId',
+  admissionPaymentId: 'admissionPaymentId',
   status: 'status',
   description: 'description',
   createdAt: 'createdAt',

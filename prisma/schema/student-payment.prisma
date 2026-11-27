@@ -1,4 +1,5 @@
 enum PaymentMethod {
+  CASH
   BKASH
   NAGAD
   ROCKET
@@ -19,7 +20,7 @@ model StudentPayment {
   paymentMethod  PaymentMethod
   senderNumber   String
   receiverNumber String?
-  trxId          String        @unique
+  trxId          String
   paidAmount     Decimal       @db.Decimal(10, 2)
   status         PaymentStatus @default(PENDING)
 
@@ -40,6 +41,7 @@ model StudentPayment {
   @@index([schoolId])
   @@index([studentId])
   @@index([feeId])
+  @@index([trxId])
   @@index([status])
   @@index([paymentMethod])
   @@index([paidAt])

@@ -1,11 +1,15 @@
-import type { NextFunction, Request, Response } from "express";
+import type { NextFunction, Response } from "express";
 
+import { prisma } from "../../lib/prisma.js";
 import type { AuthRequest } from "../../middleware/auth.js";
 import AppError from "../../utils/appError.js";
 import { resolveScopedStudentIds } from "../../utils/ownershipScope.js";
 import sendResponse from "../../utils/sendResponse.js";
+import { recordSchoolAudit } from "../audit-log/service.js";
+import { createNotification } from "../notification/service.js";
 import type { StudentFeeFilterQuery } from "./interface.js";
 import {
+	bulkCreateStudentFees,
 	createStudentFee,
 	deleteStudentFee,
 	getStudentFeeById,
@@ -21,18 +25,125 @@ const parsePositiveInt = (value: unknown, label: string): number => {
 	return num;
 };
 
+const notifyStudentsForNewFee = async (
+	schoolId: number,
+	studentIds: number[],
+	title: string,
+	amount: number,
+) => {
+	if (studentIds.length === 0) return;
+	try {
+		const [students, links] = await Promise.all([
+			prisma.student.findMany({
+				where: { id: { in: studentIds }, schoolId, userId: { not: null } },
+				select: { userId: true },
+			}),
+			prisma.guardianStudent.findMany({
+				where: { studentId: { in: studentIds }, guardian: { schoolId } },
+				select: { guardian: { select: { userId: true } } },
+			}),
+		]);
+
+		const recipientIds = new Set<number>();
+		for (const s of students) {
+			if (s.userId) recipientIds.add(s.userId);
+		}
+		for (const l of links) {
+			if (l.guardian.userId) recipientIds.add(l.guardian.userId);
+		}
+
+		await Promise.all(
+			[...recipientIds].map((recipientId) =>
+				createNotification({
+					recipientId,
+					schoolId,
+					type: "FEE",
+					title: "New Fee Invoice Issued",
+					message: `A new fee invoice "${title}" of ৳${amount} has been issued. Please review and pay before the due date.`,
+				}).catch(() => {}),
+			),
+		);
+	} catch {
+		// Non-fatal notification failure
+	}
+};
+
 export const createStudentFeeController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const result = await createStudentFee(schoolId, req.body);
+
+		if (req.user?.userId) {
+			await recordSchoolAudit({
+				schoolId,
+				userId: req.user.userId,
+				action: "CREATE",
+				entity: "StudentFee",
+				entityId: result.id,
+				description: `Created fee invoice "${result.title}" (৳${Number(result.amount)})`,
+				ipAddress: req.ip ?? null,
+				userAgent: req.headers["user-agent"] ?? null,
+			}).catch(() => {});
+		}
+
+		await notifyStudentsForNewFee(
+			schoolId,
+			[result.studentId],
+			result.title,
+			Number(result.amount),
+		);
+
 		return sendResponse(res, {
 			statusCode: 201,
 			message: "Student fee created successfully",
 			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const bulkCreateStudentFeesController = async (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
+		const result = await bulkCreateStudentFees(schoolId, req.body);
+
+		if (req.user?.userId) {
+			await recordSchoolAudit({
+				schoolId,
+				userId: req.user.userId,
+				action: "CREATE",
+				entity: "StudentFee",
+				description: `Bulk generated ${result.createdCount} fee invoice(s) "${req.body.title}" for ${result.className} (skipped ${result.skippedCount})`,
+				ipAddress: req.ip ?? null,
+				userAgent: req.headers["user-agent"] ?? null,
+			}).catch(() => {});
+		}
+
+		await notifyStudentsForNewFee(
+			schoolId,
+			result.createdStudentIds,
+			String(req.body.title ?? ""),
+			result.resolvedAmount,
+		);
+
+		return sendResponse(res, {
+			statusCode: 201,
+			message: `Generated ${result.createdCount} fee invoice(s)${result.skippedCount > 0 ? ` (${result.skippedCount} duplicate skipped)` : ""}`,
+			data: {
+				createdCount: result.createdCount,
+				skippedCount: result.skippedCount,
+				className: result.className,
+				resolvedAmount: result.resolvedAmount,
+			},
 		});
 	} catch (error) {
 		next(error);
@@ -102,7 +213,7 @@ export const getStudentFeeByIdController = async (
 };
 
 export const updateStudentFeeController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -110,6 +221,18 @@ export const updateStudentFeeController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "student fee ID");
 		const result = await updateStudentFee(schoolId, id, req.body);
+		if (req.user?.userId) {
+			await recordSchoolAudit({
+				schoolId,
+				userId: req.user.userId,
+				action: "UPDATE",
+				entity: "StudentFee",
+				entityId: id,
+				description: `Updated fee invoice #${id} (${result.title}, status: ${result.status})`,
+				ipAddress: req.ip ?? null,
+				userAgent: req.headers["user-agent"] ?? null,
+			}).catch(() => {});
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student fee updated successfully",
@@ -121,7 +244,7 @@ export const updateStudentFeeController = async (
 };
 
 export const deleteStudentFeeController = async (
-	req: Request,
+	req: AuthRequest,
 	res: Response,
 	next: NextFunction,
 ) => {
@@ -129,6 +252,18 @@ export const deleteStudentFeeController = async (
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "student fee ID");
 		const result = await deleteStudentFee(schoolId, id);
+		if (req.user?.userId) {
+			await recordSchoolAudit({
+				schoolId,
+				userId: req.user.userId,
+				action: "DELETE",
+				entity: "StudentFee",
+				entityId: id,
+				description: `Deleted fee invoice #${id} (${result.title})`,
+				ipAddress: req.ip ?? null,
+				userAgent: req.headers["user-agent"] ?? null,
+			}).catch(() => {});
+		}
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student fee deleted successfully",

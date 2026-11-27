@@ -49,6 +49,14 @@ router.get(
 	subscriptionController.getMySubscription,
 );
 
+// Admin - Get Own Subscription Payment History
+router.get(
+	"/me/payments",
+	authenticate,
+	authorize(UserRole.ADMIN),
+	subscriptionController.getMySubscriptionPayments,
+);
+
 // Super Admin - Get Subscription By ID
 router.get(
 	"/:id",

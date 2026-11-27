@@ -8,6 +8,7 @@ model AdmissionPayment {
   status        AdmissionPaymentStatus @default(PENDING)
 
   transactionId String? @unique
+  senderNumber  String?
 
   paidAt     DateTime?
   receivedBy Int?
@@ -17,7 +18,8 @@ model AdmissionPayment {
 
   school School @relation(fields: [schoolId], references: [id])
 
-  receivedByUser User? @relation(fields: [receivedBy], references: [id])
+  receivedByUser User?       @relation(fields: [receivedBy], references: [id])
+  studentFee     StudentFee?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

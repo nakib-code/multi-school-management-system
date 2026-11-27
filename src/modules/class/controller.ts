@@ -2,15 +2,17 @@ import type { NextFunction, Request, Response } from "express";
 
 import AppError from "../../utils/appError.js";
 import sendResponse from "../../utils/sendResponse.js";
-
+import type { ClassFeeStructureFilterQuery } from "./interface.js";
 import {
 	createClass,
 	deleteClass,
 	getActiveClasses,
 	getClassById,
 	getClasses,
+	getClassFeeStructures,
 	toggleClassStatus,
 	updateClass,
+	upsertClassFeeStructures,
 } from "./service.js";
 
 export const createClassController = async (
@@ -196,6 +198,58 @@ export const deleteClassController = async (
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Class deleted successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const getClassFeeStructuresController = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const schoolId = Number(req.params.schoolId);
+		if (!Number.isInteger(schoolId) || schoolId <= 0) {
+			throw new AppError(400, "Invalid school ID");
+		}
+		const validated = res.locals.validatedRequest as
+			| { query?: ClassFeeStructureFilterQuery }
+			| undefined;
+		const result = await getClassFeeStructures(
+			schoolId,
+			validated?.query ?? {},
+		);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Class fee structures retrieved successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const upsertClassFeeStructuresController = async (
+	req: Request,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		const schoolId = Number(req.params.schoolId);
+		const classId = Number(req.params.classId);
+		if (!Number.isInteger(schoolId) || schoolId <= 0) {
+			throw new AppError(400, "Invalid school ID");
+		}
+		if (!Number.isInteger(classId) || classId <= 0) {
+			throw new AppError(400, "Invalid class ID");
+		}
+		const result = await upsertClassFeeStructures(schoolId, classId, req.body);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Class fee structure updated successfully",
 			data: result,
 		});
 	} catch (error) {

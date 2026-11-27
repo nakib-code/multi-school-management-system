@@ -59,9 +59,11 @@ model Admission {
   studentEmailVerified Boolean         @default(false)
 
   // Review
-  reviewedAt      DateTime?
-  reviewedBy      Int?
-  rejectionReason String?
+  reviewedAt           DateTime?
+  reviewedBy           Int?
+  rejectionReason      String?
+  approvedStudentId    Int?
+  approvedEnrollmentId Int?
 
   reviewer User? @relation("AdmissionReviewer",fields: [reviewedBy],references: [id])
 
@@ -77,6 +79,8 @@ model Admission {
   @@index([studentEmail])
   @@index([guardianPhone])
   @@index([academicYear])
+  @@index([approvedStudentId])
+  @@index([approvedEnrollmentId])
 
   @@map("admissions")
 }

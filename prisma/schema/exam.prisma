@@ -12,10 +12,11 @@ model Exam {
   endDate   DateTime
   status    ExamStatus @default(UPCOMING)
 
-  school  School      @relation(fields: [schoolId], references: [id])
-  class   SchoolClass @relation(fields: [classId], references: [id])
-  section Section?    @relation(fields: [sectionId], references: [id])
-  results Result[]
+  school      School      @relation(fields: [schoolId], references: [id])
+  class       SchoolClass @relation(fields: [classId], references: [id])
+  section     Section?    @relation(fields: [sectionId], references: [id])
+  results     Result[]
+  studentFees StudentFee[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

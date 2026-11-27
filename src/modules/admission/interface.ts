@@ -69,11 +69,14 @@ export interface ConfirmCashPaymentInput {
 }
 
 export interface InitiateOnlinePaymentInput {
-	admissionId: number;
+	applicationNo: string;
+	guardianPhone?: string;
+	studentEmail?: string;
 }
 
 export interface TrackAdmissionInput {
 	applicationNo: string;
+	schoolId?: number;
 	studentEmail?: string;
 	guardianPhone?: string;
 }
@@ -82,6 +85,8 @@ export interface GetAdmissionsQuery {
 	page?: number;
 	limit?: number;
 	search?: string;
+	classId?: number;
+	academicYear?: string;
 	status?: string;
 	paymentStatus?: string;
 }

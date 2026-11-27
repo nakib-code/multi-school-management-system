@@ -168,6 +168,8 @@ export const getAdmissionsSchema = z.object({
 		page: z.coerce.number().int().positive().optional(),
 		limit: z.coerce.number().int().positive().max(100).optional(),
 		search: z.string().trim().max(100).optional(),
+		classId: z.coerce.number().int().positive().optional(),
+		academicYear: z.string().trim().min(4).max(20).optional(),
 		status: z.enum(["PENDING", "APPROVED", "REJECTED"]).optional(),
 		paymentStatus: z
 			.enum(["PENDING", "PAID", "FAILED", "CANCELLED"])
@@ -178,6 +180,26 @@ export const getAdmissionsSchema = z.object({
 	}),
 });
 
+export const initiateOnlinePaymentSchema = z.object({
+	params: z.object({
+		schoolId: z.coerce.number().int().positive("Invalid school ID"),
+		id: z.coerce.number().int().positive("Invalid admission ID"),
+	}),
+	body: z
+		.object({
+			applicationNo: z
+				.string()
+				.trim()
+				.min(1, "Application number is required")
+				.max(100),
+			guardianPhone: optionalString(30),
+			studentEmail: optionalEmail,
+		})
+		.refine((data) => Boolean(data.guardianPhone || data.studentEmail), {
+			message: "Guardian phone or student email is required",
+		}),
+});
+
 export const trackAdmissionSchema = z.object({
 	body: z
 		.object({
@@ -186,6 +208,10 @@ export const trackAdmissionSchema = z.object({
 				.trim()
 				.min(1, "Application number is required")
 				.max(100),
+			schoolId: z.preprocess(
+				emptyToUndefined,
+				z.coerce.number().int().positive("Invalid school ID").optional(),
+			),
 			guardianPhone: optionalString(30),
 			studentEmail: optionalEmail,
 		})
@@ -202,6 +228,10 @@ export const submitOnlinePaymentTrxSchema = z.object({
 				.trim()
 				.min(1, "Application number is required")
 				.max(100),
+			schoolId: z.preprocess(
+				emptyToUndefined,
+				z.coerce.number().int().positive("Invalid school ID").optional(),
+			),
 			guardianPhone: optionalString(30),
 			studentEmail: optionalEmail,
 			paymentMethod: z.enum(["BKASH", "NAGAD", "ROCKET"]),

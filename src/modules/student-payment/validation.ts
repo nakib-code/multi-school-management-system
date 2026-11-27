@@ -29,19 +29,46 @@ export const studentPaymentParamsSchema = z.object({
 
 export const createStudentPaymentSchema = z.object({
 	params: z.object({ schoolId: schoolIdParam }),
-	body: z.object({
-		studentId: z.coerce.number().int().positive("Student ID is required"),
-		feeId: z.coerce.number().int().positive("Fee ID is required"),
-		paymentMethod: z.nativeEnum(PaymentMethod),
-		senderNumber: bdMobileNumberSchema,
-		receiverNumber: bdMobileNumberSchema.optional(),
-		trxId: trxIdSchema,
-		paidAmount: z.coerce
-			.number()
-			.positive("Paid amount must be greater than zero"),
-		paidAt: z.coerce.date().optional(),
-		remarks: z.string().trim().max(500).optional(),
-	}),
+	body: z
+		.object({
+			studentId: z.coerce.number().int().positive("Student ID is required"),
+			feeId: z.coerce.number().int().positive("Fee ID is required"),
+			paymentMethod: z.nativeEnum(PaymentMethod),
+			senderNumber: z.string().trim().max(30).optional(),
+			receiverNumber: bdMobileNumberSchema.optional(),
+			trxId: z.string().trim().max(100).optional(),
+			paidAmount: z.coerce
+				.number()
+				.positive("Paid amount must be greater than zero"),
+			paidAt: z.coerce.date().optional(),
+			remarks: z.string().trim().max(500).optional(),
+		})
+		.superRefine((data, ctx) => {
+			if (data.paymentMethod !== PaymentMethod.CASH) {
+				const phoneCheck = bdMobileNumberSchema.safeParse(
+					data.senderNumber ?? "",
+				);
+				if (!phoneCheck.success) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						path: ["senderNumber"],
+						message:
+							phoneCheck.error.issues[0]?.message ??
+							"Valid sender mobile number is required",
+					});
+				}
+				const trxCheck = trxIdSchema.safeParse(data.trxId ?? "");
+				if (!trxCheck.success) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						path: ["trxId"],
+						message:
+							trxCheck.error.issues[0]?.message ??
+							"Valid transaction ID is required",
+					});
+				}
+			}
+		}),
 });
 
 export const rejectStudentPaymentSchema = z.object({

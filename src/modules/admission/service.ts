@@ -4,6 +4,7 @@ import {
 	type AdmissionPaymentStatus,
 	type AdmissionStatus,
 	type HefzWing,
+	PaymentMethod,
 	Prisma,
 	type ResidentialType,
 } from "../../generated/prisma/client.js";
@@ -19,6 +20,7 @@ import {
 	deleteVerificationCode,
 	getVerificationCode,
 } from "../../utils/verificationCode.js";
+import { resolveClassFeeAmount } from "../class/service.js";
 import type {
 	ConfirmCashPaymentInput,
 	CreateAdmissionInput,
@@ -128,10 +130,12 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 		}
 	}
 
-	const setting = await prisma.schoolSetting.findUnique({
-		where: { schoolId },
-		select: { admissionFee: true },
-	});
+	const resolvedAdmissionFee = await resolveClassFeeAmount(
+		schoolId,
+		classId,
+		"ADMISSION",
+		academicYear.trim(),
+	);
 
 	const normalizedEmail = studentEmail?.trim().toLowerCase() || undefined;
 	const cleanGuardianPhone = normalizePhone(guardianPhone);
@@ -171,7 +175,7 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 		1000 + Math.random() * 9000,
 	)}`;
 
-	const admissionFeeAmount = setting ? Number(setting.admissionFee) : 0;
+	const admissionFeeAmount = resolvedAdmissionFee.amount ?? 0;
 	const hasAdmissionFee =
 		Number.isFinite(admissionFeeAmount) && admissionFeeAmount > 0;
 
@@ -242,13 +246,13 @@ export const createAdmission = async (payload: CreateAdmissionInput) => {
 		});
 
 		let payment = null;
-		if (hasAdmissionFee && setting) {
+		if (hasAdmissionFee) {
 			const method: AdmissionPaymentMethod = paymentMethod ?? "CASH";
 			payment = await tx.admissionPayment.create({
 				data: {
 					admissionId: admission.id,
 					schoolId,
-					amount: setting.admissionFee,
+					amount: admissionFeeAmount,
 					paymentMethod: method,
 					status: "PENDING",
 				},
@@ -391,6 +395,14 @@ export const getAdmissions = async (
 			{ guardianName: { contains: search, mode: "insensitive" } },
 			{ guardianPhone: { contains: search, mode: "insensitive" } },
 		];
+	}
+
+	if (query.classId !== undefined) {
+		where.classId = query.classId;
+	}
+
+	if (query.academicYear?.trim()) {
+		where.academicYear = query.academicYear.trim();
 	}
 
 	if (query.status) {
@@ -570,6 +582,7 @@ export const getAdmissionById = async (
  */
 export const trackAdmission = async ({
 	applicationNo,
+	schoolId,
 	studentEmail,
 	guardianPhone,
 }: TrackAdmissionInput) => {
@@ -587,6 +600,7 @@ export const trackAdmission = async ({
 
 	const where: Prisma.AdmissionWhereInput = {
 		applicationNo: normalizedApplicationNo,
+		...(schoolId !== undefined ? { schoolId } : {}),
 		...(cleanPhone && normalizedEmail
 			? {
 					OR: [
@@ -619,6 +633,8 @@ export const trackAdmission = async ({
 			status: true,
 			rejectionReason: true,
 			reviewedAt: true,
+			approvedStudentId: true,
+			approvedEnrollmentId: true,
 			class: { select: { id: true, name: true, code: true } },
 			section: { select: { id: true, name: true, code: true } },
 			school: { select: { id: true, name: true, code: true } },
@@ -629,6 +645,7 @@ export const trackAdmission = async ({
 					paymentMethod: true,
 					status: true,
 					transactionId: true,
+					senderNumber: true,
 					paidAt: true,
 					remarks: true,
 				},
@@ -640,6 +657,42 @@ export const trackAdmission = async ({
 
 	if (!admission) {
 		throw new AppError(404, "Admission application not found");
+	}
+
+	let approvedStudent: {
+		studentId: string;
+		rollNumber: number | null;
+		className: string | null;
+		sectionName: string | null;
+	} | null = null;
+
+	if (admission.status === "APPROVED" && admission.approvedStudentId) {
+		const [studentRec, enrollmentRec] = await Promise.all([
+			prisma.student.findUnique({
+				where: { id: admission.approvedStudentId },
+				select: { studentId: true },
+			}),
+			admission.approvedEnrollmentId
+				? prisma.enrollment.findUnique({
+						where: { id: admission.approvedEnrollmentId },
+						select: {
+							rollNumber: true,
+							class: { select: { name: true } },
+							section: { select: { name: true } },
+						},
+					})
+				: Promise.resolve(null),
+		]);
+
+		if (studentRec) {
+			approvedStudent = {
+				studentId: studentRec.studentId,
+				rollNumber: enrollmentRec?.rollNumber ?? null,
+				className: enrollmentRec?.class?.name ?? admission.class?.name ?? null,
+				sectionName:
+					enrollmentRec?.section?.name ?? admission.section?.name ?? null,
+			};
+		}
 	}
 
 	return {
@@ -665,6 +718,7 @@ export const trackAdmission = async ({
 		status: admission.status,
 		rejectionReason: admission.rejectionReason,
 		reviewedAt: admission.reviewedAt,
+		approvedStudent,
 		payment: admission.payment
 			? {
 					id: admission.payment.id,
@@ -672,6 +726,7 @@ export const trackAdmission = async ({
 					paymentMethod: admission.payment.paymentMethod,
 					status: admission.payment.status,
 					transactionId: admission.payment.transactionId,
+					senderNumber: admission.payment.senderNumber,
 					paidAt: admission.payment.paidAt,
 					remarks: admission.payment.remarks,
 				}
@@ -690,6 +745,7 @@ export const approveAdmission = async (
 	schoolId: number,
 	admissionId: number,
 	reviewerId: number,
+	options?: { assignNextRollNumber?: boolean },
 ) => {
 	const admission = await prisma.admission.findFirst({
 		where: { id: admissionId, schoolId },
@@ -752,7 +808,6 @@ export const approveAdmission = async (
 					status: "ACTIVE",
 					startDate: { lte: now },
 					endDate: { gte: now },
-					package: { isActive: true },
 				},
 				include: {
 					package: {
@@ -900,7 +955,23 @@ export const approveAdmission = async (
 				},
 			});
 
-			// 3. Create Enrollment with sectionId, shift, academicGroup
+			// 3. Assign Next Sequential Roll Number (default true) & Create Enrollment
+			const shouldAssignRoll = options?.assignNextRollNumber !== false;
+			let assignedRollNumber: number | null = null;
+			if (shouldAssignRoll) {
+				const maxRollAgg = await tx.enrollment.aggregate({
+					where: {
+						schoolId,
+						academicYear: admission.academicYear,
+						...(admission.sectionId
+							? { sectionId: admission.sectionId }
+							: { classId: admission.classId, sectionId: null }),
+					},
+					_max: { rollNumber: true },
+				});
+				assignedRollNumber = (maxRollAgg._max.rollNumber ?? 0) + 1;
+			}
+
 			const enrollment = await tx.enrollment.create({
 				data: {
 					schoolId,
@@ -908,6 +979,9 @@ export const approveAdmission = async (
 					classId: admission.classId,
 					sectionId: admission.sectionId ?? null,
 					academicYear: admission.academicYear,
+					...(assignedRollNumber !== null
+						? { rollNumber: assignedRollNumber }
+						: {}),
 					...(admission.shift ? { shift: admission.shift } : {}),
 					...(resolvedGroup ? { academicGroup: resolvedGroup } : {}),
 					status: "ACTIVE",
@@ -1035,13 +1109,87 @@ export const approveAdmission = async (
 				}
 			}
 
-			// 5. Update Admission Status
+			// 5. Sync PAID AdmissionPayment into Unified StudentFee + StudentPayment Ledger
+			if (
+				admission.payment &&
+				admission.payment.status === "PAID" &&
+				Number(admission.payment.amount) > 0
+			) {
+				const mappedMethod: PaymentMethod =
+					admission.payment.paymentMethod === "CASH"
+						? PaymentMethod.CASH
+						: admission.payment.paymentMethod === "NAGAD"
+							? PaymentMethod.NAGAD
+							: admission.payment.paymentMethod === "ROCKET"
+								? PaymentMethod.ROCKET
+								: PaymentMethod.BKASH;
+
+				const paidDate = admission.payment.paidAt ?? now;
+				const syncedFee = await tx.studentFee.create({
+					data: {
+						schoolId,
+						studentId: student.id,
+						enrollmentId: enrollment.id,
+						feeType: "ADMISSION",
+						title: `Admission Fee (${admission.academicYear})`,
+						amount: admission.payment.amount,
+						dueDate: paidDate,
+						academicYear: admission.academicYear,
+						admissionPaymentId: admission.payment.id,
+						status: "PAID",
+						description: `Auto-synced from admission ${admission.applicationNo}`,
+					},
+				});
+
+				const baseTrxId =
+					admission.payment.transactionId ||
+					`ADM-${admission.payment.id}-${admission.applicationNo}`;
+				const existingActiveTrx = await tx.studentPayment.findFirst({
+					where: {
+						trxId: baseTrxId,
+						status: { not: "REJECTED" },
+					},
+					select: { id: true },
+				});
+				const safeTrxId = existingActiveTrx
+					? `ADM-${admission.payment.id}-${baseTrxId}`
+					: baseTrxId;
+
+				await tx.studentPayment.create({
+					data: {
+						schoolId,
+						studentId: student.id,
+						feeId: syncedFee.id,
+						paymentMethod: mappedMethod,
+						senderNumber:
+							admission.payment.senderNumber ||
+							(mappedMethod === PaymentMethod.CASH
+								? "OFFICE-CASH"
+								: (admission.guardianPhone ?? "ONLINE-ADMISSION")),
+						receiverNumber:
+							mappedMethod === PaymentMethod.CASH ? "OFFICE-COUNTER" : null,
+						trxId: safeTrxId,
+						paidAmount: admission.payment.amount,
+						status: "VERIFIED",
+						paidAt: paidDate,
+						verifiedById: admission.payment.receivedBy ?? reviewerId,
+						verifiedAt: paidDate,
+						remarks:
+							admission.payment.remarks ??
+							`Admission payment synced (${admission.applicationNo})`,
+					},
+				});
+			}
+
+			// 6. Update Admission Status & Link Student/Enrollment
 			const updatedAdmission = await tx.admission.update({
 				where: { id: admission.id },
 				data: {
 					status: "APPROVED",
 					reviewedAt: now,
 					reviewedBy: reviewerId,
+					approvedStudentId: student.id,
+					approvedEnrollmentId: enrollment.id,
 				},
 			});
 
@@ -1138,87 +1286,102 @@ export const confirmCashPayment = async (
 	userId: number,
 	input: ConfirmCashPaymentInput,
 ) => {
-	const admission = await prisma.admission.findUnique({
-		where: { id: admissionId },
-		select: {
-			id: true,
-			schoolId: true,
-			status: true,
-			payment: {
-				select: {
-					id: true,
-					schoolId: true,
-					amount: true,
-					paymentMethod: true,
-					status: true,
-					transactionId: true,
-					paidAt: true,
-					receivedBy: true,
-					remarks: true,
+	return prisma.$transaction(async (tx) => {
+		const admission = await tx.admission.findUnique({
+			where: { id: admissionId },
+			select: {
+				id: true,
+				schoolId: true,
+				status: true,
+				payment: {
+					select: {
+						id: true,
+						schoolId: true,
+						amount: true,
+						paymentMethod: true,
+						status: true,
+						transactionId: true,
+						paidAt: true,
+						receivedBy: true,
+						remarks: true,
+					},
 				},
 			},
-		},
+		});
+
+		if (!admission) {
+			throw new AppError(404, "Admission not found");
+		}
+
+		if (admission.schoolId !== schoolId) {
+			throw new AppError(403, "You do not have access to this admission");
+		}
+
+		if (admission.status !== "PENDING") {
+			throw new AppError(
+				400,
+				"Only pending admissions can receive payment confirmation",
+			);
+		}
+
+		if (!admission.payment) {
+			throw new AppError(404, "Admission payment not found");
+		}
+
+		if (admission.payment.paymentMethod !== "CASH") {
+			throw new AppError(400, "This admission is not using cash payment");
+		}
+
+		if (admission.payment.status === "PAID") {
+			throw new AppError(400, "Cash payment has already been confirmed");
+		}
+
+		if (admission.payment.status !== "PENDING") {
+			throw new AppError(400, "Cash payment cannot be confirmed");
+		}
+
+		const claimed = await tx.admissionPayment.updateMany({
+			where: { id: admission.payment.id, status: "PENDING" },
+			data: {
+				status: "PAID",
+				paidAt: new Date(),
+				receivedBy: userId,
+				...(input.remarks !== undefined
+					? { remarks: input.remarks.trim() }
+					: {}),
+			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Cash payment was already processed by another request",
+			);
+		}
+
+		const payment = await tx.admissionPayment.findUniqueOrThrow({
+			where: { id: admission.payment.id },
+			select: {
+				id: true,
+				admissionId: true,
+				schoolId: true,
+				amount: true,
+				paymentMethod: true,
+				status: true,
+				transactionId: true,
+				paidAt: true,
+				receivedBy: true,
+				remarks: true,
+				createdAt: true,
+				updatedAt: true,
+			},
+		});
+
+		return {
+			...payment,
+			amount: Number(payment.amount),
+		};
 	});
-
-	if (!admission) {
-		throw new AppError(404, "Admission not found");
-	}
-
-	if (admission.schoolId !== schoolId) {
-		throw new AppError(403, "You do not have access to this admission");
-	}
-
-	if (admission.status !== "PENDING") {
-		throw new AppError(
-			400,
-			"Only pending admissions can receive payment confirmation",
-		);
-	}
-
-	if (!admission.payment) {
-		throw new AppError(404, "Admission payment not found");
-	}
-
-	if (admission.payment.paymentMethod !== "CASH") {
-		throw new AppError(400, "This admission is not using cash payment");
-	}
-
-	if (admission.payment.status === "PAID") {
-		throw new AppError(400, "Cash payment has already been confirmed");
-	}
-
-	if (admission.payment.status !== "PENDING") {
-		throw new AppError(400, "Cash payment cannot be confirmed");
-	}
-
-	const payment = await prisma.admissionPayment.update({
-		where: { id: admission.payment.id },
-		data: {
-			status: "PAID",
-			paidAt: new Date(),
-			receivedBy: userId,
-			...(input.remarks !== undefined ? { remarks: input.remarks.trim() } : {}),
-		},
-		select: {
-			id: true,
-			admissionId: true,
-			schoolId: true,
-			amount: true,
-			paymentMethod: true,
-			status: true,
-			transactionId: true,
-			paidAt: true,
-			receivedBy: true,
-			remarks: true,
-			createdAt: true,
-			updatedAt: true,
-		},
-	});
-
-	return {
-		...payment,
-		amount: Number(payment.amount),
-	};
 };
 
 /**
@@ -1227,9 +1390,40 @@ export const confirmCashPayment = async (
 export const initiateOnlinePayment = async (
 	schoolId: number,
 	admissionId: number,
+	proof: {
+		applicationNo: string;
+		guardianPhone?: string;
+		studentEmail?: string;
+	},
 ) => {
+	const normalizedAppNo = proof.applicationNo.trim().toUpperCase();
+	const normalizedEmail = proof.studentEmail?.trim().toLowerCase();
+	const cleanPhone = proof.guardianPhone?.trim();
+	const phoneVariants = cleanPhone ? getPhoneLookupVariants(cleanPhone) : [];
+
+	if (!normalizedAppNo || (!normalizedEmail && !cleanPhone)) {
+		throw new AppError(
+			400,
+			"Application number and guardian phone or student email are required",
+		);
+	}
+
 	const admission = await prisma.admission.findFirst({
-		where: { id: admissionId, schoolId },
+		where: {
+			id: admissionId,
+			schoolId,
+			applicationNo: normalizedAppNo,
+			...(cleanPhone && normalizedEmail
+				? {
+						OR: [
+							{ guardianPhone: { in: phoneVariants } },
+							{ studentEmail: normalizedEmail },
+						],
+					}
+				: cleanPhone
+					? { guardianPhone: { in: phoneVariants } }
+					: { studentEmail: normalizedEmail ?? null }),
+		},
 		include: {
 			payment: true,
 			school: {
@@ -1258,7 +1452,10 @@ export const initiateOnlinePayment = async (
 		throw new AppError(400, "Admission payment is already completed");
 	}
 
-	if (admission.payment.status !== "PENDING") {
+	if (
+		admission.payment.status !== "PENDING" &&
+		admission.payment.status !== "FAILED"
+	) {
 		throw new AppError(400, "Payment cannot be initiated");
 	}
 
@@ -1269,19 +1466,36 @@ export const initiateOnlinePayment = async (
 
 	const schoolSetting = await prisma.schoolSetting.findUnique({
 		where: { schoolId },
-		select: { bkashNumber: true, nagadNumber: true, rocketNumber: true },
+		select: {
+			bkashNumber: true,
+			bkashType: true,
+			nagadNumber: true,
+			nagadType: true,
+			rocketNumber: true,
+			rocketType: true,
+			feePaymentInstruction: true,
+		},
 	});
 
 	return {
 		admissionId: admission.id,
+		applicationNo: admission.applicationNo,
 		schoolId,
 		amount,
+		paymentMethod: admission.payment.paymentMethod,
+		paymentStatus: admission.payment.status,
 		supportedMethods: ["BKASH", "NAGAD", "ROCKET"] as const,
 		receiverNumbers: {
 			BKASH: schoolSetting?.bkashNumber ?? null,
 			NAGAD: schoolSetting?.nagadNumber ?? null,
 			ROCKET: schoolSetting?.rocketNumber ?? null,
 		},
+		receiverAccountTypes: {
+			BKASH: schoolSetting?.bkashType ?? "PERSONAL",
+			NAGAD: schoolSetting?.nagadType ?? "PERSONAL",
+			ROCKET: schoolSetting?.rocketType ?? "PERSONAL",
+		},
+		instruction: schoolSetting?.feePaymentInstruction ?? null,
 		message:
 			"Please send the admission fee via bKash, Nagad, or Rocket and submit your transaction ID for manual verification.",
 	};
@@ -1292,6 +1506,7 @@ export const initiateOnlinePayment = async (
  */
 export const submitOnlinePaymentTrx = async (input: {
 	applicationNo: string;
+	schoolId?: number | undefined;
 	guardianPhone?: string | undefined;
 	studentEmail?: string | undefined;
 	paymentMethod: "BKASH" | "NAGAD" | "ROCKET";
@@ -1310,6 +1525,7 @@ export const submitOnlinePaymentTrx = async (input: {
 
 	const where: Prisma.AdmissionWhereInput = {
 		applicationNo: normalizedApplicationNo,
+		...(input.schoolId !== undefined ? { schoolId: input.schoolId } : {}),
 		...(cleanPhone && normalizedEmail
 			? {
 					OR: [
@@ -1362,17 +1578,17 @@ export const submitOnlinePaymentTrx = async (input: {
 		throw new AppError(409, "This transaction ID has already been used");
 	}
 
-	const remarks = input.senderPhone?.trim()
-		? `Sender: ${input.senderPhone.trim()}`
-		: null;
+	const cleanSenderPhone = input.senderPhone?.trim() || null;
+	const remarks = cleanSenderPhone ? `Sender: ${cleanSenderPhone}` : null;
 
 	const payment = await prisma.admissionPayment.update({
 		where: { id: admission.payment.id },
 		data: {
 			paymentMethod: input.paymentMethod,
 			transactionId: trxId,
+			senderNumber: cleanSenderPhone,
 			status: "PENDING",
-			...(remarks !== null ? { remarks } : {}),
+			remarks,
 		},
 		select: {
 			id: true,
@@ -1382,6 +1598,7 @@ export const submitOnlinePaymentTrx = async (input: {
 			paymentMethod: true,
 			status: true,
 			transactionId: true,
+			senderNumber: true,
 			paidAt: true,
 			remarks: true,
 			updatedAt: true,
@@ -1403,71 +1620,95 @@ export const verifyOnlineAdmissionPayment = async (
 	userId: number,
 	input: { remarks?: string | undefined },
 ) => {
-	const admission = await prisma.admission.findFirst({
-		where: { id: admissionId, schoolId },
-		include: { payment: true },
+	return prisma.$transaction(async (tx) => {
+		const admission = await tx.admission.findFirst({
+			where: { id: admissionId, schoolId },
+			include: { payment: true },
+		});
+
+		if (!admission) {
+			throw new AppError(404, "Admission not found");
+		}
+
+		if (admission.status !== "PENDING") {
+			throw new AppError(
+				400,
+				"Only pending admissions can receive payment verification",
+			);
+		}
+
+		if (!admission.payment) {
+			throw new AppError(404, "Admission payment not found");
+		}
+
+		if (admission.payment.paymentMethod === "CASH") {
+			throw new AppError(400, "Use cash confirmation for cash payments");
+		}
+
+		if (admission.payment.status === "PAID") {
+			throw new AppError(400, "Online payment is already verified");
+		}
+
+		if (admission.payment.status !== "PENDING") {
+			throw new AppError(400, "Only pending online payments can be verified");
+		}
+
+		if (!admission.payment.transactionId) {
+			throw new AppError(
+				400,
+				"Applicant has not submitted a transaction ID yet",
+			);
+		}
+
+		const mergedRemarks = input.remarks?.trim()
+			? admission.payment.remarks
+				? `${admission.payment.remarks} | Verified: ${input.remarks.trim()}`
+				: input.remarks.trim()
+			: admission.payment.remarks;
+
+		const claimed = await tx.admissionPayment.updateMany({
+			where: {
+				id: admission.payment.id,
+				status: "PENDING",
+				transactionId: { not: null },
+			},
+			data: {
+				status: "PAID",
+				paidAt: new Date(),
+				receivedBy: userId,
+				remarks: mergedRemarks,
+			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Online payment was already processed by another request",
+			);
+		}
+
+		const payment = await tx.admissionPayment.findUniqueOrThrow({
+			where: { id: admission.payment.id },
+			select: {
+				id: true,
+				admissionId: true,
+				schoolId: true,
+				amount: true,
+				paymentMethod: true,
+				status: true,
+				transactionId: true,
+				paidAt: true,
+				receivedBy: true,
+				remarks: true,
+				updatedAt: true,
+			},
+		});
+
+		return {
+			...payment,
+			amount: Number(payment.amount),
+		};
 	});
-
-	if (!admission) {
-		throw new AppError(404, "Admission not found");
-	}
-
-	if (admission.status !== "PENDING") {
-		throw new AppError(
-			400,
-			"Only pending admissions can receive payment verification",
-		);
-	}
-
-	if (!admission.payment) {
-		throw new AppError(404, "Admission payment not found");
-	}
-
-	if (admission.payment.paymentMethod === "CASH") {
-		throw new AppError(400, "Use cash confirmation for cash payments");
-	}
-
-	if (admission.payment.status === "PAID") {
-		throw new AppError(400, "Online payment is already verified");
-	}
-
-	if (!admission.payment.transactionId) {
-		throw new AppError(400, "Applicant has not submitted a transaction ID yet");
-	}
-
-	const mergedRemarks = input.remarks?.trim()
-		? admission.payment.remarks
-			? `${admission.payment.remarks} | Verified: ${input.remarks.trim()}`
-			: input.remarks.trim()
-		: admission.payment.remarks;
-
-	const payment = await prisma.admissionPayment.update({
-		where: { id: admission.payment.id },
-		data: {
-			status: "PAID",
-			paidAt: new Date(),
-			receivedBy: userId,
-			remarks: mergedRemarks,
-		},
-		select: {
-			id: true,
-			admissionId: true,
-			schoolId: true,
-			amount: true,
-			paymentMethod: true,
-			status: true,
-			transactionId: true,
-			paidAt: true,
-			receivedBy: true,
-			remarks: true,
-			updatedAt: true,
-		},
-	});
-
-	return {
-		...payment,
-		amount: Number(payment.amount),
-	};
 };
 
 /**
@@ -1479,64 +1720,84 @@ export const rejectOnlineAdmissionPayment = async (
 	userId: number,
 	input: { remarks: string },
 ) => {
-	const admission = await prisma.admission.findFirst({
-		where: { id: admissionId, schoolId },
-		include: { payment: true },
+	return prisma.$transaction(async (tx) => {
+		const admission = await tx.admission.findFirst({
+			where: { id: admissionId, schoolId },
+			include: { payment: true },
+		});
+
+		if (!admission) {
+			throw new AppError(404, "Admission not found");
+		}
+
+		if (admission.status !== "PENDING") {
+			throw new AppError(
+				400,
+				"Only pending admissions can have payments rejected",
+			);
+		}
+
+		if (!admission.payment) {
+			throw new AppError(404, "Admission payment not found");
+		}
+
+		if (admission.payment.paymentMethod === "CASH") {
+			throw new AppError(400, "This admission is using cash payment");
+		}
+
+		if (admission.payment.status === "PAID") {
+			throw new AppError(400, "Verified payment cannot be rejected");
+		}
+
+		if (admission.payment.status !== "PENDING") {
+			throw new AppError(400, "Only pending online payments can be rejected");
+		}
+
+		const prevTrx = admission.payment.transactionId;
+		const reasonNote = prevTrx
+			? `Rejected: ${input.remarks.trim()} (prev TrxID: ${prevTrx})`
+			: `Rejected: ${input.remarks.trim()}`;
+
+		const claimed = await tx.admissionPayment.updateMany({
+			where: {
+				id: admission.payment.id,
+				status: "PENDING",
+			},
+			data: {
+				status: "FAILED",
+				transactionId: null,
+				receivedBy: userId,
+				remarks: reasonNote,
+			},
+		});
+
+		if (claimed.count === 0) {
+			throw new AppError(
+				409,
+				"Online payment was already processed by another request",
+			);
+		}
+
+		const payment = await tx.admissionPayment.findUniqueOrThrow({
+			where: { id: admission.payment.id },
+			select: {
+				id: true,
+				admissionId: true,
+				schoolId: true,
+				amount: true,
+				paymentMethod: true,
+				status: true,
+				transactionId: true,
+				paidAt: true,
+				receivedBy: true,
+				remarks: true,
+				updatedAt: true,
+			},
+		});
+
+		return {
+			...payment,
+			amount: Number(payment.amount),
+		};
 	});
-
-	if (!admission) {
-		throw new AppError(404, "Admission not found");
-	}
-
-	if (admission.status !== "PENDING") {
-		throw new AppError(
-			400,
-			"Only pending admissions can have payments rejected",
-		);
-	}
-
-	if (!admission.payment) {
-		throw new AppError(404, "Admission payment not found");
-	}
-
-	if (admission.payment.paymentMethod === "CASH") {
-		throw new AppError(400, "This admission is using cash payment");
-	}
-
-	if (admission.payment.status === "PAID") {
-		throw new AppError(400, "Verified payment cannot be rejected");
-	}
-
-	const prevTrx = admission.payment.transactionId;
-	const reasonNote = prevTrx
-		? `Rejected: ${input.remarks.trim()} (prev TrxID: ${prevTrx})`
-		: `Rejected: ${input.remarks.trim()}`;
-
-	const payment = await prisma.admissionPayment.update({
-		where: { id: admission.payment.id },
-		data: {
-			status: "FAILED",
-			transactionId: null,
-			receivedBy: userId,
-			remarks: reasonNote,
-		},
-		select: {
-			id: true,
-			admissionId: true,
-			schoolId: true,
-			amount: true,
-			paymentMethod: true,
-			status: true,
-			transactionId: true,
-			paidAt: true,
-			receivedBy: true,
-			remarks: true,
-			updatedAt: true,
-		},
-	});
-
-	return {
-		...payment,
-		amount: Number(payment.amount),
-	};
 };
