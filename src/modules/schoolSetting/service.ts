@@ -400,6 +400,9 @@ export const updateWebsiteConnection = async (
 		...(passwordHash !== undefined
 			? { landingAdminPasswordHash: passwordHash }
 			: {}),
+		...(input.hasOnlineAdmission !== undefined
+			? { hasOnlineAdmission: input.hasOnlineAdmission }
+			: {}),
 	};
 
 	await prisma.schoolSetting.upsert({

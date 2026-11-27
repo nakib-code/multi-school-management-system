@@ -29,4 +29,5 @@ export interface UpdateWebsiteConnectionInput {
 	externalWebsiteUrl?: string | null | undefined;
 	landingAdminEmail?: string | null | undefined;
 	landingAdminPassword?: string | undefined;
+	hasOnlineAdmission?: boolean | undefined;
 }

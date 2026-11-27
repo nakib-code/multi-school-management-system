@@ -45,10 +45,12 @@ export const createSchool = async (payload: CreateSchoolInput) => {
 		throw new AppError(409, "A school with this code already exists");
 	}
 
+	const normalizedAdminEmail = adminEmail.trim().toLowerCase();
+
 	// Check admin email
-	const existingAdmin = await prisma.user.findUnique({
+	const existingAdmin = await prisma.user.findFirst({
 		where: {
-			email: adminEmail,
+			email: { equals: normalizedAdminEmail, mode: "insensitive" },
 		},
 	});
 
@@ -63,7 +65,7 @@ export const createSchool = async (payload: CreateSchoolInput) => {
 	const verificationCode = generateVerificationCode();
 
 	// Save OTP
-	await saveVerificationCode(adminEmail, verificationCode);
+	await saveVerificationCode(normalizedAdminEmail, verificationCode);
 
 	// Create school registration
 	const school = await prisma.school.create({

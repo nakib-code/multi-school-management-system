@@ -21,7 +21,7 @@ export interface SchoolFeatureFlags {
 export const DEFAULT_SCHOOL_FEATURES: SchoolFeatureFlags = {
 	hasGeneralSection: true,
 	hasHefzSection: true,
-	hasOnlineAdmission: false,
+	hasOnlineAdmission: true,
 	hasTeacherPayroll: false,
 	smsEnabled: false,
 };

@@ -9,7 +9,7 @@ model SchoolSetting {
   hasGeneralSection  Boolean @default(true)
   hasHefzSection     Boolean @default(true)
   hasPublicWebsite   Boolean @default(false)
-  hasOnlineAdmission Boolean @default(false)
+  hasOnlineAdmission Boolean @default(true)
   hasTeacherPayroll  Boolean @default(false)
   smsEnabled         Boolean @default(false)
 

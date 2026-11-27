@@ -132,6 +132,32 @@ async function seedLandingPageData() {
 		console.log("⚠️  School already exists:", school.code);
 	}
 
+	// Ensure a default School Admin exists for the seeded school
+	const schoolAdminEmail = "admin@greenvalley.com";
+	const schoolAdminPassword = "SchoolAdmin@123";
+	const existingSchoolAdmin = await prisma.user.findUnique({
+		where: { email: schoolAdminEmail },
+	});
+
+	if (!existingSchoolAdmin) {
+		const passwordHash = await bcrypt.hash(schoolAdminPassword, 12);
+		await prisma.user.create({
+			data: {
+				name: "Green Valley Admin",
+				email: schoolAdminEmail,
+				phone: "01700000001",
+				passwordHash,
+				role: "ADMIN",
+				status: "ACTIVE",
+				schoolId: school.id,
+				mustChangePassword: false,
+			},
+		});
+		console.log("✅ School Admin created:", schoolAdminEmail);
+	} else {
+		console.log("⚠️  School Admin already exists — skipped");
+	}
+
 	console.log("✅ Landing page data seeded");
 }
 

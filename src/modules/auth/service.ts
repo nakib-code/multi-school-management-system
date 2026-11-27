@@ -53,7 +53,10 @@ export const login = async (payload: LoginInput) => {
 
 	const user = await prisma.user.findFirst({
 		where: {
-			OR: [{ email: normalizedEmail }, { phone: { in: phoneVariants } }],
+			OR: [
+				{ email: { equals: normalizedEmail, mode: "insensitive" } },
+				{ phone: { in: phoneVariants } },
+			],
 		},
 		include: {
 			school: {
@@ -118,6 +121,7 @@ export const login = async (payload: LoginInput) => {
 			name: user.name,
 			email: user.email,
 			phone: user.phone,
+			avatarUrl: user.avatarUrl,
 			role: user.role,
 			status: user.status,
 			schoolId: user.schoolId,
@@ -379,6 +383,7 @@ export const changePassword = async (
 			name: user.name,
 			email: user.email,
 			phone: user.phone,
+			avatarUrl: user.avatarUrl,
 			role: user.role,
 			status: user.status,
 			schoolId: user.schoolId,

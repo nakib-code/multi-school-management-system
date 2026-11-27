@@ -64,5 +64,6 @@ export const updateWebsiteConnectionSchema = z.object({
 				z.literal(""),
 			])
 			.optional(),
+		hasOnlineAdmission: z.boolean().optional(),
 	}),
 });
