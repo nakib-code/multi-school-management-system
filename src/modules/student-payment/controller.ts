@@ -215,7 +215,7 @@ export const verifyStudentPaymentController = async (
 			description: `Verified student fee payment #${id}`,
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
-		});
+		}).catch(() => {});
 		await notifyStudentAndGuardians(
 			schoolId,
 			result.payment.studentId,
@@ -256,7 +256,7 @@ export const rejectStudentPaymentController = async (
 			description: `Rejected student fee payment #${id}`,
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
-		});
+		}).catch(() => {});
 		await notifyStudentAndGuardians(
 			schoolId,
 			result.studentId,

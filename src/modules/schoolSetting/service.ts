@@ -317,6 +317,7 @@ export const getWebsiteConnection = async (schoolId: number) => {
 					landingAdminEmail: true,
 					landingAdminPasswordHash: true,
 					hasOnlineAdmission: true,
+					onlineAdmissionPaused: true,
 				},
 			},
 		},
@@ -327,6 +328,9 @@ export const getWebsiteConnection = async (schoolId: number) => {
 	}
 
 	const setting = school.schoolSetting;
+	const platformAllowed =
+		setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission;
+	const isPaused = setting?.onlineAdmissionPaused ?? false;
 	return {
 		schoolId: school.id,
 		schoolName: school.name,
@@ -337,8 +341,9 @@ export const getWebsiteConnection = async (schoolId: number) => {
 		landingAdminEmail: setting?.landingAdminEmail ?? null,
 		hasLandingAdminPassword: Boolean(setting?.landingAdminPasswordHash),
 		apiBaseUrl: getApiBaseUrl(),
-		hasOnlineAdmission:
-			setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission,
+		hasOnlineAdmission: platformAllowed && !isPaused,
+		onlineAdmissionAllowedByPlatform: platformAllowed,
+		onlineAdmissionPaused: isPaused,
 	};
 };
 
@@ -390,6 +395,25 @@ export const updateWebsiteConnection = async (
 		passwordHash = await hashPassword(input.landingAdminPassword);
 	}
 
+	let onlineAdmissionPaused: boolean | undefined;
+	if (input.hasOnlineAdmission !== undefined) {
+		const currentSetting = await prisma.schoolSetting.findUnique({
+			where: { schoolId },
+			select: { hasOnlineAdmission: true },
+		});
+		const platformAllowed =
+			currentSetting?.hasOnlineAdmission ??
+			DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission;
+
+		if (!platformAllowed && input.hasOnlineAdmission) {
+			throw new AppError(
+				403,
+				"Online Admissions have been disabled by the platform administrator. Please contact support to re-enable.",
+			);
+		}
+		onlineAdmissionPaused = !input.hasOnlineAdmission;
+	}
+
 	const data = {
 		...(normalizedUrl !== undefined
 			? { externalWebsiteUrl: normalizedUrl }
@@ -400,9 +424,7 @@ export const updateWebsiteConnection = async (
 		...(passwordHash !== undefined
 			? { landingAdminPasswordHash: passwordHash }
 			: {}),
-		...(input.hasOnlineAdmission !== undefined
-			? { hasOnlineAdmission: input.hasOnlineAdmission }
-			: {}),
+		...(onlineAdmissionPaused !== undefined ? { onlineAdmissionPaused } : {}),
 	};
 
 	await prisma.schoolSetting.upsert({
@@ -476,6 +498,7 @@ export const verifyWebsiteConnection = async (
 				select: {
 					admissionFee: true,
 					hasOnlineAdmission: true,
+					onlineAdmissionPaused: true,
 					bkashNumber: true,
 					bkashType: true,
 					nagadNumber: true,
@@ -499,6 +522,9 @@ export const verifyWebsiteConnection = async (
 	}
 
 	const setting = school.schoolSetting;
+	const platformAllowed =
+		setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission;
+	const isPaused = setting?.onlineAdmissionPaused ?? false;
 	return {
 		connected: true,
 		school: {
@@ -511,8 +537,7 @@ export const verifyWebsiteConnection = async (
 			address: school.address,
 		},
 		admissionFee: Number(setting?.admissionFee ?? 0),
-		hasOnlineAdmission:
-			setting?.hasOnlineAdmission ?? DEFAULT_SCHOOL_FEATURES.hasOnlineAdmission,
+		hasOnlineAdmission: platformAllowed && !isPaused,
 		paymentMethods: {
 			bkashNumber: setting?.bkashNumber ?? null,
 			bkashType: setting?.bkashType ?? "PERSONAL",

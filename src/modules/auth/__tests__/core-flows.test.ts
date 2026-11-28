@@ -47,6 +47,9 @@ afterEach(() => {
 describe("Admission Online Payment TrxID Flow", () => {
 	it("submits TrxID and normalizes it to uppercase", async () => {
 		let capturedUpdate: Record<string, unknown> | undefined;
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof prisma) => Promise<unknown>,
+		) => fn(prisma)) as unknown as Record<string, unknown>);
 		stubDelegate("admission", {
 			findFirst: async () => ({
 				id: 10,
@@ -63,21 +66,23 @@ describe("Admission Online Payment TrxID Flow", () => {
 		});
 		stubDelegate("admissionPayment", {
 			findFirst: async () => null,
-			update: async (args: { data: Record<string, unknown> }) => {
+			updateMany: async (args: { data: Record<string, unknown> }) => {
 				capturedUpdate = args.data;
-				return {
-					id: 50,
-					admissionId: 10,
-					schoolId: 1,
-					amount: 1500,
-					paymentMethod: "BKASH",
-					status: "PENDING",
-					transactionId: "9K2L8M4N",
-					paidAt: null,
-					remarks: "Sender: 01711111111",
-					updatedAt: new Date(),
-				};
+				return { count: 1 };
 			},
+			findUniqueOrThrow: async () => ({
+				id: 50,
+				admissionId: 10,
+				schoolId: 1,
+				amount: 1500,
+				paymentMethod: "BKASH",
+				status: "PENDING",
+				transactionId: "9K2L8M4N",
+				senderNumber: "01711111111",
+				paidAt: null,
+				remarks: "Sender: 01711111111",
+				updatedAt: new Date(),
+			}),
 		});
 
 		const result = await submitOnlinePaymentTrx({
@@ -95,6 +100,9 @@ describe("Admission Online Payment TrxID Flow", () => {
 	});
 
 	it("rejects duplicate transaction IDs with 409", async () => {
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof prisma) => Promise<unknown>,
+		) => fn(prisma)) as unknown as Record<string, unknown>);
 		stubDelegate("admission", {
 			findFirst: async () => ({
 				id: 10,

@@ -68,6 +68,7 @@ export const requireSchoolFeature = (featureKey: SchoolFeatureKey) => {
 					hasGeneralSection: true,
 					hasHefzSection: true,
 					hasOnlineAdmission: true,
+					onlineAdmissionPaused: true,
 					hasTeacherPayroll: true,
 					smsEnabled: true,
 				},
@@ -84,6 +85,23 @@ export const requireSchoolFeature = (featureKey: SchoolFeatureKey) => {
 						`${FEATURE_LABELS[featureKey]} is currently disabled for this institution. Please contact the platform administrator.`,
 					),
 				);
+			}
+
+			if (
+				featureKey === "hasOnlineAdmission" &&
+				setting?.onlineAdmissionPaused
+			) {
+				// Allow school staff (ADMIN/MANAGER) to still review existing admissions while paused
+				const isStaff =
+					req.user?.role === "ADMIN" || req.user?.role === "MANAGER";
+				if (!isStaff) {
+					return next(
+						new AppError(
+							403,
+							"Online Admissions are currently paused by the institution.",
+						),
+					);
+				}
 			}
 
 			return next();

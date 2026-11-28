@@ -136,7 +136,7 @@ const pickBestFeeStructure = (
 		const exact = matching.find((s) => s.academicYear === academicYear);
 		if (exact) return exact;
 	}
-	return matching.find((s) => s.academicYear === null) ?? matching[0] ?? null;
+	return matching.find((s) => s.academicYear === null) ?? null;
 };
 
 export const resolveClassFeeAmount = async (
@@ -303,7 +303,9 @@ export const upsertClassFeeStructures = async (
 					where: { id: existing.id },
 					data: {
 						amount: item.amount,
-						title: item.title?.trim() || null,
+						...(item.title !== undefined
+							? { title: item.title?.trim() || null }
+							: {}),
 						isActive: item.isActive ?? true,
 					},
 				});

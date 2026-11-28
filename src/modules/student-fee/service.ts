@@ -335,6 +335,16 @@ export const updateStudentFee = async (
 		});
 		if (!existing) throw new AppError(404, "Student fee not found");
 
+		if (payload.examId !== undefined && payload.examId !== null) {
+			const exam = await tx.exam.findFirst({
+				where: { id: payload.examId, schoolId },
+				select: { id: true },
+			});
+			if (!exam) {
+				throw new AppError(404, "Selected exam was not found in this school");
+			}
+		}
+
 		const resolvedDescription =
 			payload.description !== undefined
 				? payload.description

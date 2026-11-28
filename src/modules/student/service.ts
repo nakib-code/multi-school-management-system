@@ -1,9 +1,9 @@
-import type {
-	AcademicGroup,
-	HefzWing,
+import {
+	type AcademicGroup,
+	type HefzWing,
 	Prisma,
-	ResidentialType,
-	UserRole,
+	type ResidentialType,
+	type UserRole,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
@@ -243,38 +243,6 @@ export const createStudent = async (
 		throw new AppError(404, "Selected class not found or inactive");
 	}
 
-	// Enforce active subscription & package student limit
-	const now = new Date();
-	const activeSubscription = await prisma.schoolSubscription.findFirst({
-		where: {
-			schoolId,
-			status: "ACTIVE",
-			startDate: { lte: now },
-			endDate: { gte: now },
-		},
-		include: {
-			package: {
-				select: { id: true, name: true, studentLimit: true },
-			},
-		},
-		orderBy: { startDate: "desc" },
-	});
-
-	if (!activeSubscription) {
-		throw new AppError(403, "School does not have an active subscription");
-	}
-
-	const currentStudentCount = await prisma.student.count({
-		where: { schoolId, isActive: true },
-	});
-
-	if (currentStudentCount >= activeSubscription.package.studentLimit) {
-		throw new AppError(
-			403,
-			`Student limit reached for ${activeSubscription.package.name} package. Maximum allowed students: ${activeSubscription.package.studentLimit}`,
-		);
-	}
-
 	if (input.sectionId !== undefined) {
 		const section = await prisma.section.findFirst({
 			where: { id: input.sectionId, schoolId, classId: input.classId },
@@ -302,297 +270,359 @@ export const createStudent = async (
 	const phoneVariants = getPhoneLookupVariants(input.guardianPhone);
 	const relUpper = (input.guardianRelation?.trim() || "FATHER").toUpperCase();
 
-	return prisma.$transaction(async (tx) => {
-		// 1. Create Student WITHOUT requiring student email or User login
-		const student = await tx.student.create({
-			data: {
-				schoolId,
-				studentId: generatedCode,
-				firstName,
-				...(lastName ? { lastName } : {}),
-				...(input.nameBangla ? { nameBangla: input.nameBangla } : {}),
-				dateOfBirth: input.dateOfBirth,
-				gender: input.gender.trim().toUpperCase(),
-				phone: input.phone?.trim() || cleanPhone,
-				residentialType: input.residentialType ?? "NON_RESIDENTIAL",
-				shift: (input.shift?.trim() || "MORNING").toUpperCase(),
-				...(input.academicGroup ? { academicGroup: input.academicGroup } : {}),
-				...(input.quranWing ? { quranWing: input.quranWing } : {}),
-				...(input.birthRegNo ? { birthRegNo: input.birthRegNo } : {}),
-				...(input.bloodGroup ? { bloodGroup: input.bloodGroup } : {}),
-				...(input.religion ? { religion: input.religion } : {}),
-				...(input.nationality ? { nationality: input.nationality } : {}),
-				...(input.studentPhotoUrl
-					? { studentPhotoUrl: input.studentPhotoUrl }
-					: {}),
-				...(input.fatherName || relUpper === "FATHER"
-					? { fatherName: input.fatherName ?? input.guardianName.trim() }
-					: {}),
-				...(input.fatherPhone || relUpper === "FATHER"
-					? { fatherPhone: input.fatherPhone ?? cleanPhone }
-					: {}),
-				...(input.fatherOccupation ||
-				(relUpper === "FATHER" && input.guardianOccupation)
-					? {
-							fatherOccupation:
-								input.fatherOccupation ?? input.guardianOccupation,
-						}
-					: {}),
-				...(input.fatherNid || (relUpper === "FATHER" && input.guardianNid)
-					? { fatherNid: input.fatherNid ?? input.guardianNid }
-					: {}),
-				...(input.motherName || relUpper === "MOTHER"
-					? { motherName: input.motherName ?? input.guardianName.trim() }
-					: {}),
-				...(input.motherPhone || relUpper === "MOTHER"
-					? { motherPhone: input.motherPhone ?? cleanPhone }
-					: {}),
-				...(input.motherOccupation ||
-				(relUpper === "MOTHER" && input.guardianOccupation)
-					? {
-							motherOccupation:
-								input.motherOccupation ?? input.guardianOccupation,
-						}
-					: {}),
-				...(input.motherNid || (relUpper === "MOTHER" && input.guardianNid)
-					? { motherNid: input.motherNid ?? input.guardianNid }
-					: {}),
-				...(input.emergencyContactName
-					? { emergencyContactName: input.emergencyContactName }
-					: {}),
-				...(input.emergencyContactPhone
-					? { emergencyContactPhone: input.emergencyContactPhone }
-					: {}),
-				...(input.presentAddress || input.address
-					? {
-							address: input.presentAddress ?? input.address,
-							presentAddress: input.presentAddress ?? input.address,
-						}
-					: {}),
-				...(input.permanentAddress
-					? { permanentAddress: input.permanentAddress }
-					: {}),
-				...(input.authorizedPickupName
-					? { authorizedPickupName: input.authorizedPickupName }
-					: {}),
-				...(input.authorizedPickupRelation
-					? { authorizedPickupRelation: input.authorizedPickupRelation }
-					: {}),
-				...(input.authorizedPickupPhone
-					? { authorizedPickupPhone: input.authorizedPickupPhone }
-					: {}),
-				...(input.authorizedPickupNid
-					? { authorizedPickupNid: input.authorizedPickupNid }
-					: {}),
-				...(input.pickupPersonPhotoUrl
-					? { pickupPersonPhotoUrl: input.pickupPersonPhotoUrl }
-					: {}),
-				...(input.boardName ? { boardName: input.boardName } : {}),
-				...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
-				...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
-				...(input.fourthSubject ? { fourthSubject: input.fourthSubject } : {}),
-				...(input.previousSchool
-					? { previousSchool: input.previousSchool }
-					: {}),
-				...(input.previousClass ? { previousClass: input.previousClass } : {}),
-				...(input.tcNumber ? { tcNumber: input.tcNumber } : {}),
-				...(input.tcDate ? { tcDate: input.tcDate } : {}),
-				...(input.allergies ? { allergies: input.allergies } : {}),
-				...(input.medicalConditions
-					? { medicalConditions: input.medicalConditions }
-					: {}),
-				...(input.medications ? { medications: input.medications } : {}),
-				...(input.healthNotes ? { healthNotes: input.healthNotes } : {}),
-				...(input.birthCertificateUrl
-					? { birthCertificateUrl: input.birthCertificateUrl }
-					: {}),
-				...(input.guardianNidUrl
-					? { guardianNidUrl: input.guardianNidUrl }
-					: {}),
-				...(input.previousTcUrl ? { previousTcUrl: input.previousTcUrl } : {}),
-				...(input.marksheetUrl ? { marksheetUrl: input.marksheetUrl } : {}),
-				isActive: true,
-			},
-		});
-
-		// 2. Atomically Create Academic Enrollment
-		const enrollment = await tx.enrollment.create({
-			data: {
-				schoolId,
-				studentId: student.id,
-				classId: input.classId,
-				...(input.sectionId !== undefined
-					? { sectionId: input.sectionId }
-					: {}),
-				academicYear: input.academicYear.trim(),
-				...(input.rollNumber !== undefined
-					? { rollNumber: input.rollNumber }
-					: {}),
-				shift: (input.shift?.trim() || "MORNING").toUpperCase(),
-				...(input.academicGroup ? { academicGroup: input.academicGroup } : {}),
-				...(input.boardName ? { boardName: input.boardName } : {}),
-				...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
-				...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
-				...(input.fourthSubject ? { fourthSubject: input.fourthSubject } : {}),
-				status: "ACTIVE",
-			},
-			include: {
-				class: { select: { id: true, name: true, code: true } },
-				section: { select: { id: true, name: true, code: true } },
-			},
-		});
-
-		// 3. Guardian-Centric Onboarding by (schoolId, guardianPhone)
-		let guardianSummary: {
-			guardianId: number;
-			name: string;
-			phone: string;
-			email: string;
-			isExistingGuardian: boolean;
-			defaultPassword?: string;
-			temporaryPassword?: string;
-		} | null = null;
-
-		const existingGuardian = await tx.guardian.findFirst({
-			where: {
-				schoolId,
-				user: { phone: { in: phoneVariants } },
-			},
-			include: {
-				user: {
-					select: { id: true, name: true, email: true, phone: true },
-				},
-			},
-		});
-
-		if (existingGuardian) {
-			await tx.guardianStudent.upsert({
+	return prisma.$transaction(
+		async (tx) => {
+			// Enforce active subscription & package student limit atomically inside transaction
+			const now = new Date();
+			const activeSubscription = await tx.schoolSubscription.findFirst({
 				where: {
-					guardianId_studentId: {
-						guardianId: existingGuardian.id,
-						studentId: student.id,
+					schoolId,
+					status: "ACTIVE",
+					startDate: { lte: now },
+					endDate: { gte: now },
+				},
+				include: {
+					package: {
+						select: { id: true, name: true, studentLimit: true },
 					},
 				},
-				update: { isPrimary: true },
-				create: {
-					guardianId: existingGuardian.id,
-					studentId: student.id,
-					isPrimary: true,
-				},
+				orderBy: { startDate: "desc" },
 			});
 
-			if (input.guardianNid && !existingGuardian.nid) {
-				await tx.guardian.update({
-					where: { id: existingGuardian.id },
-					data: { nid: input.guardianNid.trim() },
-				});
+			if (!activeSubscription) {
+				throw new AppError(403, "School does not have an active subscription");
 			}
 
-			guardianSummary = {
-				guardianId: existingGuardian.id,
-				name: existingGuardian.user.name,
-				phone: existingGuardian.user.phone ?? cleanPhone,
-				email: existingGuardian.user.email,
-				isExistingGuardian: true,
-			};
-		} else {
-			const digits = cleanPhone.replace(/\D/g, "");
-			const defaultPassword =
-				input.guardianPassword?.trim() || generateTemporaryPassword();
-			const passwordHash = await hashPassword(defaultPassword);
-
-			let guardianEmail =
-				input.guardianEmail?.trim().toLowerCase() ||
-				`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
-
-			const existingEmailUser = await tx.user.findUnique({
-				where: { email: guardianEmail },
-				select: { id: true },
+			const currentStudentCount = await tx.student.count({
+				where: { schoolId, isActive: true },
 			});
-			if (existingEmailUser) {
-				guardianEmail = `guardian.${schoolId}.${digits || Date.now()}.${Math.floor(100 + Math.random() * 900)}@madrasaos.local`;
+
+			if (currentStudentCount >= activeSubscription.package.studentLimit) {
+				throw new AppError(
+					403,
+					`Student limit reached for ${activeSubscription.package.name} package. Maximum allowed students: ${activeSubscription.package.studentLimit}`,
+				);
 			}
 
-			const guardianUser = await tx.user.create({
+			// 1. Create Student WITHOUT requiring student email or User login
+			const student = await tx.student.create({
 				data: {
-					name: input.guardianName.trim(),
-					email: guardianEmail,
-					phone: cleanPhone,
-					passwordHash,
-					role: "GUARDIAN",
-					status: "ACTIVE",
 					schoolId,
-					mustChangePassword: true,
-				},
-			});
-
-			const guardian = await tx.guardian.create({
-				data: {
-					userId: guardianUser.id,
-					schoolId,
-					relation: relUpper,
-					...(input.guardianOccupation
-						? { occupation: input.guardianOccupation.trim() }
+					studentId: generatedCode,
+					firstName,
+					...(lastName ? { lastName } : {}),
+					...(input.nameBangla ? { nameBangla: input.nameBangla } : {}),
+					dateOfBirth: input.dateOfBirth,
+					gender: input.gender.trim().toUpperCase(),
+					phone: input.phone?.trim() || cleanPhone,
+					residentialType: input.residentialType ?? "NON_RESIDENTIAL",
+					shift: (input.shift?.trim() || "MORNING").toUpperCase(),
+					...(input.academicGroup
+						? { academicGroup: input.academicGroup }
 						: {}),
-					...(input.guardianAddress || input.presentAddress
+					...(input.quranWing ? { quranWing: input.quranWing } : {}),
+					...(input.birthRegNo ? { birthRegNo: input.birthRegNo } : {}),
+					...(input.bloodGroup ? { bloodGroup: input.bloodGroup } : {}),
+					...(input.religion ? { religion: input.religion } : {}),
+					...(input.nationality ? { nationality: input.nationality } : {}),
+					...(input.studentPhotoUrl
+						? { studentPhotoUrl: input.studentPhotoUrl }
+						: {}),
+					...(input.fatherName || relUpper === "FATHER"
+						? { fatherName: input.fatherName ?? input.guardianName.trim() }
+						: {}),
+					...(input.fatherPhone || relUpper === "FATHER"
+						? { fatherPhone: input.fatherPhone ?? cleanPhone }
+						: {}),
+					...(input.fatherOccupation ||
+					(relUpper === "FATHER" && input.guardianOccupation)
 						? {
-								address: (
-									input.guardianAddress ??
-									input.presentAddress ??
-									""
-								).trim(),
+								fatherOccupation:
+									input.fatherOccupation ?? input.guardianOccupation,
 							}
 						: {}),
-					...(input.guardianNid ? { nid: input.guardianNid.trim() } : {}),
+					...(input.fatherNid || (relUpper === "FATHER" && input.guardianNid)
+						? { fatherNid: input.fatherNid ?? input.guardianNid }
+						: {}),
+					...(input.motherName || relUpper === "MOTHER"
+						? { motherName: input.motherName ?? input.guardianName.trim() }
+						: {}),
+					...(input.motherPhone || relUpper === "MOTHER"
+						? { motherPhone: input.motherPhone ?? cleanPhone }
+						: {}),
+					...(input.motherOccupation ||
+					(relUpper === "MOTHER" && input.guardianOccupation)
+						? {
+								motherOccupation:
+									input.motherOccupation ?? input.guardianOccupation,
+							}
+						: {}),
+					...(input.motherNid || (relUpper === "MOTHER" && input.guardianNid)
+						? { motherNid: input.motherNid ?? input.guardianNid }
+						: {}),
+					...(input.emergencyContactName
+						? { emergencyContactName: input.emergencyContactName }
+						: {}),
+					...(input.emergencyContactPhone
+						? { emergencyContactPhone: input.emergencyContactPhone }
+						: {}),
+					...(input.presentAddress || input.address
+						? {
+								address: input.presentAddress ?? input.address,
+								presentAddress: input.presentAddress ?? input.address,
+							}
+						: {}),
+					...(input.permanentAddress
+						? { permanentAddress: input.permanentAddress }
+						: {}),
+					...(input.authorizedPickupName
+						? { authorizedPickupName: input.authorizedPickupName }
+						: {}),
+					...(input.authorizedPickupRelation
+						? { authorizedPickupRelation: input.authorizedPickupRelation }
+						: {}),
+					...(input.authorizedPickupPhone
+						? { authorizedPickupPhone: input.authorizedPickupPhone }
+						: {}),
+					...(input.authorizedPickupNid
+						? { authorizedPickupNid: input.authorizedPickupNid }
+						: {}),
+					...(input.pickupPersonPhotoUrl
+						? { pickupPersonPhotoUrl: input.pickupPersonPhotoUrl }
+						: {}),
+					...(input.boardName ? { boardName: input.boardName } : {}),
+					...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
+					...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
+					...(input.fourthSubject
+						? { fourthSubject: input.fourthSubject }
+						: {}),
+					...(input.previousSchool
+						? { previousSchool: input.previousSchool }
+						: {}),
+					...(input.previousClass
+						? { previousClass: input.previousClass }
+						: {}),
+					...(input.tcNumber ? { tcNumber: input.tcNumber } : {}),
+					...(input.tcDate ? { tcDate: input.tcDate } : {}),
+					...(input.allergies ? { allergies: input.allergies } : {}),
+					...(input.medicalConditions
+						? { medicalConditions: input.medicalConditions }
+						: {}),
+					...(input.medications ? { medications: input.medications } : {}),
+					...(input.healthNotes ? { healthNotes: input.healthNotes } : {}),
+					...(input.birthCertificateUrl
+						? { birthCertificateUrl: input.birthCertificateUrl }
+						: {}),
+					...(input.guardianNidUrl
+						? { guardianNidUrl: input.guardianNidUrl }
+						: {}),
+					...(input.previousTcUrl
+						? { previousTcUrl: input.previousTcUrl }
+						: {}),
+					...(input.marksheetUrl ? { marksheetUrl: input.marksheetUrl } : {}),
+					isActive: true,
 				},
 			});
 
-			await tx.guardianStudent.create({
-				data: {
-					guardianId: guardian.id,
-					studentId: student.id,
-					isPrimary: true,
-				},
-			});
-
-			guardianSummary = {
-				guardianId: guardian.id,
-				name: guardianUser.name,
-				phone: cleanPhone,
-				email: guardianUser.email,
-				isExistingGuardian: false,
-				defaultPassword,
-				temporaryPassword: defaultPassword,
-			};
-		}
-
-		// 4. Optional Initial Hefz Enrollment if quranWing + ustadId provided
-		let hefzEnrollment = null;
-		if (input.quranWing && input.ustadId) {
-			const ustad = await tx.teacher.findFirst({
-				where: { id: input.ustadId, schoolId },
-				select: { id: true },
-			});
-			if (ustad) {
-				hefzEnrollment = await tx.hefzEnrollment.create({
-					data: {
+			// 2. Atomically Assign Next Roll Number (when omitted) & Create Academic Enrollment
+			let resolvedRollNumber = input.rollNumber;
+			if (resolvedRollNumber === undefined) {
+				const maxRollAgg = await tx.enrollment.aggregate({
+					where: {
 						schoolId,
+						academicYear: input.academicYear.trim(),
+						...(input.sectionId !== undefined
+							? { sectionId: input.sectionId }
+							: { classId: input.classId, sectionId: null }),
+					},
+					_max: { rollNumber: true },
+				});
+				resolvedRollNumber = (maxRollAgg._max.rollNumber ?? 0) + 1;
+			}
+
+			const enrollment = await tx.enrollment.create({
+				data: {
+					schoolId,
+					studentId: student.id,
+					classId: input.classId,
+					...(input.sectionId !== undefined
+						? { sectionId: input.sectionId }
+						: {}),
+					academicYear: input.academicYear.trim(),
+					rollNumber: resolvedRollNumber,
+					shift: (input.shift?.trim() || "MORNING").toUpperCase(),
+					...(input.academicGroup
+						? { academicGroup: input.academicGroup }
+						: {}),
+					...(input.boardName ? { boardName: input.boardName } : {}),
+					...(input.boardRollNo ? { boardRollNo: input.boardRollNo } : {}),
+					...(input.boardRegNo ? { boardRegNo: input.boardRegNo } : {}),
+					...(input.fourthSubject
+						? { fourthSubject: input.fourthSubject }
+						: {}),
+					status: "ACTIVE",
+				},
+				include: {
+					class: { select: { id: true, name: true, code: true } },
+					section: { select: { id: true, name: true, code: true } },
+				},
+			});
+
+			// 3. Guardian-Centric Onboarding by (schoolId, guardianPhone)
+			let guardianSummary: {
+				guardianId: number;
+				name: string;
+				phone: string;
+				email: string;
+				isExistingGuardian: boolean;
+				defaultPassword?: string;
+				temporaryPassword?: string;
+			} | null = null;
+
+			const existingGuardian = await tx.guardian.findFirst({
+				where: {
+					schoolId,
+					user: { phone: { in: phoneVariants } },
+				},
+				include: {
+					user: {
+						select: { id: true, name: true, email: true, phone: true },
+					},
+				},
+			});
+
+			if (existingGuardian) {
+				await tx.guardianStudent.upsert({
+					where: {
+						guardianId_studentId: {
+							guardianId: existingGuardian.id,
+							studentId: student.id,
+						},
+					},
+					update: { isPrimary: true },
+					create: {
+						guardianId: existingGuardian.id,
 						studentId: student.id,
-						ustadId: ustad.id,
-						wing: input.quranWing,
-						status: "ACTIVE",
+						isPrimary: true,
 					},
 				});
-			}
-		}
 
-		return {
-			student,
-			enrollment,
-			guardian: guardianSummary,
-			hefzEnrollment,
-		};
-	});
+				if (input.guardianNid && !existingGuardian.nid) {
+					await tx.guardian.update({
+						where: { id: existingGuardian.id },
+						data: { nid: input.guardianNid.trim() },
+					});
+				}
+
+				guardianSummary = {
+					guardianId: existingGuardian.id,
+					name: existingGuardian.user.name,
+					phone: existingGuardian.user.phone ?? cleanPhone,
+					email: existingGuardian.user.email,
+					isExistingGuardian: true,
+				};
+			} else {
+				const digits = cleanPhone.replace(/\D/g, "");
+				const defaultPassword =
+					input.guardianPassword?.trim() || generateTemporaryPassword();
+				const passwordHash = await hashPassword(defaultPassword);
+
+				let guardianEmail =
+					input.guardianEmail?.trim().toLowerCase() ||
+					`guardian.${schoolId}.${digits || Date.now()}@madrasaos.local`;
+
+				const existingEmailUser = await tx.user.findUnique({
+					where: { email: guardianEmail },
+					select: { id: true },
+				});
+				if (existingEmailUser) {
+					guardianEmail = `guardian.${schoolId}.${digits || Date.now()}.${Math.floor(100 + Math.random() * 900)}@madrasaos.local`;
+				}
+
+				const guardianUser = await tx.user.create({
+					data: {
+						name: input.guardianName.trim(),
+						email: guardianEmail,
+						phone: cleanPhone,
+						passwordHash,
+						role: "GUARDIAN",
+						status: "ACTIVE",
+						schoolId,
+						mustChangePassword: true,
+					},
+				});
+
+				const guardian = await tx.guardian.create({
+					data: {
+						userId: guardianUser.id,
+						schoolId,
+						relation: relUpper,
+						...(input.guardianOccupation
+							? { occupation: input.guardianOccupation.trim() }
+							: {}),
+						...(input.guardianAddress || input.presentAddress
+							? {
+									address: (
+										input.guardianAddress ??
+										input.presentAddress ??
+										""
+									).trim(),
+								}
+							: {}),
+						...(input.guardianNid ? { nid: input.guardianNid.trim() } : {}),
+					},
+				});
+
+				await tx.guardianStudent.create({
+					data: {
+						guardianId: guardian.id,
+						studentId: student.id,
+						isPrimary: true,
+					},
+				});
+
+				guardianSummary = {
+					guardianId: guardian.id,
+					name: guardianUser.name,
+					phone: cleanPhone,
+					email: guardianUser.email,
+					isExistingGuardian: false,
+					defaultPassword,
+					temporaryPassword: defaultPassword,
+				};
+			}
+
+			// 4. Optional Initial Hefz Enrollment if quranWing + ustadId provided
+			let hefzEnrollment = null;
+			if (input.quranWing && input.ustadId) {
+				const ustad = await tx.teacher.findFirst({
+					where: { id: input.ustadId, schoolId },
+					select: { id: true },
+				});
+				if (ustad) {
+					hefzEnrollment = await tx.hefzEnrollment.create({
+						data: {
+							schoolId,
+							studentId: student.id,
+							ustadId: ustad.id,
+							wing: input.quranWing,
+							status: "ACTIVE",
+						},
+					});
+				}
+			}
+
+			return {
+				student,
+				enrollment,
+				guardian: guardianSummary,
+				hefzEnrollment,
+			};
+		},
+		{
+			isolationLevel: Prisma.TransactionIsolationLevel.Serializable,
+		},
+	);
 };
 
 export const getMyStudentProfile = async (userId: number, schoolId: number) => {

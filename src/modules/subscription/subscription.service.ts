@@ -114,52 +114,114 @@ const selectPackageForAdmin = async (
 		throw new AppError(400, "Cannot select an inactive package");
 	}
 
-	const activeSubscription = await prisma.schoolSubscription.findFirst({
-		where: {
-			schoolId,
-			status: "ACTIVE",
-		},
-		include: {
-			school: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-					status: true,
+	return prisma.$transaction(async (tx) => {
+		const activeSubscription = await tx.schoolSubscription.findFirst({
+			where: {
+				schoolId,
+				status: "ACTIVE",
+			},
+			include: {
+				school: {
+					select: {
+						id: true,
+						name: true,
+						code: true,
+						status: true,
+					},
+				},
+				package: true,
+			},
+			orderBy: {
+				createdAt: "desc",
+			},
+		});
+
+		// Renewing the same active package: reuse active subscription so payment extends endDate
+		if (activeSubscription && activeSubscription.packageId === packageData.id) {
+			return activeSubscription;
+		}
+
+		const pendingSubscription = await tx.schoolSubscription.findFirst({
+			where: {
+				schoolId,
+				status: "PENDING",
+			},
+			include: {
+				payments: {
+					where: { status: "PENDING" },
+					select: { id: true },
 				},
 			},
-			package: true,
-		},
-		orderBy: {
-			createdAt: "desc",
-		},
-	});
-
-	// Renewing the same active package: reuse active subscription so payment extends endDate
-	if (activeSubscription && activeSubscription.packageId === packageData.id) {
-		return activeSubscription;
-	}
-
-	const pendingSubscription = await prisma.schoolSubscription.findFirst({
-		where: {
-			schoolId,
-			status: "PENDING",
-		},
-		include: {
-			payments: {
-				where: { status: "PENDING" },
-				select: { id: true },
+			orderBy: {
+				createdAt: "desc",
 			},
-		},
-		orderBy: {
-			createdAt: "desc",
-		},
-	});
+		});
 
-	// Same package already selected as pending.
-	if (pendingSubscription && pendingSubscription.packageId === packageData.id) {
-		return prisma.schoolSubscription.findUniqueOrThrow({
-			where: { id: pendingSubscription.id },
+		// Same package already selected as pending.
+		if (
+			pendingSubscription &&
+			pendingSubscription.packageId === packageData.id
+		) {
+			return tx.schoolSubscription.findUniqueOrThrow({
+				where: { id: pendingSubscription.id },
+				include: {
+					school: {
+						select: {
+							id: true,
+							name: true,
+							code: true,
+							status: true,
+						},
+					},
+					package: true,
+				},
+			});
+		}
+
+		if (pendingSubscription && pendingSubscription.payments.length > 0) {
+			throw new AppError(
+				409,
+				"You already have a pending payment awaiting verification. Please wait for Super Admin review before switching packages.",
+			);
+		}
+
+		// Cancel all previous pending selections atomically.
+		if (pendingSubscription) {
+			await tx.schoolSubscription.updateMany({
+				where: {
+					schoolId,
+					status: "PENDING",
+				},
+				data: {
+					status: "CANCELLED",
+					notes: "Cancelled because another package was selected.",
+				},
+			});
+		}
+
+		const now = new Date();
+
+		// Temporary dates for the pending subscription.
+		// Actual subscription dates should be finalized
+		// when payment becomes PAID/ACTIVE.
+		const endDate = new Date(now);
+
+		if (packageData.billingCycle === "MONTHLY") {
+			endDate.setMonth(endDate.getMonth() + 1);
+		} else {
+			endDate.setFullYear(endDate.getFullYear() + 1);
+		}
+
+		return tx.schoolSubscription.create({
+			data: {
+				schoolId,
+				packageId: packageData.id,
+				startDate: now,
+				endDate,
+				price: packageData.price,
+				status: "PENDING",
+				notes: "Package selected. Payment pending.",
+			},
 			include: {
 				school: {
 					select: {
@@ -172,65 +234,7 @@ const selectPackageForAdmin = async (
 				package: true,
 			},
 		});
-	}
-
-	if (pendingSubscription && pendingSubscription.payments.length > 0) {
-		throw new AppError(
-			409,
-			"You already have a pending payment awaiting verification. Please wait for Super Admin review before switching packages.",
-		);
-	}
-
-	// Cancel previous pending selection.
-	if (pendingSubscription) {
-		await prisma.schoolSubscription.update({
-			where: {
-				id: pendingSubscription.id,
-			},
-			data: {
-				status: "CANCELLED",
-				notes: "Cancelled because another package was selected.",
-			},
-		});
-	}
-
-	const now = new Date();
-
-	// Temporary dates for the pending subscription.
-	// Actual subscription dates should be finalized
-	// when payment becomes PAID/ACTIVE.
-	const endDate = new Date(now);
-
-	if (packageData.billingCycle === "MONTHLY") {
-		endDate.setMonth(endDate.getMonth() + 1);
-	} else {
-		endDate.setFullYear(endDate.getFullYear() + 1);
-	}
-
-	const subscription = await prisma.schoolSubscription.create({
-		data: {
-			schoolId,
-			packageId: packageData.id,
-			startDate: now,
-			endDate,
-			price: packageData.price,
-			status: "PENDING",
-			notes: "Package selected. Payment pending.",
-		},
-		include: {
-			school: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-					status: true,
-				},
-			},
-			package: true,
-		},
 	});
-
-	return subscription;
 };
 
 // ============================================
@@ -571,36 +575,51 @@ const updateSubscriptionStatus = async (
 	id: number,
 	payload: UpdateSubscriptionStatusPayload,
 ) => {
-	const existingSubscription = await prisma.schoolSubscription.findUnique({
-		where: {
-			id,
-		},
-	});
-
-	if (!existingSubscription) {
-		throw new AppError(404, "Subscription not found");
-	}
-
-	return prisma.schoolSubscription.update({
-		where: {
-			id,
-		},
-
-		data: {
-			status: payload.status,
-		},
-
-		include: {
-			school: {
-				select: {
-					id: true,
-					name: true,
-					code: true,
-					status: true,
-				},
+	return prisma.$transaction(async (tx) => {
+		const existingSubscription = await tx.schoolSubscription.findUnique({
+			where: {
+				id,
 			},
-			package: true,
-		},
+		});
+
+		if (!existingSubscription) {
+			throw new AppError(404, "Subscription not found");
+		}
+
+		if (payload.status === "ACTIVE") {
+			await tx.schoolSubscription.updateMany({
+				where: {
+					schoolId: existingSubscription.schoolId,
+					status: "ACTIVE",
+					id: { not: id },
+				},
+				data: {
+					status: "EXPIRED",
+				},
+			});
+		}
+
+		return tx.schoolSubscription.update({
+			where: {
+				id,
+			},
+
+			data: {
+				status: payload.status,
+			},
+
+			include: {
+				school: {
+					select: {
+						id: true,
+						name: true,
+						code: true,
+						status: true,
+					},
+				},
+				package: true,
+			},
+		});
 	});
 };
 

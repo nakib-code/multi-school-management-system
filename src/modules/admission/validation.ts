@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { bdMobileNumberSchema, trxIdSchema } from "../payment/validation.js";
 
 const emptyToUndefined = (val: unknown) =>
 	typeof val === "string" && val.trim() === "" ? undefined : val;
@@ -8,7 +9,15 @@ const optionalString = (max: number) =>
 
 const optionalUrl = z.preprocess(
 	emptyToUndefined,
-	z.string().trim().url("Please provide a valid URL").optional(),
+	z
+		.string()
+		.trim()
+		.url("Please provide a valid URL")
+		.refine(
+			(value) => /^https?:\/\//i.test(value),
+			"URL must start with http:// or https://",
+		)
+		.optional(),
 );
 
 const optionalEmail = z.preprocess(
@@ -24,7 +33,14 @@ export const createAdmissionBodySchema = z.object({
 		.min(2, "Student name must be at least 2 characters")
 		.max(150),
 
-	dateOfBirth: z.string().trim().min(4, "Date of birth is required"),
+	dateOfBirth: z
+		.string()
+		.trim()
+		.min(4, "Date of birth is required")
+		.refine((value) => {
+			const parsed = new Date(value);
+			return !Number.isNaN(parsed.getTime());
+		}, "Please provide a valid date of birth"),
 
 	gender: z.enum(["MALE", "FEMALE", "OTHER"]),
 
@@ -235,12 +251,11 @@ export const submitOnlinePaymentTrxSchema = z.object({
 			guardianPhone: optionalString(30),
 			studentEmail: optionalEmail,
 			paymentMethod: z.enum(["BKASH", "NAGAD", "ROCKET"]),
-			transactionId: z
-				.string()
-				.trim()
-				.min(4, "Transaction ID must be at least 4 characters")
-				.max(100),
-			senderPhone: optionalString(30),
+			transactionId: trxIdSchema,
+			senderPhone: z.preprocess(
+				emptyToUndefined,
+				bdMobileNumberSchema.optional(),
+			),
 		})
 		.refine((data) => Boolean(data.guardianPhone || data.studentEmail), {
 			message: "Guardian phone or student email is required",

@@ -39,7 +39,9 @@ export const createStudentPaymentSchema = z.object({
 			trxId: z.string().trim().max(100).optional(),
 			paidAmount: z.coerce
 				.number()
-				.positive("Paid amount must be greater than zero"),
+				.finite()
+				.positive("Paid amount must be greater than zero")
+				.max(99999999.99, "Paid amount exceeds maximum allowed value"),
 			paidAt: z.coerce.date().optional(),
 			remarks: z.string().trim().max(500).optional(),
 		})

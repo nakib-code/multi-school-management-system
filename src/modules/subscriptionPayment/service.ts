@@ -71,75 +71,98 @@ export const submitManualSubscriptionPayment = async (
 	schoolId: number,
 	payload: SubmitSubscriptionPaymentInput,
 ) => {
-	const subscription = await prisma.schoolSubscription.findFirst({
-		where: {
-			id: subscriptionId,
-			schoolId,
-		},
-		include: {
-			package: true,
-		},
-	});
-
-	if (!subscription) {
-		throw new AppError(404, "Subscription not found for your school");
-	}
-
-	if (subscription.status === SubscriptionStatus.CANCELLED) {
-		throw new AppError(400, "Cannot pay for a cancelled subscription");
-	}
-
 	const normalizedTrxId = normalizeTrxId(payload.trxId);
-
-	const duplicateTrx = await prisma.subscriptionPayment.findUnique({
-		where: { trxId: normalizedTrxId },
-	});
-	if (duplicateTrx) {
-		throw new AppError(
-			409,
-			"This transaction ID (trxId) has already been submitted",
-		);
-	}
-
-	const existingPending = await prisma.subscriptionPayment.findFirst({
-		where: {
-			subscriptionId,
-			status: SubscriptionPaymentStatus.PENDING,
-		},
-	});
-	if (existingPending) {
-		throw new AppError(
-			409,
-			"A pending payment already exists for this subscription. Please wait for verification.",
-		);
-	}
-
 	const receiverNumber = await resolvePlatformReceiverNumber(
 		payload.paymentMethod,
 		payload.receiverNumber,
 	);
 
-	const payment = await prisma.subscriptionPayment.create({
-		data: {
-			subscriptionId,
-			schoolId,
-			paymentMethod: payload.paymentMethod,
-			senderNumber: payload.senderNumber.trim(),
-			...(receiverNumber !== undefined ? { receiverNumber } : {}),
-			trxId: normalizedTrxId,
-			paidAmount: payload.paidAmount,
-			currency: "BDT",
-			status: SubscriptionPaymentStatus.PENDING,
-			...(payload.paidAt !== undefined ? { paidAt: payload.paidAt } : {}),
-			...(payload.remarks !== undefined ? { remarks: payload.remarks } : {}),
-		},
-		include: subscriptionPaymentInclude,
-	});
+	try {
+		return await prisma.$transaction(async (tx) => {
+			const subscription = await tx.schoolSubscription.findFirst({
+				where: {
+					id: subscriptionId,
+					schoolId,
+				},
+				include: {
+					package: true,
+				},
+			});
 
-	return {
-		...payment,
-		paidAmount: Number(payment.paidAmount),
-	};
+			if (!subscription) {
+				throw new AppError(404, "Subscription not found for your school");
+			}
+
+			if (subscription.status === SubscriptionStatus.CANCELLED) {
+				throw new AppError(400, "Cannot pay for a cancelled subscription");
+			}
+
+			const duplicateTrx = await tx.subscriptionPayment.findFirst({
+				where: {
+					trxId: normalizedTrxId,
+					status: { not: SubscriptionPaymentStatus.REJECTED },
+				},
+				select: { id: true },
+			});
+			if (duplicateTrx) {
+				throw new AppError(
+					409,
+					"This transaction ID (trxId) has already been submitted",
+				);
+			}
+
+			const existingPending = await tx.subscriptionPayment.findFirst({
+				where: {
+					subscriptionId,
+					status: SubscriptionPaymentStatus.PENDING,
+				},
+				select: { id: true },
+			});
+			if (existingPending) {
+				throw new AppError(
+					409,
+					"A pending payment already exists for this subscription. Please wait for verification.",
+				);
+			}
+
+			const payment = await tx.subscriptionPayment.create({
+				data: {
+					subscriptionId,
+					schoolId,
+					paymentMethod: payload.paymentMethod,
+					senderNumber: payload.senderNumber.trim(),
+					...(receiverNumber !== undefined ? { receiverNumber } : {}),
+					trxId: normalizedTrxId,
+					paidAmount: payload.paidAmount,
+					currency: "BDT",
+					status: SubscriptionPaymentStatus.PENDING,
+					...(payload.paidAt !== undefined ? { paidAt: payload.paidAt } : {}),
+					...(payload.remarks !== undefined
+						? { remarks: payload.remarks }
+						: {}),
+				},
+				include: subscriptionPaymentInclude,
+			});
+
+			return {
+				...payment,
+				paidAmount: Number(payment.paidAmount),
+			};
+		});
+	} catch (error) {
+		if (
+			typeof error === "object" &&
+			error !== null &&
+			"code" in error &&
+			error.code === "P2002"
+		) {
+			throw new AppError(
+				409,
+				"This transaction ID (trxId) has already been submitted",
+			);
+		}
+		throw error;
+	}
 };
 
 /* ---------- Super Admin: List Pending Payments ---------- */
@@ -189,6 +212,13 @@ export const verifySubscriptionPayment = async (
 			throw new AppError(
 				400,
 				"Only pending subscription payments can be verified",
+			);
+		}
+
+		if (payment.subscription.status === SubscriptionStatus.CANCELLED) {
+			throw new AppError(
+				400,
+				"Cannot verify payment for a cancelled subscription. Please reject this payment instead.",
 			);
 		}
 

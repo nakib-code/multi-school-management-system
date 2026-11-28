@@ -342,6 +342,7 @@ export const getSchoolReportOverview = async (schoolId: number) => {
 			select: {
 				amount: true,
 				status: true,
+				admission: { select: { status: true } },
 				studentFee: { select: { id: true } },
 			},
 		}),
@@ -387,7 +388,9 @@ export const getSchoolReportOverview = async (schoolId: number) => {
 
 		if (fee.status === "PAID") paidFeeCount += 1;
 		else if (fee.status === "PARTIAL") partialFeeCount += 1;
-		else if (fee.status === "PENDING") unpaidFeeCount += 1;
+		else if (fee.status === "PENDING" || fee.status === "OVERDUE") {
+			unpaidFeeCount += 1;
+		}
 
 		const bucket = feeTypeMap.get(fee.feeType) ?? {
 			feeType: fee.feeType,
@@ -415,15 +418,18 @@ export const getSchoolReportOverview = async (schoolId: number) => {
 
 	for (const ap of admissionPayments) {
 		const amt = Math.max(0, Number(ap.amount));
-		if (ap.status !== "CANCELLED") {
-			admissionTotalExpected += amt;
-		}
+		const isRejectedAdmission = ap.admission?.status === "REJECTED";
 		if (ap.status === "PAID") {
+			admissionTotalExpected += amt;
 			admissionCollectedVerified += amt;
 			if (!ap.studentFee) {
 				admissionUnlinkedCollected += amt;
 			}
-		} else if (ap.status === "PENDING" || ap.status === "FAILED") {
+		} else if (
+			!isRejectedAdmission &&
+			(ap.status === "PENDING" || ap.status === "FAILED")
+		) {
+			admissionTotalExpected += amt;
 			admissionPendingPayment += amt;
 		}
 	}
@@ -587,11 +593,12 @@ export const getAdmissionChartReport = async (
 		else pendingCount += 1;
 
 		if (adm.payment && adm.payment.status !== "CANCELLED") {
-			totalExpected += fee;
 			if (adm.payment.status === "PAID") {
+				totalExpected += fee;
 				totalCollected += fee;
 				paidCount += 1;
-			} else {
+			} else if (adm.status !== "REJECTED") {
+				totalExpected += fee;
 				totalPending += fee;
 				unpaidCount += 1;
 			}
@@ -918,6 +925,7 @@ export const getStudentRosterChartReport = async (
 
 	let activeCount = 0;
 	let completedCount = 0;
+	let transferredCount = 0;
 	let droppedCount = 0;
 	let residentialCount = 0;
 	let nonResidentialCount = 0;
@@ -926,6 +934,7 @@ export const getStudentRosterChartReport = async (
 	const rows = enrollments.map((en, idx) => {
 		if (en.status === "ACTIVE") activeCount += 1;
 		else if (en.status === "COMPLETED") completedCount += 1;
+		else if (en.status === "TRANSFERRED") transferredCount += 1;
 		else droppedCount += 1;
 
 		if (en.student.residentialType === "RESIDENTIAL") residentialCount += 1;
@@ -966,6 +975,7 @@ export const getStudentRosterChartReport = async (
 			totalStudents: rows.length,
 			activeCount,
 			completedCount,
+			transferredCount,
 			droppedCount,
 			residentialCount,
 			nonResidentialCount,

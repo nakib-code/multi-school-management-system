@@ -3,6 +3,30 @@ import redisClient from "../lib/redis.js";
 import AppError from "../utils/appError.js";
 
 const memoryStore = new Map<string, { count: number; resetAt: number }>();
+const MAX_MEMORY_ENTRIES = 10_000;
+let lastSweepAt = 0;
+
+const sweepExpiredMemoryEntries = (now: number) => {
+	if (now - lastSweepAt < 60_000 && memoryStore.size < MAX_MEMORY_ENTRIES) {
+		return;
+	}
+	lastSweepAt = now;
+	for (const [k, v] of memoryStore.entries()) {
+		if (v.resetAt <= now) {
+			memoryStore.delete(k);
+		}
+	}
+	// If still over cap under heavy flood, evict oldest keys
+	if (memoryStore.size >= MAX_MEMORY_ENTRIES) {
+		const excess = memoryStore.size - Math.floor(MAX_MEMORY_ENTRIES * 0.8);
+		let removed = 0;
+		for (const k of memoryStore.keys()) {
+			memoryStore.delete(k);
+			removed += 1;
+			if (removed >= excess) break;
+		}
+	}
+};
 
 export const createRateLimiter = (options: {
 	windowMs: number;
@@ -38,6 +62,7 @@ export const createRateLimiter = (options: {
 		}
 
 		const now = Date.now();
+		sweepExpiredMemoryEntries(now);
 		const entry = memoryStore.get(key);
 		if (!entry || entry.resetAt <= now) {
 			memoryStore.set(key, { count: 1, resetAt: now + windowMs });

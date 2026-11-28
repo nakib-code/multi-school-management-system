@@ -57,35 +57,44 @@ const allowedOrigins = (env.frontend_url ?? "")
 	.filter(Boolean);
 
 const isProduction = env.node_env === "production";
-const allowedPreviewPattern =
-	/^https:\/\/school-management-system-frontend(-[a-z0-9-]+)?\.vercel\.app$/;
 
+const isTrustedAppOrigin = (normalized: string): boolean =>
+	allowedOrigins.some((o) => o.toLowerCase() === normalized) ||
+	(!isProduction &&
+		(normalized === "http://localhost:3000" ||
+			normalized === "http://localhost:3001"));
+
+// Global credentialed CORS strictly limited to explicit FRONTEND_URL allowlist
 app.use(
 	cors({
 		origin: (origin, callback) => {
 			if (!origin) return callback(null, true);
 			const normalized = origin.replace(/\/$/, "").toLowerCase();
-			if (
-				allowedOrigins.some((o) => o.toLowerCase() === normalized) ||
-				(!isProduction &&
-					(normalized === "http://localhost:3000" ||
-						normalized === "http://localhost:3001")) ||
-				allowedPreviewPattern.test(normalized)
-			) {
+			if (isTrustedAppOrigin(normalized)) {
 				return callback(null, true);
 			}
-			getExternalWebsiteOrigins()
-				.then((externalOrigins) => {
-					if (externalOrigins.has(normalized)) {
-						return callback(null, true);
-					}
-					return callback(null, false);
-				})
-				.catch(() => callback(null, false));
+			return callback(null, false);
 		},
 		credentials: true,
 	}),
 );
+
+// Non-credentialed CORS for public endpoints consumed by connected external school websites
+const publicExternalCors = cors({
+	origin: (origin, callback) => {
+		if (!origin) return callback(null, true);
+		const normalized = origin.replace(/\/$/, "").toLowerCase();
+		if (isTrustedAppOrigin(normalized)) {
+			return callback(null, true);
+		}
+		getExternalWebsiteOrigins()
+			.then((externalOrigins) =>
+				callback(null, externalOrigins.has(normalized)),
+			)
+			.catch(() => callback(null, false));
+	},
+	credentials: false,
+});
 
 app.use(express.json({ limit: "4.5mb" }));
 app.use(express.urlencoded({ extended: true, limit: "4.5mb" }));
@@ -148,7 +157,7 @@ app.use("/api/v1", classDiaryRoutes);
 app.use("/api/v1/uploads", uploadRoutes);
 app.use("/api/v1/platform-audit-logs", platformAuditLogRoutes);
 app.use("/api/v1/platform-settings", platformSettingRoutes);
-app.use("/api/v1/public", publicRoutes);
+app.use("/api/v1/public", publicExternalCors, publicRoutes);
 
 // 404 handler
 app.use(notFound);

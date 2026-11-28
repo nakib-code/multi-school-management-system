@@ -115,52 +115,80 @@ export const submitStudentPayment = async (
 
 		const cashTrxId = payload.trxId?.trim()
 			? normalizeTrxId(payload.trxId)
-			: `CASH-${schoolId}-${fee.id}-${Date.now()}`;
+			: `CASH-${schoolId}-${fee.id}-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`;
 
-		return prisma.$transaction(async (tx) => {
-			const now = new Date();
-			const payment = await tx.studentPayment.create({
-				data: {
-					schoolId,
-					studentId: payload.studentId,
-					feeId: payload.feeId,
-					paymentMethod: PaymentMethod.CASH,
-					senderNumber: payload.senderNumber?.trim() || "OFFICE-CASH",
-					receiverNumber: "OFFICE-COUNTER",
-					trxId: cashTrxId,
-					paidAmount: payload.paidAmount,
-					status: PaymentStatus.VERIFIED,
-					verifiedById: requester.userId,
-					verifiedAt: now,
-					paidAt: payload.paidAt ?? now,
-					...(payload.remarks !== undefined
-						? { remarks: payload.remarks }
-						: {}),
-				},
-				include: studentPaymentInclude,
+		try {
+			return await prisma.$transaction(async (tx) => {
+				const currentFee = await tx.studentFee.findFirst({
+					where: { id: fee.id, schoolId, studentId: payload.studentId },
+				});
+				if (!currentFee) {
+					throw new AppError(404, "Student fee not found for this student");
+				}
+				if (
+					currentFee.status === FeeStatus.PAID ||
+					currentFee.status === FeeStatus.WAIVED
+				) {
+					throw new AppError(400, "This student fee is already settled");
+				}
+
+				const now = new Date();
+				const payment = await tx.studentPayment.create({
+					data: {
+						schoolId,
+						studentId: payload.studentId,
+						feeId: payload.feeId,
+						paymentMethod: PaymentMethod.CASH,
+						senderNumber: payload.senderNumber?.trim() || "OFFICE-CASH",
+						receiverNumber: "OFFICE-COUNTER",
+						trxId: cashTrxId,
+						paidAmount: payload.paidAmount,
+						status: PaymentStatus.VERIFIED,
+						verifiedById: requester.userId,
+						verifiedAt: now,
+						paidAt: payload.paidAt ?? now,
+						...(payload.remarks !== undefined
+							? { remarks: payload.remarks }
+							: {}),
+					},
+					include: studentPaymentInclude,
+				});
+
+				const verifiedSum = await tx.studentPayment.aggregate({
+					where: { feeId: currentFee.id, status: PaymentStatus.VERIFIED },
+					_sum: { paidAmount: true },
+				});
+
+				const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
+				const feeAmount = Number(currentFee.amount);
+				const nextFeeStatus =
+					totalVerifiedPaid >= feeAmount
+						? FeeStatus.PAID
+						: totalVerifiedPaid > 0
+							? FeeStatus.PARTIAL
+							: FeeStatus.PENDING;
+
+				await tx.studentFee.update({
+					where: { id: currentFee.id },
+					data: { status: nextFeeStatus },
+				});
+
+				return payment;
 			});
-
-			const verifiedSum = await tx.studentPayment.aggregate({
-				where: { feeId: fee.id, status: PaymentStatus.VERIFIED },
-				_sum: { paidAmount: true },
-			});
-
-			const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
-			const feeAmount = Number(fee.amount);
-			const nextFeeStatus =
-				totalVerifiedPaid >= feeAmount
-					? FeeStatus.PAID
-					: totalVerifiedPaid > 0
-						? FeeStatus.PARTIAL
-						: FeeStatus.PENDING;
-
-			await tx.studentFee.update({
-				where: { id: fee.id },
-				data: { status: nextFeeStatus },
-			});
-
-			return payment;
-		});
+		} catch (error) {
+			if (
+				typeof error === "object" &&
+				error !== null &&
+				"code" in error &&
+				error.code === "P2002"
+			) {
+				throw new AppError(
+					409,
+					"This transaction ID (trxId) has already been submitted",
+				);
+			}
+			throw error;
+		}
 	}
 
 	const normalizedTrxId = normalizeTrxId(payload.trxId ?? "");
@@ -282,6 +310,12 @@ export const verifyStudentPayment = async (
 		}
 		if (existing.status !== PaymentStatus.PENDING) {
 			throw new AppError(400, "Only pending student payments can be verified");
+		}
+		if (existing.fee.status === FeeStatus.WAIVED) {
+			throw new AppError(
+				400,
+				"Cannot verify payment for a waived fee invoice. Please reject this payment instead.",
+			);
 		}
 
 		const claimed = await tx.studentPayment.updateMany({

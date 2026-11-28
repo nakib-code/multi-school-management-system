@@ -46,7 +46,9 @@ export const createStudentFeeSchema = z.object({
 			title: z.string().trim().min(1, "Fee title is required").max(150),
 			amount: z.coerce
 				.number()
+				.finite()
 				.positive("Amount must be greater than zero")
+				.max(99999999.99, "Amount exceeds maximum allowed value")
 				.optional(),
 			useClassDefaultAmount: z.boolean().optional(),
 			dueDate: z.coerce.date(),
@@ -80,7 +82,9 @@ export const bulkCreateStudentFeesSchema = z.object({
 			title: z.string().trim().min(1, "Fee title is required").max(150),
 			amount: z.coerce
 				.number()
+				.finite()
 				.positive("Amount must be greater than zero")
+				.max(99999999.99, "Amount exceeds maximum allowed value")
 				.optional(),
 			useClassDefaultAmount: z.boolean().optional(),
 			dueDate: z.coerce.date(),
@@ -107,7 +111,12 @@ export const updateStudentFeeSchema = z.object({
 		.object({
 			feeType: z.nativeEnum(FeeType).optional(),
 			title: z.string().trim().min(1).max(150).optional(),
-			amount: z.coerce.number().positive().optional(),
+			amount: z.coerce
+				.number()
+				.finite()
+				.positive()
+				.max(99999999.99, "Amount exceeds maximum allowed value")
+				.optional(),
 			dueDate: z.coerce.date().optional(),
 			academicYear: z.string().trim().min(4).max(20).nullable().optional(),
 			billingMonth: z

@@ -697,6 +697,7 @@ export const SchoolSettingScalarFieldEnum = {
   hasHefzSection: 'hasHefzSection',
   hasPublicWebsite: 'hasPublicWebsite',
   hasOnlineAdmission: 'hasOnlineAdmission',
+  onlineAdmissionPaused: 'onlineAdmissionPaused',
   hasTeacherPayroll: 'hasTeacherPayroll',
   smsEnabled: 'smsEnabled',
   bkashNumber: 'bkashNumber',

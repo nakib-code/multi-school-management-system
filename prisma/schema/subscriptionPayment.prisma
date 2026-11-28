@@ -7,7 +7,7 @@ model SubscriptionPayment {
   paymentMethod  SubscriptionPaymentMethod
   senderNumber   String
   receiverNumber String?
-  trxId          String                    @unique
+  trxId          String
   paidAmount     Decimal                   @db.Decimal(10, 2)
   currency       String                    @default("BDT")
   status         SubscriptionPaymentStatus @default(PENDING)
@@ -27,6 +27,7 @@ model SubscriptionPayment {
 
   @@index([subscriptionId])
   @@index([schoolId])
+  @@index([trxId])
   @@index([status])
   @@index([paymentMethod])
   @@index([createdAt])

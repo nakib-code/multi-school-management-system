@@ -119,7 +119,12 @@ export const upsertClassFeeStructuresSchema = z.object({
 			.array(
 				z.object({
 					feeType: z.nativeEnum(FeeType),
-					amount: z.coerce.number().min(0).nullable(),
+					amount: z.coerce
+						.number()
+						.finite()
+						.min(0)
+						.max(99999999.99, "Amount exceeds maximum allowed value")
+						.nullable(),
 					title: z.string().trim().max(150).nullable().optional(),
 					isActive: z.boolean().optional(),
 				}),

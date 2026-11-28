@@ -138,6 +138,7 @@ export type FeeType = (typeof FeeType)[keyof typeof FeeType]
 export const FeeStatus = {
   PENDING: 'PENDING',
   PARTIAL: 'PARTIAL',
+  OVERDUE: 'OVERDUE',
   PAID: 'PAID',
   WAIVED: 'WAIVED'
 } as const

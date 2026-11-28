@@ -113,67 +113,72 @@ describe("Unified Admission -> StudentFee Ledger & Roll Assignment", () => {
 		let createdFeeData: Record<string, unknown> | undefined;
 		let createdPaymentData: Record<string, unknown> | undefined;
 
-		stubDelegate("admission", {
-			findFirst: async () => ({
-				id: 99,
-				schoolId: 1,
-				classId: 3,
-				sectionId: 7,
-				applicationNo: "ADM-2026-0099",
-				studentName: "Ayesha Siddiqua",
-				nameBangla: null,
-				studentEmail: null,
-				passwordHash: null,
-				dateOfBirth: new Date("2015-01-01"),
-				gender: "FEMALE",
-				residentialType: "NON_RESIDENTIAL",
-				guardianName: "Rahman",
-				guardianPhone: "01711000000",
-				guardianRelationship: "FATHER",
-				guardianEmail: null,
-				guardianNid: null,
-				guardianOccupation: null,
-				fatherName: null,
-				motherName: null,
-				address: null,
-				presentAddress: null,
-				permanentAddress: null,
-				academicYear: "2026",
-				shift: "MORNING",
-				group: null,
-				academicGroup: null,
-				quranWing: null,
-				bloodGroup: null,
-				birthRegNo: null,
-				previousSchool: null,
-				previousClass: null,
-				studentPhotoUrl: null,
-				birthCertificateUrl: null,
-				previousCertificateUrl: null,
-				guardianNidUrl: null,
-				previousTcUrl: null,
-				marksheetUrl: null,
-				status: "PENDING",
-				class: { id: 3, name: "Class 1", code: "C1" },
-				section: { id: 7, name: "A", capacity: 40 },
-				payment: {
-					id: 501,
-					amount: 2500,
-					paymentMethod: "BKASH",
-					status: "PAID",
-					transactionId: "TRX999",
-					senderNumber: "01711000000",
-					paidAt: new Date("2026-11-20T00:00:00Z"),
-					receivedBy: 2,
-					remarks: "Verified",
-				},
-			}),
-		});
+		const admissionRecord = {
+			id: 99,
+			schoolId: 1,
+			classId: 3,
+			sectionId: 7,
+			applicationNo: "ADM-2026-0099",
+			studentName: "Ayesha Siddiqua",
+			nameBangla: null,
+			studentEmail: null,
+			passwordHash: null,
+			dateOfBirth: new Date("2015-01-01"),
+			gender: "FEMALE",
+			residentialType: "NON_RESIDENTIAL",
+			guardianName: "Rahman",
+			guardianPhone: "01711000000",
+			guardianRelationship: "FATHER",
+			guardianEmail: null,
+			guardianNid: null,
+			guardianOccupation: null,
+			fatherName: null,
+			motherName: null,
+			address: null,
+			presentAddress: null,
+			permanentAddress: null,
+			academicYear: "2026",
+			shift: "MORNING",
+			group: null,
+			academicGroup: null,
+			quranWing: null,
+			bloodGroup: null,
+			birthRegNo: null,
+			previousSchool: null,
+			previousClass: null,
+			studentPhotoUrl: null,
+			birthCertificateUrl: null,
+			previousCertificateUrl: null,
+			guardianNidUrl: null,
+			previousTcUrl: null,
+			marksheetUrl: null,
+			status: "PENDING",
+			class: { id: 3, name: "Class 1", code: "C1" },
+			section: { id: 7, name: "A", capacity: 40 },
+			payment: {
+				id: 501,
+				amount: 2500,
+				paymentMethod: "BKASH",
+				status: "PAID",
+				transactionId: "TRX999",
+				senderNumber: "01711000000",
+				paidAt: new Date("2026-11-20T00:00:00Z"),
+				receivedBy: 2,
+				remarks: "Verified",
+			},
+		};
 
 		const fakeTx = {
 			schoolSubscription: {
 				findFirst: async () => ({
 					package: { id: 1, name: "Pro", studentLimit: 500 },
+				}),
+			},
+			schoolSetting: {
+				findUnique: async () => ({
+					bkashNumber: "01700000000",
+					nagadNumber: null,
+					rocketNumber: null,
 				}),
 			},
 			student: {
@@ -225,7 +230,9 @@ describe("Unified Admission -> StudentFee Ledger & Roll Assignment", () => {
 				},
 			},
 			admission: {
-				update: async () => ({
+				findFirst: async () => admissionRecord,
+				updateMany: async () => ({ count: 1 }),
+				findUniqueOrThrow: async () => ({
 					id: 99,
 					applicationNo: "ADM-2026-0099",
 					studentName: "Ayesha Siddiqua",
@@ -241,10 +248,12 @@ describe("Unified Admission -> StudentFee Ledger & Roll Assignment", () => {
 
 		const approved = await approveAdmission(1, 99, 2);
 		assert.equal(approved.status, "APPROVED");
+		assert.equal(approved.rollNumber, 13);
 		assert.equal(createdEnrollmentData?.rollNumber, 13);
 		assert.equal(createdFeeData?.feeType, "ADMISSION");
 		assert.equal(createdFeeData?.admissionPaymentId, 501);
 		assert.equal(createdPaymentData?.trxId, "ADM-501-TRX999");
+		assert.equal(createdPaymentData?.receiverNumber, "01700000000");
 
 		// Verify getSchoolReportOverview does not double-count linked admission payment
 		stubDelegate("studentFee", {

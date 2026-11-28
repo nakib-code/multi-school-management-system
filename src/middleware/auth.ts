@@ -43,7 +43,12 @@ export const authenticate = async (
 		// Verify user still exists, is active, and token predates any password reset
 		const dbUser = await prisma.user.findUnique({
 			where: { id: decoded.userId },
-			select: { status: true, passwordChangedAt: true },
+			select: {
+				status: true,
+				role: true,
+				schoolId: true,
+				passwordChangedAt: true,
+			},
 		});
 
 		if (!dbUser || dbUser.status !== "ACTIVE") {
@@ -65,9 +70,9 @@ export const authenticate = async (
 
 		req.user = {
 			userId: decoded.userId,
-			role: decoded.role,
-			...(decoded.schoolId !== undefined && {
-				schoolId: decoded.schoolId,
+			role: dbUser.role,
+			...(dbUser.schoolId !== null && {
+				schoolId: dbUser.schoolId,
 			}),
 		};
 

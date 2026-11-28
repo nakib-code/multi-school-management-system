@@ -8,9 +8,10 @@ model SchoolSetting {
   // Per-School Feature Flags (Controlled by Super Admin)
   hasGeneralSection  Boolean @default(true)
   hasHefzSection     Boolean @default(true)
-  hasPublicWebsite   Boolean @default(false)
-  hasOnlineAdmission Boolean @default(true)
-  hasTeacherPayroll  Boolean @default(false)
+  hasPublicWebsite      Boolean @default(false)
+  hasOnlineAdmission    Boolean @default(true)
+  onlineAdmissionPaused Boolean @default(false)
+  hasTeacherPayroll     Boolean @default(false)
   smsEnabled         Boolean @default(false)
 
   // School-Level Manual Mobile Banking Settings (Editable by School Admin / Manager)

@@ -127,7 +127,7 @@ export const verifySubscriptionPaymentController = async (
 			},
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
-		});
+		}).catch(() => {});
 
 		const schoolAdmin = await prisma.user.findFirst({
 			where: {
@@ -181,7 +181,7 @@ export const rejectSubscriptionPaymentController = async (
 			metadata: { reason: req.body?.rejectionReason },
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
-		});
+		}).catch(() => {});
 
 		const schoolAdmin = await prisma.user.findFirst({
 			where: {

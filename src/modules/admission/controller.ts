@@ -185,7 +185,17 @@ export const approveAdmissionController = async (
 		throw new AppError(401, "Unauthorized");
 	}
 
-	const result = await approveAdmission(schoolId, admissionId, req.user.userId);
+	const assignNextRollNumber =
+		typeof req.body?.assignNextRollNumber === "boolean"
+			? req.body.assignNextRollNumber
+			: true;
+
+	const result = await approveAdmission(
+		schoolId,
+		admissionId,
+		req.user.userId,
+		{ assignNextRollNumber },
+	);
 
 	await recordSchoolAudit({
 		schoolId,
@@ -196,7 +206,7 @@ export const approveAdmissionController = async (
 		description: `Approved admission ${result.applicationNo} (${result.studentName})`,
 		ipAddress: req.ip ?? null,
 		userAgent: req.headers["user-agent"] ?? null,
-	});
+	}).catch(() => {});
 
 	return sendResponse(res, {
 		statusCode: 200,
@@ -245,7 +255,7 @@ export const rejectAdmissionController = async (
 		description: `Rejected admission ${result.applicationNo}: ${req.body.rejectionReason}`,
 		ipAddress: req.ip ?? null,
 		userAgent: req.headers["user-agent"] ?? null,
-	});
+	}).catch(() => {});
 
 	return sendResponse(res, {
 		statusCode: 200,
@@ -284,6 +294,17 @@ export const confirmCashPaymentController = async (
 		req.user.userId,
 		{ remarks: req.body?.remarks },
 	);
+
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user.userId,
+		action: "APPROVE",
+		entity: "AdmissionPayment",
+		entityId: result.id,
+		description: `Confirmed cash admission payment #${result.id} for admission #${admissionId} (৳${result.amount})`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	}).catch(() => {});
 
 	return sendResponse(res, {
 		statusCode: 200,
@@ -418,6 +439,17 @@ export const verifyOnlinePaymentController = async (
 		{ remarks: req.body?.remarks },
 	);
 
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user.userId,
+		action: "APPROVE",
+		entity: "AdmissionPayment",
+		entityId: result.id,
+		description: `Verified online admission payment #${result.id} (${result.transactionId ?? "N/A"}) for admission #${admissionId}`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	}).catch(() => {});
+
 	return sendResponse(res, {
 		statusCode: 200,
 		success: true,
@@ -453,6 +485,17 @@ export const rejectOnlinePaymentController = async (
 		req.user.userId,
 		{ remarks: String(req.body?.remarks ?? "") },
 	);
+
+	await recordSchoolAudit({
+		schoolId,
+		userId: req.user.userId,
+		action: "REJECT",
+		entity: "AdmissionPayment",
+		entityId: result.id,
+		description: `Rejected online admission payment #${result.id} for admission #${admissionId}: ${String(req.body?.remarks ?? "")}`,
+		ipAddress: req.ip ?? null,
+		userAgent: req.headers["user-agent"] ?? null,
+	}).catch(() => {});
 
 	return sendResponse(res, {
 		statusCode: 200,

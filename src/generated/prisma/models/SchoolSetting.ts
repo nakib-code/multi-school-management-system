@@ -48,6 +48,7 @@ export type SchoolSettingMinAggregateOutputType = {
   hasHefzSection: boolean | null
   hasPublicWebsite: boolean | null
   hasOnlineAdmission: boolean | null
+  onlineAdmissionPaused: boolean | null
   hasTeacherPayroll: boolean | null
   smsEnabled: boolean | null
   bkashNumber: string | null
@@ -74,6 +75,7 @@ export type SchoolSettingMaxAggregateOutputType = {
   hasHefzSection: boolean | null
   hasPublicWebsite: boolean | null
   hasOnlineAdmission: boolean | null
+  onlineAdmissionPaused: boolean | null
   hasTeacherPayroll: boolean | null
   smsEnabled: boolean | null
   bkashNumber: string | null
@@ -100,6 +102,7 @@ export type SchoolSettingCountAggregateOutputType = {
   hasHefzSection: number
   hasPublicWebsite: number
   hasOnlineAdmission: number
+  onlineAdmissionPaused: number
   hasTeacherPayroll: number
   smsEnabled: number
   bkashNumber: number
@@ -143,6 +146,7 @@ export type SchoolSettingMinAggregateInputType = {
   hasHefzSection?: true
   hasPublicWebsite?: true
   hasOnlineAdmission?: true
+  onlineAdmissionPaused?: true
   hasTeacherPayroll?: true
   smsEnabled?: true
   bkashNumber?: true
@@ -169,6 +173,7 @@ export type SchoolSettingMaxAggregateInputType = {
   hasHefzSection?: true
   hasPublicWebsite?: true
   hasOnlineAdmission?: true
+  onlineAdmissionPaused?: true
   hasTeacherPayroll?: true
   smsEnabled?: true
   bkashNumber?: true
@@ -195,6 +200,7 @@ export type SchoolSettingCountAggregateInputType = {
   hasHefzSection?: true
   hasPublicWebsite?: true
   hasOnlineAdmission?: true
+  onlineAdmissionPaused?: true
   hasTeacherPayroll?: true
   smsEnabled?: true
   bkashNumber?: true
@@ -309,6 +315,7 @@ export type SchoolSettingGroupByOutputType = {
   hasHefzSection: boolean
   hasPublicWebsite: boolean
   hasOnlineAdmission: boolean
+  onlineAdmissionPaused: boolean
   hasTeacherPayroll: boolean
   smsEnabled: boolean
   bkashNumber: string | null
@@ -359,6 +366,7 @@ export type SchoolSettingWhereInput = {
   hasHefzSection?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   hasPublicWebsite?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   hasOnlineAdmission?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  onlineAdmissionPaused?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   hasTeacherPayroll?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   smsEnabled?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   bkashNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
@@ -387,6 +395,7 @@ export type SchoolSettingOrderByWithRelationInput = {
   hasHefzSection?: Prisma.SortOrder
   hasPublicWebsite?: Prisma.SortOrder
   hasOnlineAdmission?: Prisma.SortOrder
+  onlineAdmissionPaused?: Prisma.SortOrder
   hasTeacherPayroll?: Prisma.SortOrder
   smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -418,6 +427,7 @@ export type SchoolSettingWhereUniqueInput = Prisma.AtLeast<{
   hasHefzSection?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   hasPublicWebsite?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   hasOnlineAdmission?: Prisma.BoolFilter<"SchoolSetting"> | boolean
+  onlineAdmissionPaused?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   hasTeacherPayroll?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   smsEnabled?: Prisma.BoolFilter<"SchoolSetting"> | boolean
   bkashNumber?: Prisma.StringNullableFilter<"SchoolSetting"> | string | null
@@ -446,6 +456,7 @@ export type SchoolSettingOrderByWithAggregationInput = {
   hasHefzSection?: Prisma.SortOrder
   hasPublicWebsite?: Prisma.SortOrder
   hasOnlineAdmission?: Prisma.SortOrder
+  onlineAdmissionPaused?: Prisma.SortOrder
   hasTeacherPayroll?: Prisma.SortOrder
   smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -481,6 +492,7 @@ export type SchoolSettingScalarWhereWithAggregatesInput = {
   hasHefzSection?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
   hasPublicWebsite?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
   hasOnlineAdmission?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
+  onlineAdmissionPaused?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
   hasTeacherPayroll?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
   smsEnabled?: Prisma.BoolWithAggregatesFilter<"SchoolSetting"> | boolean
   bkashNumber?: Prisma.StringNullableWithAggregatesFilter<"SchoolSetting"> | string | null
@@ -506,6 +518,7 @@ export type SchoolSettingCreateInput = {
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: string | null
@@ -534,6 +547,7 @@ export type SchoolSettingUncheckedCreateInput = {
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: string | null
@@ -559,6 +573,7 @@ export type SchoolSettingUpdateInput = {
   hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineAdmissionPaused?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
   smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +602,7 @@ export type SchoolSettingUncheckedUpdateInput = {
   hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineAdmissionPaused?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
   smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -614,6 +630,7 @@ export type SchoolSettingCreateManyInput = {
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: string | null
@@ -639,6 +656,7 @@ export type SchoolSettingUpdateManyMutationInput = {
   hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineAdmissionPaused?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
   smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -666,6 +684,7 @@ export type SchoolSettingUncheckedUpdateManyInput = {
   hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineAdmissionPaused?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
   smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -706,6 +725,7 @@ export type SchoolSettingCountOrderByAggregateInput = {
   hasHefzSection?: Prisma.SortOrder
   hasPublicWebsite?: Prisma.SortOrder
   hasOnlineAdmission?: Prisma.SortOrder
+  onlineAdmissionPaused?: Prisma.SortOrder
   hasTeacherPayroll?: Prisma.SortOrder
   smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrder
@@ -740,6 +760,7 @@ export type SchoolSettingMaxOrderByAggregateInput = {
   hasHefzSection?: Prisma.SortOrder
   hasPublicWebsite?: Prisma.SortOrder
   hasOnlineAdmission?: Prisma.SortOrder
+  onlineAdmissionPaused?: Prisma.SortOrder
   hasTeacherPayroll?: Prisma.SortOrder
   smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrder
@@ -766,6 +787,7 @@ export type SchoolSettingMinOrderByAggregateInput = {
   hasHefzSection?: Prisma.SortOrder
   hasPublicWebsite?: Prisma.SortOrder
   hasOnlineAdmission?: Prisma.SortOrder
+  onlineAdmissionPaused?: Prisma.SortOrder
   hasTeacherPayroll?: Prisma.SortOrder
   smsEnabled?: Prisma.SortOrder
   bkashNumber?: Prisma.SortOrder
@@ -838,6 +860,7 @@ export type SchoolSettingCreateWithoutSchoolInput = {
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: string | null
@@ -864,6 +887,7 @@ export type SchoolSettingUncheckedCreateWithoutSchoolInput = {
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: string | null
@@ -905,6 +929,7 @@ export type SchoolSettingUpdateWithoutSchoolInput = {
   hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineAdmissionPaused?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
   smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -931,6 +956,7 @@ export type SchoolSettingUncheckedUpdateWithoutSchoolInput = {
   hasHefzSection?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasPublicWebsite?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasOnlineAdmission?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  onlineAdmissionPaused?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasTeacherPayroll?: Prisma.BoolFieldUpdateOperationsInput | boolean
   smsEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bkashNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -960,6 +986,7 @@ export type SchoolSettingSelect<ExtArgs extends runtime.Types.Extensions.Interna
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: boolean
@@ -988,6 +1015,7 @@ export type SchoolSettingSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: boolean
@@ -1016,6 +1044,7 @@ export type SchoolSettingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: boolean
@@ -1044,6 +1073,7 @@ export type SchoolSettingSelectScalar = {
   hasHefzSection?: boolean
   hasPublicWebsite?: boolean
   hasOnlineAdmission?: boolean
+  onlineAdmissionPaused?: boolean
   hasTeacherPayroll?: boolean
   smsEnabled?: boolean
   bkashNumber?: boolean
@@ -1063,7 +1093,7 @@ export type SchoolSettingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "weeklyOffDays" | "externalWebsiteUrl" | "websiteConnectionKeyHash" | "websiteConnectionKeyPreview" | "landingAdminEmail" | "landingAdminPasswordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
+export type SchoolSettingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "admissionFee" | "hasGeneralSection" | "hasHefzSection" | "hasPublicWebsite" | "hasOnlineAdmission" | "onlineAdmissionPaused" | "hasTeacherPayroll" | "smsEnabled" | "bkashNumber" | "bkashType" | "nagadNumber" | "nagadType" | "rocketNumber" | "rocketType" | "feePaymentInstruction" | "weeklyOffDays" | "externalWebsiteUrl" | "websiteConnectionKeyHash" | "websiteConnectionKeyPreview" | "landingAdminEmail" | "landingAdminPasswordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["schoolSetting"]>
 export type SchoolSettingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
 }
@@ -1087,6 +1117,7 @@ export type $SchoolSettingPayload<ExtArgs extends runtime.Types.Extensions.Inter
     hasHefzSection: boolean
     hasPublicWebsite: boolean
     hasOnlineAdmission: boolean
+    onlineAdmissionPaused: boolean
     hasTeacherPayroll: boolean
     smsEnabled: boolean
     bkashNumber: string | null
@@ -1535,6 +1566,7 @@ export interface SchoolSettingFieldRefs {
   readonly hasHefzSection: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
   readonly hasPublicWebsite: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
   readonly hasOnlineAdmission: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
+  readonly onlineAdmissionPaused: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
   readonly hasTeacherPayroll: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
   readonly smsEnabled: Prisma.FieldRef<"SchoolSetting", 'Boolean'>
   readonly bkashNumber: Prisma.FieldRef<"SchoolSetting", 'String'>
