@@ -26,6 +26,12 @@ const staffGuard = [
 	requireSchoolAccess,
 ];
 
+const adminGuard = [
+	authenticate,
+	authorize(UserRole.ADMIN),
+	requireSchoolAccess,
+];
+
 router.post(
 	`${basePath}/other`,
 	...staffGuard,
@@ -42,7 +48,7 @@ router.patch(
 
 router.delete(
 	`${basePath}/other/:id`,
-	...staffGuard,
+	...adminGuard,
 	validateRequest(deleteOtherIncomeSchema),
 	deleteOtherIncomeController,
 );

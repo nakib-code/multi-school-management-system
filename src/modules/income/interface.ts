@@ -44,6 +44,9 @@ export interface IncomeSummaryQuery {
 export interface IncomeChartQuery {
 	billingMonth: string;
 	category?: IncomeCategoryFilter;
+	startDate?: string;
+	endDate?: string;
+	search?: string;
 }
 
 export interface UnifiedIncomeRow {
@@ -51,7 +54,9 @@ export interface UnifiedIncomeRow {
 	id: string;
 	entryId: number;
 	date: string; // YYYY-MM-DD
-	billingMonth: string; // YYYY-MM
+	billingMonth: string; // YYYY-MM (cash payment month)
+	feeBillingMonth: string | null; // YYYY-MM (original fee billing month, if student fee)
+	receiptNo: string | null;
 	category: UnifiedIncomeCategory;
 	categoryLabel: string;
 	sourceType: IncomeSourceType;

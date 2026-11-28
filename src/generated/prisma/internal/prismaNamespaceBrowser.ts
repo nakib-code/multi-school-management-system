@@ -83,6 +83,7 @@ export const ModelName = {
   SalaryPayment: 'SalaryPayment',
   School: 'School',
   SchoolContactMessage: 'SchoolContactMessage',
+  SchoolDocumentSequence: 'SchoolDocumentSequence',
   SchoolGalleryImage: 'SchoolGalleryImage',
   SchoolNotice: 'SchoolNotice',
   SchoolPageContent: 'SchoolPageContent',
@@ -390,6 +391,9 @@ export const CustomExpenseEntryScalarFieldEnum = {
   entryDate: 'entryDate',
   billingMonth: 'billingMonth',
   amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  voucherNo: 'voucherNo',
+  attachmentUrl: 'attachmentUrl',
   fieldValues: 'fieldValues',
   recordedById: 'recordedById',
   createdAt: 'createdAt',
@@ -512,6 +516,7 @@ export const IncomeEntryScalarFieldEnum = {
   incomeDate: 'incomeDate',
   billingMonth: 'billingMonth',
   paymentMethod: 'paymentMethod',
+  receiptNo: 'receiptNo',
   referenceNo: 'referenceNo',
   notes: 'notes',
   recordedById: 'recordedById',
@@ -713,6 +718,18 @@ export const SchoolContactMessageScalarFieldEnum = {
 export type SchoolContactMessageScalarFieldEnum = (typeof SchoolContactMessageScalarFieldEnum)[keyof typeof SchoolContactMessageScalarFieldEnum]
 
 
+export const SchoolDocumentSequenceScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  docType: 'docType',
+  year: 'year',
+  lastValue: 'lastValue',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolDocumentSequenceScalarFieldEnum = (typeof SchoolDocumentSequenceScalarFieldEnum)[keyof typeof SchoolDocumentSequenceScalarFieldEnum]
+
+
 export const SchoolGalleryImageScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -830,6 +847,13 @@ export const StudentFeeScalarFieldEnum = {
   feeType: 'feeType',
   title: 'title',
   amount: 'amount',
+  grossAmount: 'grossAmount',
+  concessionAmount: 'concessionAmount',
+  concessionType: 'concessionType',
+  waivedAmount: 'waivedAmount',
+  waiverReason: 'waiverReason',
+  waivedById: 'waivedById',
+  waivedAt: 'waivedAt',
   dueDate: 'dueDate',
   academicYear: 'academicYear',
   billingMonth: 'billingMonth',
@@ -853,6 +877,7 @@ export const StudentPaymentScalarFieldEnum = {
   senderNumber: 'senderNumber',
   receiverNumber: 'receiverNumber',
   trxId: 'trxId',
+  receiptNo: 'receiptNo',
   paidAmount: 'paidAmount',
   status: 'status',
   paidAt: 'paidAt',
@@ -922,6 +947,10 @@ export const StudentScalarFieldEnum = {
   guardianNidUrl: 'guardianNidUrl',
   previousTcUrl: 'previousTcUrl',
   marksheetUrl: 'marksheetUrl',
+  concessionType: 'concessionType',
+  concessionMode: 'concessionMode',
+  concessionValue: 'concessionValue',
+  concessionReason: 'concessionReason',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

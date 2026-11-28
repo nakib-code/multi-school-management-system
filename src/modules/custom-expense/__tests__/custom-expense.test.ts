@@ -2,13 +2,19 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
 	CustomExpenseFieldType,
+	PaymentMethod,
 	Prisma,
+	UserRole,
 } from "../../../generated/prisma/client.js";
 import { prisma } from "../../../lib/prisma.js";
+import { customExpenseRoutes } from "../route.js";
 import {
+	assertNoDuplicateFieldLabels,
+	createCustomExpenseEntry,
 	generateUniqueFieldKey,
 	getCustomExpenseMonthlyChart,
 	normalizeEntryDate,
+	parseSafeFiniteNumber,
 	sanitizeAndValidateFieldValues,
 } from "../service.js";
 import { createEntrySchema, createSheetSchema } from "../validation.js";
@@ -144,6 +150,16 @@ describe("Custom Expense Monthly Chart Aggregation & School Isolation", () => {
 							isRequired: true,
 							sortOrder: 0,
 						},
+						{
+							id: 102,
+							sheetId: 12,
+							schoolId: 7,
+							label: "কেজি",
+							fieldKey: "col_2",
+							fieldType: CustomExpenseFieldType.NUMBER,
+							isRequired: false,
+							sortOrder: 1,
+						},
 					],
 					_count: { entries: 2 },
 				};
@@ -160,7 +176,10 @@ describe("Custom Expense Monthly Chart Aggregation & School Isolation", () => {
 							entryDate: new Date(Date.UTC(2026, 10, 5, 12, 0, 0)),
 							billingMonth: "2026-11",
 							amount: new Prisma.Decimal("1250.50"),
-							fieldValues: { col_1: "মাছ ও সবজি" },
+							paymentMethod: PaymentMethod.CASH,
+							voucherNo: "VCH-2026-0001",
+							attachmentUrl: null,
+							fieldValues: { col_1: "মাছ ও সবজি", col_2: 10.5 },
 							recordedBy: { id: 1, name: "Admin", role: "ADMIN" },
 						},
 						{
@@ -170,7 +189,10 @@ describe("Custom Expense Monthly Chart Aggregation & School Isolation", () => {
 							entryDate: new Date(Date.UTC(2026, 10, 5, 12, 0, 0)),
 							billingMonth: "2026-11",
 							amount: new Prisma.Decimal("749.50"),
-							fieldValues: { col_1: "মসলা" },
+							paymentMethod: PaymentMethod.CASH,
+							voucherNo: "VCH-2026-0002",
+							attachmentUrl: null,
+							fieldValues: { col_1: "মসলা", col_2: "not-a-number" },
 							recordedBy: { id: 1, name: "Admin", role: "ADMIN" },
 						},
 					];
@@ -189,6 +211,7 @@ describe("Custom Expense Monthly Chart Aggregation & School Isolation", () => {
 			assert.equal(chart.entryCount, 2);
 			assert.equal(chart.activeDaysCount, 1);
 			assert.equal(chart.dailySeries.length, 30); // November has 30 days
+			assert.equal(chart.numericColumnTotals.col_2, 10.5);
 			const day5 = chart.dailySeries.find((d) => d.date === "2026-11-05");
 			assert.deepEqual(day5, {
 				date: "2026-11-05",
@@ -198,11 +221,124 @@ describe("Custom Expense Monthly Chart Aggregation & School Isolation", () => {
 			});
 			assert.equal(chart.rows[0]?.serial, 1);
 			assert.equal(chart.rows[0]?.fieldValues.col_1, "মাছ ও সবজি");
+			assert.equal(chart.rows[0]?.voucherNo, "VCH-2026-0001");
 			assert.equal(chart.rows[1]?.serial, 2);
 		} finally {
 			prisma.school.findUnique = originalSchoolFind;
 			prisma.customExpenseSheet.findFirst = originalSheetFind;
 			prisma.customExpenseEntry.findMany = originalEntryFind;
+		}
+	});
+
+	it("rejects duplicate column labels, guards NaN numbers, blocks mutations on archived sheets, and enforces ADMIN-only DELETE routes", async () => {
+		assert.throws(
+			() =>
+				assertNoDuplicateFieldLabels([
+					{ label: "দোকানের নাম" },
+					{ label: "  দোকানের নাম  " },
+				]),
+			/Duplicate column label/,
+		);
+
+		assert.equal(parseSafeFiniteNumber("42.5"), 42.5);
+		assert.equal(parseSafeFiniteNumber("abc"), null);
+		assert.equal(parseSafeFiniteNumber(Number.NaN), null);
+		assert.equal(parseSafeFiniteNumber(Number.POSITIVE_INFINITY), null);
+
+		const originalSheetFind = prisma.customExpenseSheet.findFirst;
+		try {
+			(
+				prisma.customExpenseSheet as unknown as { findFirst: unknown }
+			).findFirst = async () => ({
+				id: 99,
+				schoolId: 7,
+				name: "Old Archived Sheet",
+				description: null,
+				isActive: false,
+				createdById: 1,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				fields: [],
+				_count: { entries: 0 },
+			});
+
+			await assert.rejects(
+				() =>
+					createCustomExpenseEntry(7, 99, 1, {
+						amount: 500,
+					}),
+				/archived/i,
+			);
+		} finally {
+			prisma.customExpenseSheet.findFirst = originalSheetFind;
+		}
+
+		// Verify ADMIN-only RBAC on destructive DELETE and restore routes
+		const routerStack = (
+			customExpenseRoutes as unknown as {
+				stack: Array<{
+					route?: {
+						path: string;
+						methods: Record<string, boolean>;
+						stack: Array<{
+							handle: (
+								req: {
+									user?: { userId: number; role: UserRole; schoolId: number };
+								},
+								res: unknown,
+								next: (err?: unknown) => void,
+							) => void;
+						}>;
+					};
+				}>;
+			}
+		).stack;
+
+		const adminOnlyRoutes = [
+			{
+				path: "/schools/:schoolId/custom-expenses/sheets/:sheetId",
+				method: "delete",
+			},
+			{
+				path: "/schools/:schoolId/custom-expenses/sheets/:sheetId/entries/:entryId",
+				method: "delete",
+			},
+			{
+				path: "/schools/:schoolId/custom-expenses/sheets/:sheetId/restore",
+				method: "patch",
+			},
+		];
+
+		for (const target of adminOnlyRoutes) {
+			const layer = routerStack.find(
+				(l) => l.route?.path === target.path && l.route.methods[target.method],
+			);
+			assert.ok(
+				layer?.route,
+				`Route ${target.method.toUpperCase()} ${target.path} should exist`,
+			);
+			const authz = layer.route.stack[1]?.handle;
+			assert.ok(authz);
+
+			let managerErr: unknown;
+			authz(
+				{ user: { userId: 2, role: UserRole.MANAGER, schoolId: 7 } },
+				{},
+				(err?: unknown) => {
+					managerErr = err;
+				},
+			);
+			assert.equal((managerErr as { statusCode?: number })?.statusCode, 403);
+
+			let adminErr: unknown;
+			authz(
+				{ user: { userId: 1, role: UserRole.ADMIN, schoolId: 7 } },
+				{},
+				(err?: unknown) => {
+					adminErr = err;
+				},
+			);
+			assert.equal(adminErr, undefined);
 		}
 	});
 });

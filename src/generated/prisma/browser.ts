@@ -178,6 +178,11 @@ export type School = Prisma.SchoolModel
  */
 export type SchoolContactMessage = Prisma.SchoolContactMessageModel
 /**
+ * Model SchoolDocumentSequence
+ * 
+ */
+export type SchoolDocumentSequence = Prisma.SchoolDocumentSequenceModel
+/**
  * Model SchoolGalleryImage
  * 
  */

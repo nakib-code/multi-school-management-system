@@ -51,6 +51,7 @@ export const createStudentFeeSchema = z.object({
 				.max(99999999.99, "Amount exceeds maximum allowed value")
 				.optional(),
 			useClassDefaultAmount: z.boolean().optional(),
+			applyStudentConcession: z.boolean().optional().default(true),
 			dueDate: z.coerce.date(),
 			academicYear: z.string().trim().min(4).max(20).optional(),
 			billingMonth: z
@@ -87,6 +88,7 @@ export const bulkCreateStudentFeesSchema = z.object({
 				.max(99999999.99, "Amount exceeds maximum allowed value")
 				.optional(),
 			useClassDefaultAmount: z.boolean().optional(),
+			applyStudentConcession: z.boolean().optional().default(true),
 			dueDate: z.coerce.date(),
 			billingMonth: z
 				.string()
@@ -114,7 +116,7 @@ export const updateStudentFeeSchema = z.object({
 			amount: z.coerce
 				.number()
 				.finite()
-				.positive()
+				.min(0, "Amount cannot be negative")
 				.max(99999999.99, "Amount exceeds maximum allowed value")
 				.optional(),
 			dueDate: z.coerce.date().optional(),
@@ -127,6 +129,13 @@ export const updateStudentFeeSchema = z.object({
 				.optional(),
 			examId: z.coerce.number().int().positive().nullable().optional(),
 			status: z.nativeEnum(FeeStatus).optional(),
+			waivedAmount: z.coerce
+				.number()
+				.finite()
+				.min(0, "Waived amount cannot be negative")
+				.max(99999999.99, "Waived amount exceeds maximum allowed value")
+				.optional(),
+			waiverReason: z.string().trim().max(500).nullable().optional(),
 			description: z.string().trim().max(500).nullable().optional(),
 			remarks: z.string().trim().max(500).nullable().optional(),
 		})

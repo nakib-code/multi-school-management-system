@@ -1,13 +1,18 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
+import type { NextFunction, Response } from "express";
 import {
 	AdmissionPaymentStatus,
 	FeeType,
 	PaymentMethod,
 	PaymentStatus,
 	Prisma,
+	UserRole,
 } from "../../../generated/prisma/client.js";
 import { prisma } from "../../../lib/prisma.js";
+import type { AuthRequest } from "../../../middleware/auth.js";
+import { authorize } from "../../../middleware/auth.js";
+import { incomeRoutes } from "../route.js";
 import {
 	deleteOtherIncomeEntry,
 	getIncomeMonthlyChart,
@@ -228,5 +233,167 @@ describe("Unified Income Aggregation, Non-Double-Counting & School Isolation", (
 		} finally {
 			prisma.incomeEntry.findFirst = origFindFirst;
 		}
+	});
+
+	it("accepts BANK_TRANSFER and CHEQUE payment methods and covers out-of-month startDate/endDate range in chart", async () => {
+		const bankParsed = createOtherIncomeSchema.safeParse({
+			params: { schoolId: 9 },
+			body: {
+				sourceLabel: "সরকারি অনুদান",
+				title: "Annual Grant",
+				amount: 25000,
+				paymentMethod: PaymentMethod.BANK_TRANSFER,
+				referenceNo: "SONALI-2026-01",
+			},
+		});
+		assert.equal(bankParsed.success, true);
+
+		const chequeParsed = createOtherIncomeSchema.safeParse({
+			params: { schoolId: 9 },
+			body: {
+				sourceLabel: "দান / অনুদান",
+				title: "Committee Cheque",
+				amount: 15000,
+				paymentMethod: PaymentMethod.CHEQUE,
+			},
+		});
+		assert.equal(chequeParsed.success, true);
+
+		const origStudentPayFind = prisma.studentPayment.findMany;
+		const origAdmissionPayFind = prisma.admissionPayment.findMany;
+		const origIncomeFind = prisma.incomeEntry.findMany;
+		const origSchoolFind = prisma.school.findUnique;
+
+		try {
+			(prisma.school as unknown as { findUnique: unknown }).findUnique =
+				async () => ({
+					id: 9,
+					name: "Jamia Arabia Madrasa",
+					code: "JAM-09",
+					logo: null,
+					address: "Chattogram",
+					phone: "01800000000",
+					email: "info@jamia.edu.bd",
+				});
+			(prisma.studentPayment as unknown as { findMany: unknown }).findMany =
+				async () => [
+					{
+						id: 10,
+						paidAmount: new Prisma.Decimal("1200.00"),
+						paymentMethod: PaymentMethod.CASH,
+						trxId: "CASH-10",
+						receiptNo: "RCP-2026-0010",
+						paidAt: new Date("2026-10-30T06:00:00Z"),
+						remarks: null,
+						student: {
+							firstName: "Tariq",
+							lastName: "Islam",
+							studentId: "STU-010",
+						},
+						fee: {
+							feeType: FeeType.MONTHLY,
+							title: "September Tuition",
+							billingMonth: "2026-09",
+						},
+						verifiedBy: { name: "Admin" },
+					},
+				];
+			(prisma.admissionPayment as unknown as { findMany: unknown }).findMany =
+				async () => [];
+			(prisma.incomeEntry as unknown as { findMany: unknown }).findMany =
+				async () => [
+					{
+						id: 40,
+						sourceLabel: "দান / অনুদান",
+						title: "November Grant",
+						amount: new Prisma.Decimal("3000.00"),
+						incomeDate: new Date(Date.UTC(2026, 10, 2, 12, 0, 0)),
+						billingMonth: "2026-11",
+						paymentMethod: PaymentMethod.BANK_TRANSFER,
+						receiptNo: "DON-2026-0001",
+						referenceNo: "BANK-40",
+						notes: null,
+						recordedBy: { name: "Admin" },
+					},
+				];
+
+			const chart = await getIncomeMonthlyChart(9, {
+				billingMonth: "2026-11",
+				startDate: "2026-10-30",
+				endDate: "2026-11-02",
+			});
+
+			// Daily series spans 4 days across month boundary (Oct 30, Oct 31, Nov 1, Nov 2)
+			assert.equal(chart.dailySeries.length, 4);
+			assert.equal(chart.dailySeries[0]?.date, "2026-10-30");
+			assert.equal(chart.dailySeries[0]?.totalAmount, 1200);
+			assert.equal(chart.dailySeries[3]?.date, "2026-11-02");
+			assert.equal(chart.dailySeries[3]?.totalAmount, 3000);
+			assert.equal(chart.displayedTotal, 4200);
+			assert.equal(chart.grandTotal, 4200);
+
+			const feeRow = chart.rows.find((r) => r.sourceType === "STUDENT_PAYMENT");
+			assert.equal(feeRow?.feeBillingMonth, "2026-09");
+			assert.equal(feeRow?.receiptNo, "RCP-2026-0010");
+		} finally {
+			prisma.studentPayment.findMany = origStudentPayFind;
+			prisma.admissionPayment.findMany = origAdmissionPayFind;
+			prisma.incomeEntry.findMany = origIncomeFind;
+			prisma.school.findUnique = origSchoolFind;
+		}
+	});
+
+	it("enforces ADMIN-only RBAC on DELETE manual income route", () => {
+		const routerStack = (
+			incomeRoutes as unknown as {
+				stack: Array<{
+					route?: {
+						path: string;
+						methods: Record<string, boolean>;
+						stack: Array<{
+							handle: (
+								req: AuthRequest,
+								res: Response,
+								next: NextFunction,
+							) => void;
+						}>;
+					};
+				}>;
+			}
+		).stack;
+
+		const deleteLayer = routerStack.find(
+			(layer) =>
+				layer.route?.path === "/schools/:schoolId/income/other/:id" &&
+				layer.route.methods.delete,
+		);
+		assert.ok(deleteLayer?.route, "DELETE manual income route should exist");
+
+		// Second middleware in adminGuard is authorize(UserRole.ADMIN)
+		const authzHandler = deleteLayer.route.stack[1]?.handle;
+		assert.ok(authzHandler);
+
+		let managerErr: unknown;
+		authzHandler(
+			{
+				user: { userId: 2, role: UserRole.MANAGER, schoolId: 9 },
+			} as AuthRequest,
+			{} as Response,
+			(err?: unknown) => {
+				managerErr = err;
+			},
+		);
+		assert.equal((managerErr as { statusCode?: number })?.statusCode, 403);
+
+		let adminErr: unknown;
+		authzHandler(
+			{ user: { userId: 1, role: UserRole.ADMIN, schoolId: 9 } } as AuthRequest,
+			{} as Response,
+			(err?: unknown) => {
+				adminErr = err;
+			},
+		);
+		assert.equal(adminErr, undefined);
+		assert.ok(authorize);
 	});
 });

@@ -1,11 +1,18 @@
-import type {
-	AdmissionPaymentStatus,
-	AdmissionStatus,
-	EnrollmentStatus,
+import {
+	type AdmissionPaymentStatus,
+	type AdmissionStatus,
+	type EnrollmentStatus,
 	FeeStatus,
-	FeeType,
+	type FeeType,
+	PaymentStatus,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
+import {
+	getDhakaStartOfToday,
+	roundMoney,
+	toDhakaDateKey,
+} from "../../utils/dhakaDate.js";
+import { computeFeeFinancials } from "../student-fee/service.js";
 
 import type { ReportOverview } from "./interface.js";
 
@@ -304,6 +311,8 @@ export const getSchoolReportOverview = async (schoolId: number) => {
 			select: {
 				feeType: true,
 				amount: true,
+				waivedAmount: true,
+				dueDate: true,
 				status: true,
 				payments: {
 					where: { status: "VERIFIED" },
@@ -368,27 +377,27 @@ export const getSchoolReportOverview = async (schoolId: number) => {
 		}
 	>();
 
+	const now = new Date();
 	for (const fee of feeRows) {
-		const net = Math.max(0, Number(fee.amount));
-		const paid =
-			fee.status === "PAID"
-				? net
-				: fee.payments.reduce((pSum, p) => pSum + Number(p.paidAmount), 0);
-		const collected = Math.min(net, paid);
-		const due = fee.status === "WAIVED" ? 0 : Math.max(0, net - paid);
-		const waived = fee.status === "WAIVED" ? net : 0;
+		const fin = computeFeeFinancials(fee, now);
+		const isFullyWaivedWithoutPayment =
+			fin.effectiveStatus === FeeStatus.WAIVED && fin.paid === 0;
 
-		if (fee.status !== "WAIVED") {
-			totalBilled += net;
-			totalCollected += collected;
-			totalDue += due;
-		} else {
-			totalWaived += waived;
+		if (!isFullyWaivedWithoutPayment) {
+			totalBilled = roundMoney(totalBilled + fin.billed);
+			totalCollected = roundMoney(totalCollected + fin.paid);
+			totalDue = roundMoney(totalDue + fin.due);
+		}
+		if (fin.waived > 0) {
+			totalWaived = roundMoney(totalWaived + fin.waived);
 		}
 
-		if (fee.status === "PAID") paidFeeCount += 1;
-		else if (fee.status === "PARTIAL") partialFeeCount += 1;
-		else if (fee.status === "PENDING" || fee.status === "OVERDUE") {
+		if (fin.effectiveStatus === FeeStatus.PAID) paidFeeCount += 1;
+		else if (fin.effectiveStatus === FeeStatus.PARTIAL) partialFeeCount += 1;
+		else if (
+			fin.effectiveStatus === FeeStatus.PENDING ||
+			fin.effectiveStatus === FeeStatus.OVERDUE
+		) {
 			unpaidFeeCount += 1;
 		}
 
@@ -401,12 +410,13 @@ export const getSchoolReportOverview = async (schoolId: number) => {
 			waived: 0,
 		};
 		bucket.count += 1;
-		if (fee.status !== "WAIVED") {
-			bucket.billed += net;
-			bucket.collected += collected;
-			bucket.due += due;
-		} else {
-			bucket.waived += waived;
+		if (!isFullyWaivedWithoutPayment) {
+			bucket.billed = roundMoney(bucket.billed + fin.billed);
+			bucket.collected = roundMoney(bucket.collected + fin.paid);
+			bucket.due = roundMoney(bucket.due + fin.due);
+		}
+		if (fin.waived > 0) {
+			bucket.waived = roundMoney(bucket.waived + fin.waived);
 		}
 		feeTypeMap.set(fee.feeType, bucket);
 	}
@@ -663,6 +673,22 @@ export const getFeeChartReport = async (
 		query.sectionId !== undefined ||
 		query.academicYear !== undefined;
 
+	const dhakaTodayStart = getDhakaStartOfToday();
+	const feeStatusWhere =
+		query.status === FeeStatus.OVERDUE
+			? {
+					OR: [
+						{ status: FeeStatus.OVERDUE },
+						{
+							status: { in: [FeeStatus.PENDING, FeeStatus.PARTIAL] },
+							dueDate: { lt: dhakaTodayStart },
+						},
+					],
+				}
+			: query.status !== undefined
+				? { status: query.status }
+				: {};
+
 	const [school, fees] = await Promise.all([
 		getSchoolHeaderInfo(schoolId),
 		prisma.studentFee.findMany({
@@ -675,7 +701,7 @@ export const getFeeChartReport = async (
 					? { billingMonth: query.billingMonth }
 					: {}),
 				...(query.examId !== undefined ? { examId: query.examId } : {}),
-				...(query.status !== undefined ? { status: query.status } : {}),
+				...feeStatusWhere,
 				...(hasEnrollmentFilter
 					? {
 							enrollment: {
@@ -697,6 +723,11 @@ export const getFeeChartReport = async (
 				feeType: true,
 				title: true,
 				amount: true,
+				grossAmount: true,
+				concessionAmount: true,
+				concessionType: true,
+				waivedAmount: true,
+				waiverReason: true,
 				dueDate: true,
 				status: true,
 				academicYear: true,
@@ -748,6 +779,7 @@ export const getFeeChartReport = async (
 	let paidCount = 0;
 	let partialCount = 0;
 	let pendingCount = 0;
+	let overdueCount = 0;
 	let waivedCount = 0;
 
 	const byFeeTypeMap = new Map<
@@ -762,28 +794,40 @@ export const getFeeChartReport = async (
 		}
 	>();
 
-	const rows = fees.map((fee, idx) => {
-		const billed = Math.max(0, Number(fee.amount));
-		const verifiedPaid = fee.payments.reduce(
-			(s, p) => s + Number(p.paidAmount),
-			0,
-		);
-		const paid =
-			fee.status === "PAID" ? billed : Math.min(billed, verifiedPaid);
-		const due = fee.status === "WAIVED" ? 0 : Math.max(0, billed - paid);
-		const waived = fee.status === "WAIVED" ? billed : 0;
+	const now = new Date();
+	const evaluatedFees = fees
+		.map((fee) => ({
+			fee,
+			fin: computeFeeFinancials(fee, now),
+		}))
+		.filter(({ fin }) => {
+			if (query.status === FeeStatus.OVERDUE) return fin.isOverdue;
+			if (
+				query.status === FeeStatus.PENDING ||
+				query.status === FeeStatus.PARTIAL
+			) {
+				return fin.effectiveStatus === query.status;
+			}
+			return true;
+		});
 
-		if (fee.status !== "WAIVED") {
-			totalBilled += billed;
-			totalCollected += paid;
-			totalDue += due;
-		} else {
-			totalWaived += waived;
+	const rows = evaluatedFees.map(({ fee, fin }, idx) => {
+		const isFullyWaivedWithoutPayment =
+			fin.effectiveStatus === FeeStatus.WAIVED && fin.paid === 0;
+
+		if (!isFullyWaivedWithoutPayment) {
+			totalBilled = roundMoney(totalBilled + fin.billed);
+			totalCollected = roundMoney(totalCollected + fin.paid);
+			totalDue = roundMoney(totalDue + fin.due);
+		}
+		if (fin.waived > 0) {
+			totalWaived = roundMoney(totalWaived + fin.waived);
 		}
 
-		if (fee.status === "PAID") paidCount += 1;
-		else if (fee.status === "PARTIAL") partialCount += 1;
-		else if (fee.status === "WAIVED") waivedCount += 1;
+		if (fin.effectiveStatus === FeeStatus.PAID) paidCount += 1;
+		else if (fin.effectiveStatus === FeeStatus.PARTIAL) partialCount += 1;
+		else if (fin.effectiveStatus === FeeStatus.WAIVED) waivedCount += 1;
+		else if (fin.effectiveStatus === FeeStatus.OVERDUE) overdueCount += 1;
 		else pendingCount += 1;
 
 		const bucket = byFeeTypeMap.get(fee.feeType) ?? {
@@ -795,12 +839,13 @@ export const getFeeChartReport = async (
 			waived: 0,
 		};
 		bucket.count += 1;
-		if (fee.status !== "WAIVED") {
-			bucket.billed += billed;
-			bucket.collected += paid;
-			bucket.due += due;
-		} else {
-			bucket.waived += waived;
+		if (!isFullyWaivedWithoutPayment) {
+			bucket.billed = roundMoney(bucket.billed + fin.billed);
+			bucket.collected = roundMoney(bucket.collected + fin.paid);
+			bucket.due = roundMoney(bucket.due + fin.due);
+		}
+		if (fin.waived > 0) {
+			bucket.waived = roundMoney(bucket.waived + fin.waived);
 		}
 		byFeeTypeMap.set(fee.feeType, bucket);
 
@@ -819,10 +864,17 @@ export const getFeeChartReport = async (
 			title: fee.title,
 			billingMonth: fee.billingMonth,
 			examName: fee.exam?.name ?? null,
-			billed,
-			paid,
-			due,
-			status: fee.status,
+			grossAmount:
+				fee.grossAmount !== null ? roundMoney(Number(fee.grossAmount)) : null,
+			concessionAmount: roundMoney(Number(fee.concessionAmount ?? 0)),
+			concessionType: fee.concessionType ?? null,
+			billed: fin.billed,
+			paid: fin.paid,
+			waived: fin.waived,
+			waiverReason: fee.waiverReason ?? null,
+			due: fin.due,
+			isOverdue: fin.isOverdue,
+			status: fin.effectiveStatus,
 			dueDate: fee.dueDate,
 		};
 	});
@@ -840,9 +892,272 @@ export const getFeeChartReport = async (
 			paidCount,
 			partialCount,
 			pendingCount,
+			overdueCount,
 			waivedCount,
 			byFeeType: [...byFeeTypeMap.values()],
 		},
+	};
+};
+
+export interface DefaulterListFilter {
+	classId?: number;
+	sectionId?: number;
+	academicYear?: string;
+	feeType?: "ALL" | FeeType;
+	status?: "ALL_DUE" | "OVERDUE" | "PENDING" | "PARTIAL";
+	search?: string;
+}
+
+export const getDefaulterListReport = async (
+	schoolId: number,
+	query: DefaulterListFilter = {},
+) => {
+	const hasEnrollmentFilter =
+		query.classId !== undefined ||
+		query.sectionId !== undefined ||
+		query.academicYear !== undefined;
+
+	const [school, unpaidFees] = await Promise.all([
+		getSchoolHeaderInfo(schoolId),
+		prisma.studentFee.findMany({
+			where: {
+				schoolId,
+				status: {
+					in: [FeeStatus.PENDING, FeeStatus.PARTIAL, FeeStatus.OVERDUE],
+				},
+				...(query.feeType !== undefined && query.feeType !== "ALL"
+					? { feeType: query.feeType }
+					: {}),
+				...(hasEnrollmentFilter
+					? {
+							enrollment: {
+								...(query.classId !== undefined
+									? { classId: query.classId }
+									: {}),
+								...(query.sectionId !== undefined
+									? { sectionId: query.sectionId }
+									: {}),
+								...(query.academicYear !== undefined
+									? { academicYear: query.academicYear }
+									: {}),
+							},
+						}
+					: {}),
+			},
+			select: {
+				id: true,
+				feeType: true,
+				title: true,
+				amount: true,
+				waivedAmount: true,
+				dueDate: true,
+				status: true,
+				billingMonth: true,
+				studentId: true,
+				student: {
+					select: {
+						id: true,
+						studentId: true,
+						firstName: true,
+						lastName: true,
+						nameBangla: true,
+						phone: true,
+						fatherName: true,
+						fatherPhone: true,
+						guardians: {
+							orderBy: { isPrimary: "desc" },
+							take: 1,
+							select: {
+								guardian: {
+									select: {
+										user: { select: { name: true, phone: true } },
+									},
+								},
+							},
+						},
+					},
+				},
+				enrollment: {
+					select: {
+						rollNumber: true,
+						academicYear: true,
+						class: { select: { id: true, name: true, code: true } },
+						section: { select: { id: true, name: true } },
+					},
+				},
+				payments: {
+					where: { status: PaymentStatus.VERIFIED },
+					select: { paidAmount: true, paidAt: true },
+				},
+			},
+		}),
+	]);
+
+	const now = new Date();
+	const studentIds = [...new Set(unpaidFees.map((f) => f.studentId))];
+
+	const lastPayments =
+		studentIds.length > 0
+			? await prisma.studentPayment.groupBy({
+					by: ["studentId"],
+					where: {
+						schoolId,
+						studentId: { in: studentIds },
+						status: PaymentStatus.VERIFIED,
+					},
+					_max: { paidAt: true },
+				})
+			: [];
+
+	const lastPaymentMap = new Map<number, string | null>(
+		lastPayments.map((lp) => [
+			lp.studentId,
+			lp._max.paidAt ? toDhakaDateKey(lp._max.paidAt) : null,
+		]),
+	);
+
+	interface StudentDefaulterBucket {
+		studentId: number;
+		studentCode: string;
+		rollNumber: number | null;
+		studentName: string;
+		nameBangla: string | null;
+		className: string;
+		sectionName: string | null;
+		academicYear: string;
+		guardianName: string | null;
+		guardianPhone: string | null;
+		unpaidFeeCount: number;
+		overdueFeeCount: number;
+		partialFeeCount: number;
+		totalBilled: number;
+		totalPaid: number;
+		totalWaived: number;
+		totalDue: number;
+		overdueDue: number;
+		oldestDueDate: string | null;
+		lastPaymentDate: string | null;
+		feeTitles: string[];
+	}
+
+	const grouped = new Map<number, StudentDefaulterBucket>();
+
+	for (const fee of unpaidFees) {
+		const fin = computeFeeFinancials(fee, now);
+		if (fin.due <= 0) continue;
+
+		if (query.status === "OVERDUE" && !fin.isOverdue) continue;
+		if (query.status === "PENDING" && fin.effectiveStatus !== FeeStatus.PENDING)
+			continue;
+		if (query.status === "PARTIAL" && fin.effectiveStatus !== FeeStatus.PARTIAL)
+			continue;
+
+		const primaryGuardian = fee.student.guardians[0]?.guardian?.user;
+		const existing = grouped.get(fee.studentId) ?? {
+			studentId: fee.student.id,
+			studentCode: fee.student.studentId,
+			rollNumber: fee.enrollment.rollNumber,
+			studentName:
+				`${fee.student.firstName} ${fee.student.lastName ?? ""}`.trim(),
+			nameBangla: fee.student.nameBangla ?? null,
+			className: fee.enrollment.class.name,
+			sectionName: fee.enrollment.section?.name ?? null,
+			academicYear: fee.enrollment.academicYear,
+			guardianName: primaryGuardian?.name ?? fee.student.fatherName ?? null,
+			guardianPhone:
+				primaryGuardian?.phone ??
+				fee.student.fatherPhone ??
+				fee.student.phone ??
+				null,
+			unpaidFeeCount: 0,
+			overdueFeeCount: 0,
+			partialFeeCount: 0,
+			totalBilled: 0,
+			totalPaid: 0,
+			totalWaived: 0,
+			totalDue: 0,
+			overdueDue: 0,
+			oldestDueDate: null,
+			lastPaymentDate: lastPaymentMap.get(fee.studentId) ?? null,
+			feeTitles: [],
+		};
+
+		existing.unpaidFeeCount += 1;
+		if (fin.isOverdue) {
+			existing.overdueFeeCount += 1;
+			existing.overdueDue = roundMoney(existing.overdueDue + fin.due);
+		}
+		if (fin.effectiveStatus === FeeStatus.PARTIAL) {
+			existing.partialFeeCount += 1;
+		}
+		existing.totalBilled = roundMoney(existing.totalBilled + fin.billed);
+		existing.totalPaid = roundMoney(existing.totalPaid + fin.paid);
+		existing.totalWaived = roundMoney(existing.totalWaived + fin.waived);
+		existing.totalDue = roundMoney(existing.totalDue + fin.due);
+		existing.feeTitles.push(fee.title);
+
+		const dueKey = toDhakaDateKey(fee.dueDate);
+		if (!existing.oldestDueDate || dueKey < existing.oldestDueDate) {
+			existing.oldestDueDate = dueKey;
+		}
+
+		grouped.set(fee.studentId, existing);
+	}
+
+	const q = query.search?.trim().toLowerCase();
+	const filteredBuckets = [...grouped.values()]
+		.filter((row) => {
+			if (!q) return true;
+			return (
+				row.studentName.toLowerCase().includes(q) ||
+				(row.nameBangla?.toLowerCase().includes(q) ?? false) ||
+				row.studentCode.toLowerCase().includes(q) ||
+				(row.guardianName?.toLowerCase().includes(q) ?? false) ||
+				(row.guardianPhone?.toLowerCase().includes(q) ?? false) ||
+				row.className.toLowerCase().includes(q) ||
+				(row.rollNumber !== null && String(row.rollNumber).includes(q))
+			);
+		})
+		.sort((a, b) => {
+			if (b.overdueDue !== a.overdueDue) return b.overdueDue - a.overdueDue;
+			if (b.totalDue !== a.totalDue) return b.totalDue - a.totalDue;
+			const classCmp = a.className.localeCompare(b.className);
+			if (classCmp !== 0) return classCmp;
+			return (
+				(a.rollNumber ?? Number.MAX_SAFE_INTEGER) -
+				(b.rollNumber ?? Number.MAX_SAFE_INTEGER)
+			);
+		});
+
+	let totalDueAmount = 0;
+	let totalOverdueAmount = 0;
+	let totalUnpaidInvoices = 0;
+	let overdueStudentsCount = 0;
+
+	const rows = filteredBuckets.map((item, idx) => {
+		totalDueAmount = roundMoney(totalDueAmount + item.totalDue);
+		totalOverdueAmount = roundMoney(totalOverdueAmount + item.overdueDue);
+		totalUnpaidInvoices += item.unpaidFeeCount;
+		if (item.overdueFeeCount > 0) overdueStudentsCount += 1;
+
+		return {
+			serial: idx + 1,
+			...item,
+			isOverdue: item.overdueFeeCount > 0,
+		};
+	});
+
+	return {
+		school,
+		filters: query,
+		summary: {
+			totalDefaulters: rows.length,
+			overdueStudentsCount,
+			totalUnpaidInvoices,
+			totalDueAmount,
+			totalOverdueAmount,
+		},
+		rows,
 	};
 };
 

@@ -162,6 +162,34 @@ export const IncomeEntryCategory = {
 export type IncomeEntryCategory = (typeof IncomeEntryCategory)[keyof typeof IncomeEntryCategory]
 
 
+export const StudentConcessionType = {
+  ORPHAN: 'ORPHAN',
+  LILLAH: 'LILLAH',
+  SIBLING: 'SIBLING',
+  SCHOLARSHIP: 'SCHOLARSHIP',
+  CUSTOM: 'CUSTOM'
+} as const
+
+export type StudentConcessionType = (typeof StudentConcessionType)[keyof typeof StudentConcessionType]
+
+
+export const DiscountMode = {
+  PERCENTAGE: 'PERCENTAGE',
+  FIXED: 'FIXED'
+} as const
+
+export type DiscountMode = (typeof DiscountMode)[keyof typeof DiscountMode]
+
+
+export const SequenceDocumentType = {
+  FEE_RECEIPT: 'FEE_RECEIPT',
+  DONATION_RECEIPT: 'DONATION_RECEIPT',
+  EXPENSE_VOUCHER: 'EXPENSE_VOUCHER'
+} as const
+
+export type SequenceDocumentType = (typeof SequenceDocumentType)[keyof typeof SequenceDocumentType]
+
+
 export const SalaryStatus = {
   PENDING: 'PENDING',
   PARTIAL: 'PARTIAL',
@@ -360,7 +388,9 @@ export const PaymentMethod = {
   CASH: 'CASH',
   BKASH: 'BKASH',
   NAGAD: 'NAGAD',
-  ROCKET: 'ROCKET'
+  ROCKET: 'ROCKET',
+  BANK_TRANSFER: 'BANK_TRANSFER',
+  CHEQUE: 'CHEQUE'
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]

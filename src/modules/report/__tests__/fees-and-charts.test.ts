@@ -1,13 +1,26 @@
 import assert from "node:assert/strict";
 import { afterEach, describe, it } from "node:test";
 import type { NextFunction, Response } from "express";
+import {
+	DiscountMode,
+	FeeStatus,
+	Prisma,
+	StudentConcessionType,
+	UserRole,
+} from "../../../generated/prisma/client.js";
 import { prisma } from "../../../lib/prisma.js";
 import type { AuthRequest } from "../../../middleware/auth.js";
 import { requireSchoolAccess } from "../../../middleware/schoolAccess.js";
 import { approveAdmission } from "../../admission/service.js";
 import { resolveClassFeeAmount } from "../../class/service.js";
 import {
+	computeConcessionDiscount,
+	computeFeeFinancials,
+	updateStudentFee,
+} from "../../student-fee/service.js";
+import {
 	getAdmissionChartReport,
+	getDefaulterListReport,
 	getFeeChartReport,
 	getSchoolReportOverview,
 	getStudentRosterChartReport,
@@ -355,5 +368,271 @@ describe("Multi-Tenant Isolation on Class-Wise Chart Reports", () => {
 		await getStudentRosterChartReport(42, { classId: 3 });
 
 		assert.deepEqual(seenSchoolIds, [42, 42, 42]);
+	});
+});
+
+describe("Student Concessions, Automated OVERDUE, Partial Waivers & Defaulter List", () => {
+	it("computes PERCENTAGE and FIXED concessions accurately including 100% orphan/lillah", () => {
+		const orphanFull = computeConcessionDiscount(2000, {
+			concessionType: StudentConcessionType.ORPHAN,
+			concessionMode: DiscountMode.PERCENTAGE,
+			concessionValue: 100,
+			concessionReason: "এতিম ছাড়",
+		});
+		assert.equal(orphanFull.grossAmount, 2000);
+		assert.equal(orphanFull.concessionAmount, 2000);
+		assert.equal(orphanFull.netAmount, 0);
+		assert.equal(orphanFull.concessionType, StudentConcessionType.ORPHAN);
+
+		const scholarship25 = computeConcessionDiscount(1800, {
+			concessionType: StudentConcessionType.SCHOLARSHIP,
+			concessionMode: DiscountMode.PERCENTAGE,
+			concessionValue: 25,
+		});
+		assert.equal(scholarship25.concessionAmount, 450);
+		assert.equal(scholarship25.netAmount, 1350);
+
+		const fixedCapped = computeConcessionDiscount(800, {
+			concessionType: StudentConcessionType.SIBLING,
+			concessionMode: DiscountMode.FIXED,
+			concessionValue: 1500,
+		});
+		assert.equal(fixedCapped.concessionAmount, 800);
+		assert.equal(fixedCapped.netAmount, 0);
+	});
+
+	it("marks past-due PENDING/PARTIAL fees as OVERDUE automatically and preserves paid cash under partial waivers", () => {
+		const now = new Date("2026-11-28T06:00:00Z");
+
+		const overduePending = computeFeeFinancials(
+			{
+				amount: new Prisma.Decimal("1500.00"),
+				waivedAmount: new Prisma.Decimal("0.00"),
+				status: FeeStatus.PENDING,
+				dueDate: new Date("2026-11-10T00:00:00Z"),
+				payments: [],
+			},
+			now,
+		);
+		assert.equal(overduePending.isOverdue, true);
+		assert.equal(overduePending.effectiveStatus, FeeStatus.OVERDUE);
+		assert.equal(overduePending.due, 1500);
+
+		// Partial payment (600) + partial waiver (400) on 1500 fee -> paid stays 600, waived 400, due 500
+		const partialWaived = computeFeeFinancials(
+			{
+				amount: new Prisma.Decimal("1500.00"),
+				waivedAmount: new Prisma.Decimal("400.00"),
+				status: FeeStatus.PARTIAL,
+				dueDate: new Date("2026-12-05T00:00:00Z"),
+				payments: [{ paidAmount: new Prisma.Decimal("600.00") }],
+			},
+			now,
+		);
+		assert.equal(partialWaived.paid, 600);
+		assert.equal(partialWaived.waived, 400);
+		assert.equal(partialWaived.due, 500);
+		assert.equal(partialWaived.isOverdue, false);
+		assert.equal(partialWaived.effectiveStatus, FeeStatus.PARTIAL);
+
+		// Full waiver of remaining balance after partial payment preserves already-collected cash (600 paid, 900 waived, 0 due, PAID)
+		const settledByWaiver = computeFeeFinancials(
+			{
+				amount: new Prisma.Decimal("1500.00"),
+				waivedAmount: new Prisma.Decimal("900.00"),
+				status: FeeStatus.WAIVED,
+				dueDate: new Date("2026-11-10T00:00:00Z"),
+				payments: [{ paidAmount: new Prisma.Decimal("600.00") }],
+			},
+			now,
+		);
+		assert.equal(settledByWaiver.paid, 600);
+		assert.equal(settledByWaiver.waived, 900);
+		assert.equal(settledByWaiver.due, 0);
+		assert.equal(settledByWaiver.isOverdue, false);
+		assert.equal(settledByWaiver.effectiveStatus, FeeStatus.PAID);
+	});
+
+	it("blocks MANAGER from approving fee waivers while allowing ADMIN", async () => {
+		const fakeTx = {
+			studentFee: {
+				findFirst: async () => ({
+					id: 55,
+					schoolId: 10,
+					title: "November Tuition",
+					amount: new Prisma.Decimal("2000.00"),
+					waivedAmount: new Prisma.Decimal("0.00"),
+					waiverReason: null,
+					status: FeeStatus.PENDING,
+					dueDate: new Date("2026-11-10T00:00:00Z"),
+				}),
+				update: async (args: { data: Record<string, unknown> }) => ({
+					id: 55,
+					...args.data,
+				}),
+			},
+			studentPayment: {
+				aggregate: async () => ({
+					_sum: { paidAmount: new Prisma.Decimal("500.00") },
+				}),
+			},
+		};
+
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof fakeTx) => Promise<unknown>,
+		) => fn(fakeTx)) as unknown as Record<string, unknown>);
+
+		await assert.rejects(
+			() =>
+				updateStudentFee(
+					10,
+					55,
+					{ waivedAmount: 500, waiverReason: "Hardship" },
+					{ userId: 2, role: UserRole.MANAGER },
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		const adminResult = await updateStudentFee(
+			10,
+			55,
+			{ waivedAmount: 500, waiverReason: "Approved by Principal" },
+			{ userId: 1, role: UserRole.ADMIN },
+		);
+		assert.ok(adminResult);
+	});
+
+	it("groups unpaid & overdue invoices per student in Defaulter List and enforces schoolId isolation", async () => {
+		let capturedFeeWhere: Record<string, unknown> | undefined;
+		let capturedGroupByWhere: Record<string, unknown> | undefined;
+
+		stubDelegate("school", {
+			findUnique: async () => ({
+				id: 19,
+				name: "Nooria Madrasa",
+				code: "NM-19",
+				logo: null,
+				address: "Dhaka",
+				phone: "01712345678",
+				email: null,
+			}),
+		});
+		stubDelegate("studentFee", {
+			findMany: async (args: { where: Record<string, unknown> }) => {
+				capturedFeeWhere = args.where;
+				return [
+					{
+						id: 1,
+						studentId: 101,
+						title: "October Tuition",
+						amount: new Prisma.Decimal("1500.00"),
+						waivedAmount: new Prisma.Decimal("0.00"),
+						status: FeeStatus.PENDING,
+						dueDate: new Date("2020-01-15T00:00:00Z"), // guaranteed past due
+						student: {
+							id: 101,
+							studentId: "STU-101",
+							firstName: "Hasan",
+							lastName: "Ali",
+							nameBangla: "হাসান আলী",
+							phone: null,
+							fatherName: "Karim Ali",
+							fatherPhone: "01711112222",
+							guardians: [],
+						},
+						enrollment: {
+							rollNumber: 3,
+							academicYear: "2026",
+							class: { id: 1, name: "Class 5", code: "C5" },
+							section: { id: 1, name: "A" },
+						},
+						payments: [],
+					},
+					{
+						id: 2,
+						studentId: 101,
+						title: "November Tuition",
+						amount: new Prisma.Decimal("1500.00"),
+						waivedAmount: new Prisma.Decimal("200.00"),
+						status: FeeStatus.PARTIAL,
+						dueDate: new Date("2020-02-15T00:00:00Z"), // guaranteed past due
+						student: {
+							id: 101,
+							studentId: "STU-101",
+							firstName: "Hasan",
+							lastName: "Ali",
+							nameBangla: "হাসান আলী",
+							phone: null,
+							fatherName: "Karim Ali",
+							fatherPhone: "01711112222",
+							guardians: [],
+						},
+						enrollment: {
+							rollNumber: 3,
+							academicYear: "2026",
+							class: { id: 1, name: "Class 5", code: "C5" },
+							section: { id: 1, name: "A" },
+						},
+						payments: [
+							{
+								paidAmount: new Prisma.Decimal("300.00"),
+								paidAt: new Date("2026-10-01T06:00:00Z"),
+							},
+						],
+					},
+					{
+						id: 3,
+						studentId: 102,
+						title: "Future Tuition",
+						amount: new Prisma.Decimal("1000.00"),
+						waivedAmount: new Prisma.Decimal("0.00"),
+						status: FeeStatus.PENDING,
+						dueDate: new Date("2099-12-31T00:00:00Z"), // not overdue
+						student: {
+							id: 102,
+							studentId: "STU-102",
+							firstName: "Bilal",
+							lastName: null,
+							nameBangla: null,
+							phone: "01899998888",
+							fatherName: null,
+							fatherPhone: null,
+							guardians: [],
+						},
+						enrollment: {
+							rollNumber: 7,
+							academicYear: "2026",
+							class: { id: 1, name: "Class 5", code: "C5" },
+							section: { id: 1, name: "A" },
+						},
+						payments: [],
+					},
+				];
+			},
+		});
+		stubDelegate("studentPayment", {
+			groupBy: async (args: { where: Record<string, unknown> }) => {
+				capturedGroupByWhere = args.where;
+				return [
+					{
+						studentId: 101,
+						_max: { paidAt: new Date("2026-10-01T06:00:00Z") },
+					},
+				];
+			},
+		});
+
+		const report = await getDefaulterListReport(19, { status: "OVERDUE" });
+		assert.equal(capturedFeeWhere?.schoolId, 19);
+		assert.equal(capturedGroupByWhere?.schoolId, 19);
+		assert.equal(report.summary.totalDefaulters, 1);
+		assert.equal(report.summary.overdueStudentsCount, 1);
+		assert.equal(report.summary.totalUnpaidInvoices, 2);
+		// Student 101: fee 1 due 1500 + fee 2 due (1500 - 300 paid - 200 waived = 1000) = 2500
+		assert.equal(report.summary.totalDueAmount, 2500);
+		assert.equal(report.summary.totalOverdueAmount, 2500);
+		assert.equal(report.rows[0]?.studentCode, "STU-101");
+		assert.equal(report.rows[0]?.guardianPhone, "01711112222");
+		assert.equal(report.rows[0]?.lastPaymentDate, "2026-10-01");
 	});
 });

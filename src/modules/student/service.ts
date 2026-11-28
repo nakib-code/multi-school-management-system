@@ -1,8 +1,10 @@
 import {
 	type AcademicGroup,
+	type DiscountMode,
 	type HefzWing,
 	Prisma,
 	type ResidentialType,
+	type StudentConcessionType,
 	type UserRole,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
@@ -85,6 +87,10 @@ export interface CreateStudentInput {
 	guardianNidUrl?: string;
 	previousTcUrl?: string;
 	marksheetUrl?: string;
+	concessionType?: StudentConcessionType;
+	concessionMode?: DiscountMode;
+	concessionValue?: number;
+	concessionReason?: string;
 }
 
 export type UpdateStudentInput = Partial<{
@@ -137,6 +143,10 @@ export type UpdateStudentInput = Partial<{
 	guardianNidUrl: string | null;
 	previousTcUrl: string | null;
 	marksheetUrl: string | null;
+	concessionType: StudentConcessionType | null;
+	concessionMode: DiscountMode | null;
+	concessionValue: number | null;
+	concessionReason: string | null;
 }>;
 
 const generateStudentCode = (schoolId: number) => {
@@ -420,6 +430,18 @@ export const createStudent = async (
 						? { previousTcUrl: input.previousTcUrl }
 						: {}),
 					...(input.marksheetUrl ? { marksheetUrl: input.marksheetUrl } : {}),
+					...(input.concessionType
+						? { concessionType: input.concessionType }
+						: {}),
+					...(input.concessionMode
+						? { concessionMode: input.concessionMode }
+						: {}),
+					...(input.concessionValue !== undefined
+						? { concessionValue: input.concessionValue }
+						: {}),
+					...(input.concessionReason
+						? { concessionReason: input.concessionReason }
+						: {}),
 					isActive: true,
 				},
 			});
@@ -744,6 +766,10 @@ export const getAllStudents = async (
 				quranWing: true,
 				studentPhotoUrl: true,
 				admissionDate: true,
+				concessionType: true,
+				concessionMode: true,
+				concessionValue: true,
+				concessionReason: true,
 				isActive: true,
 				user: {
 					select: {

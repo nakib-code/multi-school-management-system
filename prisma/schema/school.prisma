@@ -45,6 +45,7 @@ model School {
   customExpenseFields  CustomExpenseField[]
   customExpenseEntries CustomExpenseEntry[]
   incomeEntries        IncomeEntry[]
+  documentSequences    SchoolDocumentSequence[]
   teacherSalaries TeacherSalary[]
   salaryPayments  SalaryPayment[]
   admissions      Admission[]

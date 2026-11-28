@@ -42,14 +42,17 @@ model CustomExpenseField {
 }
 
 model CustomExpenseEntry {
-  id           Int      @id @default(autoincrement())
-  sheetId      Int
-  schoolId     Int
-  entryDate    DateTime
-  billingMonth String
-  amount       Decimal  @db.Decimal(10, 2)
-  fieldValues  Json     @default("{}")
-  recordedById Int
+  id            Int           @id @default(autoincrement())
+  sheetId       Int
+  schoolId      Int
+  entryDate     DateTime
+  billingMonth  String
+  amount        Decimal       @db.Decimal(10, 2)
+  paymentMethod PaymentMethod @default(CASH)
+  voucherNo     String?
+  attachmentUrl String?
+  fieldValues   Json          @default("{}")
+  recordedById  Int
 
   sheet      CustomExpenseSheet @relation(fields: [sheetId], references: [id], onDelete: Cascade)
   school     School             @relation(fields: [schoolId], references: [id], onDelete: Cascade)
@@ -58,6 +61,7 @@ model CustomExpenseEntry {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([schoolId, voucherNo])
   @@index([schoolId, sheetId, billingMonth])
   @@index([schoolId, sheetId, entryDate])
   @@map("custom_expense_entries")

@@ -10,6 +10,7 @@ import {
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import { generateNextDocumentNumber } from "../../utils/documentSequence.js";
 import { hashPassword } from "../../utils/password.js";
 import {
 	generateTemporaryPassword,
@@ -1128,7 +1129,8 @@ export const approveAdmission = async (
 								? PaymentMethod.ROCKET
 								: PaymentMethod.BKASH;
 
-				const paidDate = admission.payment.paidAt ?? now;
+				const paidDate =
+					admission.payment.paidAt ?? admission.payment.createdAt ?? now;
 				const syncedFee = await tx.studentFee.create({
 					data: {
 						schoolId,
@@ -1178,6 +1180,15 @@ export const approveAdmission = async (
 								: (schoolSetting?.rocketNumber ?? null);
 				}
 
+				const receiptNo = tx.schoolDocumentSequence
+					? await generateNextDocumentNumber(
+							tx,
+							schoolId,
+							"FEE_RECEIPT",
+							paidDate,
+						)
+					: null;
+
 				await tx.studentPayment.create({
 					data: {
 						schoolId,
@@ -1191,6 +1202,7 @@ export const approveAdmission = async (
 								: (admission.guardianPhone ?? "ONLINE-ADMISSION")),
 						receiverNumber: syncedReceiverNumber,
 						trxId: safeTrxId,
+						...(receiptNo ? { receiptNo } : {}),
 						paidAmount: admission.payment.amount,
 						status: "VERIFIED",
 						paidAt: paidDate,

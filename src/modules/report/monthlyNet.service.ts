@@ -1,17 +1,21 @@
 import {
 	AdmissionPaymentStatus,
 	PaymentStatus,
+	SalaryPaymentStatus,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import {
+	getCurrentDhakaMonth,
+	resolveMonthOrCustomDateRange,
+	roundMoney,
+	toDhakaDateKey,
+} from "../../utils/dhakaDate.js";
 import { formatDateKey } from "../custom-expense/service.js";
 import type { UnifiedIncomeCategory } from "../income/interface.js";
 import {
-	getCurrentDhakaMonth,
 	INCOME_CATEGORY_LABELS,
 	mapFeeTypeToIncomeCategory,
-	resolveMonthDateRange,
-	toDhakaDateKey,
 } from "../income/service.js";
 
 export type NetBalanceStatus = "SURPLUS" | "DEFICIT";
@@ -19,6 +23,7 @@ export type NetBalanceStatus = "SURPLUS" | "DEFICIT";
 export interface MonthlyNetQuery {
 	billingMonth?: string;
 	trendMonths?: number;
+	includePayroll?: boolean;
 }
 
 const ALL_INCOME_CATEGORIES: UnifiedIncomeCategory[] = [
@@ -28,8 +33,7 @@ const ALL_INCOME_CATEGORIES: UnifiedIncomeCategory[] = [
 	"OTHER_INCOME",
 ];
 
-const roundMoney = (value: number): number =>
-	Math.round((value + Number.EPSILON) * 100) / 100;
+export const PAYROLL_BREAKDOWN_LABEL = "শিক্ষক বেতন (Teacher Payroll)";
 
 /**
  * Returns `count` trailing YYYY-MM keys ending at `endMonth` in chronological order.
@@ -72,13 +76,15 @@ export const getMonthlyNetReport = async (
 		12,
 		Math.max(1, Number(query.trendMonths ?? 6) || 6),
 	);
+	const includePayroll = query.includePayroll !== false;
 
 	const trendMonthKeys = buildTrailingMonths(billingMonth, trendMonthsCount);
 	const earliestMonth = trendMonthKeys[0] ?? billingMonth;
 
-	const { rangeStart: windowStart } = resolveMonthDateRange(earliestMonth);
+	const { rangeStart: windowStart } =
+		resolveMonthOrCustomDateRange(earliestMonth);
 	const { rangeEnd: windowEnd, daysInMonth } =
-		resolveMonthDateRange(billingMonth);
+		resolveMonthOrCustomDateRange(billingMonth);
 
 	const [
 		school,
@@ -86,6 +92,7 @@ export const getMonthlyNetReport = async (
 		unlinkedAdmissionPayments,
 		manualIncomeEntries,
 		expenseEntries,
+		salaryPayments,
 	] = await Promise.all([
 		prisma.school.findUnique({
 			where: { id: schoolId },
@@ -151,6 +158,17 @@ export const getMonthlyNetReport = async (
 				sheet: { select: { id: true, name: true } },
 			},
 		}),
+		prisma.salaryPayment.findMany({
+			where: {
+				schoolId,
+				status: SalaryPaymentStatus.COMPLETED,
+				paidAt: { gte: windowStart, lte: windowEnd },
+			},
+			select: {
+				amount: true,
+				paidAt: true,
+			},
+		}),
 	]);
 
 	if (!school) {
@@ -160,10 +178,20 @@ export const getMonthlyNetReport = async (
 	// Trailing trend buckets keyed by YYYY-MM
 	const trendMap = new Map<
 		string,
-		{ totalIncome: number; totalExpense: number }
+		{
+			totalIncome: number;
+			customExpense: number;
+			payrollExpense: number;
+			totalExpense: number;
+		}
 	>();
 	for (const key of trendMonthKeys) {
-		trendMap.set(key, { totalIncome: 0, totalExpense: 0 });
+		trendMap.set(key, {
+			totalIncome: 0,
+			customExpense: 0,
+			payrollExpense: 0,
+			totalExpense: 0,
+		});
 	}
 
 	// Selected month income breakdown
@@ -178,7 +206,10 @@ export const getMonthlyNetReport = async (
 	};
 
 	// Selected month daily map
-	const dailyMap = new Map<string, { income: number; expense: number }>();
+	const dailyMap = new Map<
+		string,
+		{ income: number; expense: number; payrollExpense: number }
+	>();
 
 	const addIncomePoint = (
 		dateKey: string,
@@ -196,7 +227,11 @@ export const getMonthlyNetReport = async (
 			);
 			incomeCats[category].count += 1;
 
-			const dayBucket = dailyMap.get(dateKey) ?? { income: 0, expense: 0 };
+			const dayBucket = dailyMap.get(dateKey) ?? {
+				income: 0,
+				expense: 0,
+				payrollExpense: 0,
+			};
 			dayBucket.income = roundMoney(dayBucket.income + amount);
 			dailyMap.set(dateKey, dayBucket);
 		}
@@ -223,6 +258,7 @@ export const getMonthlyNetReport = async (
 		number,
 		{
 			sheetId: number;
+			sourceType: "CUSTOM_SHEET" | "TEACHER_PAYROLL";
 			sheetName: string;
 			totalAmount: number;
 			entryCount: number;
@@ -233,17 +269,25 @@ export const getMonthlyNetReport = async (
 		const amount = roundMoney(Number(exp.amount));
 		const trendBucket = trendMap.get(exp.billingMonth);
 		if (trendBucket) {
+			trendBucket.customExpense = roundMoney(
+				trendBucket.customExpense + amount,
+			);
 			trendBucket.totalExpense = roundMoney(trendBucket.totalExpense + amount);
 		}
 
 		if (exp.billingMonth === billingMonth) {
 			const dateKey = formatDateKey(exp.entryDate);
-			const dayBucket = dailyMap.get(dateKey) ?? { income: 0, expense: 0 };
+			const dayBucket = dailyMap.get(dateKey) ?? {
+				income: 0,
+				expense: 0,
+				payrollExpense: 0,
+			};
 			dayBucket.expense = roundMoney(dayBucket.expense + amount);
 			dailyMap.set(dateKey, dayBucket);
 
 			const sheetBucket = sheetExpenseMap.get(exp.sheetId) ?? {
 				sheetId: exp.sheetId,
+				sourceType: "CUSTOM_SHEET" as const,
 				sheetName: exp.sheet.name,
 				totalAmount: 0,
 				entryCount: 0,
@@ -251,6 +295,44 @@ export const getMonthlyNetReport = async (
 			sheetBucket.totalAmount = roundMoney(sheetBucket.totalAmount + amount);
 			sheetBucket.entryCount += 1;
 			sheetExpenseMap.set(exp.sheetId, sheetBucket);
+		}
+	}
+
+	// Disbursed Teacher Payroll (SalaryPayment with status = COMPLETED)
+	let payrollSelectedAmount = 0;
+	let payrollSelectedCount = 0;
+
+	for (const sal of salaryPayments) {
+		const amount = roundMoney(Number(sal.amount));
+		const dateKey = toDhakaDateKey(sal.paidAt);
+		const monthKey = dateKey.slice(0, 7);
+		const trendBucket = trendMap.get(monthKey);
+		if (trendBucket) {
+			trendBucket.payrollExpense = roundMoney(
+				trendBucket.payrollExpense + amount,
+			);
+			if (includePayroll) {
+				trendBucket.totalExpense = roundMoney(
+					trendBucket.totalExpense + amount,
+				);
+			}
+		}
+
+		if (monthKey === billingMonth) {
+			payrollSelectedAmount = roundMoney(payrollSelectedAmount + amount);
+			payrollSelectedCount += 1;
+			if (includePayroll) {
+				const dayBucket = dailyMap.get(dateKey) ?? {
+					income: 0,
+					expense: 0,
+					payrollExpense: 0,
+				};
+				dayBucket.expense = roundMoney(dayBucket.expense + amount);
+				dayBucket.payrollExpense = roundMoney(
+					dayBucket.payrollExpense + amount,
+				);
+				dailyMap.set(dateKey, dayBucket);
+			}
 		}
 	}
 
@@ -262,6 +344,8 @@ export const getMonthlyNetReport = async (
 	);
 
 	const selectedTrend = trendMap.get(billingMonth);
+	const customExpenseTotal = roundMoney(selectedTrend?.customExpense ?? 0);
+	const payrollExpenseTotal = roundMoney(payrollSelectedAmount);
 	const totalExpense = roundMoney(selectedTrend?.totalExpense ?? 0);
 	const netBalance = roundMoney(totalIncome - totalExpense);
 	const status: NetBalanceStatus = netBalance >= 0 ? "SURPLUS" : "DEFICIT";
@@ -284,7 +368,18 @@ export const getMonthlyNetReport = async (
 		};
 	});
 
-	const expenseBySheet = [...sheetExpenseMap.values()]
+	const rawExpenseBreakdown = [...sheetExpenseMap.values()];
+	if (includePayroll && payrollSelectedAmount > 0) {
+		rawExpenseBreakdown.push({
+			sheetId: 0,
+			sourceType: "TEACHER_PAYROLL",
+			sheetName: PAYROLL_BREAKDOWN_LABEL,
+			totalAmount: payrollSelectedAmount,
+			entryCount: payrollSelectedCount,
+		});
+	}
+
+	const expenseBySheet = rawExpenseBreakdown
 		.sort((a, b) => b.totalAmount - a.totalAmount)
 		.map((item) => ({
 			...item,
@@ -313,12 +408,16 @@ export const getMonthlyNetReport = async (
 	const trend = trendMonthKeys.map((monthKey) => {
 		const bucket = trendMap.get(monthKey) ?? {
 			totalIncome: 0,
+			customExpense: 0,
+			payrollExpense: 0,
 			totalExpense: 0,
 		};
 		const net = roundMoney(bucket.totalIncome - bucket.totalExpense);
 		return {
 			billingMonth: monthKey,
 			totalIncome: bucket.totalIncome,
+			customExpense: bucket.customExpense,
+			payrollExpense: bucket.payrollExpense,
 			totalExpense: bucket.totalExpense,
 			netBalance: net,
 			status: (net >= 0 ? "SURPLUS" : "DEFICIT") as NetBalanceStatus,
@@ -329,8 +428,12 @@ export const getMonthlyNetReport = async (
 		school,
 		billingMonth,
 		trendMonths: trendMonthsCount,
+		includePayroll,
 		summary: {
 			totalIncome,
+			customExpenseTotal,
+			payrollExpenseTotal,
+			payrollPaymentCount: payrollSelectedCount,
 			totalExpense,
 			netBalance,
 			status,

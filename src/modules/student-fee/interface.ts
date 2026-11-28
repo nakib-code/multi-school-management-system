@@ -7,6 +7,7 @@ export interface CreateStudentFeeInput {
 	title: string;
 	amount?: number;
 	useClassDefaultAmount?: boolean;
+	applyStudentConcession?: boolean;
 	dueDate: Date;
 	academicYear?: string;
 	billingMonth?: string;
@@ -23,6 +24,7 @@ export interface BulkCreateStudentFeeInput {
 	title: string;
 	amount?: number;
 	useClassDefaultAmount?: boolean;
+	applyStudentConcession?: boolean;
 	dueDate: Date;
 	billingMonth?: string;
 	examId?: number;
@@ -38,6 +40,8 @@ export interface UpdateStudentFeeInput {
 	billingMonth?: string | null;
 	examId?: number | null;
 	status?: FeeStatus;
+	waivedAmount?: number;
+	waiverReason?: string | null;
 	description?: string | null;
 	remarks?: string | null;
 }

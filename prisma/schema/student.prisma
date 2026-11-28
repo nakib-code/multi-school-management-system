@@ -71,6 +71,12 @@ model Student {
   previousTcUrl       String?
   marksheetUrl        String?
 
+  // Fee Concession / Scholarship Profile
+  concessionType   StudentConcessionType?
+  concessionMode   DiscountMode?
+  concessionValue  Decimal?               @db.Decimal(10, 2)
+  concessionReason String?
+
   isActive Boolean @default(true)
 
   user User? @relation(fields: [userId], references: [id])

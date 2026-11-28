@@ -10,8 +10,10 @@ import {
 } from "./monthlyNet.service.js";
 import {
 	type AdmissionChartFilter,
+	type DefaulterListFilter,
 	type FeeChartFilter,
 	getAdmissionChartReport,
+	getDefaulterListReport,
 	getFeeChartReport,
 	getReportOverview,
 	getSchoolReportOverview,
@@ -164,6 +166,34 @@ export const getMonthlyNetReportController = async (
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Monthly net income vs expense report retrieved successfully",
+			data: result,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+export const getDefaulterListReportController = async (
+	req: AuthRequest,
+	res: Response,
+	next: NextFunction,
+) => {
+	try {
+		if (!req.user) throw new AppError(401, "Authentication required");
+		const schoolId = Number(req.params.schoolId);
+		if (!Number.isInteger(schoolId) || schoolId <= 0) {
+			throw new AppError(400, "Invalid school ID");
+		}
+		const validated = res.locals.validatedRequest as
+			| { query?: DefaulterListFilter }
+			| undefined;
+		const result = await getDefaulterListReport(
+			schoolId,
+			validated?.query ?? {},
+		);
+		return sendResponse(res, {
+			statusCode: 200,
+			message: "Student defaulter list retrieved successfully",
 			data: result,
 		});
 	} catch (error) {

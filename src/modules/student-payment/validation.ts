@@ -46,7 +46,11 @@ export const createStudentPaymentSchema = z.object({
 			remarks: z.string().trim().max(500).optional(),
 		})
 		.superRefine((data, ctx) => {
-			if (data.paymentMethod !== PaymentMethod.CASH) {
+			const isMfs =
+				data.paymentMethod === PaymentMethod.BKASH ||
+				data.paymentMethod === PaymentMethod.NAGAD ||
+				data.paymentMethod === PaymentMethod.ROCKET;
+			if (isMfs) {
 				const phoneCheck = bdMobileNumberSchema.safeParse(
 					data.senderNumber ?? "",
 				);
@@ -67,6 +71,17 @@ export const createStudentPaymentSchema = z.object({
 						message:
 							trxCheck.error.issues[0]?.message ??
 							"Valid transaction ID is required",
+					});
+				}
+			} else if (
+				data.paymentMethod === PaymentMethod.BANK_TRANSFER ||
+				data.paymentMethod === PaymentMethod.CHEQUE
+			) {
+				if (!data.trxId || data.trxId.trim().length < 3) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						path: ["trxId"],
+						message: "Bank reference or cheque number is required",
 					});
 				}
 			}

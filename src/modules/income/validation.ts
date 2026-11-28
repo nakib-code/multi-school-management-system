@@ -118,5 +118,8 @@ export const incomeChartSchema = z.object({
 			.trim()
 			.regex(billingMonthRegex, "Billing month must be in YYYY-MM format"),
 		category: categoryFilterSchema.optional(),
+		startDate: dateStringSchema.optional(),
+		endDate: dateStringSchema.optional(),
+		search: z.string().trim().max(120).optional(),
 	}),
 });

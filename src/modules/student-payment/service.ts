@@ -2,10 +2,12 @@ import {
 	FeeStatus,
 	PaymentMethod,
 	PaymentStatus,
+	SequenceDocumentType,
 	UserRole,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import { generateNextDocumentNumber } from "../../utils/documentSequence.js";
 import { normalizeTrxId } from "../payment/service.js";
 import type {
 	CreateStudentPaymentInput,
@@ -133,6 +135,13 @@ export const submitStudentPayment = async (
 				}
 
 				const now = new Date();
+				const paidAtDate = payload.paidAt ?? now;
+				const receiptNo = await generateNextDocumentNumber(
+					tx,
+					schoolId,
+					SequenceDocumentType.FEE_RECEIPT,
+					paidAtDate,
+				);
 				const payment = await tx.studentPayment.create({
 					data: {
 						schoolId,
@@ -142,11 +151,12 @@ export const submitStudentPayment = async (
 						senderNumber: payload.senderNumber?.trim() || "OFFICE-CASH",
 						receiverNumber: "OFFICE-COUNTER",
 						trxId: cashTrxId,
+						receiptNo,
 						paidAmount: payload.paidAmount,
 						status: PaymentStatus.VERIFIED,
 						verifiedById: requester.userId,
 						verifiedAt: now,
-						paidAt: payload.paidAt ?? now,
+						paidAt: paidAtDate,
 						...(payload.remarks !== undefined
 							? { remarks: payload.remarks }
 							: {}),
@@ -161,8 +171,10 @@ export const submitStudentPayment = async (
 
 				const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
 				const feeAmount = Number(currentFee.amount);
+				const waivedAmount = Number(currentFee.waivedAmount ?? 0);
+				const netPayable = Math.max(0, feeAmount - waivedAmount);
 				const nextFeeStatus =
-					totalVerifiedPaid >= feeAmount
+					totalVerifiedPaid >= netPayable
 						? FeeStatus.PAID
 						: totalVerifiedPaid > 0
 							? FeeStatus.PARTIAL
@@ -318,12 +330,23 @@ export const verifyStudentPayment = async (
 			);
 		}
 
+		const verifiedAt = new Date();
+		const receiptNo =
+			existing.receiptNo ??
+			(await generateNextDocumentNumber(
+				tx,
+				schoolId,
+				SequenceDocumentType.FEE_RECEIPT,
+				existing.paidAt ?? verifiedAt,
+			));
+
 		const claimed = await tx.studentPayment.updateMany({
 			where: { id, schoolId, status: PaymentStatus.PENDING },
 			data: {
 				status: PaymentStatus.VERIFIED,
 				verifiedById: verifierUserId,
-				verifiedAt: new Date(),
+				verifiedAt,
+				receiptNo,
 				rejectionReason: null,
 			},
 		});
@@ -347,9 +370,11 @@ export const verifyStudentPayment = async (
 
 		const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
 		const feeAmount = Number(existing.fee.amount);
+		const waivedAmount = Number(existing.fee.waivedAmount ?? 0);
+		const netPayable = Math.max(0, feeAmount - waivedAmount);
 
 		const nextFeeStatus =
-			totalVerifiedPaid >= feeAmount
+			totalVerifiedPaid >= netPayable
 				? FeeStatus.PAID
 				: totalVerifiedPaid > 0
 					? FeeStatus.PARTIAL
@@ -365,8 +390,9 @@ export const verifyStudentPayment = async (
 			feeBalance: {
 				feeId: updatedFee.id,
 				feeAmount,
+				waivedAmount,
 				totalVerifiedPaid,
-				remainingBalance: Math.max(0, feeAmount - totalVerifiedPaid),
+				remainingBalance: Math.max(0, netPayable - totalVerifiedPaid),
 				feeStatus: updatedFee.status,
 			},
 		};

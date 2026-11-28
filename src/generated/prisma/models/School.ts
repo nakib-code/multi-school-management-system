@@ -452,6 +452,7 @@ export type SchoolWhereInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldListRelationFilter
   customExpenseEntries?: Prisma.CustomExpenseEntryListRelationFilter
   incomeEntries?: Prisma.IncomeEntryListRelationFilter
+  documentSequences?: Prisma.SchoolDocumentSequenceListRelationFilter
   teacherSalaries?: Prisma.TeacherSalaryListRelationFilter
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
   admissions?: Prisma.AdmissionListRelationFilter
@@ -529,6 +530,7 @@ export type SchoolOrderByWithRelationInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldOrderByRelationAggregateInput
   customExpenseEntries?: Prisma.CustomExpenseEntryOrderByRelationAggregateInput
   incomeEntries?: Prisma.IncomeEntryOrderByRelationAggregateInput
+  documentSequences?: Prisma.SchoolDocumentSequenceOrderByRelationAggregateInput
   teacherSalaries?: Prisma.TeacherSalaryOrderByRelationAggregateInput
   salaryPayments?: Prisma.SalaryPaymentOrderByRelationAggregateInput
   admissions?: Prisma.AdmissionOrderByRelationAggregateInput
@@ -609,6 +611,7 @@ export type SchoolWhereUniqueInput = Prisma.AtLeast<{
   customExpenseFields?: Prisma.CustomExpenseFieldListRelationFilter
   customExpenseEntries?: Prisma.CustomExpenseEntryListRelationFilter
   incomeEntries?: Prisma.IncomeEntryListRelationFilter
+  documentSequences?: Prisma.SchoolDocumentSequenceListRelationFilter
   teacherSalaries?: Prisma.TeacherSalaryListRelationFilter
   salaryPayments?: Prisma.SalaryPaymentListRelationFilter
   admissions?: Prisma.AdmissionListRelationFilter
@@ -760,6 +763,7 @@ export type SchoolCreateInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -836,6 +840,7 @@ export type SchoolUncheckedCreateInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -911,6 +916,7 @@ export type SchoolUpdateInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -987,6 +993,7 @@ export type SchoolUncheckedUpdateInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -1668,6 +1675,20 @@ export type SchoolUpdateOneRequiredWithoutContactMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutContactMessagesInput, Prisma.SchoolUpdateWithoutContactMessagesInput>, Prisma.SchoolUncheckedUpdateWithoutContactMessagesInput>
 }
 
+export type SchoolCreateNestedOneWithoutDocumentSequencesInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDocumentSequencesInput, Prisma.SchoolUncheckedCreateWithoutDocumentSequencesInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDocumentSequencesInput
+  connect?: Prisma.SchoolWhereUniqueInput
+}
+
+export type SchoolUpdateOneRequiredWithoutDocumentSequencesNestedInput = {
+  create?: Prisma.XOR<Prisma.SchoolCreateWithoutDocumentSequencesInput, Prisma.SchoolUncheckedCreateWithoutDocumentSequencesInput>
+  connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutDocumentSequencesInput
+  upsert?: Prisma.SchoolUpsertWithoutDocumentSequencesInput
+  connect?: Prisma.SchoolWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SchoolUpdateToOneWithWhereWithoutDocumentSequencesInput, Prisma.SchoolUpdateWithoutDocumentSequencesInput>, Prisma.SchoolUncheckedUpdateWithoutDocumentSequencesInput>
+}
+
 export type SchoolCreateNestedOneWithoutGalleryImagesInput = {
   create?: Prisma.XOR<Prisma.SchoolCreateWithoutGalleryImagesInput, Prisma.SchoolUncheckedCreateWithoutGalleryImagesInput>
   connectOrCreate?: Prisma.SchoolCreateOrConnectWithoutGalleryImagesInput
@@ -1936,6 +1957,7 @@ export type SchoolCreateWithoutAdmissionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
@@ -2011,6 +2033,7 @@ export type SchoolUncheckedCreateWithoutAdmissionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
@@ -2101,6 +2124,7 @@ export type SchoolUpdateWithoutAdmissionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
@@ -2176,6 +2200,7 @@ export type SchoolUncheckedUpdateWithoutAdmissionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2250,6 +2275,7 @@ export type SchoolCreateWithoutAdmissionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -2325,6 +2351,7 @@ export type SchoolUncheckedCreateWithoutAdmissionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -2415,6 +2442,7 @@ export type SchoolUpdateWithoutAdmissionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -2490,6 +2518,7 @@ export type SchoolUncheckedUpdateWithoutAdmissionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2563,6 +2592,7 @@ export type SchoolCreateWithoutAttendancesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -2638,6 +2668,7 @@ export type SchoolUncheckedCreateWithoutAttendancesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -2728,6 +2759,7 @@ export type SchoolUpdateWithoutAttendancesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -2803,6 +2835,7 @@ export type SchoolUncheckedUpdateWithoutAttendancesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -2877,6 +2910,7 @@ export type SchoolCreateWithoutSchoolHolidaysInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -2952,6 +2986,7 @@ export type SchoolUncheckedCreateWithoutSchoolHolidaysInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -3042,6 +3077,7 @@ export type SchoolUpdateWithoutSchoolHolidaysInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -3117,6 +3153,7 @@ export type SchoolUncheckedUpdateWithoutSchoolHolidaysInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3191,6 +3228,7 @@ export type SchoolCreateWithoutAttendanceHistoriesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -3266,6 +3304,7 @@ export type SchoolUncheckedCreateWithoutAttendanceHistoriesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -3356,6 +3395,7 @@ export type SchoolUpdateWithoutAttendanceHistoriesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -3431,6 +3471,7 @@ export type SchoolUncheckedUpdateWithoutAttendanceHistoriesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3505,6 +3546,7 @@ export type SchoolCreateWithoutLeaveRequestsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -3580,6 +3622,7 @@ export type SchoolUncheckedCreateWithoutLeaveRequestsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -3670,6 +3713,7 @@ export type SchoolUpdateWithoutLeaveRequestsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -3745,6 +3789,7 @@ export type SchoolUncheckedUpdateWithoutLeaveRequestsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -3819,6 +3864,7 @@ export type SchoolCreateWithoutMonthlyReportsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -3894,6 +3940,7 @@ export type SchoolUncheckedCreateWithoutMonthlyReportsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -3984,6 +4031,7 @@ export type SchoolUpdateWithoutMonthlyReportsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -4059,6 +4107,7 @@ export type SchoolUncheckedUpdateWithoutMonthlyReportsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4134,6 +4183,7 @@ export type SchoolCreateWithoutAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -4209,6 +4259,7 @@ export type SchoolUncheckedCreateWithoutAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -4299,6 +4350,7 @@ export type SchoolUpdateWithoutAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -4374,6 +4426,7 @@ export type SchoolUncheckedUpdateWithoutAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4448,6 +4501,7 @@ export type SchoolCreateWithoutClassDiariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -4523,6 +4577,7 @@ export type SchoolUncheckedCreateWithoutClassDiariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -4613,6 +4668,7 @@ export type SchoolUpdateWithoutClassDiariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -4688,6 +4744,7 @@ export type SchoolUncheckedUpdateWithoutClassDiariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -4761,6 +4818,7 @@ export type SchoolCreateWithoutClassFeeStructuresInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -4836,6 +4894,7 @@ export type SchoolUncheckedCreateWithoutClassFeeStructuresInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -4926,6 +4985,7 @@ export type SchoolUpdateWithoutClassFeeStructuresInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -5001,6 +5061,7 @@ export type SchoolUncheckedUpdateWithoutClassFeeStructuresInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5076,6 +5137,7 @@ export type SchoolCreateWithoutClassRoutinesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -5151,6 +5213,7 @@ export type SchoolUncheckedCreateWithoutClassRoutinesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -5241,6 +5304,7 @@ export type SchoolUpdateWithoutClassRoutinesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -5316,6 +5380,7 @@ export type SchoolUncheckedUpdateWithoutClassRoutinesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5389,6 +5454,7 @@ export type SchoolCreateWithoutClassesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -5464,6 +5530,7 @@ export type SchoolUncheckedCreateWithoutClassesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -5554,6 +5621,7 @@ export type SchoolUpdateWithoutClassesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -5629,6 +5697,7 @@ export type SchoolUncheckedUpdateWithoutClassesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -5703,6 +5772,7 @@ export type SchoolCreateWithoutCustomExpenseSheetsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -5778,6 +5848,7 @@ export type SchoolUncheckedCreateWithoutCustomExpenseSheetsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -5868,6 +5939,7 @@ export type SchoolUpdateWithoutCustomExpenseSheetsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -5943,6 +6015,7 @@ export type SchoolUncheckedUpdateWithoutCustomExpenseSheetsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6017,6 +6090,7 @@ export type SchoolCreateWithoutCustomExpenseFieldsInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -6092,6 +6166,7 @@ export type SchoolUncheckedCreateWithoutCustomExpenseFieldsInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -6182,6 +6257,7 @@ export type SchoolUpdateWithoutCustomExpenseFieldsInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -6257,6 +6333,7 @@ export type SchoolUncheckedUpdateWithoutCustomExpenseFieldsInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6331,6 +6408,7 @@ export type SchoolCreateWithoutCustomExpenseEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetCreateNestedManyWithoutSchoolInput
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -6406,6 +6484,7 @@ export type SchoolUncheckedCreateWithoutCustomExpenseEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -6496,6 +6575,7 @@ export type SchoolUpdateWithoutCustomExpenseEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUpdateManyWithoutSchoolNestedInput
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -6571,6 +6651,7 @@ export type SchoolUncheckedUpdateWithoutCustomExpenseEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6645,6 +6726,7 @@ export type SchoolCreateWithoutEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -6720,6 +6802,7 @@ export type SchoolUncheckedCreateWithoutEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -6810,6 +6893,7 @@ export type SchoolUpdateWithoutEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -6885,6 +6969,7 @@ export type SchoolUncheckedUpdateWithoutEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -6959,6 +7044,7 @@ export type SchoolCreateWithoutExamsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -7034,6 +7120,7 @@ export type SchoolUncheckedCreateWithoutExamsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -7124,6 +7211,7 @@ export type SchoolUpdateWithoutExamsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -7199,6 +7287,7 @@ export type SchoolUncheckedUpdateWithoutExamsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7273,6 +7362,7 @@ export type SchoolCreateWithoutGuardiansInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -7348,6 +7438,7 @@ export type SchoolUncheckedCreateWithoutGuardiansInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -7438,6 +7529,7 @@ export type SchoolUpdateWithoutGuardiansInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -7513,6 +7605,7 @@ export type SchoolUncheckedUpdateWithoutGuardiansInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7588,6 +7681,7 @@ export type SchoolCreateWithoutHefzDailyLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -7663,6 +7757,7 @@ export type SchoolUncheckedCreateWithoutHefzDailyLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -7753,6 +7848,7 @@ export type SchoolUpdateWithoutHefzDailyLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -7828,6 +7924,7 @@ export type SchoolUncheckedUpdateWithoutHefzDailyLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -7902,6 +7999,7 @@ export type SchoolCreateWithoutHefzEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -7977,6 +8075,7 @@ export type SchoolUncheckedCreateWithoutHefzEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -8067,6 +8166,7 @@ export type SchoolUpdateWithoutHefzEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -8142,6 +8242,7 @@ export type SchoolUncheckedUpdateWithoutHefzEnrollmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8215,6 +8316,7 @@ export type SchoolCreateWithoutIncomeEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetCreateNestedManyWithoutSchoolInput
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -8290,6 +8392,7 @@ export type SchoolUncheckedCreateWithoutIncomeEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -8380,6 +8483,7 @@ export type SchoolUpdateWithoutIncomeEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUpdateManyWithoutSchoolNestedInput
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -8455,6 +8559,7 @@ export type SchoolUncheckedUpdateWithoutIncomeEntriesInput = {
   customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8529,6 +8634,7 @@ export type SchoolCreateWithoutManagersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -8604,6 +8710,7 @@ export type SchoolUncheckedCreateWithoutManagersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -8694,6 +8801,7 @@ export type SchoolUpdateWithoutManagersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -8769,6 +8877,7 @@ export type SchoolUncheckedUpdateWithoutManagersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -8844,6 +8953,7 @@ export type SchoolCreateWithoutNotificationsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -8919,6 +9029,7 @@ export type SchoolUncheckedCreateWithoutNotificationsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -9009,6 +9120,7 @@ export type SchoolUpdateWithoutNotificationsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -9084,6 +9196,7 @@ export type SchoolUncheckedUpdateWithoutNotificationsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9157,6 +9270,7 @@ export type SchoolCreateWithoutSelectedPackageInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -9232,6 +9346,7 @@ export type SchoolUncheckedCreateWithoutSelectedPackageInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -9370,6 +9485,7 @@ export type SchoolCreateWithoutPlatformAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -9445,6 +9561,7 @@ export type SchoolUncheckedCreateWithoutPlatformAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -9535,6 +9652,7 @@ export type SchoolUpdateWithoutPlatformAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -9610,6 +9728,7 @@ export type SchoolUncheckedUpdateWithoutPlatformAuditLogsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9683,6 +9802,7 @@ export type SchoolCreateWithoutResultsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -9758,6 +9878,7 @@ export type SchoolUncheckedCreateWithoutResultsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -9848,6 +9969,7 @@ export type SchoolUpdateWithoutResultsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -9923,6 +10045,7 @@ export type SchoolUncheckedUpdateWithoutResultsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -9998,6 +10121,7 @@ export type SchoolCreateWithoutSalaryPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
@@ -10073,6 +10197,7 @@ export type SchoolUncheckedCreateWithoutSalaryPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
@@ -10163,6 +10288,7 @@ export type SchoolUpdateWithoutSalaryPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
@@ -10238,6 +10364,7 @@ export type SchoolUncheckedUpdateWithoutSalaryPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10312,6 +10439,7 @@ export type SchoolCreateWithoutContactMessagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -10387,6 +10515,7 @@ export type SchoolUncheckedCreateWithoutContactMessagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -10477,6 +10606,7 @@ export type SchoolUpdateWithoutContactMessagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -10552,6 +10682,7 @@ export type SchoolUncheckedUpdateWithoutContactMessagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10570,6 +10701,324 @@ export type SchoolUncheckedUpdateWithoutContactMessagesInput = {
   pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
   notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
   galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolCreateWithoutDocumentSequencesInput = {
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  selectedPackage?: Prisma.PackageCreateNestedOneWithoutSelectedSchoolsInput
+  subscriptions?: Prisma.SchoolSubscriptionCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceCreateNestedManyWithoutSchoolInput
+  schoolHolidays?: Prisma.SchoolHolidayCreateNestedManyWithoutSchoolInput
+  attendanceHistories?: Prisma.AttendanceHistoryCreateNestedManyWithoutSchoolInput
+  leaveRequests?: Prisma.LeaveRequestCreateNestedManyWithoutSchoolInput
+  monthlyReports?: Prisma.MonthlyReportCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutSchoolInput
+  classFeeStructures?: Prisma.ClassFeeStructureCreateNestedManyWithoutSchoolInput
+  customExpenseSheets?: Prisma.CustomExpenseSheetCreateNestedManyWithoutSchoolInput
+  customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
+  customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
+  incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogCreateNestedManyWithoutSchoolInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutSchoolInput
+  classRoutines?: Prisma.ClassRoutineCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryCreateNestedManyWithoutSchoolInput
+  platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutSchoolInput
+  uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolUncheckedCreateWithoutDocumentSequencesInput = {
+  id?: number
+  name: string
+  code: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  logo?: string | null
+  status?: $Enums.SchoolStatus
+  adminName?: string | null
+  adminEmail?: string | null
+  adminPhone?: string | null
+  adminPasswordHash?: string | null
+  adminEmailVerified?: boolean
+  selectedPackageId?: number | null
+  rejectionReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  subdomain?: string | null
+  customDomain?: string | null
+  domainVerified?: boolean
+  domainVerificationToken?: string | null
+  tagline?: string | null
+  description?: string | null
+  primaryColor?: string | null
+  secondaryColor?: string | null
+  contactEmail?: string | null
+  contactPhone?: string | null
+  contactAddress?: string | null
+  facebookUrl?: string | null
+  youtubeUrl?: string | null
+  mapEmbedUrl?: string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedCreateNestedManyWithoutSchoolInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  guardians?: Prisma.GuardianUncheckedCreateNestedManyWithoutSchoolInput
+  teachers?: Prisma.TeacherUncheckedCreateNestedManyWithoutSchoolInput
+  managers?: Prisma.ManagerUncheckedCreateNestedManyWithoutSchoolInput
+  classes?: Prisma.SchoolClassUncheckedCreateNestedManyWithoutSchoolInput
+  sections?: Prisma.SectionUncheckedCreateNestedManyWithoutSchoolInput
+  subjects?: Prisma.SubjectUncheckedCreateNestedManyWithoutSchoolInput
+  enrollments?: Prisma.EnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  attendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutSchoolInput
+  schoolHolidays?: Prisma.SchoolHolidayUncheckedCreateNestedManyWithoutSchoolInput
+  attendanceHistories?: Prisma.AttendanceHistoryUncheckedCreateNestedManyWithoutSchoolInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutSchoolInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutSchoolInput
+  exams?: Prisma.ExamUncheckedCreateNestedManyWithoutSchoolInput
+  results?: Prisma.ResultUncheckedCreateNestedManyWithoutSchoolInput
+  studentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutSchoolInput
+  studentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  classFeeStructures?: Prisma.ClassFeeStructureUncheckedCreateNestedManyWithoutSchoolInput
+  customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutSchoolInput
+  customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
+  customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
+  incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutSchoolInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutSchoolInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedCreateNestedOneWithoutSchoolInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedCreateNestedManyWithoutSchoolInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedCreateNestedManyWithoutSchoolInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutSchoolInput
+  classRoutines?: Prisma.ClassRoutineUncheckedCreateNestedManyWithoutSchoolInput
+  classDiaries?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutSchoolInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutSchoolInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutSchoolInput
+  pageContents?: Prisma.SchoolPageContentUncheckedCreateNestedManyWithoutSchoolInput
+  notices?: Prisma.SchoolNoticeUncheckedCreateNestedManyWithoutSchoolInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedCreateNestedManyWithoutSchoolInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedCreateNestedManyWithoutSchoolInput
+}
+
+export type SchoolCreateOrConnectWithoutDocumentSequencesInput = {
+  where: Prisma.SchoolWhereUniqueInput
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutDocumentSequencesInput, Prisma.SchoolUncheckedCreateWithoutDocumentSequencesInput>
+}
+
+export type SchoolUpsertWithoutDocumentSequencesInput = {
+  update: Prisma.XOR<Prisma.SchoolUpdateWithoutDocumentSequencesInput, Prisma.SchoolUncheckedUpdateWithoutDocumentSequencesInput>
+  create: Prisma.XOR<Prisma.SchoolCreateWithoutDocumentSequencesInput, Prisma.SchoolUncheckedCreateWithoutDocumentSequencesInput>
+  where?: Prisma.SchoolWhereInput
+}
+
+export type SchoolUpdateToOneWithWhereWithoutDocumentSequencesInput = {
+  where?: Prisma.SchoolWhereInput
+  data: Prisma.XOR<Prisma.SchoolUpdateWithoutDocumentSequencesInput, Prisma.SchoolUncheckedUpdateWithoutDocumentSequencesInput>
+}
+
+export type SchoolUpdateWithoutDocumentSequencesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  selectedPackage?: Prisma.PackageUpdateOneWithoutSelectedSchoolsNestedInput
+  subscriptions?: Prisma.SchoolSubscriptionUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUpdateManyWithoutSchoolNestedInput
+  schoolHolidays?: Prisma.SchoolHolidayUpdateManyWithoutSchoolNestedInput
+  attendanceHistories?: Prisma.AttendanceHistoryUpdateManyWithoutSchoolNestedInput
+  leaveRequests?: Prisma.LeaveRequestUpdateManyWithoutSchoolNestedInput
+  monthlyReports?: Prisma.MonthlyReportUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUpdateManyWithoutSchoolNestedInput
+  classFeeStructures?: Prisma.ClassFeeStructureUpdateManyWithoutSchoolNestedInput
+  customExpenseSheets?: Prisma.CustomExpenseSheetUpdateManyWithoutSchoolNestedInput
+  customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
+  customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
+  incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUpdateManyWithoutSchoolNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutSchoolNestedInput
+  classRoutines?: Prisma.ClassRoutineUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUpdateManyWithoutSchoolNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutSchoolNestedInput
+  uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUpdateManyWithoutSchoolNestedInput
+}
+
+export type SchoolUncheckedUpdateWithoutDocumentSequencesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSchoolStatusFieldUpdateOperationsInput | $Enums.SchoolStatus
+  adminName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminPasswordHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adminEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  selectedPackageId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  domainVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  domainVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tagline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  secondaryColor?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactEmail?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  contactAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  facebookUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  youtubeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  mapEmbedUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subscriptions?: Prisma.SchoolSubscriptionUncheckedUpdateManyWithoutSchoolNestedInput
+  subscriptionPayments?: Prisma.SubscriptionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  guardians?: Prisma.GuardianUncheckedUpdateManyWithoutSchoolNestedInput
+  teachers?: Prisma.TeacherUncheckedUpdateManyWithoutSchoolNestedInput
+  managers?: Prisma.ManagerUncheckedUpdateManyWithoutSchoolNestedInput
+  classes?: Prisma.SchoolClassUncheckedUpdateManyWithoutSchoolNestedInput
+  sections?: Prisma.SectionUncheckedUpdateManyWithoutSchoolNestedInput
+  subjects?: Prisma.SubjectUncheckedUpdateManyWithoutSchoolNestedInput
+  enrollments?: Prisma.EnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  attendances?: Prisma.AttendanceUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolHolidays?: Prisma.SchoolHolidayUncheckedUpdateManyWithoutSchoolNestedInput
+  attendanceHistories?: Prisma.AttendanceHistoryUncheckedUpdateManyWithoutSchoolNestedInput
+  leaveRequests?: Prisma.LeaveRequestUncheckedUpdateManyWithoutSchoolNestedInput
+  monthlyReports?: Prisma.MonthlyReportUncheckedUpdateManyWithoutSchoolNestedInput
+  exams?: Prisma.ExamUncheckedUpdateManyWithoutSchoolNestedInput
+  results?: Prisma.ResultUncheckedUpdateManyWithoutSchoolNestedInput
+  studentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput
+  studentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  classFeeStructures?: Prisma.ClassFeeStructureUncheckedUpdateManyWithoutSchoolNestedInput
+  customExpenseSheets?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutSchoolNestedInput
+  customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
+  customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
+  salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  users?: Prisma.UserUncheckedUpdateManyWithoutSchoolNestedInput
+  admissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutSchoolNestedInput
+  schoolSetting?: Prisma.SchoolSettingUncheckedUpdateOneWithoutSchoolNestedInput
+  teacherAssignments?: Prisma.TeacherAssignmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzEnrollments?: Prisma.HefzEnrollmentUncheckedUpdateManyWithoutSchoolNestedInput
+  hefzDailyLogs?: Prisma.HefzDailyLogUncheckedUpdateManyWithoutSchoolNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutSchoolNestedInput
+  classRoutines?: Prisma.ClassRoutineUncheckedUpdateManyWithoutSchoolNestedInput
+  classDiaries?: Prisma.ClassDiaryUncheckedUpdateManyWithoutSchoolNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutSchoolNestedInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutSchoolNestedInput
+  pageContents?: Prisma.SchoolPageContentUncheckedUpdateManyWithoutSchoolNestedInput
+  notices?: Prisma.SchoolNoticeUncheckedUpdateManyWithoutSchoolNestedInput
+  galleryImages?: Prisma.SchoolGalleryImageUncheckedUpdateManyWithoutSchoolNestedInput
+  contactMessages?: Prisma.SchoolContactMessageUncheckedUpdateManyWithoutSchoolNestedInput
 }
 
 export type SchoolCreateWithoutGalleryImagesInput = {
@@ -10626,6 +11075,7 @@ export type SchoolCreateWithoutGalleryImagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -10701,6 +11151,7 @@ export type SchoolUncheckedCreateWithoutGalleryImagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -10791,6 +11242,7 @@ export type SchoolUpdateWithoutGalleryImagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -10866,6 +11318,7 @@ export type SchoolUncheckedUpdateWithoutGalleryImagesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -10940,6 +11393,7 @@ export type SchoolCreateWithoutNoticesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -11015,6 +11469,7 @@ export type SchoolUncheckedCreateWithoutNoticesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -11105,6 +11560,7 @@ export type SchoolUpdateWithoutNoticesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -11180,6 +11636,7 @@ export type SchoolUncheckedUpdateWithoutNoticesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -11254,6 +11711,7 @@ export type SchoolCreateWithoutPageContentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -11329,6 +11787,7 @@ export type SchoolUncheckedCreateWithoutPageContentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -11419,6 +11878,7 @@ export type SchoolUpdateWithoutPageContentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -11494,6 +11954,7 @@ export type SchoolUncheckedUpdateWithoutPageContentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -11568,6 +12029,7 @@ export type SchoolCreateWithoutSchoolSettingInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -11643,6 +12105,7 @@ export type SchoolUncheckedCreateWithoutSchoolSettingInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -11733,6 +12196,7 @@ export type SchoolUpdateWithoutSchoolSettingInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -11808,6 +12272,7 @@ export type SchoolUncheckedUpdateWithoutSchoolSettingInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -11881,6 +12346,7 @@ export type SchoolCreateWithoutSubscriptionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -11956,6 +12422,7 @@ export type SchoolUncheckedCreateWithoutSubscriptionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -12046,6 +12513,7 @@ export type SchoolUpdateWithoutSubscriptionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -12121,6 +12589,7 @@ export type SchoolUncheckedUpdateWithoutSubscriptionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -12195,6 +12664,7 @@ export type SchoolCreateWithoutSectionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -12270,6 +12740,7 @@ export type SchoolUncheckedCreateWithoutSectionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -12360,6 +12831,7 @@ export type SchoolUpdateWithoutSectionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -12435,6 +12907,7 @@ export type SchoolUncheckedUpdateWithoutSectionsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -12509,6 +12982,7 @@ export type SchoolCreateWithoutStudentFeesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -12584,6 +13058,7 @@ export type SchoolUncheckedCreateWithoutStudentFeesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -12674,6 +13149,7 @@ export type SchoolUpdateWithoutStudentFeesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -12749,6 +13225,7 @@ export type SchoolUncheckedUpdateWithoutStudentFeesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -12823,6 +13300,7 @@ export type SchoolCreateWithoutStudentPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -12898,6 +13376,7 @@ export type SchoolUncheckedCreateWithoutStudentPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -12988,6 +13467,7 @@ export type SchoolUpdateWithoutStudentPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -13063,6 +13543,7 @@ export type SchoolUncheckedUpdateWithoutStudentPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -13137,6 +13618,7 @@ export type SchoolCreateWithoutSubjectsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -13212,6 +13694,7 @@ export type SchoolUncheckedCreateWithoutSubjectsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -13302,6 +13785,7 @@ export type SchoolUpdateWithoutSubjectsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -13377,6 +13861,7 @@ export type SchoolUncheckedUpdateWithoutSubjectsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -13451,6 +13936,7 @@ export type SchoolCreateWithoutSubscriptionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -13526,6 +14012,7 @@ export type SchoolUncheckedCreateWithoutSubscriptionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -13616,6 +14103,7 @@ export type SchoolUpdateWithoutSubscriptionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -13691,6 +14179,7 @@ export type SchoolUncheckedUpdateWithoutSubscriptionPaymentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -13766,6 +14255,7 @@ export type SchoolCreateWithoutTeacherAssignmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -13841,6 +14331,7 @@ export type SchoolUncheckedCreateWithoutTeacherAssignmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -13931,6 +14422,7 @@ export type SchoolUpdateWithoutTeacherAssignmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -14006,6 +14498,7 @@ export type SchoolUncheckedUpdateWithoutTeacherAssignmentsInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -14080,6 +14573,7 @@ export type SchoolCreateWithoutTeacherSalariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutSchoolInput
@@ -14155,6 +14649,7 @@ export type SchoolUncheckedCreateWithoutTeacherSalariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutSchoolInput
@@ -14245,6 +14740,7 @@ export type SchoolUpdateWithoutTeacherSalariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutSchoolNestedInput
@@ -14320,6 +14816,7 @@ export type SchoolUncheckedUpdateWithoutTeacherSalariesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutSchoolNestedInput
@@ -14393,6 +14890,7 @@ export type SchoolCreateWithoutTeachersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -14468,6 +14966,7 @@ export type SchoolUncheckedCreateWithoutTeachersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -14558,6 +15057,7 @@ export type SchoolUpdateWithoutTeachersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -14633,6 +15133,7 @@ export type SchoolUncheckedUpdateWithoutTeachersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -14708,6 +15209,7 @@ export type SchoolCreateWithoutUploadedFilesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -14783,6 +15285,7 @@ export type SchoolUncheckedCreateWithoutUploadedFilesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -14873,6 +15376,7 @@ export type SchoolUpdateWithoutUploadedFilesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -14948,6 +15452,7 @@ export type SchoolUncheckedUpdateWithoutUploadedFilesInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -15022,6 +15527,7 @@ export type SchoolCreateWithoutUsersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionCreateNestedManyWithoutSchoolInput
@@ -15097,6 +15603,7 @@ export type SchoolUncheckedCreateWithoutUsersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedCreateNestedManyWithoutSchoolInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutSchoolInput
   incomeEntries?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutSchoolInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedCreateNestedManyWithoutSchoolInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedCreateNestedManyWithoutSchoolInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutSchoolInput
   admissions?: Prisma.AdmissionUncheckedCreateNestedManyWithoutSchoolInput
@@ -15187,6 +15694,7 @@ export type SchoolUpdateWithoutUsersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -15262,6 +15770,7 @@ export type SchoolUncheckedUpdateWithoutUsersInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -15368,6 +15877,7 @@ export type SchoolUpdateWithoutSelectedPackageInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUpdateManyWithoutSchoolNestedInput
@@ -15443,6 +15953,7 @@ export type SchoolUncheckedUpdateWithoutSelectedPackageInput = {
   customExpenseFields?: Prisma.CustomExpenseFieldUncheckedUpdateManyWithoutSchoolNestedInput
   customExpenseEntries?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutSchoolNestedInput
   incomeEntries?: Prisma.IncomeEntryUncheckedUpdateManyWithoutSchoolNestedInput
+  documentSequences?: Prisma.SchoolDocumentSequenceUncheckedUpdateManyWithoutSchoolNestedInput
   teacherSalaries?: Prisma.TeacherSalaryUncheckedUpdateManyWithoutSchoolNestedInput
   salaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutSchoolNestedInput
   admissions?: Prisma.AdmissionUncheckedUpdateManyWithoutSchoolNestedInput
@@ -15526,6 +16037,7 @@ export type SchoolCountOutputType = {
   customExpenseFields: number
   customExpenseEntries: number
   incomeEntries: number
+  documentSequences: number
   teacherSalaries: number
   salaryPayments: number
   admissions: number
@@ -15570,6 +16082,7 @@ export type SchoolCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions
   customExpenseFields?: boolean | SchoolCountOutputTypeCountCustomExpenseFieldsArgs
   customExpenseEntries?: boolean | SchoolCountOutputTypeCountCustomExpenseEntriesArgs
   incomeEntries?: boolean | SchoolCountOutputTypeCountIncomeEntriesArgs
+  documentSequences?: boolean | SchoolCountOutputTypeCountDocumentSequencesArgs
   teacherSalaries?: boolean | SchoolCountOutputTypeCountTeacherSalariesArgs
   salaryPayments?: boolean | SchoolCountOutputTypeCountSalaryPaymentsArgs
   admissions?: boolean | SchoolCountOutputTypeCountAdmissionsArgs
@@ -15764,6 +16277,13 @@ export type SchoolCountOutputTypeCountIncomeEntriesArgs<ExtArgs extends runtime.
 /**
  * SchoolCountOutputType without action
  */
+export type SchoolCountOutputTypeCountDocumentSequencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SchoolDocumentSequenceWhereInput
+}
+
+/**
+ * SchoolCountOutputType without action
+ */
 export type SchoolCountOutputTypeCountTeacherSalariesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TeacherSalaryWhereInput
 }
@@ -15944,6 +16464,7 @@ export type SchoolSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   customExpenseFields?: boolean | Prisma.School$customExpenseFieldsArgs<ExtArgs>
   customExpenseEntries?: boolean | Prisma.School$customExpenseEntriesArgs<ExtArgs>
   incomeEntries?: boolean | Prisma.School$incomeEntriesArgs<ExtArgs>
+  documentSequences?: boolean | Prisma.School$documentSequencesArgs<ExtArgs>
   teacherSalaries?: boolean | Prisma.School$teacherSalariesArgs<ExtArgs>
   salaryPayments?: boolean | Prisma.School$salaryPaymentsArgs<ExtArgs>
   admissions?: boolean | Prisma.School$admissionsArgs<ExtArgs>
@@ -16096,6 +16617,7 @@ export type SchoolInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   customExpenseFields?: boolean | Prisma.School$customExpenseFieldsArgs<ExtArgs>
   customExpenseEntries?: boolean | Prisma.School$customExpenseEntriesArgs<ExtArgs>
   incomeEntries?: boolean | Prisma.School$incomeEntriesArgs<ExtArgs>
+  documentSequences?: boolean | Prisma.School$documentSequencesArgs<ExtArgs>
   teacherSalaries?: boolean | Prisma.School$teacherSalariesArgs<ExtArgs>
   salaryPayments?: boolean | Prisma.School$salaryPaymentsArgs<ExtArgs>
   admissions?: boolean | Prisma.School$admissionsArgs<ExtArgs>
@@ -16151,6 +16673,7 @@ export type $SchoolPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     customExpenseFields: Prisma.$CustomExpenseFieldPayload<ExtArgs>[]
     customExpenseEntries: Prisma.$CustomExpenseEntryPayload<ExtArgs>[]
     incomeEntries: Prisma.$IncomeEntryPayload<ExtArgs>[]
+    documentSequences: Prisma.$SchoolDocumentSequencePayload<ExtArgs>[]
     teacherSalaries: Prisma.$TeacherSalaryPayload<ExtArgs>[]
     salaryPayments: Prisma.$SalaryPaymentPayload<ExtArgs>[]
     admissions: Prisma.$AdmissionPayload<ExtArgs>[]
@@ -16621,6 +17144,7 @@ export interface Prisma__SchoolClient<T, Null = never, ExtArgs extends runtime.T
   customExpenseFields<T extends Prisma.School$customExpenseFieldsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$customExpenseFieldsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomExpenseFieldPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customExpenseEntries<T extends Prisma.School$customExpenseEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$customExpenseEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomExpenseEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   incomeEntries<T extends Prisma.School$incomeEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$incomeEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  documentSequences<T extends Prisma.School$documentSequencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$documentSequencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchoolDocumentSequencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teacherSalaries<T extends Prisma.School$teacherSalariesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$teacherSalariesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeacherSalaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   salaryPayments<T extends Prisma.School$salaryPaymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$salaryPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SalaryPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   admissions<T extends Prisma.School$admissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.School$admissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -17669,6 +18193,30 @@ export type School$incomeEntriesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.IncomeEntryScalarFieldEnum | Prisma.IncomeEntryScalarFieldEnum[]
+}
+
+/**
+ * School.documentSequences
+ */
+export type School$documentSequencesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SchoolDocumentSequence
+   */
+  select?: Prisma.SchoolDocumentSequenceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SchoolDocumentSequence
+   */
+  omit?: Prisma.SchoolDocumentSequenceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SchoolDocumentSequenceInclude<ExtArgs> | null
+  where?: Prisma.SchoolDocumentSequenceWhereInput
+  orderBy?: Prisma.SchoolDocumentSequenceOrderByWithRelationInput | Prisma.SchoolDocumentSequenceOrderByWithRelationInput[]
+  cursor?: Prisma.SchoolDocumentSequenceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SchoolDocumentSequenceScalarFieldEnum | Prisma.SchoolDocumentSequenceScalarFieldEnum[]
 }
 
 /**

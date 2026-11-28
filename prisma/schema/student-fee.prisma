@@ -4,14 +4,21 @@ model StudentFee {
   studentId    Int
   enrollmentId Int
 
-  feeType      FeeType
-  title        String
-  amount       Decimal  @db.Decimal(10, 2)
-  dueDate      DateTime
-  academicYear String?
-  billingMonth String?
-  examId       Int?
-  admissionPaymentId Int? @unique
+  feeType            FeeType
+  title              String
+  amount             Decimal                @db.Decimal(10, 2)
+  grossAmount        Decimal?               @db.Decimal(10, 2)
+  concessionAmount   Decimal                @default(0) @db.Decimal(10, 2)
+  concessionType     StudentConcessionType?
+  waivedAmount       Decimal                @default(0) @db.Decimal(10, 2)
+  waiverReason       String?
+  waivedById         Int?
+  waivedAt           DateTime?
+  dueDate            DateTime
+  academicYear       String?
+  billingMonth       String?
+  examId             Int?
+  admissionPaymentId Int?                   @unique
 
   status      FeeStatus @default(PENDING)
   description String?
@@ -21,6 +28,7 @@ model StudentFee {
   enrollment       Enrollment        @relation(fields: [enrollmentId], references: [id])
   exam             Exam?             @relation(fields: [examId], references: [id], onDelete: SetNull)
   admissionPayment AdmissionPayment? @relation(fields: [admissionPaymentId], references: [id], onDelete: SetNull)
+  waivedBy         User?             @relation("StudentFeeWaiver", fields: [waivedById], references: [id], onDelete: SetNull)
   payments         StudentPayment[]
 
   createdAt DateTime @default(now())

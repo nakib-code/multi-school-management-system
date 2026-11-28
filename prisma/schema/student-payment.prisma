@@ -3,6 +3,8 @@ enum PaymentMethod {
   BKASH
   NAGAD
   ROCKET
+  BANK_TRANSFER
+  CHEQUE
 }
 
 enum PaymentStatus {
@@ -21,6 +23,7 @@ model StudentPayment {
   senderNumber   String
   receiverNumber String?
   trxId          String
+  receiptNo      String?
   paidAmount     Decimal       @db.Decimal(10, 2)
   status         PaymentStatus @default(PENDING)
 
@@ -38,6 +41,7 @@ model StudentPayment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([schoolId, receiptNo])
   @@index([schoolId])
   @@index([studentId])
   @@index([feeId])

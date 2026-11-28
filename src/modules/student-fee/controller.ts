@@ -137,10 +137,11 @@ export const bulkCreateStudentFeesController = async (
 
 		return sendResponse(res, {
 			statusCode: 201,
-			message: `Generated ${result.createdCount} fee invoice(s)${result.skippedCount > 0 ? ` (${result.skippedCount} duplicate skipped)` : ""}`,
+			message: `Generated ${result.createdCount} fee invoice(s)${result.skippedCount > 0 ? ` (${result.skippedCount} duplicate skipped)` : ""}${result.concessionAppliedCount > 0 ? ` (${result.concessionAppliedCount} with concession)` : ""}`,
 			data: {
 				createdCount: result.createdCount,
 				skippedCount: result.skippedCount,
+				concessionAppliedCount: result.concessionAppliedCount,
 				className: result.className,
 				resolvedAmount: result.resolvedAmount,
 			},
@@ -220,7 +221,12 @@ export const updateStudentFeeController = async (
 	try {
 		const schoolId = parsePositiveInt(req.params.schoolId, "school ID");
 		const id = parsePositiveInt(req.params.id, "student fee ID");
-		const result = await updateStudentFee(schoolId, id, req.body);
+		const { fee, previous } = await updateStudentFee(
+			schoolId,
+			id,
+			req.body,
+			req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+		);
 		if (req.user?.userId) {
 			await recordSchoolAudit({
 				schoolId,
@@ -228,7 +234,7 @@ export const updateStudentFeeController = async (
 				action: "UPDATE",
 				entity: "StudentFee",
 				entityId: id,
-				description: `Updated fee invoice #${id} (${result.title}, status: ${result.status})`,
+				description: `Updated fee invoice #${id}: before [title="${previous.title}", ৳${previous.amount}, waived=৳${previous.waivedAmount}, status=${previous.status}] -> after [title="${fee.title}", ৳${Number(fee.amount)}, waived=৳${Number(fee.waivedAmount ?? 0)}, status=${fee.status}]`,
 				ipAddress: req.ip ?? null,
 				userAgent: req.headers["user-agent"] ?? null,
 			}).catch(() => {});
@@ -236,7 +242,7 @@ export const updateStudentFeeController = async (
 		return sendResponse(res, {
 			statusCode: 200,
 			message: "Student fee updated successfully",
-			data: result,
+			data: fee,
 		});
 	} catch (error) {
 		next(error);

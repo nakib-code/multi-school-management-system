@@ -11,6 +11,7 @@ import {
 	getMonthlyChartController,
 	listEntriesController,
 	listSheetsController,
+	restoreSheetController,
 	updateEntryController,
 	updateSheetFieldsController,
 } from "./controller.js";
@@ -22,6 +23,7 @@ import {
 	listEntriesSchema,
 	listSheetsSchema,
 	monthlyChartSchema,
+	restoreSheetSchema,
 	updateEntrySchema,
 	updateSheetFieldsSchema,
 } from "./validation.js";
@@ -31,6 +33,11 @@ const basePath = "/schools/:schoolId/custom-expenses";
 const staffGuard = [
 	authenticate,
 	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+];
+const adminGuard = [
+	authenticate,
+	authorize(UserRole.ADMIN),
 	requireSchoolAccess,
 ];
 
@@ -55,9 +62,16 @@ router.patch(
 	updateSheetFieldsController,
 );
 
+router.patch(
+	`${basePath}/sheets/:sheetId/restore`,
+	...adminGuard,
+	validateRequest(restoreSheetSchema),
+	restoreSheetController,
+);
+
 router.delete(
 	`${basePath}/sheets/:sheetId`,
-	...staffGuard,
+	...adminGuard,
 	validateRequest(deleteSheetSchema),
 	deleteSheetController,
 );
@@ -85,7 +99,7 @@ router.patch(
 
 router.delete(
 	`${basePath}/sheets/:sheetId/entries/:entryId`,
-	...staffGuard,
+	...adminGuard,
 	validateRequest(deleteEntrySchema),
 	deleteEntryController,
 );

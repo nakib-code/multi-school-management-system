@@ -1,6 +1,14 @@
-import { FeeStatus, PaymentStatus } from "../../generated/prisma/client.js";
+import {
+	type DiscountMode,
+	FeeStatus,
+	PaymentStatus,
+	Prisma,
+	type StudentConcessionType,
+	UserRole,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import { getDhakaStartOfToday, roundMoney } from "../../utils/dhakaDate.js";
 import { resolveClassFeeAmount } from "../class/service.js";
 import type {
 	BulkCreateStudentFeeInput,
@@ -11,7 +19,16 @@ import type {
 
 const studentFeeInclude = {
 	student: {
-		select: { id: true, studentId: true, firstName: true, lastName: true },
+		select: {
+			id: true,
+			studentId: true,
+			firstName: true,
+			lastName: true,
+			concessionType: true,
+			concessionMode: true,
+			concessionValue: true,
+			concessionReason: true,
+		},
 	},
 	enrollment: {
 		select: {
@@ -27,10 +44,14 @@ const studentFeeInclude = {
 	exam: {
 		select: { id: true, name: true, type: true },
 	},
+	waivedBy: {
+		select: { id: true, name: true, role: true },
+	},
 	payments: {
 		select: {
 			id: true,
 			trxId: true,
+			receiptNo: true,
 			paidAmount: true,
 			paymentMethod: true,
 			senderNumber: true,
@@ -43,6 +64,190 @@ const studentFeeInclude = {
 	},
 };
 
+export interface StudentConcessionProfile {
+	concessionType?: StudentConcessionType | null;
+	concessionMode?: DiscountMode | null;
+	concessionValue?: number | Prisma.Decimal | null;
+	concessionReason?: string | null;
+}
+
+/**
+ * Pure helper: computes net billed amount after applying a student's concession/scholarship profile.
+ */
+export const computeConcessionDiscount = (
+	grossAmount: number,
+	profile?: StudentConcessionProfile | null,
+): {
+	grossAmount: number;
+	concessionAmount: number;
+	netAmount: number;
+	concessionType: StudentConcessionType | null;
+	concessionReason: string | null;
+} => {
+	const safeGross = roundMoney(Math.max(0, grossAmount));
+	if (
+		!profile ||
+		!profile.concessionType ||
+		!profile.concessionMode ||
+		profile.concessionValue === null ||
+		profile.concessionValue === undefined
+	) {
+		return {
+			grossAmount: safeGross,
+			concessionAmount: 0,
+			netAmount: safeGross,
+			concessionType: null,
+			concessionReason: null,
+		};
+	}
+
+	const rawVal = Number(profile.concessionValue);
+	if (!Number.isFinite(rawVal) || rawVal <= 0) {
+		return {
+			grossAmount: safeGross,
+			concessionAmount: 0,
+			netAmount: safeGross,
+			concessionType: null,
+			concessionReason: null,
+		};
+	}
+
+	const discount =
+		profile.concessionMode === "PERCENTAGE"
+			? roundMoney((safeGross * Math.min(100, rawVal)) / 100)
+			: roundMoney(Math.min(safeGross, rawVal));
+
+	const clampedDiscount = roundMoney(
+		Math.min(safeGross, Math.max(0, discount)),
+	);
+	const netAmount = roundMoney(Math.max(0, safeGross - clampedDiscount));
+
+	return {
+		grossAmount: safeGross,
+		concessionAmount: clampedDiscount,
+		netAmount,
+		concessionType: profile.concessionType,
+		concessionReason: profile.concessionReason ?? null,
+	};
+};
+
+export interface FeeFinancialSummary {
+	billed: number;
+	paid: number;
+	waived: number;
+	due: number;
+	isOverdue: boolean;
+	effectiveStatus: FeeStatus;
+}
+
+/**
+ * Pure helper: computes consistent billed/paid/waived/due and automated OVERDUE status
+ * without wiping out already-verified payments when a partial or full waiver is applied.
+ */
+export const computeFeeFinancials = (
+	fee: {
+		amount: number | Prisma.Decimal;
+		waivedAmount?: number | Prisma.Decimal | null;
+		status: FeeStatus;
+		dueDate?: Date | string | null;
+		payments?: Array<{
+			paidAmount: number | Prisma.Decimal;
+			status?: PaymentStatus;
+		}>;
+	},
+	now: Date = new Date(),
+): FeeFinancialSummary => {
+	const billed = roundMoney(Math.max(0, Number(fee.amount)));
+	const verifiedPaid = roundMoney(
+		(fee.payments ?? [])
+			.filter(
+				(p) => p.status === undefined || p.status === PaymentStatus.VERIFIED,
+			)
+			.reduce((sum, p) => sum + Number(p.paidAmount), 0),
+	);
+
+	// Preserve legacy manually-marked PAID invoices that have no StudentPayment rows
+	const paid =
+		fee.status === FeeStatus.PAID && verifiedPaid === 0
+			? billed
+			: roundMoney(Math.min(billed, verifiedPaid));
+
+	const rawExplicitWaived = roundMoney(
+		Math.max(0, Number(fee.waivedAmount ?? 0)),
+	);
+	const maxWaivable = roundMoney(Math.max(0, billed - paid));
+	const waived =
+		fee.status === FeeStatus.WAIVED
+			? roundMoney(
+					Math.max(Math.min(maxWaivable, rawExplicitWaived), maxWaivable),
+				)
+			: roundMoney(Math.min(maxWaivable, rawExplicitWaived));
+
+	const due = roundMoney(Math.max(0, billed - paid - waived));
+
+	const dhakaTodayStart = getDhakaStartOfToday(now).getTime();
+	const dueTime = fee.dueDate ? new Date(fee.dueDate).getTime() : Number.NaN;
+	const pastDue = Number.isFinite(dueTime) && dueTime < dhakaTodayStart;
+
+	const isOverdue =
+		due > 0 &&
+		fee.status !== FeeStatus.PAID &&
+		fee.status !== FeeStatus.WAIVED &&
+		(fee.status === FeeStatus.OVERDUE || pastDue);
+
+	let effectiveStatus: FeeStatus;
+	if (due === 0) {
+		effectiveStatus =
+			fee.status === FeeStatus.WAIVED && paid === 0
+				? FeeStatus.WAIVED
+				: paid === 0 && waived > 0
+					? FeeStatus.WAIVED
+					: FeeStatus.PAID;
+	} else if (isOverdue) {
+		effectiveStatus = FeeStatus.OVERDUE;
+	} else if (paid > 0) {
+		effectiveStatus = FeeStatus.PARTIAL;
+	} else {
+		effectiveStatus = FeeStatus.PENDING;
+	}
+
+	return {
+		billed,
+		paid,
+		waived,
+		due,
+		isOverdue,
+		effectiveStatus,
+	};
+};
+
+const enrichFeeRecord = <
+	T extends {
+		amount: number | Prisma.Decimal;
+		waivedAmount?: number | Prisma.Decimal | null;
+		status: FeeStatus;
+		dueDate: Date;
+		payments?: Array<{
+			paidAmount: number | Prisma.Decimal;
+			status?: PaymentStatus;
+		}>;
+	},
+>(
+	fee: T,
+	now: Date = new Date(),
+) => {
+	const fin = computeFeeFinancials(fee, now);
+	return {
+		...fee,
+		status: fin.effectiveStatus,
+		storedStatus: fee.status,
+		isOverdue: fin.isOverdue,
+		computedPaid: fin.paid,
+		computedWaived: fin.waived,
+		computedDue: fin.due,
+	};
+};
+
 export const createStudentFee = async (
 	schoolId: number,
 	payload: CreateStudentFeeInput,
@@ -52,6 +257,16 @@ export const createStudentFee = async (
 			id: payload.enrollmentId,
 			schoolId,
 			studentId: payload.studentId,
+		},
+		include: {
+			student: {
+				select: {
+					concessionType: true,
+					concessionMode: true,
+					concessionValue: true,
+					concessionReason: true,
+				},
+			},
 		},
 	});
 	if (!enrollment) {
@@ -96,27 +311,56 @@ export const createStudentFee = async (
 		}
 	}
 
-	return prisma.studentFee.create({
+	const shouldApplyConcession = payload.applyStudentConcession !== false;
+	const concession = shouldApplyConcession
+		? computeConcessionDiscount(resolvedAmount, enrollment.student)
+		: {
+				grossAmount: roundMoney(resolvedAmount),
+				concessionAmount: 0,
+				netAmount: roundMoney(resolvedAmount),
+				concessionType: null,
+				concessionReason: null,
+			};
+
+	const autoWaivedByConcession =
+		concession.concessionAmount > 0 && concession.netAmount === 0;
+	const finalStatus =
+		payload.status ??
+		(autoWaivedByConcession ? FeeStatus.WAIVED : FeeStatus.PENDING);
+
+	const created = await prisma.studentFee.create({
 		data: {
 			schoolId,
 			studentId: payload.studentId,
 			enrollmentId: payload.enrollmentId,
 			feeType: payload.feeType,
 			title: payload.title.trim(),
-			amount: resolvedAmount,
+			amount: new Prisma.Decimal(concession.netAmount.toFixed(2)),
+			grossAmount: new Prisma.Decimal(concession.grossAmount.toFixed(2)),
+			concessionAmount: new Prisma.Decimal(
+				concession.concessionAmount.toFixed(2),
+			),
+			...(concession.concessionType
+				? { concessionType: concession.concessionType }
+				: {}),
 			dueDate: payload.dueDate,
 			academicYear,
 			...(payload.billingMonth !== undefined
 				? { billingMonth: payload.billingMonth }
 				: {}),
 			...(payload.examId !== undefined ? { examId: payload.examId } : {}),
-			...(payload.status !== undefined ? { status: payload.status } : {}),
+			status: finalStatus,
+			...(autoWaivedByConcession && concession.concessionReason
+				? { waiverReason: concession.concessionReason }
+				: {}),
 			...(payload.description !== undefined
 				? { description: payload.description.trim() }
 				: {}),
 		},
 		include: studentFeeInclude,
 	});
+
+	return enrichFeeRecord(created);
 };
 
 export const getStudentFees = async (
@@ -139,7 +383,24 @@ export const getStudentFees = async (
 		query.sectionId !== undefined ||
 		query.academicYear !== undefined;
 
-	return prisma.studentFee.findMany({
+	const dhakaTodayStart = getDhakaStartOfToday();
+
+	let statusWhere: Prisma.StudentFeeWhereInput = {};
+	if (query.status === FeeStatus.OVERDUE) {
+		statusWhere = {
+			OR: [
+				{ status: FeeStatus.OVERDUE },
+				{
+					status: { in: [FeeStatus.PENDING, FeeStatus.PARTIAL] },
+					dueDate: { lt: dhakaTodayStart },
+				},
+			],
+		};
+	} else if (query.status !== undefined) {
+		statusWhere = { status: query.status };
+	}
+
+	const rows = await prisma.studentFee.findMany({
 		where: {
 			schoolId,
 			...(allowedStudentIds !== null && allowedStudentIds !== undefined
@@ -175,11 +436,25 @@ export const getStudentFees = async (
 				? { billingMonth: query.billingMonth }
 				: {}),
 			...(query.examId !== undefined ? { examId: query.examId } : {}),
-			...(query.status !== undefined ? { status: query.status } : {}),
+			...statusWhere,
 		},
 		include: studentFeeInclude,
 		orderBy: { dueDate: "desc" },
 	});
+
+	const now = new Date();
+	const enriched = rows.map((row) => enrichFeeRecord(row, now));
+
+	if (query.status === FeeStatus.OVERDUE) {
+		return enriched.filter((f) => f.isOverdue);
+	}
+	if (
+		query.status === FeeStatus.PENDING ||
+		query.status === FeeStatus.PARTIAL
+	) {
+		return enriched.filter((f) => f.status === query.status);
+	}
+	return enriched;
 };
 
 export const getStudentFeeById = async (schoolId: number, id: number) => {
@@ -188,7 +463,7 @@ export const getStudentFeeById = async (schoolId: number, id: number) => {
 		include: studentFeeInclude,
 	});
 	if (!fee) throw new AppError(404, "Student fee not found");
-	return fee;
+	return enrichFeeRecord(fee);
 };
 
 export const bulkCreateStudentFees = async (
@@ -251,6 +526,14 @@ export const bulkCreateStudentFees = async (
 			id: true,
 			studentId: true,
 			academicYear: true,
+			student: {
+				select: {
+					concessionType: true,
+					concessionMode: true,
+					concessionValue: true,
+					concessionReason: true,
+				},
+			},
 		},
 	});
 
@@ -292,26 +575,55 @@ export const bulkCreateStudentFees = async (
 
 	const toCreate = enrollments.filter((e) => !existingEnrollmentIds.has(e.id));
 	const skippedCount = enrollments.length - toCreate.length;
+	const shouldApplyConcession = payload.applyStudentConcession !== false;
+	let concessionAppliedCount = 0;
 
 	if (toCreate.length > 0) {
 		await prisma.studentFee.createMany({
-			data: toCreate.map((e) => ({
-				schoolId,
-				studentId: e.studentId,
-				enrollmentId: e.id,
-				feeType: payload.feeType,
-				title: payload.title.trim(),
-				amount: resolvedAmount,
-				dueDate: payload.dueDate,
-				academicYear: payload.academicYear?.trim() || e.academicYear,
-				...(payload.billingMonth !== undefined
-					? { billingMonth: payload.billingMonth }
-					: {}),
-				...(payload.examId !== undefined ? { examId: payload.examId } : {}),
-				...(payload.description !== undefined
-					? { description: payload.description.trim() }
-					: {}),
-			})),
+			data: toCreate.map((e) => {
+				const concession = shouldApplyConcession
+					? computeConcessionDiscount(resolvedAmount, e.student)
+					: {
+							grossAmount: roundMoney(resolvedAmount),
+							concessionAmount: 0,
+							netAmount: roundMoney(resolvedAmount),
+							concessionType: null,
+							concessionReason: null,
+						};
+				if (concession.concessionAmount > 0) {
+					concessionAppliedCount += 1;
+				}
+				const autoWaived =
+					concession.concessionAmount > 0 && concession.netAmount === 0;
+				return {
+					schoolId,
+					studentId: e.studentId,
+					enrollmentId: e.id,
+					feeType: payload.feeType,
+					title: payload.title.trim(),
+					amount: new Prisma.Decimal(concession.netAmount.toFixed(2)),
+					grossAmount: new Prisma.Decimal(concession.grossAmount.toFixed(2)),
+					concessionAmount: new Prisma.Decimal(
+						concession.concessionAmount.toFixed(2),
+					),
+					...(concession.concessionType
+						? { concessionType: concession.concessionType }
+						: {}),
+					status: autoWaived ? FeeStatus.WAIVED : FeeStatus.PENDING,
+					...(autoWaived && concession.concessionReason
+						? { waiverReason: concession.concessionReason }
+						: {}),
+					dueDate: payload.dueDate,
+					academicYear: payload.academicYear?.trim() || e.academicYear,
+					...(payload.billingMonth !== undefined
+						? { billingMonth: payload.billingMonth }
+						: {}),
+					...(payload.examId !== undefined ? { examId: payload.examId } : {}),
+					...(payload.description !== undefined
+						? { description: payload.description.trim() }
+						: {}),
+				};
+			}),
 		});
 	}
 
@@ -320,6 +632,7 @@ export const bulkCreateStudentFees = async (
 		resolvedAmount,
 		createdCount: toCreate.length,
 		skippedCount,
+		concessionAppliedCount,
 		createdStudentIds: toCreate.map((e) => e.studentId),
 	};
 };
@@ -328,12 +641,25 @@ export const updateStudentFee = async (
 	schoolId: number,
 	id: number,
 	payload: UpdateStudentFeeInput,
+	requester?: { userId: number; role: UserRole },
 ) => {
 	return prisma.$transaction(async (tx) => {
 		const existing = await tx.studentFee.findFirst({
 			where: { id, schoolId },
 		});
 		if (!existing) throw new AppError(404, "Student fee not found");
+
+		const isWaiverMutation =
+			payload.waivedAmount !== undefined ||
+			payload.waiverReason !== undefined ||
+			payload.status === FeeStatus.WAIVED;
+
+		if (isWaiverMutation && requester && requester.role !== UserRole.ADMIN) {
+			throw new AppError(
+				403,
+				"Only School Admins can approve full or partial fee waivers",
+			);
+		}
 
 		if (payload.examId !== undefined && payload.examId !== null) {
 			const exam = await tx.exam.findFirst({
@@ -345,6 +671,35 @@ export const updateStudentFee = async (
 			}
 		}
 
+		const verifiedSum = await tx.studentPayment.aggregate({
+			where: { feeId: id, status: PaymentStatus.VERIFIED },
+			_sum: { paidAmount: true },
+		});
+		const totalVerifiedPaid = roundMoney(
+			Number(verifiedSum._sum.paidAmount ?? 0),
+		);
+
+		const nextAmount = roundMoney(
+			payload.amount !== undefined ? payload.amount : Number(existing.amount),
+		);
+		const maxWaivable = roundMoney(Math.max(0, nextAmount - totalVerifiedPaid));
+
+		let nextWaivedAmount = roundMoney(Number(existing.waivedAmount ?? 0));
+		if (payload.waivedAmount !== undefined) {
+			if (payload.waivedAmount > maxWaivable + 0.001) {
+				throw new AppError(
+					400,
+					`Waived amount (৳${payload.waivedAmount}) cannot exceed the unpaid balance (৳${maxWaivable})`,
+				);
+			}
+			nextWaivedAmount = roundMoney(payload.waivedAmount);
+		} else if (payload.status === FeeStatus.WAIVED) {
+			// Full waiver of remaining balance without erasing already verified payments
+			nextWaivedAmount = maxWaivable;
+		} else if (nextWaivedAmount > maxWaivable) {
+			nextWaivedAmount = maxWaivable;
+		}
+
 		const resolvedDescription =
 			payload.description !== undefined
 				? payload.description
@@ -353,30 +708,44 @@ export const updateStudentFee = async (
 					: undefined;
 
 		let resolvedStatus = payload.status;
+		const remainingAfterWaiver = roundMoney(
+			Math.max(0, nextAmount - totalVerifiedPaid - nextWaivedAmount),
+		);
+
 		if (
-			payload.amount !== undefined &&
-			payload.status === undefined &&
-			existing.status !== FeeStatus.WAIVED
+			payload.waivedAmount !== undefined ||
+			(payload.amount !== undefined &&
+				payload.status === undefined &&
+				existing.status !== FeeStatus.WAIVED)
 		) {
-			const verifiedSum = await tx.studentPayment.aggregate({
-				where: { feeId: id, status: PaymentStatus.VERIFIED },
-				_sum: { paidAmount: true },
-			});
-			const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
-			resolvedStatus =
-				totalVerifiedPaid >= payload.amount
-					? FeeStatus.PAID
-					: totalVerifiedPaid > 0
-						? FeeStatus.PARTIAL
-						: FeeStatus.PENDING;
+			if (remainingAfterWaiver === 0) {
+				resolvedStatus =
+					totalVerifiedPaid > 0 ? FeeStatus.PAID : FeeStatus.WAIVED;
+			} else if (totalVerifiedPaid > 0) {
+				resolvedStatus = FeeStatus.PARTIAL;
+			} else {
+				resolvedStatus = FeeStatus.PENDING;
+			}
+		} else if (payload.status === FeeStatus.WAIVED && totalVerifiedPaid > 0) {
+			// Remaining balance is waived, preserve already verified payments cleanly
+			resolvedStatus = FeeStatus.WAIVED;
 		}
 
-		return tx.studentFee.update({
+		const previous = {
+			title: existing.title,
+			amount: roundMoney(Number(existing.amount)),
+			waivedAmount: roundMoney(Number(existing.waivedAmount ?? 0)),
+			status: existing.status,
+		};
+
+		const updated = await tx.studentFee.update({
 			where: { id },
 			data: {
 				...(payload.feeType !== undefined ? { feeType: payload.feeType } : {}),
 				...(payload.title !== undefined ? { title: payload.title } : {}),
-				...(payload.amount !== undefined ? { amount: payload.amount } : {}),
+				...(payload.amount !== undefined
+					? { amount: new Prisma.Decimal(nextAmount.toFixed(2)) }
+					: {}),
 				...(payload.dueDate !== undefined ? { dueDate: payload.dueDate } : {}),
 				...(payload.academicYear !== undefined
 					? { academicYear: payload.academicYear }
@@ -386,12 +755,27 @@ export const updateStudentFee = async (
 					: {}),
 				...(payload.examId !== undefined ? { examId: payload.examId } : {}),
 				...(resolvedStatus !== undefined ? { status: resolvedStatus } : {}),
+				...(isWaiverMutation || nextWaivedAmount !== previous.waivedAmount
+					? {
+							waivedAmount: new Prisma.Decimal(nextWaivedAmount.toFixed(2)),
+							...(payload.waiverReason !== undefined
+								? { waiverReason: payload.waiverReason }
+								: {}),
+							...(nextWaivedAmount > 0 && requester
+								? { waivedById: requester.userId, waivedAt: new Date() }
+								: nextWaivedAmount === 0
+									? { waivedById: null, waivedAt: null }
+									: {}),
+						}
+					: {}),
 				...(resolvedDescription !== undefined
 					? { description: resolvedDescription }
 					: {}),
 			},
 			include: studentFeeInclude,
 		});
+
+		return { fee: enrichFeeRecord(updated), previous };
 	});
 };
 

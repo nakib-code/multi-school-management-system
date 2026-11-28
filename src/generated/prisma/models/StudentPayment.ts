@@ -53,6 +53,7 @@ export type StudentPaymentMinAggregateOutputType = {
   senderNumber: string | null
   receiverNumber: string | null
   trxId: string | null
+  receiptNo: string | null
   paidAmount: runtime.Decimal | null
   status: $Enums.PaymentStatus | null
   paidAt: Date | null
@@ -73,6 +74,7 @@ export type StudentPaymentMaxAggregateOutputType = {
   senderNumber: string | null
   receiverNumber: string | null
   trxId: string | null
+  receiptNo: string | null
   paidAmount: runtime.Decimal | null
   status: $Enums.PaymentStatus | null
   paidAt: Date | null
@@ -93,6 +95,7 @@ export type StudentPaymentCountAggregateOutputType = {
   senderNumber: number
   receiverNumber: number
   trxId: number
+  receiptNo: number
   paidAmount: number
   status: number
   paidAt: number
@@ -133,6 +136,7 @@ export type StudentPaymentMinAggregateInputType = {
   senderNumber?: true
   receiverNumber?: true
   trxId?: true
+  receiptNo?: true
   paidAmount?: true
   status?: true
   paidAt?: true
@@ -153,6 +157,7 @@ export type StudentPaymentMaxAggregateInputType = {
   senderNumber?: true
   receiverNumber?: true
   trxId?: true
+  receiptNo?: true
   paidAmount?: true
   status?: true
   paidAt?: true
@@ -173,6 +178,7 @@ export type StudentPaymentCountAggregateInputType = {
   senderNumber?: true
   receiverNumber?: true
   trxId?: true
+  receiptNo?: true
   paidAmount?: true
   status?: true
   paidAt?: true
@@ -280,6 +286,7 @@ export type StudentPaymentGroupByOutputType = {
   senderNumber: string
   receiverNumber: string | null
   trxId: string
+  receiptNo: string | null
   paidAmount: runtime.Decimal
   status: $Enums.PaymentStatus
   paidAt: Date
@@ -323,6 +330,7 @@ export type StudentPaymentWhereInput = {
   senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
   receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   trxId?: Prisma.StringFilter<"StudentPayment"> | string
+  receiptNo?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
@@ -347,6 +355,7 @@ export type StudentPaymentOrderByWithRelationInput = {
   senderNumber?: Prisma.SortOrder
   receiverNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   trxId?: Prisma.SortOrder
+  receiptNo?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
@@ -364,6 +373,7 @@ export type StudentPaymentOrderByWithRelationInput = {
 
 export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  schoolId_receiptNo?: Prisma.StudentPaymentSchoolIdReceiptNoCompoundUniqueInput
   AND?: Prisma.StudentPaymentWhereInput | Prisma.StudentPaymentWhereInput[]
   OR?: Prisma.StudentPaymentWhereInput[]
   NOT?: Prisma.StudentPaymentWhereInput | Prisma.StudentPaymentWhereInput[]
@@ -374,6 +384,7 @@ export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
   receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   trxId?: Prisma.StringFilter<"StudentPayment"> | string
+  receiptNo?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
@@ -387,7 +398,7 @@ export type StudentPaymentWhereUniqueInput = Prisma.AtLeast<{
   student?: Prisma.XOR<Prisma.StudentScalarRelationFilter, Prisma.StudentWhereInput>
   fee?: Prisma.XOR<Prisma.StudentFeeScalarRelationFilter, Prisma.StudentFeeWhereInput>
   verifiedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id">
+}, "id" | "schoolId_receiptNo">
 
 export type StudentPaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -398,6 +409,7 @@ export type StudentPaymentOrderByWithAggregationInput = {
   senderNumber?: Prisma.SortOrder
   receiverNumber?: Prisma.SortOrderInput | Prisma.SortOrder
   trxId?: Prisma.SortOrder
+  receiptNo?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
@@ -426,6 +438,7 @@ export type StudentPaymentScalarWhereWithAggregatesInput = {
   senderNumber?: Prisma.StringWithAggregatesFilter<"StudentPayment"> | string
   receiverNumber?: Prisma.StringNullableWithAggregatesFilter<"StudentPayment"> | string | null
   trxId?: Prisma.StringWithAggregatesFilter<"StudentPayment"> | string
+  receiptNo?: Prisma.StringNullableWithAggregatesFilter<"StudentPayment"> | string | null
   paidAmount?: Prisma.DecimalWithAggregatesFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusWithAggregatesFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeWithAggregatesFilter<"StudentPayment"> | Date | string
@@ -442,6 +455,7 @@ export type StudentPaymentCreateInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -465,6 +479,7 @@ export type StudentPaymentUncheckedCreateInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -481,6 +496,7 @@ export type StudentPaymentUpdateInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -504,6 +520,7 @@ export type StudentPaymentUncheckedUpdateInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -524,6 +541,7 @@ export type StudentPaymentCreateManyInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -540,6 +558,7 @@ export type StudentPaymentUpdateManyMutationInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -559,6 +578,7 @@ export type StudentPaymentUncheckedUpdateManyInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -580,6 +600,11 @@ export type StudentPaymentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StudentPaymentSchoolIdReceiptNoCompoundUniqueInput = {
+  schoolId: number
+  receiptNo: string
+}
+
 export type StudentPaymentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
@@ -589,6 +614,7 @@ export type StudentPaymentCountOrderByAggregateInput = {
   senderNumber?: Prisma.SortOrder
   receiverNumber?: Prisma.SortOrder
   trxId?: Prisma.SortOrder
+  receiptNo?: Prisma.SortOrder
   paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
@@ -618,6 +644,7 @@ export type StudentPaymentMaxOrderByAggregateInput = {
   senderNumber?: Prisma.SortOrder
   receiverNumber?: Prisma.SortOrder
   trxId?: Prisma.SortOrder
+  receiptNo?: Prisma.SortOrder
   paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
@@ -638,6 +665,7 @@ export type StudentPaymentMinOrderByAggregateInput = {
   senderNumber?: Prisma.SortOrder
   receiverNumber?: Prisma.SortOrder
   trxId?: Prisma.SortOrder
+  receiptNo?: Prisma.SortOrder
   paidAmount?: Prisma.SortOrder
   status?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
@@ -835,6 +863,7 @@ export type StudentPaymentCreateWithoutSchoolInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -856,6 +885,7 @@ export type StudentPaymentUncheckedCreateWithoutSchoolInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -905,6 +935,7 @@ export type StudentPaymentScalarWhereInput = {
   senderNumber?: Prisma.StringFilter<"StudentPayment"> | string
   receiverNumber?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   trxId?: Prisma.StringFilter<"StudentPayment"> | string
+  receiptNo?: Prisma.StringNullableFilter<"StudentPayment"> | string | null
   paidAmount?: Prisma.DecimalFilter<"StudentPayment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFilter<"StudentPayment"> | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFilter<"StudentPayment"> | Date | string
@@ -921,6 +952,7 @@ export type StudentPaymentCreateWithoutFeeInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -942,6 +974,7 @@ export type StudentPaymentUncheckedCreateWithoutFeeInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -984,6 +1017,7 @@ export type StudentPaymentCreateWithoutStudentInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1005,6 +1039,7 @@ export type StudentPaymentUncheckedCreateWithoutStudentInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1047,6 +1082,7 @@ export type StudentPaymentCreateWithoutVerifiedByInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1069,6 +1105,7 @@ export type StudentPaymentUncheckedCreateWithoutVerifiedByInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1113,6 +1150,7 @@ export type StudentPaymentCreateManySchoolInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1129,6 +1167,7 @@ export type StudentPaymentUpdateWithoutSchoolInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1150,6 +1189,7 @@ export type StudentPaymentUncheckedUpdateWithoutSchoolInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1169,6 +1209,7 @@ export type StudentPaymentUncheckedUpdateManyWithoutSchoolInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1188,6 +1229,7 @@ export type StudentPaymentCreateManyFeeInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1204,6 +1246,7 @@ export type StudentPaymentUpdateWithoutFeeInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1225,6 +1268,7 @@ export type StudentPaymentUncheckedUpdateWithoutFeeInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1244,6 +1288,7 @@ export type StudentPaymentUncheckedUpdateManyWithoutFeeInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1263,6 +1308,7 @@ export type StudentPaymentCreateManyStudentInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1279,6 +1325,7 @@ export type StudentPaymentUpdateWithoutStudentInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1300,6 +1347,7 @@ export type StudentPaymentUncheckedUpdateWithoutStudentInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1319,6 +1367,7 @@ export type StudentPaymentUncheckedUpdateManyWithoutStudentInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1339,6 +1388,7 @@ export type StudentPaymentCreateManyVerifiedByInput = {
   senderNumber: string
   receiverNumber?: string | null
   trxId: string
+  receiptNo?: string | null
   paidAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: $Enums.PaymentStatus
   paidAt?: Date | string
@@ -1354,6 +1404,7 @@ export type StudentPaymentUpdateWithoutVerifiedByInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1376,6 +1427,7 @@ export type StudentPaymentUncheckedUpdateWithoutVerifiedByInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1395,6 +1447,7 @@ export type StudentPaymentUncheckedUpdateManyWithoutVerifiedByInput = {
   senderNumber?: Prisma.StringFieldUpdateOperationsInput | string
   receiverNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   trxId?: Prisma.StringFieldUpdateOperationsInput | string
+  receiptNo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   paidAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
   paidAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1416,6 +1469,7 @@ export type StudentPaymentSelect<ExtArgs extends runtime.Types.Extensions.Intern
   senderNumber?: boolean
   receiverNumber?: boolean
   trxId?: boolean
+  receiptNo?: boolean
   paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
@@ -1440,6 +1494,7 @@ export type StudentPaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   senderNumber?: boolean
   receiverNumber?: boolean
   trxId?: boolean
+  receiptNo?: boolean
   paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
@@ -1464,6 +1519,7 @@ export type StudentPaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   senderNumber?: boolean
   receiverNumber?: boolean
   trxId?: boolean
+  receiptNo?: boolean
   paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
@@ -1488,6 +1544,7 @@ export type StudentPaymentSelectScalar = {
   senderNumber?: boolean
   receiverNumber?: boolean
   trxId?: boolean
+  receiptNo?: boolean
   paidAmount?: boolean
   status?: boolean
   paidAt?: boolean
@@ -1499,7 +1556,7 @@ export type StudentPaymentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StudentPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "feeId" | "paymentMethod" | "senderNumber" | "receiverNumber" | "trxId" | "paidAmount" | "status" | "paidAt" | "verifiedById" | "verifiedAt" | "rejectionReason" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["studentPayment"]>
+export type StudentPaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "feeId" | "paymentMethod" | "senderNumber" | "receiverNumber" | "trxId" | "receiptNo" | "paidAmount" | "status" | "paidAt" | "verifiedById" | "verifiedAt" | "rejectionReason" | "remarks" | "createdAt" | "updatedAt", ExtArgs["result"]["studentPayment"]>
 export type StudentPaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
@@ -1536,6 +1593,7 @@ export type $StudentPaymentPayload<ExtArgs extends runtime.Types.Extensions.Inte
     senderNumber: string
     receiverNumber: string | null
     trxId: string
+    receiptNo: string | null
     paidAmount: runtime.Decimal
     status: $Enums.PaymentStatus
     paidAt: Date
@@ -1980,6 +2038,7 @@ export interface StudentPaymentFieldRefs {
   readonly senderNumber: Prisma.FieldRef<"StudentPayment", 'String'>
   readonly receiverNumber: Prisma.FieldRef<"StudentPayment", 'String'>
   readonly trxId: Prisma.FieldRef<"StudentPayment", 'String'>
+  readonly receiptNo: Prisma.FieldRef<"StudentPayment", 'String'>
   readonly paidAmount: Prisma.FieldRef<"StudentPayment", 'Decimal'>
   readonly status: Prisma.FieldRef<"StudentPayment", 'PaymentStatus'>
   readonly paidAt: Prisma.FieldRef<"StudentPayment", 'DateTime'>

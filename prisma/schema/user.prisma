@@ -42,6 +42,7 @@ model User {
   customExpenseSheetsCreated   CustomExpenseSheet[]  @relation("CustomExpenseSheetCreator")
   customExpenseEntriesRecorded CustomExpenseEntry[]  @relation("CustomExpenseEntryRecorder")
   incomeEntriesRecorded        IncomeEntry[]         @relation("IncomeEntryRecorder")
+  waivedStudentFees            StudentFee[]          @relation("StudentFeeWaiver")
 
   @@index([role])
   @@index([status])

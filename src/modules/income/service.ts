@@ -5,9 +5,17 @@ import {
 	PaymentMethod,
 	PaymentStatus,
 	Prisma,
+	SequenceDocumentType,
 } from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
 import AppError from "../../utils/appError.js";
+import {
+	getCurrentDhakaMonth as getDhakaMonth,
+	resolveMonthOrCustomDateRange,
+	roundMoney,
+	toDhakaDateKey as toDhakaDate,
+} from "../../utils/dhakaDate.js";
+import { generateNextDocumentNumber } from "../../utils/documentSequence.js";
 import type {
 	CreateOtherIncomeInput,
 	IncomeCategoryFilter,
@@ -32,24 +40,8 @@ const ALL_CATEGORIES: UnifiedIncomeCategory[] = [
 	"OTHER_INCOME",
 ];
 
-const roundMoney = (value: number): number =>
-	Math.round((value + Number.EPSILON) * 100) / 100;
-
-export const toDhakaDateKey = (date: Date): string => {
-	const parts = new Intl.DateTimeFormat("en-CA", {
-		timeZone: "Asia/Dhaka",
-		year: "numeric",
-		month: "2-digit",
-		day: "2-digit",
-	}).formatToParts(date);
-	const y = parts.find((p) => p.type === "year")?.value ?? "2026";
-	const m = parts.find((p) => p.type === "month")?.value ?? "01";
-	const d = parts.find((p) => p.type === "day")?.value ?? "01";
-	return `${y}-${m}-${d}`;
-};
-
-export const getCurrentDhakaMonth = (now: Date = new Date()): string =>
-	toDhakaDateKey(now).slice(0, 7);
+export const toDhakaDateKey = toDhakaDate;
+export const getCurrentDhakaMonth = getDhakaMonth;
 
 export const normalizeIncomeDate = (
 	rawDate?: string,
@@ -80,29 +72,7 @@ export const resolveMonthDateRange = (
 	billingMonth: string,
 	startDate?: string,
 	endDate?: string,
-): { rangeStart: Date; rangeEnd: Date; daysInMonth: number } => {
-	const [yearStr = "2026", monthStr = "01"] = billingMonth.split("-");
-	const year = Number(yearStr);
-	const month = Number(monthStr);
-	const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
-	const lastDay = String(daysInMonth).padStart(2, "0");
-
-	const effectiveStart = startDate?.trim() || `${yearStr}-${monthStr}-01`;
-	const effectiveEnd = endDate?.trim() || `${yearStr}-${monthStr}-${lastDay}`;
-
-	const rangeStart = new Date(`${effectiveStart}T00:00:00+06:00`);
-	const rangeEnd = new Date(`${effectiveEnd}T23:59:59.999+06:00`);
-
-	if (
-		Number.isNaN(rangeStart.getTime()) ||
-		Number.isNaN(rangeEnd.getTime()) ||
-		rangeStart > rangeEnd
-	) {
-		throw new AppError(400, "Invalid date range");
-	}
-
-	return { rangeStart, rangeEnd, daysInMonth };
-};
+) => resolveMonthOrCustomDateRange(billingMonth, startDate, endDate);
 
 export const mapFeeTypeToIncomeCategory = (
 	feeType: FeeType,
@@ -121,23 +91,33 @@ export const createOtherIncomeEntry = async (
 		payload.incomeDate,
 	);
 
-	const created = await prisma.incomeEntry.create({
-		data: {
+	const created = await prisma.$transaction(async (tx) => {
+		const receiptNo = await generateNextDocumentNumber(
+			tx,
 			schoolId,
-			category: IncomeEntryCategory.OTHER_INCOME,
-			sourceLabel: payload.sourceLabel.trim(),
-			title: payload.title.trim(),
-			amount: new Prisma.Decimal(roundMoney(payload.amount).toFixed(2)),
+			SequenceDocumentType.DONATION_RECEIPT,
 			incomeDate,
-			billingMonth,
-			paymentMethod: payload.paymentMethod ?? PaymentMethod.CASH,
-			referenceNo: payload.referenceNo?.trim() || null,
-			notes: payload.notes?.trim() || null,
-			recordedById,
-		},
-		include: {
-			recordedBy: { select: { id: true, name: true, role: true } },
-		},
+		);
+
+		return tx.incomeEntry.create({
+			data: {
+				schoolId,
+				category: IncomeEntryCategory.OTHER_INCOME,
+				sourceLabel: payload.sourceLabel.trim(),
+				title: payload.title.trim(),
+				amount: new Prisma.Decimal(roundMoney(payload.amount).toFixed(2)),
+				incomeDate,
+				billingMonth,
+				paymentMethod: payload.paymentMethod ?? PaymentMethod.CASH,
+				receiptNo,
+				referenceNo: payload.referenceNo?.trim() || null,
+				notes: payload.notes?.trim() || null,
+				recordedById,
+			},
+			include: {
+				recordedBy: { select: { id: true, name: true, role: true } },
+			},
+		});
 	});
 
 	return {
@@ -150,6 +130,7 @@ export const createOtherIncomeEntry = async (
 		incomeDate: dateKey,
 		billingMonth: created.billingMonth,
 		paymentMethod: created.paymentMethod,
+		receiptNo: created.receiptNo,
 		referenceNo: created.referenceNo,
 		notes: created.notes,
 		recordedBy: created.recordedBy,
@@ -169,6 +150,15 @@ export const updateOtherIncomeEntry = async (
 	if (!existing) {
 		throw new AppError(404, "Income entry not found");
 	}
+
+	const previous = {
+		sourceLabel: existing.sourceLabel,
+		title: existing.title,
+		amount: roundMoney(Number(existing.amount)),
+		incomeDate: toDhakaDateKey(existing.incomeDate),
+		billingMonth: existing.billingMonth,
+		paymentMethod: existing.paymentMethod,
+	};
 
 	const dateUpdate =
 		payload.incomeDate !== undefined
@@ -218,18 +208,28 @@ export const updateOtherIncomeEntry = async (
 		incomeDate: toDhakaDateKey(updated.incomeDate),
 		billingMonth: updated.billingMonth,
 		paymentMethod: updated.paymentMethod,
+		receiptNo: updated.receiptNo,
 		referenceNo: updated.referenceNo,
 		notes: updated.notes,
 		recordedBy: updated.recordedBy,
 		createdAt: updated.createdAt,
 		updatedAt: updated.updatedAt,
+		previous,
 	};
 };
 
 export const deleteOtherIncomeEntry = async (schoolId: number, id: number) => {
 	const existing = await prisma.incomeEntry.findFirst({
 		where: { id, schoolId },
-		select: { id: true, title: true, amount: true, billingMonth: true },
+		select: {
+			id: true,
+			sourceLabel: true,
+			title: true,
+			amount: true,
+			billingMonth: true,
+			receiptNo: true,
+			paymentMethod: true,
+		},
 	});
 	if (!existing) {
 		throw new AppError(404, "Income entry not found");
@@ -241,9 +241,12 @@ export const deleteOtherIncomeEntry = async (schoolId: number, id: number) => {
 
 	return {
 		id: existing.id,
+		sourceLabel: existing.sourceLabel,
 		title: existing.title,
 		amount: roundMoney(Number(existing.amount)),
 		billingMonth: existing.billingMonth,
+		receiptNo: existing.receiptNo,
+		paymentMethod: existing.paymentMethod,
 	};
 };
 
@@ -265,6 +268,7 @@ const fetchUnifiedIncomeRows = async (
 					paidAmount: true,
 					paymentMethod: true,
 					trxId: true,
+					receiptNo: true,
 					paidAt: true,
 					remarks: true,
 					student: {
@@ -278,6 +282,7 @@ const fetchUnifiedIncomeRows = async (
 						select: {
 							feeType: true,
 							title: true,
+							billingMonth: true,
 						},
 					},
 					verifiedBy: {
@@ -330,6 +335,7 @@ const fetchUnifiedIncomeRows = async (
 					incomeDate: true,
 					billingMonth: true,
 					paymentMethod: true,
+					receiptNo: true,
 					referenceNo: true,
 					notes: true,
 					recordedBy: {
@@ -352,6 +358,8 @@ const fetchUnifiedIncomeRows = async (
 			entryId: sp.id,
 			date: dateKey,
 			billingMonth: dateKey.slice(0, 7),
+			feeBillingMonth: sp.fee.billingMonth ?? null,
+			receiptNo: sp.receiptNo ?? null,
 			category,
 			categoryLabel: INCOME_CATEGORY_LABELS[category],
 			sourceType: "STUDENT_PAYMENT",
@@ -374,6 +382,8 @@ const fetchUnifiedIncomeRows = async (
 			entryId: ap.id,
 			date: dateKey,
 			billingMonth: dateKey.slice(0, 7),
+			feeBillingMonth: null,
+			receiptNo: null,
 			category: "ADMISSION_FEE",
 			categoryLabel: INCOME_CATEGORY_LABELS.ADMISSION_FEE,
 			sourceType: "ADMISSION_PAYMENT",
@@ -395,6 +405,8 @@ const fetchUnifiedIncomeRows = async (
 			entryId: ie.id,
 			date: dateKey,
 			billingMonth: ie.billingMonth,
+			feeBillingMonth: null,
+			receiptNo: ie.receiptNo ?? null,
 			category: "OTHER_INCOME",
 			categoryLabel: INCOME_CATEGORY_LABELS.OTHER_INCOME,
 			sourceType: "MANUAL_INCOME",
@@ -482,8 +494,10 @@ const filterRows = (
 				row.sourceOrStudent.toLowerCase().includes(q) ||
 				row.title.toLowerCase().includes(q) ||
 				row.categoryLabel.toLowerCase().includes(q) ||
+				(row.receiptNo?.toLowerCase().includes(q) ?? false) ||
 				(row.referenceNo?.toLowerCase().includes(q) ?? false) ||
 				(row.notes?.toLowerCase().includes(q) ?? false) ||
+				(row.feeBillingMonth?.toLowerCase().includes(q) ?? false) ||
 				row.paymentMethod.toLowerCase().includes(q) ||
 				row.date.includes(q)
 			);
@@ -494,33 +508,76 @@ const filterRows = (
 		}));
 };
 
+const buildDailySeriesForKeys = (
+	dateKeys: string[],
+	rows: UnifiedIncomeRow[],
+) => {
+	const dailyMap = new Map<string, { totalAmount: number; count: number }>();
+	for (const row of rows) {
+		const bucket = dailyMap.get(row.date) ?? { totalAmount: 0, count: 0 };
+		bucket.totalAmount = roundMoney(bucket.totalAmount + row.amount);
+		bucket.count += 1;
+		dailyMap.set(row.date, bucket);
+	}
+
+	const dailySeries = dateKeys.map((date) => {
+		const bucket = dailyMap.get(date);
+		const day = Number(date.slice(8, 10)) || 1;
+		return {
+			date,
+			day,
+			totalAmount: bucket?.totalAmount ?? 0,
+			count: bucket?.count ?? 0,
+		};
+	});
+
+	return {
+		dailySeries,
+		activeDaysCount: dailyMap.size,
+	};
+};
+
 export const getIncomeSummary = async (
 	schoolId: number,
 	query: IncomeSummaryQuery,
 ) => {
 	const billingMonth = query.billingMonth?.trim() || getCurrentDhakaMonth();
 	const category: IncomeCategoryFilter = query.category ?? "ALL";
-	const { rangeStart, rangeEnd } = resolveMonthDateRange(
-		billingMonth,
-		query.startDate,
-		query.endDate,
-	);
+	const { rangeStart, rangeEnd, startKey, endKey, dateKeys } =
+		resolveMonthDateRange(billingMonth, query.startDate, query.endDate);
 
 	const allRows = await fetchUnifiedIncomeRows(schoolId, rangeStart, rangeEnd);
-	const aggregates = aggregateByCategory(allRows);
+	const periodAggregates = aggregateByCategory(allRows);
 	const rows = filterRows(allRows, category, query.search);
-	const filteredTotal = roundMoney(
-		rows.reduce((sum, item) => sum + item.amount, 0),
+	const filteredAggregates = aggregateByCategory(rows);
+	const { dailySeries, activeDaysCount } = buildDailySeriesForKeys(
+		dateKeys,
+		rows,
+	);
+	const hasActiveFilters = Boolean(
+		category !== "ALL" ||
+			query.search?.trim() ||
+			query.startDate?.trim() ||
+			query.endDate?.trim(),
 	);
 
 	return {
 		billingMonth,
 		category,
-		startDate: query.startDate ?? null,
-		endDate: query.endDate ?? null,
-		...aggregates,
-		filteredTotal,
+		startDate: query.startDate?.trim() || null,
+		endDate: query.endDate?.trim() || null,
+		effectiveStartDate: startKey,
+		effectiveEndDate: endKey,
+		hasActiveFilters,
+		...periodAggregates,
+		filteredTotal: filteredAggregates.grandTotal,
+		filteredSummary: {
+			...filteredAggregates,
+			entryCount: rows.length,
+		},
 		entryCount: rows.length,
+		activeDaysCount,
+		dailySeries,
 		rows,
 	};
 };
@@ -531,8 +588,8 @@ export const getIncomeMonthlyChart = async (
 ) => {
 	const billingMonth = query.billingMonth.trim();
 	const category: IncomeCategoryFilter = query.category ?? "ALL";
-	const { rangeStart, rangeEnd, daysInMonth } =
-		resolveMonthDateRange(billingMonth);
+	const { rangeStart, rangeEnd, startKey, endKey, dateKeys } =
+		resolveMonthDateRange(billingMonth, query.startDate, query.endDate);
 
 	const [school, allRows] = await Promise.all([
 		prisma.school.findUnique({
@@ -554,41 +611,38 @@ export const getIncomeMonthlyChart = async (
 		throw new AppError(404, "School not found");
 	}
 
-	const aggregates = aggregateByCategory(allRows);
-	const rows = filterRows(allRows, category);
-	const displayedTotal = roundMoney(
-		rows.reduce((sum, item) => sum + item.amount, 0),
+	const periodAggregates = aggregateByCategory(allRows);
+	const rows = filterRows(allRows, category, query.search);
+	const filteredAggregates = aggregateByCategory(rows);
+	const { dailySeries, activeDaysCount } = buildDailySeriesForKeys(
+		dateKeys,
+		rows,
 	);
-
-	const dailyMap = new Map<string, { totalAmount: number; count: number }>();
-	for (const row of rows) {
-		const bucket = dailyMap.get(row.date) ?? { totalAmount: 0, count: 0 };
-		bucket.totalAmount = roundMoney(bucket.totalAmount + row.amount);
-		bucket.count += 1;
-		dailyMap.set(row.date, bucket);
-	}
-
-	const [yearStr = "2026", monthStr = "01"] = billingMonth.split("-");
-	const dailySeries = Array.from({ length: daysInMonth }, (_, i) => {
-		const day = i + 1;
-		const date = `${yearStr}-${monthStr}-${String(day).padStart(2, "0")}`;
-		const bucket = dailyMap.get(date);
-		return {
-			date,
-			day,
-			totalAmount: bucket?.totalAmount ?? 0,
-			count: bucket?.count ?? 0,
-		};
-	});
+	const hasActiveFilters = Boolean(
+		category !== "ALL" ||
+			query.search?.trim() ||
+			query.startDate?.trim() ||
+			query.endDate?.trim(),
+	);
 
 	return {
 		school,
 		billingMonth,
 		category,
-		...aggregates,
-		displayedTotal,
+		startDate: query.startDate?.trim() || null,
+		endDate: query.endDate?.trim() || null,
+		effectiveStartDate: startKey,
+		effectiveEndDate: endKey,
+		hasActiveFilters,
+		...periodAggregates,
+		displayedTotal: filteredAggregates.grandTotal,
+		filteredTotal: filteredAggregates.grandTotal,
+		filteredSummary: {
+			...filteredAggregates,
+			entryCount: rows.length,
+		},
 		entryCount: rows.length,
-		activeDaysCount: dailyMap.size,
+		activeDaysCount,
 		dailySeries,
 		rows,
 	};

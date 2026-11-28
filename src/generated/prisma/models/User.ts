@@ -316,6 +316,7 @@ export type UserWhereInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetListRelationFilter
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryListRelationFilter
   incomeEntriesRecorded?: Prisma.IncomeEntryListRelationFilter
+  waivedStudentFees?: Prisma.StudentFeeListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -357,6 +358,7 @@ export type UserOrderByWithRelationInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetOrderByRelationAggregateInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryOrderByRelationAggregateInput
   incomeEntriesRecorded?: Prisma.IncomeEntryOrderByRelationAggregateInput
+  waivedStudentFees?: Prisma.StudentFeeOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -401,6 +403,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetListRelationFilter
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryListRelationFilter
   incomeEntriesRecorded?: Prisma.IncomeEntryListRelationFilter
+  waivedStudentFees?: Prisma.StudentFeeListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -482,6 +485,7 @@ export type UserCreateInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -522,6 +526,7 @@ export type UserUncheckedCreateInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUpdateInput = {
@@ -561,6 +566,7 @@ export type UserUpdateInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -601,6 +607,7 @@ export type UserUncheckedUpdateInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -1041,6 +1048,22 @@ export type UserUncheckedUpdateManyWithoutSchoolNestedInput = {
   deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
+export type UserCreateNestedOneWithoutWaivedStudentFeesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWaivedStudentFeesInput, Prisma.UserUncheckedCreateWithoutWaivedStudentFeesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWaivedStudentFeesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutWaivedStudentFeesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWaivedStudentFeesInput, Prisma.UserUncheckedCreateWithoutWaivedStudentFeesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWaivedStudentFeesInput
+  upsert?: Prisma.UserUpsertWithoutWaivedStudentFeesInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWaivedStudentFeesInput, Prisma.UserUpdateWithoutWaivedStudentFeesInput>, Prisma.UserUncheckedUpdateWithoutWaivedStudentFeesInput>
+}
+
 export type UserCreateNestedOneWithoutVerifiedStudentPaymentsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutVerifiedStudentPaymentsInput, Prisma.UserUncheckedCreateWithoutVerifiedStudentPaymentsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerifiedStudentPaymentsInput
@@ -1161,6 +1184,7 @@ export type UserCreateWithoutAdmissionsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutAdmissionsReviewedInput = {
@@ -1200,6 +1224,7 @@ export type UserUncheckedCreateWithoutAdmissionsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutAdmissionsReviewedInput = {
@@ -1254,6 +1279,7 @@ export type UserUpdateWithoutAdmissionsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdmissionsReviewedInput = {
@@ -1293,6 +1319,7 @@ export type UserUncheckedUpdateWithoutAdmissionsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutReceivedAdmissionPaymentsInput = {
@@ -1331,6 +1358,7 @@ export type UserCreateWithoutReceivedAdmissionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput = {
@@ -1370,6 +1398,7 @@ export type UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutReceivedAdmissionPaymentsInput = {
@@ -1424,6 +1453,7 @@ export type UserUpdateWithoutReceivedAdmissionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput = {
@@ -1463,6 +1493,7 @@ export type UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutMarkedAttendancesInput = {
@@ -1501,6 +1532,7 @@ export type UserCreateWithoutMarkedAttendancesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
@@ -1540,6 +1572,7 @@ export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutMarkedAttendancesInput = {
@@ -1594,6 +1627,7 @@ export type UserUpdateWithoutMarkedAttendancesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
@@ -1633,6 +1667,7 @@ export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutAttendanceHistoriesChangedInput = {
@@ -1671,6 +1706,7 @@ export type UserCreateWithoutAttendanceHistoriesChangedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutAttendanceHistoriesChangedInput = {
@@ -1710,6 +1746,7 @@ export type UserUncheckedCreateWithoutAttendanceHistoriesChangedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutAttendanceHistoriesChangedInput = {
@@ -1764,6 +1801,7 @@ export type UserUpdateWithoutAttendanceHistoriesChangedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttendanceHistoriesChangedInput = {
@@ -1803,6 +1841,7 @@ export type UserUncheckedUpdateWithoutAttendanceHistoriesChangedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutLeaveRequestsCreatedInput = {
@@ -1841,6 +1880,7 @@ export type UserCreateWithoutLeaveRequestsCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutLeaveRequestsCreatedInput = {
@@ -1880,6 +1920,7 @@ export type UserUncheckedCreateWithoutLeaveRequestsCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutLeaveRequestsCreatedInput = {
@@ -1923,6 +1964,7 @@ export type UserCreateWithoutLeaveRequestsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutLeaveRequestsReviewedInput = {
@@ -1962,6 +2004,7 @@ export type UserUncheckedCreateWithoutLeaveRequestsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutLeaveRequestsReviewedInput = {
@@ -2016,6 +2059,7 @@ export type UserUpdateWithoutLeaveRequestsCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaveRequestsCreatedInput = {
@@ -2055,6 +2099,7 @@ export type UserUncheckedUpdateWithoutLeaveRequestsCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUpsertWithoutLeaveRequestsReviewedInput = {
@@ -2104,6 +2149,7 @@ export type UserUpdateWithoutLeaveRequestsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaveRequestsReviewedInput = {
@@ -2143,6 +2189,7 @@ export type UserUncheckedUpdateWithoutLeaveRequestsReviewedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutMonthlyReportsPublishedInput = {
@@ -2181,6 +2228,7 @@ export type UserCreateWithoutMonthlyReportsPublishedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutMonthlyReportsPublishedInput = {
@@ -2220,6 +2268,7 @@ export type UserUncheckedCreateWithoutMonthlyReportsPublishedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutMonthlyReportsPublishedInput = {
@@ -2274,6 +2323,7 @@ export type UserUpdateWithoutMonthlyReportsPublishedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMonthlyReportsPublishedInput = {
@@ -2313,6 +2363,7 @@ export type UserUncheckedUpdateWithoutMonthlyReportsPublishedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -2351,6 +2402,7 @@ export type UserCreateWithoutAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -2390,6 +2442,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -2444,6 +2497,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -2483,6 +2537,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutClassDiariesCreatedInput = {
@@ -2521,6 +2576,7 @@ export type UserCreateWithoutClassDiariesCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutClassDiariesCreatedInput = {
@@ -2560,6 +2616,7 @@ export type UserUncheckedCreateWithoutClassDiariesCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutClassDiariesCreatedInput = {
@@ -2614,6 +2671,7 @@ export type UserUpdateWithoutClassDiariesCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClassDiariesCreatedInput = {
@@ -2653,6 +2711,7 @@ export type UserUncheckedUpdateWithoutClassDiariesCreatedInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutCustomExpenseSheetsCreatedInput = {
@@ -2691,6 +2750,7 @@ export type UserCreateWithoutCustomExpenseSheetsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutCustomExpenseSheetsCreatedInput = {
@@ -2730,6 +2790,7 @@ export type UserUncheckedCreateWithoutCustomExpenseSheetsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutCustomExpenseSheetsCreatedInput = {
@@ -2784,6 +2845,7 @@ export type UserUpdateWithoutCustomExpenseSheetsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomExpenseSheetsCreatedInput = {
@@ -2823,6 +2885,7 @@ export type UserUncheckedUpdateWithoutCustomExpenseSheetsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutCustomExpenseEntriesRecordedInput = {
@@ -2861,6 +2924,7 @@ export type UserCreateWithoutCustomExpenseEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutCustomExpenseEntriesRecordedInput = {
@@ -2900,6 +2964,7 @@ export type UserUncheckedCreateWithoutCustomExpenseEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutCustomExpenseEntriesRecordedInput = {
@@ -2954,6 +3019,7 @@ export type UserUpdateWithoutCustomExpenseEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomExpenseEntriesRecordedInput = {
@@ -2993,6 +3059,7 @@ export type UserUncheckedUpdateWithoutCustomExpenseEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutGuardianInput = {
@@ -3031,6 +3098,7 @@ export type UserCreateWithoutGuardianInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutGuardianInput = {
@@ -3070,6 +3138,7 @@ export type UserUncheckedCreateWithoutGuardianInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutGuardianInput = {
@@ -3124,6 +3193,7 @@ export type UserUpdateWithoutGuardianInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGuardianInput = {
@@ -3163,6 +3233,7 @@ export type UserUncheckedUpdateWithoutGuardianInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutIncomeEntriesRecordedInput = {
@@ -3201,6 +3272,7 @@ export type UserCreateWithoutIncomeEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutIncomeEntriesRecordedInput = {
@@ -3240,6 +3312,7 @@ export type UserUncheckedCreateWithoutIncomeEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutIncomeEntriesRecordedInput = {
@@ -3294,6 +3367,7 @@ export type UserUpdateWithoutIncomeEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutIncomeEntriesRecordedInput = {
@@ -3333,6 +3407,7 @@ export type UserUncheckedUpdateWithoutIncomeEntriesRecordedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutManagerInput = {
@@ -3371,6 +3446,7 @@ export type UserCreateWithoutManagerInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutManagerInput = {
@@ -3410,6 +3486,7 @@ export type UserUncheckedCreateWithoutManagerInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutManagerInput = {
@@ -3464,6 +3541,7 @@ export type UserUpdateWithoutManagerInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutManagerInput = {
@@ -3503,6 +3581,7 @@ export type UserUncheckedUpdateWithoutManagerInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -3541,6 +3620,7 @@ export type UserCreateWithoutNotificationsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -3580,6 +3660,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -3634,6 +3715,7 @@ export type UserUpdateWithoutNotificationsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -3673,6 +3755,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutPasswordResetTokensInput = {
@@ -3711,6 +3794,7 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
@@ -3750,6 +3834,7 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutPasswordResetTokensInput = {
@@ -3804,6 +3889,7 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
@@ -3843,6 +3929,7 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutPlatformAuditLogsInput = {
@@ -3881,6 +3968,7 @@ export type UserCreateWithoutPlatformAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutPlatformAuditLogsInput = {
@@ -3920,6 +4008,7 @@ export type UserUncheckedCreateWithoutPlatformAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutPlatformAuditLogsInput = {
@@ -3974,6 +4063,7 @@ export type UserUpdateWithoutPlatformAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlatformAuditLogsInput = {
@@ -4013,6 +4103,7 @@ export type UserUncheckedUpdateWithoutPlatformAuditLogsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutPaidSalaryPaymentsInput = {
@@ -4051,6 +4142,7 @@ export type UserCreateWithoutPaidSalaryPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutPaidSalaryPaymentsInput = {
@@ -4090,6 +4182,7 @@ export type UserUncheckedCreateWithoutPaidSalaryPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutPaidSalaryPaymentsInput = {
@@ -4144,6 +4237,7 @@ export type UserUpdateWithoutPaidSalaryPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaidSalaryPaymentsInput = {
@@ -4183,6 +4277,7 @@ export type UserUncheckedUpdateWithoutPaidSalaryPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutSchoolInput = {
@@ -4221,6 +4316,7 @@ export type UserCreateWithoutSchoolInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutSchoolInput = {
@@ -4260,6 +4356,7 @@ export type UserUncheckedCreateWithoutSchoolInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutSchoolInput = {
@@ -4308,6 +4405,180 @@ export type UserScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
+export type UserCreateWithoutWaivedStudentFeesInput = {
+  name: string
+  email: string
+  passwordHash: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  avatarUrl?: string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school?: Prisma.SchoolCreateNestedOneWithoutUsersInput
+  guardian?: Prisma.GuardianCreateNestedOneWithoutUserInput
+  student?: Prisma.StudentCreateNestedOneWithoutUserInput
+  teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
+  manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
+  markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryCreateNestedManyWithoutChangedByUserInput
+  leaveRequestsCreated?: Prisma.LeaveRequestCreateNestedManyWithoutRequestedByUserInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByUserInput
+  monthlyReportsPublished?: Prisma.MonthlyReportCreateNestedManyWithoutPublishedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
+  verifiedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutVerifiedByInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentCreateNestedManyWithoutVerifiedByInput
+  paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
+  admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutActorInput
+  uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutUploadedByInput
+  classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+}
+
+export type UserUncheckedCreateWithoutWaivedStudentFeesInput = {
+  id?: number
+  name: string
+  email: string
+  passwordHash: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  avatarUrl?: string | null
+  schoolId?: number | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardian?: Prisma.GuardianUncheckedCreateNestedOneWithoutUserInput
+  student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
+  teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
+  manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
+  markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
+  leaveRequestsCreated?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutRequestedByUserInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByUserInput
+  monthlyReportsPublished?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutPublishedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
+  verifiedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutVerifiedByInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentUncheckedCreateNestedManyWithoutVerifiedByInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
+  admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutActorInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
+  classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+}
+
+export type UserCreateOrConnectWithoutWaivedStudentFeesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWaivedStudentFeesInput, Prisma.UserUncheckedCreateWithoutWaivedStudentFeesInput>
+}
+
+export type UserUpsertWithoutWaivedStudentFeesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWaivedStudentFeesInput, Prisma.UserUncheckedUpdateWithoutWaivedStudentFeesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWaivedStudentFeesInput, Prisma.UserUncheckedCreateWithoutWaivedStudentFeesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWaivedStudentFeesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWaivedStudentFeesInput, Prisma.UserUncheckedUpdateWithoutWaivedStudentFeesInput>
+}
+
+export type UserUpdateWithoutWaivedStudentFeesInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneWithoutUsersNestedInput
+  guardian?: Prisma.GuardianUpdateOneWithoutUserNestedInput
+  student?: Prisma.StudentUpdateOneWithoutUserNestedInput
+  teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
+  manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
+  markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryUpdateManyWithoutChangedByUserNestedInput
+  leaveRequestsCreated?: Prisma.LeaveRequestUpdateManyWithoutRequestedByUserNestedInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestUpdateManyWithoutReviewedByUserNestedInput
+  monthlyReportsPublished?: Prisma.MonthlyReportUpdateManyWithoutPublishedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
+  verifiedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutVerifiedByNestedInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentUpdateManyWithoutVerifiedByNestedInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
+  admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutActorNestedInput
+  uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutUploadedByNestedInput
+  classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWaivedStudentFeesInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardian?: Prisma.GuardianUncheckedUpdateOneWithoutUserNestedInput
+  student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
+  teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
+  manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
+  markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
+  leaveRequestsCreated?: Prisma.LeaveRequestUncheckedUpdateManyWithoutRequestedByUserNestedInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByUserNestedInput
+  monthlyReportsPublished?: Prisma.MonthlyReportUncheckedUpdateManyWithoutPublishedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
+  verifiedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutVerifiedByNestedInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentUncheckedUpdateManyWithoutVerifiedByNestedInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
+  admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
+  classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+}
+
 export type UserCreateWithoutVerifiedStudentPaymentsInput = {
   name: string
   email: string
@@ -4344,6 +4615,7 @@ export type UserCreateWithoutVerifiedStudentPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutVerifiedStudentPaymentsInput = {
@@ -4383,6 +4655,7 @@ export type UserUncheckedCreateWithoutVerifiedStudentPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutVerifiedStudentPaymentsInput = {
@@ -4437,6 +4710,7 @@ export type UserUpdateWithoutVerifiedStudentPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerifiedStudentPaymentsInput = {
@@ -4476,6 +4750,7 @@ export type UserUncheckedUpdateWithoutVerifiedStudentPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutStudentInput = {
@@ -4514,6 +4789,7 @@ export type UserCreateWithoutStudentInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutStudentInput = {
@@ -4553,6 +4829,7 @@ export type UserUncheckedCreateWithoutStudentInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutStudentInput = {
@@ -4607,6 +4884,7 @@ export type UserUpdateWithoutStudentInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStudentInput = {
@@ -4646,6 +4924,7 @@ export type UserUncheckedUpdateWithoutStudentInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4684,6 +4963,7 @@ export type UserCreateWithoutVerifiedSubscriptionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4723,6 +5003,7 @@ export type UserUncheckedCreateWithoutVerifiedSubscriptionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4777,6 +5058,7 @@ export type UserUpdateWithoutVerifiedSubscriptionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4816,6 +5098,7 @@ export type UserUncheckedUpdateWithoutVerifiedSubscriptionPaymentsInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutTeacherInput = {
@@ -4854,6 +5137,7 @@ export type UserCreateWithoutTeacherInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutTeacherInput = {
@@ -4893,6 +5177,7 @@ export type UserUncheckedCreateWithoutTeacherInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutTeacherInput = {
@@ -4947,6 +5232,7 @@ export type UserUpdateWithoutTeacherInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeacherInput = {
@@ -4986,6 +5272,7 @@ export type UserUncheckedUpdateWithoutTeacherInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateWithoutUploadedFilesInput = {
@@ -5024,6 +5311,7 @@ export type UserCreateWithoutUploadedFilesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserUncheckedCreateWithoutUploadedFilesInput = {
@@ -5063,6 +5351,7 @@ export type UserUncheckedCreateWithoutUploadedFilesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput
 }
 
 export type UserCreateOrConnectWithoutUploadedFilesInput = {
@@ -5117,6 +5406,7 @@ export type UserUpdateWithoutUploadedFilesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedFilesInput = {
@@ -5156,6 +5446,7 @@ export type UserUncheckedUpdateWithoutUploadedFilesInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserCreateManySchoolInput = {
@@ -5210,6 +5501,7 @@ export type UserUpdateWithoutSchoolInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSchoolInput = {
@@ -5249,6 +5541,7 @@ export type UserUncheckedUpdateWithoutSchoolInput = {
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
   incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  waivedStudentFees?: Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutSchoolInput = {
@@ -5292,6 +5585,7 @@ export type UserCountOutputType = {
   customExpenseSheetsCreated: number
   customExpenseEntriesRecorded: number
   incomeEntriesRecorded: number
+  waivedStudentFees: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5314,6 +5608,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   customExpenseSheetsCreated?: boolean | UserCountOutputTypeCountCustomExpenseSheetsCreatedArgs
   customExpenseEntriesRecorded?: boolean | UserCountOutputTypeCountCustomExpenseEntriesRecordedArgs
   incomeEntriesRecorded?: boolean | UserCountOutputTypeCountIncomeEntriesRecordedArgs
+  waivedStudentFees?: boolean | UserCountOutputTypeCountWaivedStudentFeesArgs
 }
 
 /**
@@ -5459,6 +5754,13 @@ export type UserCountOutputTypeCountIncomeEntriesRecordedArgs<ExtArgs extends ru
   where?: Prisma.IncomeEntryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWaivedStudentFeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StudentFeeWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5499,6 +5801,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   customExpenseSheetsCreated?: boolean | Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs>
   customExpenseEntriesRecorded?: boolean | Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs>
   incomeEntriesRecorded?: boolean | Prisma.User$incomeEntriesRecordedArgs<ExtArgs>
+  waivedStudentFees?: boolean | Prisma.User$waivedStudentFeesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -5581,6 +5884,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   customExpenseSheetsCreated?: boolean | Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs>
   customExpenseEntriesRecorded?: boolean | Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs>
   incomeEntriesRecorded?: boolean | Prisma.User$incomeEntriesRecordedArgs<ExtArgs>
+  waivedStudentFees?: boolean | Prisma.User$waivedStudentFeesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5617,6 +5921,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     customExpenseSheetsCreated: Prisma.$CustomExpenseSheetPayload<ExtArgs>[]
     customExpenseEntriesRecorded: Prisma.$CustomExpenseEntryPayload<ExtArgs>[]
     incomeEntriesRecorded: Prisma.$IncomeEntryPayload<ExtArgs>[]
+    waivedStudentFees: Prisma.$StudentFeePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -6051,6 +6356,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   customExpenseSheetsCreated<T extends Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomExpenseSheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customExpenseEntriesRecorded<T extends Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomExpenseEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   incomeEntriesRecorded<T extends Prisma.User$incomeEntriesRecordedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$incomeEntriesRecordedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  waivedStudentFees<T extends Prisma.User$waivedStudentFeesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$waivedStudentFeesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentFeePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7043,6 +7349,30 @@ export type User$incomeEntriesRecordedArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.IncomeEntryScalarFieldEnum | Prisma.IncomeEntryScalarFieldEnum[]
+}
+
+/**
+ * User.waivedStudentFees
+ */
+export type User$waivedStudentFeesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StudentFee
+   */
+  select?: Prisma.StudentFeeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StudentFee
+   */
+  omit?: Prisma.StudentFeeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StudentFeeInclude<ExtArgs> | null
+  where?: Prisma.StudentFeeWhereInput
+  orderBy?: Prisma.StudentFeeOrderByWithRelationInput | Prisma.StudentFeeOrderByWithRelationInput[]
+  cursor?: Prisma.StudentFeeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StudentFeeScalarFieldEnum | Prisma.StudentFeeScalarFieldEnum[]
 }
 
 /**

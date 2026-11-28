@@ -5,6 +5,7 @@ import {
 	FeeType,
 	PaymentStatus,
 	Prisma,
+	SalaryPaymentStatus,
 } from "../../../generated/prisma/client.js";
 import { prisma } from "../../../lib/prisma.js";
 import {
@@ -33,18 +34,20 @@ describe("Monthly Net Report Helpers", () => {
 });
 
 describe("Monthly Net Income vs Expense Report", () => {
-	it("computes SURPLUS, 6-month trend, daily net series, and enforces schoolId isolation", async () => {
+	it("computes SURPLUS/DEFICIT with disbursed Teacher Payroll, 6-month trend, daily net series, and enforces schoolId isolation", async () => {
 		const origSchool = prisma.school.findUnique;
 		const origStudentPay = prisma.studentPayment.findMany;
 		const origAdmissionPay = prisma.admissionPayment.findMany;
 		const origIncome = prisma.incomeEntry.findMany;
 		const origExpense = prisma.customExpenseEntry.findMany;
+		const origSalaryPay = prisma.salaryPayment.findMany;
 
 		const captured: {
 			studentWhere?: Record<string, unknown>;
 			admissionWhere?: Record<string, unknown>;
 			incomeWhere?: Record<string, unknown>;
 			expenseWhere?: Record<string, unknown>;
+			salaryWhere?: Record<string, unknown>;
 		} = {};
 
 		try {
@@ -128,6 +131,21 @@ describe("Monthly Net Income vs Expense Report", () => {
 					];
 				};
 
+			(prisma.salaryPayment as unknown as { findMany: unknown }).findMany =
+				async (args: { where: Record<string, unknown> }) => {
+					captured.salaryWhere = args.where;
+					return [
+						{
+							amount: new Prisma.Decimal("4200.00"),
+							paidAt: new Date("2026-11-05T10:00:00Z"),
+						},
+						{
+							amount: new Prisma.Decimal("1000.00"),
+							paidAt: new Date("2026-10-10T10:00:00Z"),
+						},
+					];
+				};
+
 			const report = await getMonthlyNetReport(14, {
 				billingMonth: "2026-11",
 				trendMonths: 6,
@@ -144,54 +162,87 @@ describe("Monthly Net Income vs Expense Report", () => {
 			assert.deepEqual(captured.admissionWhere?.studentFee, { is: null });
 			assert.equal(captured.incomeWhere?.schoolId, 14);
 			assert.equal(captured.expenseWhere?.schoolId, 14);
+			assert.equal(captured.salaryWhere?.schoolId, 14);
+			assert.equal(captured.salaryWhere?.status, SalaryPaymentStatus.COMPLETED);
 
-			// Selected month (2026-11): income = 8000 + 1500 + 2500 = 12000; expense = 3000 + 1800 = 4800
+			// Selected month (2026-11):
+			// income = 8000 + 1500 + 2500 = 12000
+			// custom expense = 3000 + 1800 = 4800; payroll = 4200; totalExpense = 9000
+			assert.equal(report.includePayroll, true);
 			assert.equal(report.summary.totalIncome, 12000);
-			assert.equal(report.summary.totalExpense, 4800);
-			assert.equal(report.summary.netBalance, 7200);
+			assert.equal(report.summary.customExpenseTotal, 4800);
+			assert.equal(report.summary.payrollExpenseTotal, 4200);
+			assert.equal(report.summary.payrollPaymentCount, 1);
+			assert.equal(report.summary.totalExpense, 9000);
+			assert.equal(report.summary.netBalance, 3000);
 			assert.equal(report.summary.status, "SURPLUS");
-			assert.equal(report.summary.expenseSharePercent, 40);
+			assert.equal(report.summary.expenseSharePercent, 75);
 
-			// Sheet-wise expense breakdown sorted desc
-			assert.equal(report.expenseBreakdown.length, 2);
-			assert.equal(report.expenseBreakdown[0]?.sheetName, "বাজার বিল");
-			assert.equal(report.expenseBreakdown[0]?.totalAmount, 3000);
+			// Expense breakdown sorted desc: Payroll (4200), বাজার বিল (3000), কারেন্ট বিল (1800)
+			assert.equal(report.expenseBreakdown.length, 3);
+			assert.equal(report.expenseBreakdown[0]?.sourceType, "TEACHER_PAYROLL");
+			assert.equal(
+				report.expenseBreakdown[0]?.sheetName,
+				"শিক্ষক বেতন (Teacher Payroll)",
+			);
+			assert.equal(report.expenseBreakdown[0]?.totalAmount, 4200);
+			assert.equal(report.expenseBreakdown[1]?.sheetName, "বাজার বিল");
+			assert.equal(report.expenseBreakdown[1]?.totalAmount, 3000);
 
-			// Daily series check (Nov 5: income 9500, expense 3000, net 6500)
+			// Daily series check (Nov 5: income 9500, custom 3000 + payroll 4200 = 7200, net 2300)
 			const nov5 = report.dailySeries.find((d) => d.date === "2026-11-05");
 			assert.deepEqual(nov5, {
 				date: "2026-11-05",
 				day: 5,
 				income: 9500,
-				expense: 3000,
-				net: 6500,
+				expense: 7200,
+				net: 2300,
 			});
 
-			// 6-month trend: Oct 2026 was DEFICIT (2000 - 3500 = -1500)
+			// 6-month trend: Oct 2026 was DEFICIT (2000 - (3500 + 1000) = -2500)
 			assert.equal(report.trend.length, 6);
 			const oct = report.trend.find((t) => t.billingMonth === "2026-10");
 			assert.deepEqual(oct, {
 				billingMonth: "2026-10",
 				totalIncome: 2000,
-				totalExpense: 3500,
-				netBalance: -1500,
+				customExpense: 3500,
+				payrollExpense: 1000,
+				totalExpense: 4500,
+				netBalance: -2500,
 				status: "DEFICIT",
 			});
-			// Zero-data month (e.g. 2026-06) should be 0 / SURPLUS
+
+			// Zero-data month (2026-06) should be 0 / SURPLUS
 			const jun = report.trend.find((t) => t.billingMonth === "2026-06");
 			assert.deepEqual(jun, {
 				billingMonth: "2026-06",
 				totalIncome: 0,
+				customExpense: 0,
+				payrollExpense: 0,
 				totalExpense: 0,
 				netBalance: 0,
 				status: "SURPLUS",
 			});
+
+			// Toggle includePayroll = false excludes payroll from totalExpense & breakdown while preserving payrollExpenseTotal visibility
+			const withoutPayroll = await getMonthlyNetReport(14, {
+				billingMonth: "2026-11",
+				trendMonths: 6,
+				includePayroll: false,
+			});
+			assert.equal(withoutPayroll.includePayroll, false);
+			assert.equal(withoutPayroll.summary.totalExpense, 4800);
+			assert.equal(withoutPayroll.summary.payrollExpenseTotal, 4200);
+			assert.equal(withoutPayroll.summary.netBalance, 7200);
+			assert.equal(withoutPayroll.summary.expenseSharePercent, 40);
+			assert.equal(withoutPayroll.expenseBreakdown.length, 2);
 		} finally {
 			prisma.school.findUnique = origSchool;
 			prisma.studentPayment.findMany = origStudentPay;
 			prisma.admissionPayment.findMany = origAdmissionPay;
 			prisma.incomeEntry.findMany = origIncome;
 			prisma.customExpenseEntry.findMany = origExpense;
+			prisma.salaryPayment.findMany = origSalaryPay;
 		}
 	});
 });

@@ -32,6 +32,10 @@ export type StudentFeeAvgAggregateOutputType = {
   studentId: number | null
   enrollmentId: number | null
   amount: runtime.Decimal | null
+  grossAmount: runtime.Decimal | null
+  concessionAmount: runtime.Decimal | null
+  waivedAmount: runtime.Decimal | null
+  waivedById: number | null
   examId: number | null
   admissionPaymentId: number | null
 }
@@ -42,6 +46,10 @@ export type StudentFeeSumAggregateOutputType = {
   studentId: number | null
   enrollmentId: number | null
   amount: runtime.Decimal | null
+  grossAmount: runtime.Decimal | null
+  concessionAmount: runtime.Decimal | null
+  waivedAmount: runtime.Decimal | null
+  waivedById: number | null
   examId: number | null
   admissionPaymentId: number | null
 }
@@ -54,6 +62,13 @@ export type StudentFeeMinAggregateOutputType = {
   feeType: $Enums.FeeType | null
   title: string | null
   amount: runtime.Decimal | null
+  grossAmount: runtime.Decimal | null
+  concessionAmount: runtime.Decimal | null
+  concessionType: $Enums.StudentConcessionType | null
+  waivedAmount: runtime.Decimal | null
+  waiverReason: string | null
+  waivedById: number | null
+  waivedAt: Date | null
   dueDate: Date | null
   academicYear: string | null
   billingMonth: string | null
@@ -73,6 +88,13 @@ export type StudentFeeMaxAggregateOutputType = {
   feeType: $Enums.FeeType | null
   title: string | null
   amount: runtime.Decimal | null
+  grossAmount: runtime.Decimal | null
+  concessionAmount: runtime.Decimal | null
+  concessionType: $Enums.StudentConcessionType | null
+  waivedAmount: runtime.Decimal | null
+  waiverReason: string | null
+  waivedById: number | null
+  waivedAt: Date | null
   dueDate: Date | null
   academicYear: string | null
   billingMonth: string | null
@@ -92,6 +114,13 @@ export type StudentFeeCountAggregateOutputType = {
   feeType: number
   title: number
   amount: number
+  grossAmount: number
+  concessionAmount: number
+  concessionType: number
+  waivedAmount: number
+  waiverReason: number
+  waivedById: number
+  waivedAt: number
   dueDate: number
   academicYear: number
   billingMonth: number
@@ -111,6 +140,10 @@ export type StudentFeeAvgAggregateInputType = {
   studentId?: true
   enrollmentId?: true
   amount?: true
+  grossAmount?: true
+  concessionAmount?: true
+  waivedAmount?: true
+  waivedById?: true
   examId?: true
   admissionPaymentId?: true
 }
@@ -121,6 +154,10 @@ export type StudentFeeSumAggregateInputType = {
   studentId?: true
   enrollmentId?: true
   amount?: true
+  grossAmount?: true
+  concessionAmount?: true
+  waivedAmount?: true
+  waivedById?: true
   examId?: true
   admissionPaymentId?: true
 }
@@ -133,6 +170,13 @@ export type StudentFeeMinAggregateInputType = {
   feeType?: true
   title?: true
   amount?: true
+  grossAmount?: true
+  concessionAmount?: true
+  concessionType?: true
+  waivedAmount?: true
+  waiverReason?: true
+  waivedById?: true
+  waivedAt?: true
   dueDate?: true
   academicYear?: true
   billingMonth?: true
@@ -152,6 +196,13 @@ export type StudentFeeMaxAggregateInputType = {
   feeType?: true
   title?: true
   amount?: true
+  grossAmount?: true
+  concessionAmount?: true
+  concessionType?: true
+  waivedAmount?: true
+  waiverReason?: true
+  waivedById?: true
+  waivedAt?: true
   dueDate?: true
   academicYear?: true
   billingMonth?: true
@@ -171,6 +222,13 @@ export type StudentFeeCountAggregateInputType = {
   feeType?: true
   title?: true
   amount?: true
+  grossAmount?: true
+  concessionAmount?: true
+  concessionType?: true
+  waivedAmount?: true
+  waiverReason?: true
+  waivedById?: true
+  waivedAt?: true
   dueDate?: true
   academicYear?: true
   billingMonth?: true
@@ -277,6 +335,13 @@ export type StudentFeeGroupByOutputType = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal
+  grossAmount: runtime.Decimal | null
+  concessionAmount: runtime.Decimal
+  concessionType: $Enums.StudentConcessionType | null
+  waivedAmount: runtime.Decimal
+  waiverReason: string | null
+  waivedById: number | null
+  waivedAt: Date | null
   dueDate: Date
   academicYear: string | null
   billingMonth: string | null
@@ -319,6 +384,13 @@ export type StudentFeeWhereInput = {
   feeType?: Prisma.EnumFeeTypeFilter<"StudentFee"> | $Enums.FeeType
   title?: Prisma.StringFilter<"StudentFee"> | string
   amount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.DecimalNullableFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableFilter<"StudentFee"> | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.StringNullableFilter<"StudentFee"> | string | null
+  waivedById?: Prisma.IntNullableFilter<"StudentFee"> | number | null
+  waivedAt?: Prisma.DateTimeNullableFilter<"StudentFee"> | Date | string | null
   dueDate?: Prisma.DateTimeFilter<"StudentFee"> | Date | string
   academicYear?: Prisma.StringNullableFilter<"StudentFee"> | string | null
   billingMonth?: Prisma.StringNullableFilter<"StudentFee"> | string | null
@@ -333,6 +405,7 @@ export type StudentFeeWhereInput = {
   enrollment?: Prisma.XOR<Prisma.EnrollmentScalarRelationFilter, Prisma.EnrollmentWhereInput>
   exam?: Prisma.XOR<Prisma.ExamNullableScalarRelationFilter, Prisma.ExamWhereInput> | null
   admissionPayment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
+  waivedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payments?: Prisma.StudentPaymentListRelationFilter
 }
 
@@ -344,6 +417,13 @@ export type StudentFeeOrderByWithRelationInput = {
   feeType?: Prisma.SortOrder
   title?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrderInput | Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waiverReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  waivedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  waivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   academicYear?: Prisma.SortOrderInput | Prisma.SortOrder
   billingMonth?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -358,6 +438,7 @@ export type StudentFeeOrderByWithRelationInput = {
   enrollment?: Prisma.EnrollmentOrderByWithRelationInput
   exam?: Prisma.ExamOrderByWithRelationInput
   admissionPayment?: Prisma.AdmissionPaymentOrderByWithRelationInput
+  waivedBy?: Prisma.UserOrderByWithRelationInput
   payments?: Prisma.StudentPaymentOrderByRelationAggregateInput
 }
 
@@ -373,6 +454,13 @@ export type StudentFeeWhereUniqueInput = Prisma.AtLeast<{
   feeType?: Prisma.EnumFeeTypeFilter<"StudentFee"> | $Enums.FeeType
   title?: Prisma.StringFilter<"StudentFee"> | string
   amount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.DecimalNullableFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableFilter<"StudentFee"> | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.StringNullableFilter<"StudentFee"> | string | null
+  waivedById?: Prisma.IntNullableFilter<"StudentFee"> | number | null
+  waivedAt?: Prisma.DateTimeNullableFilter<"StudentFee"> | Date | string | null
   dueDate?: Prisma.DateTimeFilter<"StudentFee"> | Date | string
   academicYear?: Prisma.StringNullableFilter<"StudentFee"> | string | null
   billingMonth?: Prisma.StringNullableFilter<"StudentFee"> | string | null
@@ -386,6 +474,7 @@ export type StudentFeeWhereUniqueInput = Prisma.AtLeast<{
   enrollment?: Prisma.XOR<Prisma.EnrollmentScalarRelationFilter, Prisma.EnrollmentWhereInput>
   exam?: Prisma.XOR<Prisma.ExamNullableScalarRelationFilter, Prisma.ExamWhereInput> | null
   admissionPayment?: Prisma.XOR<Prisma.AdmissionPaymentNullableScalarRelationFilter, Prisma.AdmissionPaymentWhereInput> | null
+  waivedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   payments?: Prisma.StudentPaymentListRelationFilter
 }, "id" | "admissionPaymentId">
 
@@ -397,6 +486,13 @@ export type StudentFeeOrderByWithAggregationInput = {
   feeType?: Prisma.SortOrder
   title?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrderInput | Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waiverReason?: Prisma.SortOrderInput | Prisma.SortOrder
+  waivedById?: Prisma.SortOrderInput | Prisma.SortOrder
+  waivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   academicYear?: Prisma.SortOrderInput | Prisma.SortOrder
   billingMonth?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -424,6 +520,13 @@ export type StudentFeeScalarWhereWithAggregatesInput = {
   feeType?: Prisma.EnumFeeTypeWithAggregatesFilter<"StudentFee"> | $Enums.FeeType
   title?: Prisma.StringWithAggregatesFilter<"StudentFee"> | string
   amount?: Prisma.DecimalWithAggregatesFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.DecimalNullableWithAggregatesFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalWithAggregatesFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableWithAggregatesFilter<"StudentFee"> | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalWithAggregatesFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.StringNullableWithAggregatesFilter<"StudentFee"> | string | null
+  waivedById?: Prisma.IntNullableWithAggregatesFilter<"StudentFee"> | number | null
+  waivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"StudentFee"> | Date | string | null
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"StudentFee"> | Date | string
   academicYear?: Prisma.StringNullableWithAggregatesFilter<"StudentFee"> | string | null
   billingMonth?: Prisma.StringNullableWithAggregatesFilter<"StudentFee"> | string | null
@@ -439,6 +542,12 @@ export type StudentFeeCreateInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -451,6 +560,7 @@ export type StudentFeeCreateInput = {
   enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
   exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
   admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
 }
 
@@ -462,6 +572,13 @@ export type StudentFeeUncheckedCreateInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -478,6 +595,12 @@ export type StudentFeeUpdateInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -490,6 +613,7 @@ export type StudentFeeUpdateInput = {
   enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
   exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
   admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
 }
 
@@ -501,6 +625,13 @@ export type StudentFeeUncheckedUpdateInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -521,6 +652,13 @@ export type StudentFeeCreateManyInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -536,6 +674,12 @@ export type StudentFeeUpdateManyMutationInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -553,6 +697,13 @@ export type StudentFeeUncheckedUpdateManyInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -587,6 +738,13 @@ export type StudentFeeCountOrderByAggregateInput = {
   feeType?: Prisma.SortOrder
   title?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waiverReason?: Prisma.SortOrder
+  waivedById?: Prisma.SortOrder
+  waivedAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
@@ -604,6 +762,10 @@ export type StudentFeeAvgOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   enrollmentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waivedById?: Prisma.SortOrder
   examId?: Prisma.SortOrder
   admissionPaymentId?: Prisma.SortOrder
 }
@@ -616,6 +778,13 @@ export type StudentFeeMaxOrderByAggregateInput = {
   feeType?: Prisma.SortOrder
   title?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waiverReason?: Prisma.SortOrder
+  waivedById?: Prisma.SortOrder
+  waivedAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
@@ -635,6 +804,13 @@ export type StudentFeeMinOrderByAggregateInput = {
   feeType?: Prisma.SortOrder
   title?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waiverReason?: Prisma.SortOrder
+  waivedById?: Prisma.SortOrder
+  waivedAt?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   academicYear?: Prisma.SortOrder
   billingMonth?: Prisma.SortOrder
@@ -652,6 +828,10 @@ export type StudentFeeSumOrderByAggregateInput = {
   studentId?: Prisma.SortOrder
   enrollmentId?: Prisma.SortOrder
   amount?: Prisma.SortOrder
+  grossAmount?: Prisma.SortOrder
+  concessionAmount?: Prisma.SortOrder
+  waivedAmount?: Prisma.SortOrder
+  waivedById?: Prisma.SortOrder
   examId?: Prisma.SortOrder
   admissionPaymentId?: Prisma.SortOrder
 }
@@ -819,6 +999,18 @@ export type StudentFeeUncheckedUpdateManyWithoutSchoolNestedInput = {
   deleteMany?: Prisma.StudentFeeScalarWhereInput | Prisma.StudentFeeScalarWhereInput[]
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type NullableEnumStudentConcessionTypeFieldUpdateOperationsInput = {
+  set?: $Enums.StudentConcessionType | null
+}
+
 export type EnumFeeStatusFieldUpdateOperationsInput = {
   set?: $Enums.FeeStatus
 }
@@ -879,10 +1071,58 @@ export type StudentFeeUncheckedUpdateManyWithoutStudentNestedInput = {
   deleteMany?: Prisma.StudentFeeScalarWhereInput | Prisma.StudentFeeScalarWhereInput[]
 }
 
+export type StudentFeeCreateNestedManyWithoutWaivedByInput = {
+  create?: Prisma.XOR<Prisma.StudentFeeCreateWithoutWaivedByInput, Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput> | Prisma.StudentFeeCreateWithoutWaivedByInput[] | Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput[]
+  connectOrCreate?: Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput | Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput[]
+  createMany?: Prisma.StudentFeeCreateManyWaivedByInputEnvelope
+  connect?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+}
+
+export type StudentFeeUncheckedCreateNestedManyWithoutWaivedByInput = {
+  create?: Prisma.XOR<Prisma.StudentFeeCreateWithoutWaivedByInput, Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput> | Prisma.StudentFeeCreateWithoutWaivedByInput[] | Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput[]
+  connectOrCreate?: Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput | Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput[]
+  createMany?: Prisma.StudentFeeCreateManyWaivedByInputEnvelope
+  connect?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+}
+
+export type StudentFeeUpdateManyWithoutWaivedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentFeeCreateWithoutWaivedByInput, Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput> | Prisma.StudentFeeCreateWithoutWaivedByInput[] | Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput[]
+  connectOrCreate?: Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput | Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput[]
+  upsert?: Prisma.StudentFeeUpsertWithWhereUniqueWithoutWaivedByInput | Prisma.StudentFeeUpsertWithWhereUniqueWithoutWaivedByInput[]
+  createMany?: Prisma.StudentFeeCreateManyWaivedByInputEnvelope
+  set?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  disconnect?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  delete?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  connect?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  update?: Prisma.StudentFeeUpdateWithWhereUniqueWithoutWaivedByInput | Prisma.StudentFeeUpdateWithWhereUniqueWithoutWaivedByInput[]
+  updateMany?: Prisma.StudentFeeUpdateManyWithWhereWithoutWaivedByInput | Prisma.StudentFeeUpdateManyWithWhereWithoutWaivedByInput[]
+  deleteMany?: Prisma.StudentFeeScalarWhereInput | Prisma.StudentFeeScalarWhereInput[]
+}
+
+export type StudentFeeUncheckedUpdateManyWithoutWaivedByNestedInput = {
+  create?: Prisma.XOR<Prisma.StudentFeeCreateWithoutWaivedByInput, Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput> | Prisma.StudentFeeCreateWithoutWaivedByInput[] | Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput[]
+  connectOrCreate?: Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput | Prisma.StudentFeeCreateOrConnectWithoutWaivedByInput[]
+  upsert?: Prisma.StudentFeeUpsertWithWhereUniqueWithoutWaivedByInput | Prisma.StudentFeeUpsertWithWhereUniqueWithoutWaivedByInput[]
+  createMany?: Prisma.StudentFeeCreateManyWaivedByInputEnvelope
+  set?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  disconnect?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  delete?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  connect?: Prisma.StudentFeeWhereUniqueInput | Prisma.StudentFeeWhereUniqueInput[]
+  update?: Prisma.StudentFeeUpdateWithWhereUniqueWithoutWaivedByInput | Prisma.StudentFeeUpdateWithWhereUniqueWithoutWaivedByInput[]
+  updateMany?: Prisma.StudentFeeUpdateManyWithWhereWithoutWaivedByInput | Prisma.StudentFeeUpdateManyWithWhereWithoutWaivedByInput[]
+  deleteMany?: Prisma.StudentFeeScalarWhereInput | Prisma.StudentFeeScalarWhereInput[]
+}
+
 export type StudentFeeCreateWithoutAdmissionPaymentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -894,6 +1134,7 @@ export type StudentFeeCreateWithoutAdmissionPaymentInput = {
   student: Prisma.StudentCreateNestedOneWithoutFeesInput
   enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
   exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
 }
 
@@ -905,6 +1146,13 @@ export type StudentFeeUncheckedCreateWithoutAdmissionPaymentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -936,6 +1184,12 @@ export type StudentFeeUpdateWithoutAdmissionPaymentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -947,6 +1201,7 @@ export type StudentFeeUpdateWithoutAdmissionPaymentInput = {
   student?: Prisma.StudentUpdateOneRequiredWithoutFeesNestedInput
   enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
   exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
 }
 
@@ -958,6 +1213,13 @@ export type StudentFeeUncheckedUpdateWithoutAdmissionPaymentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -973,6 +1235,12 @@ export type StudentFeeCreateWithoutEnrollmentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -984,6 +1252,7 @@ export type StudentFeeCreateWithoutEnrollmentInput = {
   student: Prisma.StudentCreateNestedOneWithoutFeesInput
   exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
   admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
 }
 
@@ -994,6 +1263,13 @@ export type StudentFeeUncheckedCreateWithoutEnrollmentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1043,6 +1319,13 @@ export type StudentFeeScalarWhereInput = {
   feeType?: Prisma.EnumFeeTypeFilter<"StudentFee"> | $Enums.FeeType
   title?: Prisma.StringFilter<"StudentFee"> | string
   amount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.DecimalNullableFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableFilter<"StudentFee"> | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFilter<"StudentFee"> | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.StringNullableFilter<"StudentFee"> | string | null
+  waivedById?: Prisma.IntNullableFilter<"StudentFee"> | number | null
+  waivedAt?: Prisma.DateTimeNullableFilter<"StudentFee"> | Date | string | null
   dueDate?: Prisma.DateTimeFilter<"StudentFee"> | Date | string
   academicYear?: Prisma.StringNullableFilter<"StudentFee"> | string | null
   billingMonth?: Prisma.StringNullableFilter<"StudentFee"> | string | null
@@ -1058,6 +1341,12 @@ export type StudentFeeCreateWithoutExamInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1069,6 +1358,7 @@ export type StudentFeeCreateWithoutExamInput = {
   student: Prisma.StudentCreateNestedOneWithoutFeesInput
   enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
   admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
 }
 
@@ -1080,6 +1370,13 @@ export type StudentFeeUncheckedCreateWithoutExamInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1121,6 +1418,12 @@ export type StudentFeeCreateWithoutSchoolInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1132,6 +1435,7 @@ export type StudentFeeCreateWithoutSchoolInput = {
   enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
   exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
   admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
 }
 
@@ -1142,6 +1446,13 @@ export type StudentFeeUncheckedCreateWithoutSchoolInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1184,6 +1495,12 @@ export type StudentFeeCreateWithoutPaymentsInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1196,6 +1513,7 @@ export type StudentFeeCreateWithoutPaymentsInput = {
   enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
   exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
   admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
 }
 
 export type StudentFeeUncheckedCreateWithoutPaymentsInput = {
@@ -1206,6 +1524,13 @@ export type StudentFeeUncheckedCreateWithoutPaymentsInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1237,6 +1562,12 @@ export type StudentFeeUpdateWithoutPaymentsInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1249,6 +1580,7 @@ export type StudentFeeUpdateWithoutPaymentsInput = {
   enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
   exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
   admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
 }
 
 export type StudentFeeUncheckedUpdateWithoutPaymentsInput = {
@@ -1259,6 +1591,13 @@ export type StudentFeeUncheckedUpdateWithoutPaymentsInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1274,6 +1613,12 @@ export type StudentFeeCreateWithoutStudentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1285,6 +1630,7 @@ export type StudentFeeCreateWithoutStudentInput = {
   enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
   exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
   admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  waivedBy?: Prisma.UserCreateNestedOneWithoutWaivedStudentFeesInput
   payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
 }
 
@@ -1295,6 +1641,13 @@ export type StudentFeeUncheckedCreateWithoutStudentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1333,6 +1686,83 @@ export type StudentFeeUpdateManyWithWhereWithoutStudentInput = {
   data: Prisma.XOR<Prisma.StudentFeeUpdateManyMutationInput, Prisma.StudentFeeUncheckedUpdateManyWithoutStudentInput>
 }
 
+export type StudentFeeCreateWithoutWaivedByInput = {
+  feeType: $Enums.FeeType
+  title: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
+  dueDate: Date | string
+  academicYear?: string | null
+  billingMonth?: string | null
+  status?: $Enums.FeeStatus
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school: Prisma.SchoolCreateNestedOneWithoutStudentFeesInput
+  student: Prisma.StudentCreateNestedOneWithoutFeesInput
+  enrollment: Prisma.EnrollmentCreateNestedOneWithoutFeesInput
+  exam?: Prisma.ExamCreateNestedOneWithoutStudentFeesInput
+  admissionPayment?: Prisma.AdmissionPaymentCreateNestedOneWithoutStudentFeeInput
+  payments?: Prisma.StudentPaymentCreateNestedManyWithoutFeeInput
+}
+
+export type StudentFeeUncheckedCreateWithoutWaivedByInput = {
+  id?: number
+  schoolId: number
+  studentId: number
+  enrollmentId: number
+  feeType: $Enums.FeeType
+  title: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
+  dueDate: Date | string
+  academicYear?: string | null
+  billingMonth?: string | null
+  examId?: number | null
+  admissionPaymentId?: number | null
+  status?: $Enums.FeeStatus
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  payments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutFeeInput
+}
+
+export type StudentFeeCreateOrConnectWithoutWaivedByInput = {
+  where: Prisma.StudentFeeWhereUniqueInput
+  create: Prisma.XOR<Prisma.StudentFeeCreateWithoutWaivedByInput, Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput>
+}
+
+export type StudentFeeCreateManyWaivedByInputEnvelope = {
+  data: Prisma.StudentFeeCreateManyWaivedByInput | Prisma.StudentFeeCreateManyWaivedByInput[]
+  skipDuplicates?: boolean
+}
+
+export type StudentFeeUpsertWithWhereUniqueWithoutWaivedByInput = {
+  where: Prisma.StudentFeeWhereUniqueInput
+  update: Prisma.XOR<Prisma.StudentFeeUpdateWithoutWaivedByInput, Prisma.StudentFeeUncheckedUpdateWithoutWaivedByInput>
+  create: Prisma.XOR<Prisma.StudentFeeCreateWithoutWaivedByInput, Prisma.StudentFeeUncheckedCreateWithoutWaivedByInput>
+}
+
+export type StudentFeeUpdateWithWhereUniqueWithoutWaivedByInput = {
+  where: Prisma.StudentFeeWhereUniqueInput
+  data: Prisma.XOR<Prisma.StudentFeeUpdateWithoutWaivedByInput, Prisma.StudentFeeUncheckedUpdateWithoutWaivedByInput>
+}
+
+export type StudentFeeUpdateManyWithWhereWithoutWaivedByInput = {
+  where: Prisma.StudentFeeScalarWhereInput
+  data: Prisma.XOR<Prisma.StudentFeeUpdateManyMutationInput, Prisma.StudentFeeUncheckedUpdateManyWithoutWaivedByInput>
+}
+
 export type StudentFeeCreateManyEnrollmentInput = {
   id?: number
   schoolId: number
@@ -1340,6 +1770,13 @@ export type StudentFeeCreateManyEnrollmentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1355,6 +1792,12 @@ export type StudentFeeUpdateWithoutEnrollmentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1366,6 +1809,7 @@ export type StudentFeeUpdateWithoutEnrollmentInput = {
   student?: Prisma.StudentUpdateOneRequiredWithoutFeesNestedInput
   exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
   admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
 }
 
@@ -1376,6 +1820,13 @@ export type StudentFeeUncheckedUpdateWithoutEnrollmentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1395,6 +1846,13 @@ export type StudentFeeUncheckedUpdateManyWithoutEnrollmentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1414,6 +1872,13 @@ export type StudentFeeCreateManyExamInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1428,6 +1893,12 @@ export type StudentFeeUpdateWithoutExamInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1439,6 +1910,7 @@ export type StudentFeeUpdateWithoutExamInput = {
   student?: Prisma.StudentUpdateOneRequiredWithoutFeesNestedInput
   enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
   admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
 }
 
@@ -1450,6 +1922,13 @@ export type StudentFeeUncheckedUpdateWithoutExamInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1469,6 +1948,13 @@ export type StudentFeeUncheckedUpdateManyWithoutExamInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1486,6 +1972,13 @@ export type StudentFeeCreateManySchoolInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1501,6 +1994,12 @@ export type StudentFeeUpdateWithoutSchoolInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1512,6 +2011,7 @@ export type StudentFeeUpdateWithoutSchoolInput = {
   enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
   exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
   admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
 }
 
@@ -1522,6 +2022,13 @@ export type StudentFeeUncheckedUpdateWithoutSchoolInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1541,6 +2048,13 @@ export type StudentFeeUncheckedUpdateManyWithoutSchoolInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1559,6 +2073,13 @@ export type StudentFeeCreateManyStudentInput = {
   feeType: $Enums.FeeType
   title: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedById?: number | null
+  waivedAt?: Date | string | null
   dueDate: Date | string
   academicYear?: string | null
   billingMonth?: string | null
@@ -1574,6 +2095,12 @@ export type StudentFeeUpdateWithoutStudentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1585,6 +2112,7 @@ export type StudentFeeUpdateWithoutStudentInput = {
   enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
   exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
   admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  waivedBy?: Prisma.UserUpdateOneWithoutWaivedStudentFeesNestedInput
   payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
 }
 
@@ -1595,6 +2123,13 @@ export type StudentFeeUncheckedUpdateWithoutStudentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1614,6 +2149,114 @@ export type StudentFeeUncheckedUpdateManyWithoutStudentInput = {
   feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
   title?: Prisma.StringFieldUpdateOperationsInput | string
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  examId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  admissionPaymentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StudentFeeCreateManyWaivedByInput = {
+  id?: number
+  schoolId: number
+  studentId: number
+  enrollmentId: number
+  feeType: $Enums.FeeType
+  title: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: $Enums.StudentConcessionType | null
+  waivedAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: string | null
+  waivedAt?: Date | string | null
+  dueDate: Date | string
+  academicYear?: string | null
+  billingMonth?: string | null
+  examId?: number | null
+  admissionPaymentId?: number | null
+  status?: $Enums.FeeStatus
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StudentFeeUpdateWithoutWaivedByInput = {
+  feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneRequiredWithoutStudentFeesNestedInput
+  student?: Prisma.StudentUpdateOneRequiredWithoutFeesNestedInput
+  enrollment?: Prisma.EnrollmentUpdateOneRequiredWithoutFeesNestedInput
+  exam?: Prisma.ExamUpdateOneWithoutStudentFeesNestedInput
+  admissionPayment?: Prisma.AdmissionPaymentUpdateOneWithoutStudentFeeNestedInput
+  payments?: Prisma.StudentPaymentUpdateManyWithoutFeeNestedInput
+}
+
+export type StudentFeeUncheckedUpdateWithoutWaivedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+  enrollmentId?: Prisma.IntFieldUpdateOperationsInput | number
+  feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  examId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  admissionPaymentId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumFeeStatusFieldUpdateOperationsInput | $Enums.FeeStatus
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  payments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutFeeNestedInput
+}
+
+export type StudentFeeUncheckedUpdateManyWithoutWaivedByInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  schoolId?: Prisma.IntFieldUpdateOperationsInput | number
+  studentId?: Prisma.IntFieldUpdateOperationsInput | number
+  enrollmentId?: Prisma.IntFieldUpdateOperationsInput | number
+  feeType?: Prisma.EnumFeeTypeFieldUpdateOperationsInput | $Enums.FeeType
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  grossAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  waivedAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  waiverReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  waivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   academicYear?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   billingMonth?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1664,6 +2307,13 @@ export type StudentFeeSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   feeType?: boolean
   title?: boolean
   amount?: boolean
+  grossAmount?: boolean
+  concessionAmount?: boolean
+  concessionType?: boolean
+  waivedAmount?: boolean
+  waiverReason?: boolean
+  waivedById?: boolean
+  waivedAt?: boolean
   dueDate?: boolean
   academicYear?: boolean
   billingMonth?: boolean
@@ -1678,6 +2328,7 @@ export type StudentFeeSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   enrollment?: boolean | Prisma.EnrollmentDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.StudentFee$examArgs<ExtArgs>
   admissionPayment?: boolean | Prisma.StudentFee$admissionPaymentArgs<ExtArgs>
+  waivedBy?: boolean | Prisma.StudentFee$waivedByArgs<ExtArgs>
   payments?: boolean | Prisma.StudentFee$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentFeeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["studentFee"]>
@@ -1690,6 +2341,13 @@ export type StudentFeeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   feeType?: boolean
   title?: boolean
   amount?: boolean
+  grossAmount?: boolean
+  concessionAmount?: boolean
+  concessionType?: boolean
+  waivedAmount?: boolean
+  waiverReason?: boolean
+  waivedById?: boolean
+  waivedAt?: boolean
   dueDate?: boolean
   academicYear?: boolean
   billingMonth?: boolean
@@ -1704,6 +2362,7 @@ export type StudentFeeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   enrollment?: boolean | Prisma.EnrollmentDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.StudentFee$examArgs<ExtArgs>
   admissionPayment?: boolean | Prisma.StudentFee$admissionPaymentArgs<ExtArgs>
+  waivedBy?: boolean | Prisma.StudentFee$waivedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentFee"]>
 
 export type StudentFeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1714,6 +2373,13 @@ export type StudentFeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   feeType?: boolean
   title?: boolean
   amount?: boolean
+  grossAmount?: boolean
+  concessionAmount?: boolean
+  concessionType?: boolean
+  waivedAmount?: boolean
+  waiverReason?: boolean
+  waivedById?: boolean
+  waivedAt?: boolean
   dueDate?: boolean
   academicYear?: boolean
   billingMonth?: boolean
@@ -1728,6 +2394,7 @@ export type StudentFeeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   enrollment?: boolean | Prisma.EnrollmentDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.StudentFee$examArgs<ExtArgs>
   admissionPayment?: boolean | Prisma.StudentFee$admissionPaymentArgs<ExtArgs>
+  waivedBy?: boolean | Prisma.StudentFee$waivedByArgs<ExtArgs>
 }, ExtArgs["result"]["studentFee"]>
 
 export type StudentFeeSelectScalar = {
@@ -1738,6 +2405,13 @@ export type StudentFeeSelectScalar = {
   feeType?: boolean
   title?: boolean
   amount?: boolean
+  grossAmount?: boolean
+  concessionAmount?: boolean
+  concessionType?: boolean
+  waivedAmount?: boolean
+  waiverReason?: boolean
+  waivedById?: boolean
+  waivedAt?: boolean
   dueDate?: boolean
   academicYear?: boolean
   billingMonth?: boolean
@@ -1749,13 +2423,14 @@ export type StudentFeeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StudentFeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "enrollmentId" | "feeType" | "title" | "amount" | "dueDate" | "academicYear" | "billingMonth" | "examId" | "admissionPaymentId" | "status" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["studentFee"]>
+export type StudentFeeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "schoolId" | "studentId" | "enrollmentId" | "feeType" | "title" | "amount" | "grossAmount" | "concessionAmount" | "concessionType" | "waivedAmount" | "waiverReason" | "waivedById" | "waivedAt" | "dueDate" | "academicYear" | "billingMonth" | "examId" | "admissionPaymentId" | "status" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["studentFee"]>
 export type StudentFeeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
   student?: boolean | Prisma.StudentDefaultArgs<ExtArgs>
   enrollment?: boolean | Prisma.EnrollmentDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.StudentFee$examArgs<ExtArgs>
   admissionPayment?: boolean | Prisma.StudentFee$admissionPaymentArgs<ExtArgs>
+  waivedBy?: boolean | Prisma.StudentFee$waivedByArgs<ExtArgs>
   payments?: boolean | Prisma.StudentFee$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.StudentFeeCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1765,6 +2440,7 @@ export type StudentFeeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.E
   enrollment?: boolean | Prisma.EnrollmentDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.StudentFee$examArgs<ExtArgs>
   admissionPayment?: boolean | Prisma.StudentFee$admissionPaymentArgs<ExtArgs>
+  waivedBy?: boolean | Prisma.StudentFee$waivedByArgs<ExtArgs>
 }
 export type StudentFeeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   school?: boolean | Prisma.SchoolDefaultArgs<ExtArgs>
@@ -1772,6 +2448,7 @@ export type StudentFeeIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   enrollment?: boolean | Prisma.EnrollmentDefaultArgs<ExtArgs>
   exam?: boolean | Prisma.StudentFee$examArgs<ExtArgs>
   admissionPayment?: boolean | Prisma.StudentFee$admissionPaymentArgs<ExtArgs>
+  waivedBy?: boolean | Prisma.StudentFee$waivedByArgs<ExtArgs>
 }
 
 export type $StudentFeePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1782,6 +2459,7 @@ export type $StudentFeePayload<ExtArgs extends runtime.Types.Extensions.Internal
     enrollment: Prisma.$EnrollmentPayload<ExtArgs>
     exam: Prisma.$ExamPayload<ExtArgs> | null
     admissionPayment: Prisma.$AdmissionPaymentPayload<ExtArgs> | null
+    waivedBy: Prisma.$UserPayload<ExtArgs> | null
     payments: Prisma.$StudentPaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1792,6 +2470,13 @@ export type $StudentFeePayload<ExtArgs extends runtime.Types.Extensions.Internal
     feeType: $Enums.FeeType
     title: string
     amount: runtime.Decimal
+    grossAmount: runtime.Decimal | null
+    concessionAmount: runtime.Decimal
+    concessionType: $Enums.StudentConcessionType | null
+    waivedAmount: runtime.Decimal
+    waiverReason: string | null
+    waivedById: number | null
+    waivedAt: Date | null
     dueDate: Date
     academicYear: string | null
     billingMonth: string | null
@@ -2200,6 +2885,7 @@ export interface Prisma__StudentFeeClient<T, Null = never, ExtArgs extends runti
   enrollment<T extends Prisma.EnrollmentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EnrollmentDefaultArgs<ExtArgs>>): Prisma.Prisma__EnrollmentClient<runtime.Types.Result.GetResult<Prisma.$EnrollmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   exam<T extends Prisma.StudentFee$examArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentFee$examArgs<ExtArgs>>): Prisma.Prisma__ExamClient<runtime.Types.Result.GetResult<Prisma.$ExamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   admissionPayment<T extends Prisma.StudentFee$admissionPaymentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentFee$admissionPaymentArgs<ExtArgs>>): Prisma.Prisma__AdmissionPaymentClient<runtime.Types.Result.GetResult<Prisma.$AdmissionPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  waivedBy<T extends Prisma.StudentFee$waivedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentFee$waivedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.StudentFee$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StudentFee$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudentPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2237,6 +2923,13 @@ export interface StudentFeeFieldRefs {
   readonly feeType: Prisma.FieldRef<"StudentFee", 'FeeType'>
   readonly title: Prisma.FieldRef<"StudentFee", 'String'>
   readonly amount: Prisma.FieldRef<"StudentFee", 'Decimal'>
+  readonly grossAmount: Prisma.FieldRef<"StudentFee", 'Decimal'>
+  readonly concessionAmount: Prisma.FieldRef<"StudentFee", 'Decimal'>
+  readonly concessionType: Prisma.FieldRef<"StudentFee", 'StudentConcessionType'>
+  readonly waivedAmount: Prisma.FieldRef<"StudentFee", 'Decimal'>
+  readonly waiverReason: Prisma.FieldRef<"StudentFee", 'String'>
+  readonly waivedById: Prisma.FieldRef<"StudentFee", 'Int'>
+  readonly waivedAt: Prisma.FieldRef<"StudentFee", 'DateTime'>
   readonly dueDate: Prisma.FieldRef<"StudentFee", 'DateTime'>
   readonly academicYear: Prisma.FieldRef<"StudentFee", 'String'>
   readonly billingMonth: Prisma.FieldRef<"StudentFee", 'String'>
@@ -2682,6 +3375,25 @@ export type StudentFee$admissionPaymentArgs<ExtArgs extends runtime.Types.Extens
    */
   include?: Prisma.AdmissionPaymentInclude<ExtArgs> | null
   where?: Prisma.AdmissionPaymentWhereInput
+}
+
+/**
+ * StudentFee.waivedBy
+ */
+export type StudentFee$waivedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

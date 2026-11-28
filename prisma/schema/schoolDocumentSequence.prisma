@@ -1,0 +1,14 @@
+model SchoolDocumentSequence {
+  id        Int                  @id @default(autoincrement())
+  schoolId  Int
+  docType   SequenceDocumentType
+  year      Int
+  lastValue Int                  @default(0)
+
+  school School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, docType, year])
+  @@map("school_document_sequences")
+}

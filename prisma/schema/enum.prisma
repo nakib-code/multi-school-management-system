@@ -99,6 +99,25 @@ enum IncomeEntryCategory {
   OTHER_INCOME
 }
 
+enum StudentConcessionType {
+  ORPHAN
+  LILLAH
+  SIBLING
+  SCHOLARSHIP
+  CUSTOM
+}
+
+enum DiscountMode {
+  PERCENTAGE
+  FIXED
+}
+
+enum SequenceDocumentType {
+  FEE_RECEIPT
+  DONATION_RECEIPT
+  EXPENSE_VOUCHER
+}
+
 enum SalaryStatus {
   PENDING
   PARTIAL

@@ -6,6 +6,7 @@ import { validateRequest } from "../../middleware/validateRequest.js";
 
 import {
 	getAdmissionChartReportController,
+	getDefaulterListReportController,
 	getFeeChartReportController,
 	getMonthlyNetReportController,
 	getReportOverviewController,
@@ -14,6 +15,7 @@ import {
 } from "./controller.js";
 import {
 	admissionChartQuerySchema,
+	defaulterListQuerySchema,
 	feeChartQuerySchema,
 	monthlyNetQuerySchema,
 	rosterChartQuerySchema,
@@ -72,6 +74,15 @@ schoolRouter.get(
 	requireSchoolAccess,
 	validateRequest(monthlyNetQuerySchema),
 	getMonthlyNetReportController,
+);
+
+schoolRouter.get(
+	"/schools/:schoolId/reports/defaulters",
+	authenticate,
+	authorize(UserRole.ADMIN, UserRole.MANAGER),
+	requireSchoolAccess,
+	validateRequest(defaulterListQuerySchema),
+	getDefaulterListReportController,
 );
 
 export const reportRoutes = router;

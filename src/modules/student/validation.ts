@@ -83,6 +83,21 @@ const stage2CreateFields = {
 	guardianNidUrl: optUrl,
 	previousTcUrl: optUrl,
 	marksheetUrl: optUrl,
+
+	// Fee Concession / Scholarship Profile
+	concessionType: z.preprocess(
+		emptyToUndefined,
+		z.enum(["ORPHAN", "LILLAH", "SIBLING", "SCHOLARSHIP", "CUSTOM"]).optional(),
+	),
+	concessionMode: z.preprocess(
+		emptyToUndefined,
+		z.enum(["PERCENTAGE", "FIXED"]).optional(),
+	),
+	concessionValue: z.preprocess(
+		emptyToUndefined,
+		z.coerce.number().finite().min(0).max(99999999.99).optional(),
+	),
+	concessionReason: optStr(300),
 };
 
 export const createStudentSchema = z.object({
@@ -257,6 +272,24 @@ export const updateStudentSchema = z.object({
 		guardianNidUrl: nullableOptUrl,
 		previousTcUrl: nullableOptUrl,
 		marksheetUrl: nullableOptUrl,
+
+		// Fee Concession / Scholarship Profile
+		concessionType: z.preprocess(
+			emptyToNull,
+			z
+				.enum(["ORPHAN", "LILLAH", "SIBLING", "SCHOLARSHIP", "CUSTOM"])
+				.nullable()
+				.optional(),
+		),
+		concessionMode: z.preprocess(
+			emptyToNull,
+			z.enum(["PERCENTAGE", "FIXED"]).nullable().optional(),
+		),
+		concessionValue: z.preprocess(
+			emptyToNull,
+			z.coerce.number().finite().min(0).max(99999999.99).nullable().optional(),
+		),
+		concessionReason: nullableOptStr(300),
 	}),
 });
 

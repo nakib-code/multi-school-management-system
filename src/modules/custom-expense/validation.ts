@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { CustomExpenseFieldType } from "../../generated/prisma/client.js";
+import {
+	CustomExpenseFieldType,
+	PaymentMethod,
+} from "../../generated/prisma/client.js";
 
 const schoolIdParam = z.coerce
 	.number()
@@ -46,6 +49,34 @@ const entryDateSchema = z
 		{ message: "Invalid entry date" },
 	);
 
+const isoCalendarDateSchema = z
+	.string()
+	.trim()
+	.refine(
+		(val) => {
+			if (!isoDateRegex.test(val)) return false;
+			const [y = 0, m = 0, d = 0] = val.split("-").map(Number);
+			const dt = new Date(Date.UTC(y, m - 1, d));
+			return (
+				dt.getUTCFullYear() === y &&
+				dt.getUTCMonth() === m - 1 &&
+				dt.getUTCDate() === d
+			);
+		},
+		{ message: "Date must be a valid YYYY-MM-DD calendar date" },
+	);
+
+const attachmentUrlSchema = z.preprocess(
+	(val) => (typeof val === "string" && val.trim() === "" ? null : val),
+	z
+		.string()
+		.trim()
+		.url("Attachment must be a valid URL")
+		.max(1000)
+		.nullable()
+		.optional(),
+);
+
 const fieldInputSchema = z.object({
 	id: z.coerce.number().int().positive().optional(),
 	label: z
@@ -79,6 +110,11 @@ export const listSheetsSchema = z.object({
 			includeInactive: z
 				.enum(["true", "false"])
 				.transform((v) => v === "true")
+				.optional(),
+			billingMonth: z
+				.string()
+				.trim()
+				.regex(billingMonthRegex, "Billing month must be in YYYY-MM format")
 				.optional(),
 		})
 		.optional(),
@@ -135,6 +171,13 @@ export const deleteSheetSchema = z.object({
 		.optional(),
 });
 
+export const restoreSheetSchema = z.object({
+	params: z.object({
+		schoolId: schoolIdParam,
+		sheetId: sheetIdParam,
+	}),
+});
+
 export const listEntriesSchema = z.object({
 	params: z.object({
 		schoolId: schoolIdParam,
@@ -147,6 +190,8 @@ export const listEntriesSchema = z.object({
 				.trim()
 				.regex(billingMonthRegex, "Billing month must be in YYYY-MM format")
 				.optional(),
+			startDate: isoCalendarDateSchema.optional(),
+			endDate: isoCalendarDateSchema.optional(),
 			search: z.string().trim().max(120).optional(),
 		})
 		.optional(),
@@ -160,6 +205,8 @@ export const createEntrySchema = z.object({
 	body: z.object({
 		entryDate: entryDateSchema.optional(),
 		amount: amountSchema,
+		paymentMethod: z.nativeEnum(PaymentMethod).default(PaymentMethod.CASH),
+		attachmentUrl: attachmentUrlSchema,
 		fieldValues: fieldValuesSchema,
 	}),
 });
@@ -174,6 +221,8 @@ export const updateEntrySchema = z.object({
 		.object({
 			entryDate: entryDateSchema.optional(),
 			amount: amountSchema.optional(),
+			paymentMethod: z.nativeEnum(PaymentMethod).optional(),
+			attachmentUrl: attachmentUrlSchema,
 			fieldValues: fieldValuesSchema,
 		})
 		.refine((data) => Object.keys(data).length > 0, {
@@ -199,5 +248,8 @@ export const monthlyChartSchema = z.object({
 			.string()
 			.trim()
 			.regex(billingMonthRegex, "Billing month must be in YYYY-MM format"),
+		startDate: isoCalendarDateSchema.optional(),
+		endDate: isoCalendarDateSchema.optional(),
+		search: z.string().trim().max(120).optional(),
 	}),
 });

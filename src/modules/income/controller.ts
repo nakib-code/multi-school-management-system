@@ -40,7 +40,7 @@ export const createOtherIncomeController = async (
 			action: "CREATE",
 			entity: "IncomeEntry",
 			entityId: entry.id,
-			description: `Recorded out-income "${entry.title}" (${entry.sourceLabel}, ৳${entry.amount}, ${entry.billingMonth})`,
+			description: `Recorded out-income "${entry.title}" (${entry.sourceLabel}, ৳${entry.amount}, ${entry.paymentMethod}, ${entry.receiptNo ?? "no-receipt"}, ${entry.billingMonth})`,
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
 		}).catch(() => {});
@@ -67,13 +67,15 @@ export const updateOtherIncomeController = async (
 		const id = parsePositiveInt(req.params.id, "income entry ID");
 		const entry = await updateOtherIncomeEntry(schoolId, id, req.body);
 
+		const { previous, ...entryData } = entry;
+
 		await recordSchoolAudit({
 			schoolId,
 			userId: req.user.userId,
 			action: "UPDATE",
 			entity: "IncomeEntry",
-			entityId: entry.id,
-			description: `Updated out-income #${entry.id} "${entry.title}" (৳${entry.amount}, ${entry.billingMonth})`,
+			entityId: entryData.id,
+			description: `Updated out-income #${entryData.id}: before [title="${previous.title}", source="${previous.sourceLabel}", ৳${previous.amount}, ${previous.incomeDate}, ${previous.paymentMethod}] -> after [title="${entryData.title}", source="${entryData.sourceLabel}", ৳${entryData.amount}, ${entryData.incomeDate}, ${entryData.paymentMethod}]`,
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
 		}).catch(() => {});
@@ -82,7 +84,7 @@ export const updateOtherIncomeController = async (
 			statusCode: 200,
 			success: true,
 			message: "Out-income entry updated successfully",
-			data: entry,
+			data: entryData,
 		});
 	} catch (err) {
 		next(err);
@@ -106,7 +108,7 @@ export const deleteOtherIncomeController = async (
 			action: "DELETE",
 			entity: "IncomeEntry",
 			entityId: deleted.id,
-			description: `Deleted out-income #${deleted.id} "${deleted.title}" (৳${deleted.amount}, ${deleted.billingMonth})`,
+			description: `Deleted out-income #${deleted.id}: before [title="${deleted.title}", source="${deleted.sourceLabel}", ৳${deleted.amount}, ${deleted.paymentMethod}, ${deleted.receiptNo ?? "no-receipt"}, ${deleted.billingMonth}]`,
 			ipAddress: req.ip ?? null,
 			userAgent: req.headers["user-agent"] ?? null,
 		}).catch(() => {});
@@ -175,10 +177,19 @@ export const getIncomeMonthlyChartController = async (
 			typeof req.query.category === "string"
 				? (req.query.category as IncomeCategoryFilter)
 				: undefined;
+		const startDate =
+			typeof req.query.startDate === "string" ? req.query.startDate : undefined;
+		const endDate =
+			typeof req.query.endDate === "string" ? req.query.endDate : undefined;
+		const search =
+			typeof req.query.search === "string" ? req.query.search : undefined;
 
 		const chart = await getIncomeMonthlyChart(schoolId, {
 			billingMonth,
 			...(category ? { category } : {}),
+			...(startDate ? { startDate } : {}),
+			...(endDate ? { endDate } : {}),
+			...(search ? { search } : {}),
 		});
 
 		return sendResponse(res, {

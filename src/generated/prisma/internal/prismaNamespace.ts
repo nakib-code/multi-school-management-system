@@ -429,6 +429,7 @@ export const ModelName = {
   SalaryPayment: 'SalaryPayment',
   School: 'School',
   SchoolContactMessage: 'SchoolContactMessage',
+  SchoolDocumentSequence: 'SchoolDocumentSequence',
   SchoolGalleryImage: 'SchoolGalleryImage',
   SchoolNotice: 'SchoolNotice',
   SchoolPageContent: 'SchoolPageContent',
@@ -460,7 +461,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "customExpenseSheet" | "customExpenseField" | "customExpenseEntry" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "incomeEntry" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "customExpenseSheet" | "customExpenseField" | "customExpenseEntry" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "incomeEntry" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolDocumentSequence" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2832,6 +2833,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SchoolDocumentSequence: {
+      payload: Prisma.$SchoolDocumentSequencePayload<ExtArgs>
+      fields: Prisma.SchoolDocumentSequenceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SchoolDocumentSequenceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SchoolDocumentSequenceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>
+        }
+        findFirst: {
+          args: Prisma.SchoolDocumentSequenceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SchoolDocumentSequenceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>
+        }
+        findMany: {
+          args: Prisma.SchoolDocumentSequenceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>[]
+        }
+        create: {
+          args: Prisma.SchoolDocumentSequenceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>
+        }
+        createMany: {
+          args: Prisma.SchoolDocumentSequenceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SchoolDocumentSequenceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>[]
+        }
+        delete: {
+          args: Prisma.SchoolDocumentSequenceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>
+        }
+        update: {
+          args: Prisma.SchoolDocumentSequenceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>
+        }
+        deleteMany: {
+          args: Prisma.SchoolDocumentSequenceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SchoolDocumentSequenceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SchoolDocumentSequenceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>[]
+        }
+        upsert: {
+          args: Prisma.SchoolDocumentSequenceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SchoolDocumentSequencePayload>
+        }
+        aggregate: {
+          args: Prisma.SchoolDocumentSequenceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSchoolDocumentSequence>
+        }
+        groupBy: {
+          args: Prisma.SchoolDocumentSequenceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolDocumentSequenceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SchoolDocumentSequenceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SchoolDocumentSequenceCountAggregateOutputType> | number
+        }
+      }
+    }
     SchoolGalleryImage: {
       payload: Prisma.$SchoolGalleryImagePayload<ExtArgs>
       fields: Prisma.SchoolGalleryImageFieldRefs
@@ -4328,6 +4403,9 @@ export const CustomExpenseEntryScalarFieldEnum = {
   entryDate: 'entryDate',
   billingMonth: 'billingMonth',
   amount: 'amount',
+  paymentMethod: 'paymentMethod',
+  voucherNo: 'voucherNo',
+  attachmentUrl: 'attachmentUrl',
   fieldValues: 'fieldValues',
   recordedById: 'recordedById',
   createdAt: 'createdAt',
@@ -4450,6 +4528,7 @@ export const IncomeEntryScalarFieldEnum = {
   incomeDate: 'incomeDate',
   billingMonth: 'billingMonth',
   paymentMethod: 'paymentMethod',
+  receiptNo: 'receiptNo',
   referenceNo: 'referenceNo',
   notes: 'notes',
   recordedById: 'recordedById',
@@ -4651,6 +4730,18 @@ export const SchoolContactMessageScalarFieldEnum = {
 export type SchoolContactMessageScalarFieldEnum = (typeof SchoolContactMessageScalarFieldEnum)[keyof typeof SchoolContactMessageScalarFieldEnum]
 
 
+export const SchoolDocumentSequenceScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  docType: 'docType',
+  year: 'year',
+  lastValue: 'lastValue',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SchoolDocumentSequenceScalarFieldEnum = (typeof SchoolDocumentSequenceScalarFieldEnum)[keyof typeof SchoolDocumentSequenceScalarFieldEnum]
+
+
 export const SchoolGalleryImageScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -4768,6 +4859,13 @@ export const StudentFeeScalarFieldEnum = {
   feeType: 'feeType',
   title: 'title',
   amount: 'amount',
+  grossAmount: 'grossAmount',
+  concessionAmount: 'concessionAmount',
+  concessionType: 'concessionType',
+  waivedAmount: 'waivedAmount',
+  waiverReason: 'waiverReason',
+  waivedById: 'waivedById',
+  waivedAt: 'waivedAt',
   dueDate: 'dueDate',
   academicYear: 'academicYear',
   billingMonth: 'billingMonth',
@@ -4791,6 +4889,7 @@ export const StudentPaymentScalarFieldEnum = {
   senderNumber: 'senderNumber',
   receiverNumber: 'receiverNumber',
   trxId: 'trxId',
+  receiptNo: 'receiptNo',
   paidAmount: 'paidAmount',
   status: 'status',
   paidAt: 'paidAt',
@@ -4860,6 +4959,10 @@ export const StudentScalarFieldEnum = {
   guardianNidUrl: 'guardianNidUrl',
   previousTcUrl: 'previousTcUrl',
   marksheetUrl: 'marksheetUrl',
+  concessionType: 'concessionType',
+  concessionMode: 'concessionMode',
+  concessionValue: 'concessionValue',
+  concessionReason: 'concessionReason',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -5286,6 +5389,20 @@ export type ListEnumCustomExpenseFieldTypeFieldRefInput<$PrismaModel> = FieldRef
 
 
 /**
+ * Reference to a field of type 'PaymentMethod'
+ */
+export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod[]'
+ */
+export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+    
+
+
+/**
  * Reference to a field of type 'Json'
  */
 export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
@@ -5398,20 +5515,6 @@ export type ListEnumIncomeEntryCategoryFieldRefInput<$PrismaModel> = FieldRefInp
 
 
 /**
- * Reference to a field of type 'PaymentMethod'
- */
-export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
-    
-
-
-/**
- * Reference to a field of type 'PaymentMethod[]'
- */
-export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
-    
-
-
-/**
  * Reference to a field of type 'NotificationType'
  */
 export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -5510,6 +5613,20 @@ export type ListEnumSchoolStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'SequenceDocumentType'
+ */
+export type EnumSequenceDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SequenceDocumentType'>
+    
+
+
+/**
+ * Reference to a field of type 'SequenceDocumentType[]'
+ */
+export type ListEnumSequenceDocumentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SequenceDocumentType[]'>
+    
+
+
+/**
  * Reference to a field of type 'SubscriptionStatus'
  */
 export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus'>
@@ -5520,6 +5637,20 @@ export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'SubscriptionStatus[]'
  */
 export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'StudentConcessionType'
+ */
+export type EnumStudentConcessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentConcessionType'>
+    
+
+
+/**
+ * Reference to a field of type 'StudentConcessionType[]'
+ */
+export type ListEnumStudentConcessionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StudentConcessionType[]'>
     
 
 
@@ -5548,6 +5679,20 @@ export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'PaymentStatus[]'
  */
 export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DiscountMode'
+ */
+export type EnumDiscountModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountMode'>
+    
+
+
+/**
+ * Reference to a field of type 'DiscountMode[]'
+ */
+export type ListEnumDiscountModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DiscountMode[]'>
     
 
 
@@ -5817,6 +5962,7 @@ export type GlobalOmitConfig = {
   salaryPayment?: Prisma.SalaryPaymentOmit
   school?: Prisma.SchoolOmit
   schoolContactMessage?: Prisma.SchoolContactMessageOmit
+  schoolDocumentSequence?: Prisma.SchoolDocumentSequenceOmit
   schoolGalleryImage?: Prisma.SchoolGalleryImageOmit
   schoolNotice?: Prisma.SchoolNoticeOmit
   schoolPageContent?: Prisma.SchoolPageContentOmit

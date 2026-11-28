@@ -64,6 +64,24 @@ export const monthlyNetQuerySchema = z.object({
 				.regex(billingMonthRegex, "Billing month must be in YYYY-MM format")
 				.optional(),
 			trendMonths: z.coerce.number().int().min(1).max(12).optional(),
+			includePayroll: z
+				.enum(["true", "false"])
+				.transform((v) => v === "true")
+				.optional(),
+		})
+		.optional(),
+});
+
+export const defaulterListQuerySchema = z.object({
+	params: z.object({ schoolId: schoolIdParam }),
+	query: z
+		.object({
+			classId: z.coerce.number().int().positive().optional(),
+			sectionId: z.coerce.number().int().positive().optional(),
+			academicYear: z.string().trim().min(4).max(20).optional(),
+			feeType: z.union([z.literal("ALL"), z.nativeEnum(FeeType)]).optional(),
+			status: z.enum(["ALL_DUE", "OVERDUE", "PENDING", "PARTIAL"]).optional(),
+			search: z.string().trim().max(120).optional(),
 		})
 		.optional(),
 });

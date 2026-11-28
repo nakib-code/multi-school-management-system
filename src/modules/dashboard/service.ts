@@ -1,4 +1,19 @@
+import {
+	AdmissionPaymentStatus,
+	PaymentMethod,
+	PaymentStatus,
+	SalaryPaymentMethod,
+	SalaryPaymentStatus,
+} from "../../generated/prisma/client.js";
 import { prisma } from "../../lib/prisma.js";
+import {
+	getCurrentDhakaMonth,
+	getDhakaDayRange,
+	getDhakaStartOfToday,
+	getTodayDhakaDateKey,
+	resolveMonthOrCustomDateRange,
+	roundMoney,
+} from "../../utils/dhakaDate.js";
 
 type DashboardRole =
 	| "SUPER_ADMIN"
@@ -47,6 +62,12 @@ const getSchoolDashboard = async (user: DashboardUser) => {
 	}
 
 	const schoolId = user.schoolId;
+	const currentMonth = getCurrentDhakaMonth();
+	const todayKey = getTodayDhakaDateKey();
+	const { rangeStart: monthStart, rangeEnd: monthEnd } =
+		resolveMonthOrCustomDateRange(currentMonth);
+	const { start: todayStart, end: todayEnd } = getDhakaDayRange(todayKey);
+	const dhakaStartOfToday = getDhakaStartOfToday();
 
 	const [
 		totalStudents,
@@ -55,6 +76,18 @@ const getSchoolDashboard = async (user: DashboardUser) => {
 		totalClasses,
 		totalSections,
 		totalSubjects,
+		monthStudentPayments,
+		monthAdmissionPayments,
+		monthManualIncome,
+		monthCustomExpenses,
+		monthSalaryPayments,
+		todayCashStudentPayments,
+		todayCashAdmissionPayments,
+		todayCashManualIncome,
+		todayCashCustomExpenses,
+		todayCashSalaryPayments,
+		pendingPaymentVerifications,
+		overdueFeesCount,
 	] = await Promise.all([
 		prisma.student.count({ where: { schoolId } }),
 		prisma.teacher.count({ where: { schoolId } }),
@@ -62,7 +95,138 @@ const getSchoolDashboard = async (user: DashboardUser) => {
 		prisma.schoolClass.count({ where: { schoolId } }),
 		prisma.section.count({ where: { schoolId } }),
 		prisma.subject.count({ where: { schoolId } }),
+		prisma.studentPayment.aggregate({
+			where: {
+				schoolId,
+				status: PaymentStatus.VERIFIED,
+				paidAt: { gte: monthStart, lte: monthEnd },
+			},
+			_sum: { paidAmount: true },
+		}),
+		prisma.admissionPayment.aggregate({
+			where: {
+				schoolId,
+				status: AdmissionPaymentStatus.PAID,
+				studentFee: { is: null },
+				OR: [
+					{ paidAt: { gte: monthStart, lte: monthEnd } },
+					{ paidAt: null, createdAt: { gte: monthStart, lte: monthEnd } },
+				],
+			},
+			_sum: { amount: true },
+		}),
+		prisma.incomeEntry.aggregate({
+			where: {
+				schoolId,
+				incomeDate: { gte: monthStart, lte: monthEnd },
+			},
+			_sum: { amount: true },
+		}),
+		prisma.customExpenseEntry.aggregate({
+			where: {
+				schoolId,
+				billingMonth: currentMonth,
+			},
+			_sum: { amount: true },
+		}),
+		prisma.salaryPayment.aggregate({
+			where: {
+				schoolId,
+				status: SalaryPaymentStatus.COMPLETED,
+				paidAt: { gte: monthStart, lte: monthEnd },
+			},
+			_sum: { amount: true },
+		}),
+		prisma.studentPayment.aggregate({
+			where: {
+				schoolId,
+				status: PaymentStatus.VERIFIED,
+				paymentMethod: PaymentMethod.CASH,
+				paidAt: { gte: todayStart, lte: todayEnd },
+			},
+			_sum: { paidAmount: true },
+		}),
+		prisma.admissionPayment.aggregate({
+			where: {
+				schoolId,
+				status: AdmissionPaymentStatus.PAID,
+				paymentMethod: "CASH",
+				studentFee: { is: null },
+				OR: [
+					{ paidAt: { gte: todayStart, lte: todayEnd } },
+					{ paidAt: null, createdAt: { gte: todayStart, lte: todayEnd } },
+				],
+			},
+			_sum: { amount: true },
+		}),
+		prisma.incomeEntry.aggregate({
+			where: {
+				schoolId,
+				paymentMethod: PaymentMethod.CASH,
+				incomeDate: { gte: todayStart, lte: todayEnd },
+			},
+			_sum: { amount: true },
+		}),
+		prisma.customExpenseEntry.aggregate({
+			where: {
+				schoolId,
+				paymentMethod: PaymentMethod.CASH,
+				entryDate: { gte: todayStart, lte: todayEnd },
+			},
+			_sum: { amount: true },
+		}),
+		prisma.salaryPayment.aggregate({
+			where: {
+				schoolId,
+				status: SalaryPaymentStatus.COMPLETED,
+				paymentMethod: SalaryPaymentMethod.CASH,
+				paidAt: { gte: todayStart, lte: todayEnd },
+			},
+			_sum: { amount: true },
+		}),
+		prisma.studentPayment.count({
+			where: { schoolId, status: PaymentStatus.PENDING },
+		}),
+		prisma.studentFee.count({
+			where: {
+				schoolId,
+				OR: [
+					{ status: "OVERDUE" },
+					{
+						status: { in: ["PENDING", "PARTIAL"] },
+						dueDate: { lt: dhakaStartOfToday },
+					},
+				],
+			},
+		}),
 	]);
+
+	const monthlyIncome = roundMoney(
+		Number(monthStudentPayments._sum.paidAmount ?? 0) +
+			Number(monthAdmissionPayments._sum.amount ?? 0) +
+			Number(monthManualIncome._sum.amount ?? 0),
+	);
+	const monthlyCustomExpense = roundMoney(
+		Number(monthCustomExpenses._sum.amount ?? 0),
+	);
+	const monthlyPayrollExpense = roundMoney(
+		Number(monthSalaryPayments._sum.amount ?? 0),
+	);
+	const monthlyTotalExpense = roundMoney(
+		monthlyCustomExpense + monthlyPayrollExpense,
+	);
+	const monthlyNetBalance = roundMoney(monthlyIncome - monthlyTotalExpense);
+
+	const todayCashCollected = roundMoney(
+		Number(todayCashStudentPayments._sum.paidAmount ?? 0) +
+			Number(todayCashAdmissionPayments._sum.amount ?? 0) +
+			Number(todayCashManualIncome._sum.amount ?? 0),
+	);
+	const todayCashSpent = roundMoney(
+		Number(todayCashCustomExpenses._sum.amount ?? 0) +
+			Number(todayCashSalaryPayments._sum.amount ?? 0),
+	);
+	const todayCashInHand = roundMoney(todayCashCollected - todayCashSpent);
 
 	return {
 		role: user.role,
@@ -73,6 +237,22 @@ const getSchoolDashboard = async (user: DashboardUser) => {
 			totalClasses,
 			totalSections,
 			totalSubjects,
+		},
+		finance: {
+			billingMonth: currentMonth,
+			todayDate: todayKey,
+			monthlyIncome,
+			monthlyCustomExpense,
+			monthlyPayrollExpense,
+			monthlyTotalExpense,
+			monthlyNetBalance,
+			monthlyStatus:
+				monthlyNetBalance >= 0 ? ("SURPLUS" as const) : ("DEFICIT" as const),
+			todayCashCollected,
+			todayCashSpent,
+			todayCashInHand,
+			pendingPaymentVerifications,
+			overdueFeesCount,
 		},
 	};
 };

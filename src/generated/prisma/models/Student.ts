@@ -30,12 +30,14 @@ export type StudentAvgAggregateOutputType = {
   id: number | null
   userId: number | null
   schoolId: number | null
+  concessionValue: runtime.Decimal | null
 }
 
 export type StudentSumAggregateOutputType = {
   id: number | null
   userId: number | null
   schoolId: number | null
+  concessionValue: runtime.Decimal | null
 }
 
 export type StudentMinAggregateOutputType = {
@@ -93,6 +95,10 @@ export type StudentMinAggregateOutputType = {
   guardianNidUrl: string | null
   previousTcUrl: string | null
   marksheetUrl: string | null
+  concessionType: $Enums.StudentConcessionType | null
+  concessionMode: $Enums.DiscountMode | null
+  concessionValue: runtime.Decimal | null
+  concessionReason: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -153,6 +159,10 @@ export type StudentMaxAggregateOutputType = {
   guardianNidUrl: string | null
   previousTcUrl: string | null
   marksheetUrl: string | null
+  concessionType: $Enums.StudentConcessionType | null
+  concessionMode: $Enums.DiscountMode | null
+  concessionValue: runtime.Decimal | null
+  concessionReason: string | null
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -213,6 +223,10 @@ export type StudentCountAggregateOutputType = {
   guardianNidUrl: number
   previousTcUrl: number
   marksheetUrl: number
+  concessionType: number
+  concessionMode: number
+  concessionValue: number
+  concessionReason: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -224,12 +238,14 @@ export type StudentAvgAggregateInputType = {
   id?: true
   userId?: true
   schoolId?: true
+  concessionValue?: true
 }
 
 export type StudentSumAggregateInputType = {
   id?: true
   userId?: true
   schoolId?: true
+  concessionValue?: true
 }
 
 export type StudentMinAggregateInputType = {
@@ -287,6 +303,10 @@ export type StudentMinAggregateInputType = {
   guardianNidUrl?: true
   previousTcUrl?: true
   marksheetUrl?: true
+  concessionType?: true
+  concessionMode?: true
+  concessionValue?: true
+  concessionReason?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -347,6 +367,10 @@ export type StudentMaxAggregateInputType = {
   guardianNidUrl?: true
   previousTcUrl?: true
   marksheetUrl?: true
+  concessionType?: true
+  concessionMode?: true
+  concessionValue?: true
+  concessionReason?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -407,6 +431,10 @@ export type StudentCountAggregateInputType = {
   guardianNidUrl?: true
   previousTcUrl?: true
   marksheetUrl?: true
+  concessionType?: true
+  concessionMode?: true
+  concessionValue?: true
+  concessionReason?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -554,6 +582,10 @@ export type StudentGroupByOutputType = {
   guardianNidUrl: string | null
   previousTcUrl: string | null
   marksheetUrl: string | null
+  concessionType: $Enums.StudentConcessionType | null
+  concessionMode: $Enums.DiscountMode | null
+  concessionValue: runtime.Decimal | null
+  concessionReason: string | null
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -637,6 +669,10 @@ export type StudentWhereInput = {
   guardianNidUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   previousTcUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   marksheetUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableFilter<"Student"> | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.EnumDiscountModeNullableFilter<"Student"> | $Enums.DiscountMode | null
+  concessionValue?: Prisma.DecimalNullableFilter<"Student"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.StringNullableFilter<"Student"> | string | null
   isActive?: Prisma.BoolFilter<"Student"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Student"> | Date | string
@@ -706,6 +742,10 @@ export type StudentOrderByWithRelationInput = {
   guardianNidUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   previousTcUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   marksheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionType?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionMode?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -778,6 +818,10 @@ export type StudentWhereUniqueInput = Prisma.AtLeast<{
   guardianNidUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   previousTcUrl?: Prisma.StringNullableFilter<"Student"> | string | null
   marksheetUrl?: Prisma.StringNullableFilter<"Student"> | string | null
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableFilter<"Student"> | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.EnumDiscountModeNullableFilter<"Student"> | $Enums.DiscountMode | null
+  concessionValue?: Prisma.DecimalNullableFilter<"Student"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.StringNullableFilter<"Student"> | string | null
   isActive?: Prisma.BoolFilter<"Student"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Student"> | Date | string
@@ -847,6 +891,10 @@ export type StudentOrderByWithAggregationInput = {
   guardianNidUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   previousTcUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   marksheetUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionType?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionMode?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  concessionReason?: Prisma.SortOrderInput | Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -915,6 +963,10 @@ export type StudentScalarWhereWithAggregatesInput = {
   guardianNidUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   previousTcUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   marksheetUrl?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
+  concessionType?: Prisma.EnumStudentConcessionTypeNullableWithAggregatesFilter<"Student"> | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.EnumDiscountModeNullableWithAggregatesFilter<"Student"> | $Enums.DiscountMode | null
+  concessionValue?: Prisma.DecimalNullableWithAggregatesFilter<"Student"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.StringNullableWithAggregatesFilter<"Student"> | string | null
   isActive?: Prisma.BoolWithAggregatesFilter<"Student"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Student"> | Date | string
@@ -973,6 +1025,10 @@ export type StudentCreateInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1042,6 +1098,10 @@ export type StudentUncheckedCreateInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1108,6 +1168,10 @@ export type StudentUpdateInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1177,6 +1241,10 @@ export type StudentUncheckedUpdateInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1245,6 +1313,10 @@ export type StudentCreateManyInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1303,6 +1375,10 @@ export type StudentUpdateManyMutationInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1363,6 +1439,10 @@ export type StudentUncheckedUpdateManyInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1428,6 +1508,10 @@ export type StudentCountOrderByAggregateInput = {
   guardianNidUrl?: Prisma.SortOrder
   previousTcUrl?: Prisma.SortOrder
   marksheetUrl?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrder
+  concessionMode?: Prisma.SortOrder
+  concessionValue?: Prisma.SortOrder
+  concessionReason?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1437,6 +1521,7 @@ export type StudentAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  concessionValue?: Prisma.SortOrder
 }
 
 export type StudentMaxOrderByAggregateInput = {
@@ -1494,6 +1579,10 @@ export type StudentMaxOrderByAggregateInput = {
   guardianNidUrl?: Prisma.SortOrder
   previousTcUrl?: Prisma.SortOrder
   marksheetUrl?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrder
+  concessionMode?: Prisma.SortOrder
+  concessionValue?: Prisma.SortOrder
+  concessionReason?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1554,6 +1643,10 @@ export type StudentMinOrderByAggregateInput = {
   guardianNidUrl?: Prisma.SortOrder
   previousTcUrl?: Prisma.SortOrder
   marksheetUrl?: Prisma.SortOrder
+  concessionType?: Prisma.SortOrder
+  concessionMode?: Prisma.SortOrder
+  concessionValue?: Prisma.SortOrder
+  concessionReason?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -1563,6 +1656,7 @@ export type StudentSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   schoolId?: Prisma.SortOrder
+  concessionValue?: Prisma.SortOrder
 }
 
 export type StudentNullableScalarRelationFilter = {
@@ -1682,6 +1776,10 @@ export type StudentUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StudentUpdateToOneWithWhereWithoutPaymentsInput, Prisma.StudentUpdateWithoutPaymentsInput>, Prisma.StudentUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type NullableEnumDiscountModeFieldUpdateOperationsInput = {
+  set?: $Enums.DiscountMode | null
+}
+
 export type StudentCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.StudentCreateWithoutUserInput, Prisma.StudentUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.StudentCreateOrConnectWithoutUserInput
@@ -1767,6 +1865,10 @@ export type StudentCreateWithoutAttendancesInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1835,6 +1937,10 @@ export type StudentUncheckedCreateWithoutAttendancesInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1916,6 +2022,10 @@ export type StudentUpdateWithoutAttendancesInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1984,6 +2094,10 @@ export type StudentUncheckedUpdateWithoutAttendancesInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2049,6 +2163,10 @@ export type StudentCreateWithoutLeaveRequestsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2117,6 +2235,10 @@ export type StudentUncheckedCreateWithoutLeaveRequestsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2198,6 +2320,10 @@ export type StudentUpdateWithoutLeaveRequestsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2266,6 +2392,10 @@ export type StudentUncheckedUpdateWithoutLeaveRequestsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2331,6 +2461,10 @@ export type StudentCreateWithoutEnrollmentsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2399,6 +2533,10 @@ export type StudentUncheckedCreateWithoutEnrollmentsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2480,6 +2618,10 @@ export type StudentUpdateWithoutEnrollmentsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2548,6 +2690,10 @@ export type StudentUncheckedUpdateWithoutEnrollmentsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2613,6 +2759,10 @@ export type StudentCreateWithoutGuardiansInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2681,6 +2831,10 @@ export type StudentUncheckedCreateWithoutGuardiansInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2762,6 +2916,10 @@ export type StudentUpdateWithoutGuardiansInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2830,6 +2988,10 @@ export type StudentUncheckedUpdateWithoutGuardiansInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2895,6 +3057,10 @@ export type StudentCreateWithoutHefzEnrollmentsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -2963,6 +3129,10 @@ export type StudentUncheckedCreateWithoutHefzEnrollmentsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3044,6 +3214,10 @@ export type StudentUpdateWithoutHefzEnrollmentsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3112,6 +3286,10 @@ export type StudentUncheckedUpdateWithoutHefzEnrollmentsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3177,6 +3355,10 @@ export type StudentCreateWithoutResultsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3245,6 +3427,10 @@ export type StudentUncheckedCreateWithoutResultsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3326,6 +3512,10 @@ export type StudentUpdateWithoutResultsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3394,6 +3584,10 @@ export type StudentUncheckedUpdateWithoutResultsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3459,6 +3653,10 @@ export type StudentCreateWithoutFeesInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3527,6 +3725,10 @@ export type StudentUncheckedCreateWithoutFeesInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3608,6 +3810,10 @@ export type StudentUpdateWithoutFeesInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3676,6 +3882,10 @@ export type StudentUncheckedUpdateWithoutFeesInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3741,6 +3951,10 @@ export type StudentCreateWithoutPaymentsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3809,6 +4023,10 @@ export type StudentUncheckedCreateWithoutPaymentsInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -3890,6 +4108,10 @@ export type StudentUpdateWithoutPaymentsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -3958,6 +4180,10 @@ export type StudentUncheckedUpdateWithoutPaymentsInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4023,6 +4249,10 @@ export type StudentCreateWithoutUserInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4090,6 +4320,10 @@ export type StudentUncheckedCreateWithoutUserInput = {
   guardianNidUrl?: string | null
   previousTcUrl?: string | null
   marksheetUrl?: string | null
+  concessionType?: $Enums.StudentConcessionType | null
+  concessionMode?: $Enums.DiscountMode | null
+  concessionValue?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -4172,6 +4406,10 @@ export type StudentUpdateWithoutUserInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4239,6 +4477,10 @@ export type StudentUncheckedUpdateWithoutUserInput = {
   guardianNidUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   previousTcUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   marksheetUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  concessionType?: Prisma.NullableEnumStudentConcessionTypeFieldUpdateOperationsInput | $Enums.StudentConcessionType | null
+  concessionMode?: Prisma.NullableEnumDiscountModeFieldUpdateOperationsInput | $Enums.DiscountMode | null
+  concessionValue?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  concessionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -4401,6 +4643,10 @@ export type StudentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   guardianNidUrl?: boolean
   previousTcUrl?: boolean
   marksheetUrl?: boolean
+  concessionType?: boolean
+  concessionMode?: boolean
+  concessionValue?: boolean
+  concessionReason?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -4471,6 +4717,10 @@ export type StudentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   guardianNidUrl?: boolean
   previousTcUrl?: boolean
   marksheetUrl?: boolean
+  concessionType?: boolean
+  concessionMode?: boolean
+  concessionValue?: boolean
+  concessionReason?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -4532,6 +4782,10 @@ export type StudentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   guardianNidUrl?: boolean
   previousTcUrl?: boolean
   marksheetUrl?: boolean
+  concessionType?: boolean
+  concessionMode?: boolean
+  concessionValue?: boolean
+  concessionReason?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -4593,12 +4847,16 @@ export type StudentSelectScalar = {
   guardianNidUrl?: boolean
   previousTcUrl?: boolean
   marksheetUrl?: boolean
+  concessionType?: boolean
+  concessionMode?: boolean
+  concessionValue?: boolean
+  concessionReason?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "studentId" | "firstName" | "lastName" | "nameBangla" | "dateOfBirth" | "gender" | "phone" | "address" | "admissionDate" | "residentialType" | "shift" | "quranWing" | "birthRegNo" | "bloodGroup" | "religion" | "nationality" | "studentPhotoUrl" | "fatherName" | "fatherPhone" | "fatherOccupation" | "fatherNid" | "motherName" | "motherPhone" | "motherOccupation" | "motherNid" | "emergencyContactName" | "emergencyContactPhone" | "presentAddress" | "permanentAddress" | "authorizedPickupName" | "authorizedPickupRelation" | "authorizedPickupPhone" | "authorizedPickupNid" | "pickupPersonPhotoUrl" | "academicGroup" | "boardName" | "boardRollNo" | "boardRegNo" | "fourthSubject" | "previousSchool" | "previousClass" | "tcNumber" | "tcDate" | "allergies" | "medicalConditions" | "medications" | "healthNotes" | "birthCertificateUrl" | "guardianNidUrl" | "previousTcUrl" | "marksheetUrl" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
+export type StudentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "schoolId" | "studentId" | "firstName" | "lastName" | "nameBangla" | "dateOfBirth" | "gender" | "phone" | "address" | "admissionDate" | "residentialType" | "shift" | "quranWing" | "birthRegNo" | "bloodGroup" | "religion" | "nationality" | "studentPhotoUrl" | "fatherName" | "fatherPhone" | "fatherOccupation" | "fatherNid" | "motherName" | "motherPhone" | "motherOccupation" | "motherNid" | "emergencyContactName" | "emergencyContactPhone" | "presentAddress" | "permanentAddress" | "authorizedPickupName" | "authorizedPickupRelation" | "authorizedPickupPhone" | "authorizedPickupNid" | "pickupPersonPhotoUrl" | "academicGroup" | "boardName" | "boardRollNo" | "boardRegNo" | "fourthSubject" | "previousSchool" | "previousClass" | "tcNumber" | "tcDate" | "allergies" | "medicalConditions" | "medications" | "healthNotes" | "birthCertificateUrl" | "guardianNidUrl" | "previousTcUrl" | "marksheetUrl" | "concessionType" | "concessionMode" | "concessionValue" | "concessionReason" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["student"]>
 export type StudentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.Student$userArgs<ExtArgs>
   guardians?: boolean | Prisma.Student$guardiansArgs<ExtArgs>
@@ -4686,6 +4944,10 @@ export type $StudentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     guardianNidUrl: string | null
     previousTcUrl: string | null
     marksheetUrl: string | null
+    concessionType: $Enums.StudentConcessionType | null
+    concessionMode: $Enums.DiscountMode | null
+    concessionValue: runtime.Decimal | null
+    concessionReason: string | null
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -5175,6 +5437,10 @@ export interface StudentFieldRefs {
   readonly guardianNidUrl: Prisma.FieldRef<"Student", 'String'>
   readonly previousTcUrl: Prisma.FieldRef<"Student", 'String'>
   readonly marksheetUrl: Prisma.FieldRef<"Student", 'String'>
+  readonly concessionType: Prisma.FieldRef<"Student", 'StudentConcessionType'>
+  readonly concessionMode: Prisma.FieldRef<"Student", 'DiscountMode'>
+  readonly concessionValue: Prisma.FieldRef<"Student", 'Decimal'>
+  readonly concessionReason: Prisma.FieldRef<"Student", 'String'>
   readonly isActive: Prisma.FieldRef<"Student", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Student", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Student", 'DateTime'>
