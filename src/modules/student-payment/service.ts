@@ -50,7 +50,8 @@ const getSchoolConfiguredReceiverNumber = async (
 
 	if (method === PaymentMethod.BKASH) return setting.bkashNumber ?? undefined;
 	if (method === PaymentMethod.NAGAD) return setting.nagadNumber ?? undefined;
-	return setting.rocketNumber ?? undefined;
+	if (method === PaymentMethod.ROCKET) return setting.rocketNumber ?? undefined;
+	return undefined;
 };
 
 export const submitStudentPayment = async (

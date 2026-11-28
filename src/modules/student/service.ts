@@ -892,6 +892,19 @@ export const updateStudent = async (
 	data: UpdateStudentInput,
 	requester?: { userId: number; role: UserRole },
 ) => {
+	const hasConcessionMutation =
+		data.concessionType !== undefined ||
+		data.concessionMode !== undefined ||
+		data.concessionValue !== undefined ||
+		data.concessionReason !== undefined;
+
+	if (hasConcessionMutation && requester && requester.role !== "ADMIN") {
+		throw new AppError(
+			403,
+			"Only School Admins can modify student fee concessions",
+		);
+	}
+
 	if (requester?.role === "GUARDIAN") {
 		await assertGuardianOwnsStudent(schoolId, requester.userId, studentId);
 	}
@@ -904,13 +917,25 @@ export const updateStudent = async (
 		throw new AppError(404, "Student not found");
 	}
 
+	const {
+		concessionType: _concessionType,
+		concessionMode: _concessionMode,
+		concessionValue: _concessionValue,
+		concessionReason: _concessionReason,
+		...nonConcessionData
+	} = data;
+
+	const safeUpdateData: UpdateStudentInput =
+		!requester || requester.role === "ADMIN" ? data : nonConcessionData;
+
 	return prisma.$transaction(async (tx) => {
 		const updatedStudent = await tx.student.update({
 			where: { id: student.id },
 			data: {
-				...data,
-				...(data.presentAddress !== undefined && data.address === undefined
-					? { address: data.presentAddress }
+				...safeUpdateData,
+				...(safeUpdateData.presentAddress !== undefined &&
+				safeUpdateData.address === undefined
+					? { address: safeUpdateData.presentAddress }
 					: {}),
 			},
 			include: fullStudentInclude,

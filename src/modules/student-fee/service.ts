@@ -86,8 +86,7 @@ export const computeConcessionDiscount = (
 } => {
 	const safeGross = roundMoney(Math.max(0, grossAmount));
 	if (
-		!profile ||
-		!profile.concessionType ||
+		!profile?.concessionType ||
 		!profile.concessionMode ||
 		profile.concessionValue === null ||
 		profile.concessionValue === undefined
@@ -187,13 +186,14 @@ export const computeFeeFinancials = (
 
 	const dhakaTodayStart = getDhakaStartOfToday(now).getTime();
 	const dueTime = fee.dueDate ? new Date(fee.dueDate).getTime() : Number.NaN;
-	const pastDue = Number.isFinite(dueTime) && dueTime < dhakaTodayStart;
+	const hasValidDueDate = Number.isFinite(dueTime);
+	const pastDue = hasValidDueDate && dueTime < dhakaTodayStart;
 
 	const isOverdue =
 		due > 0 &&
 		fee.status !== FeeStatus.PAID &&
 		fee.status !== FeeStatus.WAIVED &&
-		(fee.status === FeeStatus.OVERDUE || pastDue);
+		(hasValidDueDate ? pastDue : fee.status === FeeStatus.OVERDUE);
 
 	let effectiveStatus: FeeStatus;
 	if (due === 0) {
@@ -396,6 +396,10 @@ export const getStudentFees = async (
 				},
 			],
 		};
+	} else if (query.status === FeeStatus.PAID) {
+		statusWhere = {
+			status: { in: [FeeStatus.PAID, FeeStatus.WAIVED] },
+		};
 	} else if (query.status !== undefined) {
 		statusWhere = { status: query.status };
 	}
@@ -448,10 +452,7 @@ export const getStudentFees = async (
 	if (query.status === FeeStatus.OVERDUE) {
 		return enriched.filter((f) => f.isOverdue);
 	}
-	if (
-		query.status === FeeStatus.PENDING ||
-		query.status === FeeStatus.PARTIAL
-	) {
+	if (query.status !== undefined) {
 		return enriched.filter((f) => f.status === query.status);
 	}
 	return enriched;
@@ -577,6 +578,8 @@ export const bulkCreateStudentFees = async (
 	const skippedCount = enrollments.length - toCreate.length;
 	const shouldApplyConcession = payload.applyStudentConcession !== false;
 	let concessionAppliedCount = 0;
+	const createdNotifications: Array<{ studentId: number; netAmount: number }> =
+		[];
 
 	if (toCreate.length > 0) {
 		await prisma.studentFee.createMany({
@@ -595,6 +598,12 @@ export const bulkCreateStudentFees = async (
 				}
 				const autoWaived =
 					concession.concessionAmount > 0 && concession.netAmount === 0;
+				if (!autoWaived && concession.netAmount > 0) {
+					createdNotifications.push({
+						studentId: e.studentId,
+						netAmount: concession.netAmount,
+					});
+				}
 				return {
 					schoolId,
 					studentId: e.studentId,
@@ -634,6 +643,7 @@ export const bulkCreateStudentFees = async (
 		skippedCount,
 		concessionAppliedCount,
 		createdStudentIds: toCreate.map((e) => e.studentId),
+		createdNotifications,
 	};
 };
 
@@ -727,8 +737,28 @@ export const updateStudentFee = async (
 				resolvedStatus = FeeStatus.PENDING;
 			}
 		} else if (payload.status === FeeStatus.WAIVED && totalVerifiedPaid > 0) {
-			// Remaining balance is waived, preserve already verified payments cleanly
-			resolvedStatus = FeeStatus.WAIVED;
+			// Remaining balance is waived while preserving verified payments -> aligns with computeFeeFinancials (PAID)
+			resolvedStatus = FeeStatus.PAID;
+		}
+
+		// Clear sticky OVERDUE status when dueDate is extended to today or the future
+		const effectiveDueDate = payload.dueDate ?? existing.dueDate;
+		const effectiveDueTime = effectiveDueDate
+			? new Date(effectiveDueDate).getTime()
+			: Number.NaN;
+		const isExtendedToCurrentOrFuture =
+			payload.dueDate !== undefined &&
+			Number.isFinite(effectiveDueTime) &&
+			effectiveDueTime >= getDhakaStartOfToday().getTime();
+		const currentCandidateStatus = resolvedStatus ?? existing.status;
+
+		if (
+			isExtendedToCurrentOrFuture &&
+			remainingAfterWaiver > 0 &&
+			currentCandidateStatus === FeeStatus.OVERDUE
+		) {
+			resolvedStatus =
+				totalVerifiedPaid > 0 ? FeeStatus.PARTIAL : FeeStatus.PENDING;
 		}
 
 		const previous = {

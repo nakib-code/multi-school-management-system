@@ -14,6 +14,7 @@ import {
 	resolveMonthOrCustomDateRange,
 	roundMoney,
 } from "../../utils/dhakaDate.js";
+import { computeFeeFinancials } from "../student-fee/service.js";
 
 type DashboardRole =
 	| "SUPER_ADMIN"
@@ -372,7 +373,7 @@ const getStudentDashboard = async (user: DashboardUser) => {
 	const [
 		attendanceTotal30d,
 		attendancePresent30d,
-		unpaidFees,
+		unpaidFeeRows,
 		totalResults,
 		unreadNotifications,
 	] = await Promise.all([
@@ -387,11 +388,21 @@ const getStudentDashboard = async (user: DashboardUser) => {
 				status: { in: ["PRESENT", "LATE"] },
 			},
 		}),
-		prisma.studentFee.count({
+		prisma.studentFee.findMany({
 			where: {
 				schoolId,
 				studentId: student.id,
-				status: { in: ["PENDING", "PARTIAL"] },
+				status: { in: ["PENDING", "PARTIAL", "OVERDUE"] },
+			},
+			select: {
+				amount: true,
+				waivedAmount: true,
+				status: true,
+				dueDate: true,
+				payments: {
+					where: { status: "VERIFIED" },
+					select: { paidAmount: true },
+				},
 			},
 		}),
 		prisma.result.count({
@@ -401,6 +412,11 @@ const getStudentDashboard = async (user: DashboardUser) => {
 			where: { recipientId: user.userId, isRead: false },
 		}),
 	]);
+
+	const now = new Date();
+	const unpaidFees = unpaidFeeRows.filter(
+		(fee) => computeFeeFinancials(fee, now).due > 0,
+	).length;
 
 	return {
 		role: user.role,
@@ -452,10 +468,13 @@ const getGuardianDashboard = async (user: DashboardUser) => {
 				where: {
 					schoolId,
 					studentId: { in: studentIds },
-					status: { in: ["PENDING", "PARTIAL"] },
+					status: { in: ["PENDING", "PARTIAL", "OVERDUE"] },
 				},
 				select: {
 					amount: true,
+					waivedAmount: true,
+					status: true,
+					dueDate: true,
 					payments: {
 						where: { status: "VERIFIED" },
 						select: { paidAmount: true },
@@ -474,20 +493,22 @@ const getGuardianDashboard = async (user: DashboardUser) => {
 			}),
 		]);
 
-	const totalDueAmount = unpaidFeeRows.reduce((sum, fee) => {
-		const paid = fee.payments.reduce(
-			(pSum, p) => pSum + Number(p.paidAmount),
-			0,
-		);
-		const due = Math.max(0, Number(fee.amount) - paid);
-		return sum + due;
-	}, 0);
+	const now = new Date();
+	let unpaidFees = 0;
+	let totalDueAmount = 0;
+	for (const fee of unpaidFeeRows) {
+		const fin = computeFeeFinancials(fee, now);
+		if (fin.due > 0) {
+			unpaidFees += 1;
+			totalDueAmount = roundMoney(totalDueAmount + fin.due);
+		}
+	}
 
 	return {
 		role: user.role,
 		stats: {
 			linkedChildren: studentIds.length,
-			unpaidFees: unpaidFeeRows.length,
+			unpaidFees,
 			totalDueAmount,
 			pendingLeaveRequests,
 			unreadNotifications,

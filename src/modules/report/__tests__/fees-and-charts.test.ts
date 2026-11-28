@@ -4,6 +4,7 @@ import type { NextFunction, Response } from "express";
 import {
 	DiscountMode,
 	FeeStatus,
+	PaymentMethod,
 	Prisma,
 	StudentConcessionType,
 	UserRole,
@@ -13,11 +14,14 @@ import type { AuthRequest } from "../../../middleware/auth.js";
 import { requireSchoolAccess } from "../../../middleware/schoolAccess.js";
 import { approveAdmission } from "../../admission/service.js";
 import { resolveClassFeeAmount } from "../../class/service.js";
+import { getDashboard } from "../../dashboard/service.js";
+import { updateStudent } from "../../student/service.js";
 import {
 	computeConcessionDiscount,
 	computeFeeFinancials,
 	updateStudentFee,
 } from "../../student-fee/service.js";
+import { submitStudentPayment } from "../../student-payment/service.js";
 import {
 	getAdmissionChartReport,
 	getDefaulterListReport,
@@ -634,5 +638,299 @@ describe("Student Concessions, Automated OVERDUE, Partial Waivers & Defaulter Li
 		assert.equal(report.rows[0]?.studentCode, "STU-101");
 		assert.equal(report.rows[0]?.guardianPhone, "01711112222");
 		assert.equal(report.rows[0]?.lastPaymentDate, "2026-10-01");
+	});
+
+	it("rejects GUARDIAN and MANAGER concession updates with 403 while allowing ADMIN", async () => {
+		let capturedUpdateData: Record<string, unknown> | undefined;
+
+		stubDelegate("guardian", {
+			findFirst: async () => ({ id: 7 }),
+		});
+		stubDelegate("guardianStudent", {
+			findUnique: async () => ({ guardianId: 7, studentId: 50 }),
+		});
+		stubDelegate("student", {
+			findFirst: async () => ({ id: 50, schoolId: 10 }),
+		});
+		const fakeTx = {
+			student: {
+				update: async (args: { data: Record<string, unknown> }) => {
+					capturedUpdateData = args.data;
+					return { id: 50, ...args.data };
+				},
+			},
+			enrollment: {
+				findFirst: async () => null,
+			},
+		};
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof fakeTx) => Promise<unknown>,
+		) => fn(fakeTx)) as unknown as Record<string, unknown>);
+
+		// Guardian attempting to self-assign 100% ORPHAN concession -> 403
+		await assert.rejects(
+			() =>
+				updateStudent(
+					10,
+					50,
+					{
+						concessionType: StudentConcessionType.ORPHAN,
+						concessionMode: DiscountMode.PERCENTAGE,
+						concessionValue: 100,
+					},
+					{ userId: 99, role: UserRole.GUARDIAN },
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		// Manager attempting to modify concession -> 403
+		await assert.rejects(
+			() =>
+				updateStudent(
+					10,
+					50,
+					{ concessionReason: "Manager override" },
+					{ userId: 88, role: UserRole.MANAGER },
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		// Guardian updating non-concession contact fields succeeds without touching concessions
+		await updateStudent(
+			10,
+			50,
+			{ phone: "01700001111" },
+			{ userId: 99, role: UserRole.GUARDIAN },
+		);
+		assert.equal(capturedUpdateData?.phone, "01700001111");
+		assert.equal("concessionType" in (capturedUpdateData ?? {}), false);
+
+		// Admin updating concession succeeds
+		await updateStudent(
+			10,
+			50,
+			{
+				concessionType: StudentConcessionType.ORPHAN,
+				concessionMode: DiscountMode.PERCENTAGE,
+				concessionValue: 100,
+			},
+			{ userId: 1, role: UserRole.ADMIN },
+		);
+		assert.equal(
+			capturedUpdateData?.concessionType,
+			StudentConcessionType.ORPHAN,
+		);
+	});
+
+	it("includes OVERDUE fees and subtracts waivedAmount in Student and Guardian dashboards", async () => {
+		let capturedGuardianFeeWhere: Record<string, unknown> | undefined;
+		let capturedStudentFeeWhere: Record<string, unknown> | undefined;
+
+		stubDelegate("guardian", {
+			findFirst: async () => ({
+				id: 5,
+				students: [{ studentId: 201 }],
+			}),
+		});
+		stubDelegate("student", {
+			findFirst: async () => ({ id: 201 }),
+		});
+		stubDelegate("leaveRequest", {
+			count: async () => 0,
+		});
+		stubDelegate("notification", {
+			count: async () => 2,
+		});
+		stubDelegate("attendance", {
+			count: async () => 10,
+		});
+		stubDelegate("result", {
+			count: async () => 3,
+		});
+		stubDelegate("studentFee", {
+			findMany: async (args: { where: Record<string, unknown> }) => {
+				if (Array.isArray((args.where.studentId as { in?: number[] })?.in)) {
+					capturedGuardianFeeWhere = args.where;
+				} else {
+					capturedStudentFeeWhere = args.where;
+				}
+				return [
+					{
+						amount: new Prisma.Decimal("2000.00"),
+						waivedAmount: new Prisma.Decimal("500.00"),
+						status: FeeStatus.OVERDUE,
+						dueDate: new Date("2020-01-10T00:00:00Z"),
+						payments: [{ paidAmount: new Prisma.Decimal("400.00") }],
+					},
+					{
+						amount: new Prisma.Decimal("1000.00"),
+						waivedAmount: new Prisma.Decimal("200.00"),
+						status: FeeStatus.PARTIAL,
+						dueDate: new Date("2099-12-31T00:00:00Z"),
+						payments: [{ paidAmount: new Prisma.Decimal("300.00") }],
+					},
+				];
+			},
+		});
+
+		const guardianDash = (await getDashboard({
+			userId: 50,
+			role: "GUARDIAN",
+			schoolId: 12,
+		})) as { stats: { unpaidFees: number; totalDueAmount: number } };
+
+		assert.deepEqual(
+			(capturedGuardianFeeWhere?.status as { in: string[] })?.in,
+			["PENDING", "PARTIAL", "OVERDUE"],
+		);
+		assert.equal(guardianDash.stats.unpaidFees, 2);
+		// Fee 1: 2000 - 400 paid - 500 waived = 1100; Fee 2: 1000 - 300 paid - 200 waived = 500 -> Total 1600
+		assert.equal(guardianDash.stats.totalDueAmount, 1600);
+
+		const studentDash = (await getDashboard({
+			userId: 60,
+			role: "STUDENT",
+			schoolId: 12,
+		})) as { stats: { unpaidFees: number } };
+
+		assert.deepEqual(
+			(capturedStudentFeeWhere?.status as { in: string[] })?.in,
+			["PENDING", "PARTIAL", "OVERDUE"],
+		);
+		assert.equal(studentDash.stats.unpaidFees, 2);
+	});
+
+	it("leaves receiverNumber undefined for BANK_TRANSFER and CHEQUE student payments instead of falling back to Rocket", async () => {
+		const createdPayloads: Array<Record<string, unknown>> = [];
+
+		stubDelegate("studentFee", {
+			findFirst: async () => ({
+				id: 88,
+				schoolId: 10,
+				studentId: 301,
+				status: FeeStatus.PENDING,
+				amount: new Prisma.Decimal("1500.00"),
+				waivedAmount: new Prisma.Decimal("0.00"),
+			}),
+		});
+		stubDelegate("schoolSetting", {
+			findUnique: async () => ({
+				bkashNumber: "01711111111",
+				nagadNumber: "01822222222",
+				rocketNumber: "01933333333",
+			}),
+		});
+		stubDelegate("studentPayment", {
+			findFirst: async () => null,
+			create: async (args: { data: Record<string, unknown> }) => {
+				createdPayloads.push(args.data);
+				return { id: createdPayloads.length, ...args.data };
+			},
+		});
+
+		await submitStudentPayment(
+			10,
+			{ userId: 1, role: UserRole.ADMIN },
+			{
+				studentId: 301,
+				feeId: 88,
+				paymentMethod: PaymentMethod.BANK_TRANSFER,
+				trxId: "BANK-REF-1001",
+				paidAmount: 1500,
+			},
+		);
+
+		await submitStudentPayment(
+			10,
+			{ userId: 1, role: UserRole.ADMIN },
+			{
+				studentId: 301,
+				feeId: 88,
+				paymentMethod: PaymentMethod.CHEQUE,
+				trxId: "CHQ-2002",
+				paidAmount: 1500,
+			},
+		);
+
+		await submitStudentPayment(
+			10,
+			{ userId: 1, role: UserRole.ADMIN },
+			{
+				studentId: 301,
+				feeId: 88,
+				paymentMethod: PaymentMethod.ROCKET,
+				senderNumber: "01755556666",
+				trxId: "RCK998877",
+				paidAmount: 1500,
+			},
+		);
+
+		assert.equal(createdPayloads[0]?.receiverNumber, undefined);
+		assert.equal(createdPayloads[1]?.receiverNumber, undefined);
+		assert.equal(createdPayloads[2]?.receiverNumber, "01933333333");
+	});
+
+	it("persists PAID when waiving remaining balance after partial payment and clears OVERDUE when dueDate is extended", async () => {
+		const updatedRecords: Array<Record<string, unknown>> = [];
+
+		let currentFee = {
+			id: 77,
+			schoolId: 10,
+			title: "Monthly Fee",
+			amount: new Prisma.Decimal("1500.00"),
+			waivedAmount: new Prisma.Decimal("0.00"),
+			waiverReason: null as string | null,
+			status: FeeStatus.OVERDUE as FeeStatus,
+			dueDate: new Date("2020-01-10T00:00:00Z"),
+		};
+
+		const fakeTx = {
+			studentFee: {
+				findFirst: async () => currentFee,
+				update: async (args: { data: Record<string, unknown> }) => {
+					updatedRecords.push(args.data);
+					return {
+						...currentFee,
+						...args.data,
+						payments: [{ paidAmount: new Prisma.Decimal("600.00") }],
+					};
+				},
+			},
+			studentPayment: {
+				aggregate: async () => ({
+					_sum: { paidAmount: new Prisma.Decimal("600.00") },
+				}),
+			},
+		};
+
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof fakeTx) => Promise<unknown>,
+		) => fn(fakeTx)) as unknown as Record<string, unknown>);
+
+		// Extending dueDate into the future on an OVERDUE fee with partial payment -> clears OVERDUE to PARTIAL
+		const extended = await updateStudentFee(
+			10,
+			77,
+			{ dueDate: new Date("2099-12-31T00:00:00Z") },
+			{ userId: 1, role: UserRole.ADMIN },
+		);
+		assert.equal(updatedRecords[0]?.status, FeeStatus.PARTIAL);
+		assert.equal(extended.fee.isOverdue, false);
+		assert.equal(extended.fee.status, FeeStatus.PARTIAL);
+
+		// Waiving remaining balance via status=WAIVED when verifiedPaid > 0 -> persists PAID & waivedAmount=900
+		currentFee = { ...currentFee, status: FeeStatus.PARTIAL };
+		const waivedRemainder = await updateStudentFee(
+			10,
+			77,
+			{ status: FeeStatus.WAIVED, waiverReason: "Principal approval" },
+			{ userId: 1, role: UserRole.ADMIN },
+		);
+		assert.equal(updatedRecords[1]?.status, FeeStatus.PAID);
+		assert.equal(Number(updatedRecords[1]?.waivedAmount), 900);
+		assert.equal(waivedRemainder.fee.status, FeeStatus.PAID);
+		assert.equal(waivedRemainder.fee.computedPaid, 600);
+		assert.equal(waivedRemainder.fee.computedWaived, 900);
+		assert.equal(waivedRemainder.fee.computedDue, 0);
 	});
 });

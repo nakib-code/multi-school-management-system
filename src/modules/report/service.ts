@@ -685,9 +685,11 @@ export const getFeeChartReport = async (
 						},
 					],
 				}
-			: query.status !== undefined
-				? { status: query.status }
-				: {};
+			: query.status === FeeStatus.PAID
+				? { status: { in: [FeeStatus.PAID, FeeStatus.WAIVED] } }
+				: query.status !== undefined
+					? { status: query.status }
+					: {};
 
 	const [school, fees] = await Promise.all([
 		getSchoolHeaderInfo(schoolId),
@@ -802,10 +804,7 @@ export const getFeeChartReport = async (
 		}))
 		.filter(({ fin }) => {
 			if (query.status === FeeStatus.OVERDUE) return fin.isOverdue;
-			if (
-				query.status === FeeStatus.PENDING ||
-				query.status === FeeStatus.PARTIAL
-			) {
+			if (query.status !== undefined) {
 				return fin.effectiveStatus === query.status;
 			}
 			return true;

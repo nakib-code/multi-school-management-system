@@ -27,33 +27,56 @@ const parsePositiveInt = (value: unknown, label: string): number => {
 
 const notifyStudentsForNewFee = async (
 	schoolId: number,
-	studentIds: number[],
+	feeTargets: Array<{ studentId: number; amount: number }>,
 	title: string,
-	amount: number,
 ) => {
-	if (studentIds.length === 0) return;
+	const payableTargets = feeTargets.filter((t) => t.amount > 0);
+	if (payableTargets.length === 0) return;
+
+	const amountByStudent = new Map<number, number>();
+	for (const t of payableTargets) {
+		amountByStudent.set(t.studentId, t.amount);
+	}
+	const studentIds = [...amountByStudent.keys()];
+
 	try {
 		const [students, links] = await Promise.all([
 			prisma.student.findMany({
 				where: { id: { in: studentIds }, schoolId, userId: { not: null } },
-				select: { userId: true },
+				select: { id: true, userId: true },
 			}),
 			prisma.guardianStudent.findMany({
 				where: { studentId: { in: studentIds }, guardian: { schoolId } },
-				select: { guardian: { select: { userId: true } } },
+				select: { studentId: true, guardian: { select: { userId: true } } },
 			}),
 		]);
 
-		const recipientIds = new Set<number>();
+		const notifications: Array<{ recipientId: number; amount: number }> = [];
+		const seen = new Set<string>();
+
 		for (const s of students) {
-			if (s.userId) recipientIds.add(s.userId);
+			const amt = amountByStudent.get(s.id);
+			if (s.userId && amt !== undefined) {
+				const key = `${s.userId}:${s.id}`;
+				if (!seen.has(key)) {
+					seen.add(key);
+					notifications.push({ recipientId: s.userId, amount: amt });
+				}
+			}
 		}
 		for (const l of links) {
-			if (l.guardian.userId) recipientIds.add(l.guardian.userId);
+			const amt = amountByStudent.get(l.studentId);
+			if (l.guardian.userId && amt !== undefined) {
+				const key = `${l.guardian.userId}:${l.studentId}`;
+				if (!seen.has(key)) {
+					seen.add(key);
+					notifications.push({ recipientId: l.guardian.userId, amount: amt });
+				}
+			}
 		}
 
 		await Promise.all(
-			[...recipientIds].map((recipientId) =>
+			notifications.map(({ recipientId, amount }) =>
 				createNotification({
 					recipientId,
 					schoolId,
@@ -90,12 +113,13 @@ export const createStudentFeeController = async (
 			}).catch(() => {});
 		}
 
-		await notifyStudentsForNewFee(
-			schoolId,
-			[result.studentId],
-			result.title,
-			Number(result.amount),
-		);
+		if (Number(result.amount) > 0 && result.status !== "WAIVED") {
+			await notifyStudentsForNewFee(
+				schoolId,
+				[{ studentId: result.studentId, amount: Number(result.amount) }],
+				result.title,
+			);
+		}
 
 		return sendResponse(res, {
 			statusCode: 201,
@@ -130,9 +154,11 @@ export const bulkCreateStudentFeesController = async (
 
 		await notifyStudentsForNewFee(
 			schoolId,
-			result.createdStudentIds,
+			result.createdNotifications.map((n) => ({
+				studentId: n.studentId,
+				amount: n.netAmount,
+			})),
 			String(req.body.title ?? ""),
-			result.resolvedAmount,
 		);
 
 		return sendResponse(res, {
