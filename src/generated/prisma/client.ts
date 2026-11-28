@@ -147,6 +147,11 @@ export type HefzDailyLog = Prisma.HefzDailyLogModel
  */
 export type HefzEnrollment = Prisma.HefzEnrollmentModel
 /**
+ * Model IncomeEntry
+ * 
+ */
+export type IncomeEntry = Prisma.IncomeEntryModel
+/**
  * Model Manager
  * 
  */

@@ -72,6 +72,7 @@ export const ModelName = {
   GuardianStudent: 'GuardianStudent',
   HefzDailyLog: 'HefzDailyLog',
   HefzEnrollment: 'HefzEnrollment',
+  IncomeEntry: 'IncomeEntry',
   Manager: 'Manager',
   Notification: 'Notification',
   Package: 'Package',
@@ -499,6 +500,26 @@ export const HefzEnrollmentScalarFieldEnum = {
 } as const
 
 export type HefzEnrollmentScalarFieldEnum = (typeof HefzEnrollmentScalarFieldEnum)[keyof typeof HefzEnrollmentScalarFieldEnum]
+
+
+export const IncomeEntryScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  category: 'category',
+  sourceLabel: 'sourceLabel',
+  title: 'title',
+  amount: 'amount',
+  incomeDate: 'incomeDate',
+  billingMonth: 'billingMonth',
+  paymentMethod: 'paymentMethod',
+  referenceNo: 'referenceNo',
+  notes: 'notes',
+  recordedById: 'recordedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IncomeEntryScalarFieldEnum = (typeof IncomeEntryScalarFieldEnum)[keyof typeof IncomeEntryScalarFieldEnum]
 
 
 export const ManagerScalarFieldEnum = {

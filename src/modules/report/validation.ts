@@ -53,3 +53,17 @@ export const rosterChartQuerySchema = z.object({
 		})
 		.optional(),
 });
+
+export const monthlyNetQuerySchema = z.object({
+	params: z.object({ schoolId: schoolIdParam }),
+	query: z
+		.object({
+			billingMonth: z
+				.string()
+				.trim()
+				.regex(billingMonthRegex, "Billing month must be in YYYY-MM format")
+				.optional(),
+			trendMonths: z.coerce.number().int().min(1).max(12).optional(),
+		})
+		.optional(),
+});

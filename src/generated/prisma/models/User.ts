@@ -315,6 +315,7 @@ export type UserWhereInput = {
   classDiariesCreated?: Prisma.ClassDiaryListRelationFilter
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetListRelationFilter
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryListRelationFilter
+  incomeEntriesRecorded?: Prisma.IncomeEntryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -355,6 +356,7 @@ export type UserOrderByWithRelationInput = {
   classDiariesCreated?: Prisma.ClassDiaryOrderByRelationAggregateInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetOrderByRelationAggregateInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryOrderByRelationAggregateInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -398,6 +400,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   classDiariesCreated?: Prisma.ClassDiaryListRelationFilter
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetListRelationFilter
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryListRelationFilter
+  incomeEntriesRecorded?: Prisma.IncomeEntryListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -478,6 +481,7 @@ export type UserCreateInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -517,6 +521,7 @@ export type UserUncheckedCreateInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUpdateInput = {
@@ -555,6 +560,7 @@ export type UserUpdateInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -594,6 +600,7 @@ export type UserUncheckedUpdateInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -904,6 +911,20 @@ export type UserUpdateOneRequiredWithoutGuardianNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutGuardianInput, Prisma.UserUpdateWithoutGuardianInput>, Prisma.UserUncheckedUpdateWithoutGuardianInput>
 }
 
+export type UserCreateNestedOneWithoutIncomeEntriesRecordedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutIncomeEntriesRecordedInput, Prisma.UserUncheckedCreateWithoutIncomeEntriesRecordedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncomeEntriesRecordedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutIncomeEntriesRecordedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutIncomeEntriesRecordedInput, Prisma.UserUncheckedCreateWithoutIncomeEntriesRecordedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutIncomeEntriesRecordedInput
+  upsert?: Prisma.UserUpsertWithoutIncomeEntriesRecordedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutIncomeEntriesRecordedInput, Prisma.UserUpdateWithoutIncomeEntriesRecordedInput>, Prisma.UserUncheckedUpdateWithoutIncomeEntriesRecordedInput>
+}
+
 export type UserCreateNestedOneWithoutManagerInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutManagerInput, Prisma.UserUncheckedCreateWithoutManagerInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutManagerInput
@@ -1139,6 +1160,7 @@ export type UserCreateWithoutAdmissionsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutAdmissionsReviewedInput = {
@@ -1177,6 +1199,7 @@ export type UserUncheckedCreateWithoutAdmissionsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutAdmissionsReviewedInput = {
@@ -1230,6 +1253,7 @@ export type UserUpdateWithoutAdmissionsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAdmissionsReviewedInput = {
@@ -1268,6 +1292,7 @@ export type UserUncheckedUpdateWithoutAdmissionsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutReceivedAdmissionPaymentsInput = {
@@ -1305,6 +1330,7 @@ export type UserCreateWithoutReceivedAdmissionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput = {
@@ -1343,6 +1369,7 @@ export type UserUncheckedCreateWithoutReceivedAdmissionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutReceivedAdmissionPaymentsInput = {
@@ -1396,6 +1423,7 @@ export type UserUpdateWithoutReceivedAdmissionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput = {
@@ -1434,6 +1462,7 @@ export type UserUncheckedUpdateWithoutReceivedAdmissionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutMarkedAttendancesInput = {
@@ -1471,6 +1500,7 @@ export type UserCreateWithoutMarkedAttendancesInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
@@ -1509,6 +1539,7 @@ export type UserUncheckedCreateWithoutMarkedAttendancesInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutMarkedAttendancesInput = {
@@ -1562,6 +1593,7 @@ export type UserUpdateWithoutMarkedAttendancesInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
@@ -1600,6 +1632,7 @@ export type UserUncheckedUpdateWithoutMarkedAttendancesInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutAttendanceHistoriesChangedInput = {
@@ -1637,6 +1670,7 @@ export type UserCreateWithoutAttendanceHistoriesChangedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutAttendanceHistoriesChangedInput = {
@@ -1675,6 +1709,7 @@ export type UserUncheckedCreateWithoutAttendanceHistoriesChangedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutAttendanceHistoriesChangedInput = {
@@ -1728,6 +1763,7 @@ export type UserUpdateWithoutAttendanceHistoriesChangedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAttendanceHistoriesChangedInput = {
@@ -1766,6 +1802,7 @@ export type UserUncheckedUpdateWithoutAttendanceHistoriesChangedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutLeaveRequestsCreatedInput = {
@@ -1803,6 +1840,7 @@ export type UserCreateWithoutLeaveRequestsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutLeaveRequestsCreatedInput = {
@@ -1841,6 +1879,7 @@ export type UserUncheckedCreateWithoutLeaveRequestsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutLeaveRequestsCreatedInput = {
@@ -1883,6 +1922,7 @@ export type UserCreateWithoutLeaveRequestsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutLeaveRequestsReviewedInput = {
@@ -1921,6 +1961,7 @@ export type UserUncheckedCreateWithoutLeaveRequestsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutLeaveRequestsReviewedInput = {
@@ -1974,6 +2015,7 @@ export type UserUpdateWithoutLeaveRequestsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaveRequestsCreatedInput = {
@@ -2012,6 +2054,7 @@ export type UserUncheckedUpdateWithoutLeaveRequestsCreatedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUpsertWithoutLeaveRequestsReviewedInput = {
@@ -2060,6 +2103,7 @@ export type UserUpdateWithoutLeaveRequestsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeaveRequestsReviewedInput = {
@@ -2098,6 +2142,7 @@ export type UserUncheckedUpdateWithoutLeaveRequestsReviewedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutMonthlyReportsPublishedInput = {
@@ -2135,6 +2180,7 @@ export type UserCreateWithoutMonthlyReportsPublishedInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutMonthlyReportsPublishedInput = {
@@ -2173,6 +2219,7 @@ export type UserUncheckedCreateWithoutMonthlyReportsPublishedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutMonthlyReportsPublishedInput = {
@@ -2226,6 +2273,7 @@ export type UserUpdateWithoutMonthlyReportsPublishedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMonthlyReportsPublishedInput = {
@@ -2264,6 +2312,7 @@ export type UserUncheckedUpdateWithoutMonthlyReportsPublishedInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -2301,6 +2350,7 @@ export type UserCreateWithoutAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -2339,6 +2389,7 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -2392,6 +2443,7 @@ export type UserUpdateWithoutAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -2430,6 +2482,7 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutClassDiariesCreatedInput = {
@@ -2467,6 +2520,7 @@ export type UserCreateWithoutClassDiariesCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutUploadedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutClassDiariesCreatedInput = {
@@ -2505,6 +2559,7 @@ export type UserUncheckedCreateWithoutClassDiariesCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutClassDiariesCreatedInput = {
@@ -2558,6 +2613,7 @@ export type UserUpdateWithoutClassDiariesCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutUploadedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClassDiariesCreatedInput = {
@@ -2596,6 +2652,7 @@ export type UserUncheckedUpdateWithoutClassDiariesCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutCustomExpenseSheetsCreatedInput = {
@@ -2633,6 +2690,7 @@ export type UserCreateWithoutCustomExpenseSheetsCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutUploadedByInput
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutCustomExpenseSheetsCreatedInput = {
@@ -2671,6 +2729,7 @@ export type UserUncheckedCreateWithoutCustomExpenseSheetsCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutCustomExpenseSheetsCreatedInput = {
@@ -2724,6 +2783,7 @@ export type UserUpdateWithoutCustomExpenseSheetsCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutUploadedByNestedInput
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomExpenseSheetsCreatedInput = {
@@ -2762,6 +2822,7 @@ export type UserUncheckedUpdateWithoutCustomExpenseSheetsCreatedInput = {
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutCustomExpenseEntriesRecordedInput = {
@@ -2799,6 +2860,7 @@ export type UserCreateWithoutCustomExpenseEntriesRecordedInput = {
   uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutUploadedByInput
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutCustomExpenseEntriesRecordedInput = {
@@ -2837,6 +2899,7 @@ export type UserUncheckedCreateWithoutCustomExpenseEntriesRecordedInput = {
   uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutCustomExpenseEntriesRecordedInput = {
@@ -2890,6 +2953,7 @@ export type UserUpdateWithoutCustomExpenseEntriesRecordedInput = {
   uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutUploadedByNestedInput
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomExpenseEntriesRecordedInput = {
@@ -2928,6 +2992,7 @@ export type UserUncheckedUpdateWithoutCustomExpenseEntriesRecordedInput = {
   uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutGuardianInput = {
@@ -2965,6 +3030,7 @@ export type UserCreateWithoutGuardianInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutGuardianInput = {
@@ -3003,6 +3069,7 @@ export type UserUncheckedCreateWithoutGuardianInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutGuardianInput = {
@@ -3056,6 +3123,7 @@ export type UserUpdateWithoutGuardianInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutGuardianInput = {
@@ -3073,6 +3141,177 @@ export type UserUncheckedUpdateWithoutGuardianInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
+  teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
+  manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
+  markedAttendances?: Prisma.AttendanceUncheckedUpdateManyWithoutMarkedByUserNestedInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryUncheckedUpdateManyWithoutChangedByUserNestedInput
+  leaveRequestsCreated?: Prisma.LeaveRequestUncheckedUpdateManyWithoutRequestedByUserNestedInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestUncheckedUpdateManyWithoutReviewedByUserNestedInput
+  monthlyReportsPublished?: Prisma.MonthlyReportUncheckedUpdateManyWithoutPublishedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedUpdateManyWithoutReceivedByUserNestedInput
+  verifiedStudentPayments?: Prisma.StudentPaymentUncheckedUpdateManyWithoutVerifiedByNestedInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentUncheckedUpdateManyWithoutVerifiedByNestedInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUncheckedUpdateManyWithoutPaidByUserNestedInput
+  admissionsReviewed?: Prisma.AdmissionUncheckedUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutRecipientNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedUpdateManyWithoutActorNestedInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedUpdateManyWithoutUploadedByNestedInput
+  classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+}
+
+export type UserCreateWithoutIncomeEntriesRecordedInput = {
+  name: string
+  email: string
+  passwordHash: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  avatarUrl?: string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  school?: Prisma.SchoolCreateNestedOneWithoutUsersInput
+  guardian?: Prisma.GuardianCreateNestedOneWithoutUserInput
+  student?: Prisma.StudentCreateNestedOneWithoutUserInput
+  teacher?: Prisma.TeacherCreateNestedOneWithoutUserInput
+  manager?: Prisma.ManagerCreateNestedOneWithoutUserInput
+  markedAttendances?: Prisma.AttendanceCreateNestedManyWithoutMarkedByUserInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryCreateNestedManyWithoutChangedByUserInput
+  leaveRequestsCreated?: Prisma.LeaveRequestCreateNestedManyWithoutRequestedByUserInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestCreateNestedManyWithoutReviewedByUserInput
+  monthlyReportsPublished?: Prisma.MonthlyReportCreateNestedManyWithoutPublishedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentCreateNestedManyWithoutReceivedByUserInput
+  verifiedStudentPayments?: Prisma.StudentPaymentCreateNestedManyWithoutVerifiedByInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentCreateNestedManyWithoutVerifiedByInput
+  paidSalaryPayments?: Prisma.SalaryPaymentCreateNestedManyWithoutPaidByUserInput
+  admissionsReviewed?: Prisma.AdmissionCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutRecipientInput
+  platformAuditLogs?: Prisma.PlatformAuditLogCreateNestedManyWithoutActorInput
+  uploadedFiles?: Prisma.UploadedFileCreateNestedManyWithoutUploadedByInput
+  classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+}
+
+export type UserUncheckedCreateWithoutIncomeEntriesRecordedInput = {
+  id?: number
+  name: string
+  email: string
+  passwordHash: string
+  phone?: string | null
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  mustChangePassword?: boolean
+  passwordChangedAt?: Date | string | null
+  avatarUrl?: string | null
+  schoolId?: number | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  guardian?: Prisma.GuardianUncheckedCreateNestedOneWithoutUserInput
+  student?: Prisma.StudentUncheckedCreateNestedOneWithoutUserInput
+  teacher?: Prisma.TeacherUncheckedCreateNestedOneWithoutUserInput
+  manager?: Prisma.ManagerUncheckedCreateNestedOneWithoutUserInput
+  markedAttendances?: Prisma.AttendanceUncheckedCreateNestedManyWithoutMarkedByUserInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryUncheckedCreateNestedManyWithoutChangedByUserInput
+  leaveRequestsCreated?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutRequestedByUserInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestUncheckedCreateNestedManyWithoutReviewedByUserInput
+  monthlyReportsPublished?: Prisma.MonthlyReportUncheckedCreateNestedManyWithoutPublishedByUserInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUncheckedCreateNestedManyWithoutReceivedByUserInput
+  verifiedStudentPayments?: Prisma.StudentPaymentUncheckedCreateNestedManyWithoutVerifiedByInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentUncheckedCreateNestedManyWithoutVerifiedByInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUncheckedCreateNestedManyWithoutPaidByUserInput
+  admissionsReviewed?: Prisma.AdmissionUncheckedCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutRecipientInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUncheckedCreateNestedManyWithoutActorInput
+  uploadedFiles?: Prisma.UploadedFileUncheckedCreateNestedManyWithoutUploadedByInput
+  classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+}
+
+export type UserCreateOrConnectWithoutIncomeEntriesRecordedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutIncomeEntriesRecordedInput, Prisma.UserUncheckedCreateWithoutIncomeEntriesRecordedInput>
+}
+
+export type UserUpsertWithoutIncomeEntriesRecordedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutIncomeEntriesRecordedInput, Prisma.UserUncheckedUpdateWithoutIncomeEntriesRecordedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutIncomeEntriesRecordedInput, Prisma.UserUncheckedCreateWithoutIncomeEntriesRecordedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutIncomeEntriesRecordedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutIncomeEntriesRecordedInput, Prisma.UserUncheckedUpdateWithoutIncomeEntriesRecordedInput>
+}
+
+export type UserUpdateWithoutIncomeEntriesRecordedInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  school?: Prisma.SchoolUpdateOneWithoutUsersNestedInput
+  guardian?: Prisma.GuardianUpdateOneWithoutUserNestedInput
+  student?: Prisma.StudentUpdateOneWithoutUserNestedInput
+  teacher?: Prisma.TeacherUpdateOneWithoutUserNestedInput
+  manager?: Prisma.ManagerUpdateOneWithoutUserNestedInput
+  markedAttendances?: Prisma.AttendanceUpdateManyWithoutMarkedByUserNestedInput
+  attendanceHistoriesChanged?: Prisma.AttendanceHistoryUpdateManyWithoutChangedByUserNestedInput
+  leaveRequestsCreated?: Prisma.LeaveRequestUpdateManyWithoutRequestedByUserNestedInput
+  leaveRequestsReviewed?: Prisma.LeaveRequestUpdateManyWithoutReviewedByUserNestedInput
+  monthlyReportsPublished?: Prisma.MonthlyReportUpdateManyWithoutPublishedByUserNestedInput
+  receivedAdmissionPayments?: Prisma.AdmissionPaymentUpdateManyWithoutReceivedByUserNestedInput
+  verifiedStudentPayments?: Prisma.StudentPaymentUpdateManyWithoutVerifiedByNestedInput
+  verifiedSubscriptionPayments?: Prisma.SubscriptionPaymentUpdateManyWithoutVerifiedByNestedInput
+  paidSalaryPayments?: Prisma.SalaryPaymentUpdateManyWithoutPaidByUserNestedInput
+  admissionsReviewed?: Prisma.AdmissionUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  passwordResetTokens?: Prisma.PasswordResetTokenUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutRecipientNestedInput
+  platformAuditLogs?: Prisma.PlatformAuditLogUpdateManyWithoutActorNestedInput
+  uploadedFiles?: Prisma.UploadedFileUpdateManyWithoutUploadedByNestedInput
+  classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
+  customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
+  customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutIncomeEntriesRecordedInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  mustChangePassword?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordChangedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  guardian?: Prisma.GuardianUncheckedUpdateOneWithoutUserNestedInput
   student?: Prisma.StudentUncheckedUpdateOneWithoutUserNestedInput
   teacher?: Prisma.TeacherUncheckedUpdateOneWithoutUserNestedInput
   manager?: Prisma.ManagerUncheckedUpdateOneWithoutUserNestedInput
@@ -3131,6 +3370,7 @@ export type UserCreateWithoutManagerInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutManagerInput = {
@@ -3169,6 +3409,7 @@ export type UserUncheckedCreateWithoutManagerInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutManagerInput = {
@@ -3222,6 +3463,7 @@ export type UserUpdateWithoutManagerInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutManagerInput = {
@@ -3260,6 +3502,7 @@ export type UserUncheckedUpdateWithoutManagerInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -3297,6 +3540,7 @@ export type UserCreateWithoutNotificationsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -3335,6 +3579,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -3388,6 +3633,7 @@ export type UserUpdateWithoutNotificationsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -3426,6 +3672,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutPasswordResetTokensInput = {
@@ -3463,6 +3710,7 @@ export type UserCreateWithoutPasswordResetTokensInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
@@ -3501,6 +3749,7 @@ export type UserUncheckedCreateWithoutPasswordResetTokensInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutPasswordResetTokensInput = {
@@ -3554,6 +3803,7 @@ export type UserUpdateWithoutPasswordResetTokensInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
@@ -3592,6 +3842,7 @@ export type UserUncheckedUpdateWithoutPasswordResetTokensInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutPlatformAuditLogsInput = {
@@ -3629,6 +3880,7 @@ export type UserCreateWithoutPlatformAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutPlatformAuditLogsInput = {
@@ -3667,6 +3919,7 @@ export type UserUncheckedCreateWithoutPlatformAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutPlatformAuditLogsInput = {
@@ -3720,6 +3973,7 @@ export type UserUpdateWithoutPlatformAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlatformAuditLogsInput = {
@@ -3758,6 +4012,7 @@ export type UserUncheckedUpdateWithoutPlatformAuditLogsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutPaidSalaryPaymentsInput = {
@@ -3795,6 +4050,7 @@ export type UserCreateWithoutPaidSalaryPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutPaidSalaryPaymentsInput = {
@@ -3833,6 +4089,7 @@ export type UserUncheckedCreateWithoutPaidSalaryPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutPaidSalaryPaymentsInput = {
@@ -3886,6 +4143,7 @@ export type UserUpdateWithoutPaidSalaryPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaidSalaryPaymentsInput = {
@@ -3924,6 +4182,7 @@ export type UserUncheckedUpdateWithoutPaidSalaryPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutSchoolInput = {
@@ -3961,6 +4220,7 @@ export type UserCreateWithoutSchoolInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutSchoolInput = {
@@ -3999,6 +4259,7 @@ export type UserUncheckedCreateWithoutSchoolInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutSchoolInput = {
@@ -4082,6 +4343,7 @@ export type UserCreateWithoutVerifiedStudentPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutVerifiedStudentPaymentsInput = {
@@ -4120,6 +4382,7 @@ export type UserUncheckedCreateWithoutVerifiedStudentPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutVerifiedStudentPaymentsInput = {
@@ -4173,6 +4436,7 @@ export type UserUpdateWithoutVerifiedStudentPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerifiedStudentPaymentsInput = {
@@ -4211,6 +4475,7 @@ export type UserUncheckedUpdateWithoutVerifiedStudentPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutStudentInput = {
@@ -4248,6 +4513,7 @@ export type UserCreateWithoutStudentInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutStudentInput = {
@@ -4286,6 +4552,7 @@ export type UserUncheckedCreateWithoutStudentInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutStudentInput = {
@@ -4339,6 +4606,7 @@ export type UserUpdateWithoutStudentInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStudentInput = {
@@ -4377,6 +4645,7 @@ export type UserUncheckedUpdateWithoutStudentInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4414,6 +4683,7 @@ export type UserCreateWithoutVerifiedSubscriptionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4452,6 +4722,7 @@ export type UserUncheckedCreateWithoutVerifiedSubscriptionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4505,6 +4776,7 @@ export type UserUpdateWithoutVerifiedSubscriptionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutVerifiedSubscriptionPaymentsInput = {
@@ -4543,6 +4815,7 @@ export type UserUncheckedUpdateWithoutVerifiedSubscriptionPaymentsInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutTeacherInput = {
@@ -4580,6 +4853,7 @@ export type UserCreateWithoutTeacherInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutTeacherInput = {
@@ -4618,6 +4892,7 @@ export type UserUncheckedCreateWithoutTeacherInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutTeacherInput = {
@@ -4671,6 +4946,7 @@ export type UserUpdateWithoutTeacherInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeacherInput = {
@@ -4709,6 +4985,7 @@ export type UserUncheckedUpdateWithoutTeacherInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateWithoutUploadedFilesInput = {
@@ -4746,6 +5023,7 @@ export type UserCreateWithoutUploadedFilesInput = {
   classDiariesCreated?: Prisma.ClassDiaryCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserUncheckedCreateWithoutUploadedFilesInput = {
@@ -4784,6 +5062,7 @@ export type UserUncheckedCreateWithoutUploadedFilesInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedCreateNestedManyWithoutCreatedByInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedCreateNestedManyWithoutRecordedByInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedCreateNestedManyWithoutRecordedByInput
 }
 
 export type UserCreateOrConnectWithoutUploadedFilesInput = {
@@ -4837,6 +5116,7 @@ export type UserUpdateWithoutUploadedFilesInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutUploadedFilesInput = {
@@ -4875,6 +5155,7 @@ export type UserUncheckedUpdateWithoutUploadedFilesInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserCreateManySchoolInput = {
@@ -4928,6 +5209,7 @@ export type UserUpdateWithoutSchoolInput = {
   classDiariesCreated?: Prisma.ClassDiaryUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSchoolInput = {
@@ -4966,6 +5248,7 @@ export type UserUncheckedUpdateWithoutSchoolInput = {
   classDiariesCreated?: Prisma.ClassDiaryUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseSheetsCreated?: Prisma.CustomExpenseSheetUncheckedUpdateManyWithoutCreatedByNestedInput
   customExpenseEntriesRecorded?: Prisma.CustomExpenseEntryUncheckedUpdateManyWithoutRecordedByNestedInput
+  incomeEntriesRecorded?: Prisma.IncomeEntryUncheckedUpdateManyWithoutRecordedByNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutSchoolInput = {
@@ -5008,6 +5291,7 @@ export type UserCountOutputType = {
   classDiariesCreated: number
   customExpenseSheetsCreated: number
   customExpenseEntriesRecorded: number
+  incomeEntriesRecorded: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5029,6 +5313,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   classDiariesCreated?: boolean | UserCountOutputTypeCountClassDiariesCreatedArgs
   customExpenseSheetsCreated?: boolean | UserCountOutputTypeCountCustomExpenseSheetsCreatedArgs
   customExpenseEntriesRecorded?: boolean | UserCountOutputTypeCountCustomExpenseEntriesRecordedArgs
+  incomeEntriesRecorded?: boolean | UserCountOutputTypeCountIncomeEntriesRecordedArgs
 }
 
 /**
@@ -5167,6 +5452,13 @@ export type UserCountOutputTypeCountCustomExpenseEntriesRecordedArgs<ExtArgs ext
   where?: Prisma.CustomExpenseEntryWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountIncomeEntriesRecordedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.IncomeEntryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5206,6 +5498,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   classDiariesCreated?: boolean | Prisma.User$classDiariesCreatedArgs<ExtArgs>
   customExpenseSheetsCreated?: boolean | Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs>
   customExpenseEntriesRecorded?: boolean | Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs>
+  incomeEntriesRecorded?: boolean | Prisma.User$incomeEntriesRecordedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -5287,6 +5580,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   classDiariesCreated?: boolean | Prisma.User$classDiariesCreatedArgs<ExtArgs>
   customExpenseSheetsCreated?: boolean | Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs>
   customExpenseEntriesRecorded?: boolean | Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs>
+  incomeEntriesRecorded?: boolean | Prisma.User$incomeEntriesRecordedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5322,6 +5616,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     classDiariesCreated: Prisma.$ClassDiaryPayload<ExtArgs>[]
     customExpenseSheetsCreated: Prisma.$CustomExpenseSheetPayload<ExtArgs>[]
     customExpenseEntriesRecorded: Prisma.$CustomExpenseEntryPayload<ExtArgs>[]
+    incomeEntriesRecorded: Prisma.$IncomeEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -5755,6 +6050,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   classDiariesCreated<T extends Prisma.User$classDiariesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$classDiariesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassDiaryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customExpenseSheetsCreated<T extends Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customExpenseSheetsCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomExpenseSheetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customExpenseEntriesRecorded<T extends Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customExpenseEntriesRecordedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomExpenseEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  incomeEntriesRecorded<T extends Prisma.User$incomeEntriesRecordedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$incomeEntriesRecordedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$IncomeEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6723,6 +7019,30 @@ export type User$customExpenseEntriesRecordedArgs<ExtArgs extends runtime.Types.
   take?: number
   skip?: number
   distinct?: Prisma.CustomExpenseEntryScalarFieldEnum | Prisma.CustomExpenseEntryScalarFieldEnum[]
+}
+
+/**
+ * User.incomeEntriesRecorded
+ */
+export type User$incomeEntriesRecordedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the IncomeEntry
+   */
+  select?: Prisma.IncomeEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the IncomeEntry
+   */
+  omit?: Prisma.IncomeEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.IncomeEntryInclude<ExtArgs> | null
+  where?: Prisma.IncomeEntryWhereInput
+  orderBy?: Prisma.IncomeEntryOrderByWithRelationInput | Prisma.IncomeEntryOrderByWithRelationInput[]
+  cursor?: Prisma.IncomeEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.IncomeEntryScalarFieldEnum | Prisma.IncomeEntryScalarFieldEnum[]
 }
 
 /**

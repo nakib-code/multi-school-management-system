@@ -418,6 +418,7 @@ export const ModelName = {
   GuardianStudent: 'GuardianStudent',
   HefzDailyLog: 'HefzDailyLog',
   HefzEnrollment: 'HefzEnrollment',
+  IncomeEntry: 'IncomeEntry',
   Manager: 'Manager',
   Notification: 'Notification',
   Package: 'Package',
@@ -459,7 +460,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "customExpenseSheet" | "customExpenseField" | "customExpenseEntry" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "customExpenseSheet" | "customExpenseField" | "customExpenseEntry" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "incomeEntry" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2014,6 +2015,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.HefzEnrollmentCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.HefzEnrollmentCountAggregateOutputType> | number
+        }
+      }
+    }
+    IncomeEntry: {
+      payload: Prisma.$IncomeEntryPayload<ExtArgs>
+      fields: Prisma.IncomeEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IncomeEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IncomeEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.IncomeEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IncomeEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>
+        }
+        findMany: {
+          args: Prisma.IncomeEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>[]
+        }
+        create: {
+          args: Prisma.IncomeEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>
+        }
+        createMany: {
+          args: Prisma.IncomeEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IncomeEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.IncomeEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>
+        }
+        update: {
+          args: Prisma.IncomeEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.IncomeEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IncomeEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IncomeEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.IncomeEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IncomeEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.IncomeEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIncomeEntry>
+        }
+        groupBy: {
+          args: Prisma.IncomeEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncomeEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IncomeEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IncomeEntryCountAggregateOutputType> | number
         }
       }
     }
@@ -4365,6 +4440,26 @@ export const HefzEnrollmentScalarFieldEnum = {
 export type HefzEnrollmentScalarFieldEnum = (typeof HefzEnrollmentScalarFieldEnum)[keyof typeof HefzEnrollmentScalarFieldEnum]
 
 
+export const IncomeEntryScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  category: 'category',
+  sourceLabel: 'sourceLabel',
+  title: 'title',
+  amount: 'amount',
+  incomeDate: 'incomeDate',
+  billingMonth: 'billingMonth',
+  paymentMethod: 'paymentMethod',
+  referenceNo: 'referenceNo',
+  notes: 'notes',
+  recordedById: 'recordedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IncomeEntryScalarFieldEnum = (typeof IncomeEntryScalarFieldEnum)[keyof typeof IncomeEntryScalarFieldEnum]
+
+
 export const ManagerScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -5289,6 +5384,34 @@ export type ListEnumHefzEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
+ * Reference to a field of type 'IncomeEntryCategory'
+ */
+export type EnumIncomeEntryCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncomeEntryCategory'>
+    
+
+
+/**
+ * Reference to a field of type 'IncomeEntryCategory[]'
+ */
+export type ListEnumIncomeEntryCategoryFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IncomeEntryCategory[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod'
+ */
+export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentMethod[]'
+ */
+export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
+    
+
+
+/**
  * Reference to a field of type 'NotificationType'
  */
 export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
@@ -5411,20 +5534,6 @@ export type EnumFeeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'FeeStatus[]'
  */
 export type ListEnumFeeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FeeStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'PaymentMethod'
- */
-export type EnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod'>
-    
-
-
-/**
- * Reference to a field of type 'PaymentMethod[]'
- */
-export type ListEnumPaymentMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentMethod[]'>
     
 
 
@@ -5697,6 +5806,7 @@ export type GlobalOmitConfig = {
   guardianStudent?: Prisma.GuardianStudentOmit
   hefzDailyLog?: Prisma.HefzDailyLogOmit
   hefzEnrollment?: Prisma.HefzEnrollmentOmit
+  incomeEntry?: Prisma.IncomeEntryOmit
   manager?: Prisma.ManagerOmit
   notification?: Prisma.NotificationOmit
   package?: Prisma.PackageOmit

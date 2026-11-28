@@ -742,10 +742,6 @@ export type StudentPaymentUncheckedUpdateManyWithoutFeeNestedInput = {
   deleteMany?: Prisma.StudentPaymentScalarWhereInput | Prisma.StudentPaymentScalarWhereInput[]
 }
 
-export type EnumPaymentMethodFieldUpdateOperationsInput = {
-  set?: $Enums.PaymentMethod
-}
-
 export type EnumPaymentStatusFieldUpdateOperationsInput = {
   set?: $Enums.PaymentStatus
 }

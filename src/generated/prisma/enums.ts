@@ -155,6 +155,13 @@ export const CustomExpenseFieldType = {
 export type CustomExpenseFieldType = (typeof CustomExpenseFieldType)[keyof typeof CustomExpenseFieldType]
 
 
+export const IncomeEntryCategory = {
+  OTHER_INCOME: 'OTHER_INCOME'
+} as const
+
+export type IncomeEntryCategory = (typeof IncomeEntryCategory)[keyof typeof IncomeEntryCategory]
+
+
 export const SalaryStatus = {
   PENDING: 'PENDING',
   PARTIAL: 'PARTIAL',

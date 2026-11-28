@@ -44,6 +44,7 @@ model School {
   customExpenseSheets  CustomExpenseSheet[]
   customExpenseFields  CustomExpenseField[]
   customExpenseEntries CustomExpenseEntry[]
+  incomeEntries        IncomeEntry[]
   teacherSalaries TeacherSalary[]
   salaryPayments  SalaryPayment[]
   admissions      Admission[]

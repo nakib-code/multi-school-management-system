@@ -95,6 +95,10 @@ enum CustomExpenseFieldType {
   DATE
 }
 
+enum IncomeEntryCategory {
+  OTHER_INCOME
+}
+
 enum SalaryStatus {
   PENDING
   PARTIAL
