@@ -82,6 +82,10 @@ export const defaulterListQuerySchema = z.object({
 			feeType: z.union([z.literal("ALL"), z.nativeEnum(FeeType)]).optional(),
 			status: z.enum(["ALL_DUE", "OVERDUE", "PENDING", "PARTIAL"]).optional(),
 			search: z.string().trim().max(120).optional(),
+			includeInactive: z
+				.enum(["true", "false"])
+				.transform((v) => v === "true")
+				.optional(),
 		})
 		.optional(),
 });

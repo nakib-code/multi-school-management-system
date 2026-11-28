@@ -905,6 +905,7 @@ export interface DefaulterListFilter {
 	feeType?: "ALL" | FeeType;
 	status?: "ALL_DUE" | "OVERDUE" | "PENDING" | "PARTIAL";
 	search?: string;
+	includeInactive?: boolean;
 }
 
 export const getDefaulterListReport = async (
@@ -924,6 +925,7 @@ export const getDefaulterListReport = async (
 				status: {
 					in: [FeeStatus.PENDING, FeeStatus.PARTIAL, FeeStatus.OVERDUE],
 				},
+				...(!query.includeInactive ? { student: { isActive: true } } : {}),
 				...(query.feeType !== undefined && query.feeType !== "ALL"
 					? { feeType: query.feeType }
 					: {}),
@@ -943,6 +945,11 @@ export const getDefaulterListReport = async (
 						}
 					: {}),
 			},
+			orderBy: [
+				{ enrollment: { academicYear: "desc" } },
+				{ enrollment: { id: "desc" } },
+				{ dueDate: "asc" },
+			],
 			select: {
 				id: true,
 				feeType: true,
@@ -957,6 +964,7 @@ export const getDefaulterListReport = async (
 					select: {
 						id: true,
 						studentId: true,
+						isActive: true,
 						firstName: true,
 						lastName: true,
 						nameBangla: true,
@@ -978,6 +986,7 @@ export const getDefaulterListReport = async (
 				},
 				enrollment: {
 					select: {
+						id: true,
 						rollNumber: true,
 						academicYear: true,
 						class: { select: { id: true, name: true, code: true } },
@@ -1018,6 +1027,7 @@ export const getDefaulterListReport = async (
 	interface StudentDefaulterBucket {
 		studentId: number;
 		studentCode: string;
+		isActive: boolean;
 		rollNumber: number | null;
 		studentName: string;
 		nameBangla: string | null;
@@ -1055,6 +1065,7 @@ export const getDefaulterListReport = async (
 		const existing = grouped.get(fee.studentId) ?? {
 			studentId: fee.student.id,
 			studentCode: fee.student.studentId,
+			isActive: fee.student.isActive ?? true,
 			rollNumber: fee.enrollment.rollNumber,
 			studentName:
 				`${fee.student.firstName} ${fee.student.lastName ?? ""}`.trim(),

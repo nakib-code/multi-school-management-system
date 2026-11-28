@@ -231,7 +231,26 @@ const fullStudentInclude = {
 export const createStudent = async (
 	schoolId: number,
 	input: CreateStudentInput,
+	requester?: { userId: number; role: UserRole },
 ) => {
+	const hasNonDefaultConcession =
+		input.concessionType !== undefined ||
+		(input.concessionMode !== undefined &&
+			input.concessionMode !== "PERCENTAGE") ||
+		(input.concessionValue !== undefined &&
+			Number(input.concessionValue) !== 0) ||
+		(input.concessionReason !== undefined &&
+			input.concessionReason.trim() !== "");
+
+	if (hasNonDefaultConcession && requester && requester.role !== "ADMIN") {
+		throw new AppError(
+			403,
+			"Only School Admins can assign student fee concessions",
+		);
+	}
+
+	const canAssignConcession = !requester || requester.role === "ADMIN";
+
 	const [school, schoolClass] = await Promise.all([
 		prisma.school.findUnique({
 			where: { id: schoolId },
@@ -430,16 +449,16 @@ export const createStudent = async (
 						? { previousTcUrl: input.previousTcUrl }
 						: {}),
 					...(input.marksheetUrl ? { marksheetUrl: input.marksheetUrl } : {}),
-					...(input.concessionType
+					...(canAssignConcession && input.concessionType
 						? { concessionType: input.concessionType }
 						: {}),
-					...(input.concessionMode
+					...(canAssignConcession && input.concessionMode
 						? { concessionMode: input.concessionMode }
 						: {}),
-					...(input.concessionValue !== undefined
+					...(canAssignConcession && input.concessionValue !== undefined
 						? { concessionValue: input.concessionValue }
 						: {}),
-					...(input.concessionReason
+					...(canAssignConcession && input.concessionReason
 						? { concessionReason: input.concessionReason }
 						: {}),
 					isActive: true,

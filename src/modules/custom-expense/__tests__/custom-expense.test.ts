@@ -102,6 +102,39 @@ describe("Custom Expense Field Key & Date Normalization", () => {
 			/is required/,
 		);
 	});
+
+	it("accepts only http/https protocols for attachmentUrl and rejects javascript/data/ftp schemes", () => {
+		const validHttps = createEntrySchema.safeParse({
+			params: { schoolId: 1, sheetId: 2 },
+			body: {
+				amount: 500,
+				attachmentUrl: "https://res.cloudinary.com/demo/image/upload/bill.jpg",
+			},
+		});
+		assert.equal(validHttps.success, true);
+
+		const validHttp = createEntrySchema.safeParse({
+			params: { schoolId: 1, sheetId: 2 },
+			body: {
+				amount: 500,
+				attachmentUrl: "http://localhost:3000/uploads/bill.pdf",
+			},
+		});
+		assert.equal(validHttp.success, true);
+
+		for (const badUrl of [
+			"javascript:alert(1)",
+			"data:text/html,<script>alert(1)</script>",
+			"ftp://example.com/bill.pdf",
+			"file:///etc/passwd",
+		]) {
+			const res = createEntrySchema.safeParse({
+				params: { schoolId: 1, sheetId: 2 },
+				body: { amount: 500, attachmentUrl: badUrl },
+			});
+			assert.equal(res.success, false, `Expected ${badUrl} to be rejected`);
+		}
+	});
 });
 
 describe("Custom Expense Monthly Chart Aggregation & School Isolation", () => {

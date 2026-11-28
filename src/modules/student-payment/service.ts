@@ -204,11 +204,35 @@ export const submitStudentPayment = async (
 		}
 	}
 
+	if (
+		(payload.paymentMethod === PaymentMethod.BANK_TRANSFER ||
+			payload.paymentMethod === PaymentMethod.CHEQUE) &&
+		requester.role !== UserRole.ADMIN &&
+		requester.role !== UserRole.MANAGER
+	) {
+		throw new AppError(
+			403,
+			"Only School Admins and Managers can record bank transfer or cheque payments",
+		);
+	}
+
+	const isMfsMethod =
+		payload.paymentMethod === PaymentMethod.BKASH ||
+		payload.paymentMethod === PaymentMethod.NAGAD ||
+		payload.paymentMethod === PaymentMethod.ROCKET;
+	if (isMfsMethod && !(payload.senderNumber ?? "").trim()) {
+		throw new AppError(
+			400,
+			"Sender mobile number is required for mobile financial service payments",
+		);
+	}
+
 	const normalizedTrxId = normalizeTrxId(payload.trxId ?? "");
 
-	// Duplicate TrxID protection for active (non-REJECTED) student payments
+	// Duplicate TrxID protection for active (non-REJECTED) student payments within the same school
 	const existingTrx = await prisma.studentPayment.findFirst({
 		where: {
+			schoolId,
 			trxId: normalizedTrxId,
 			status: { not: PaymentStatus.REJECTED },
 		},
@@ -331,6 +355,33 @@ export const verifyStudentPayment = async (
 			);
 		}
 
+		const priorVerifiedSum = await tx.studentPayment.aggregate({
+			where: { feeId: existing.feeId, status: PaymentStatus.VERIFIED },
+			_sum: { paidAmount: true },
+		});
+		const priorVerifiedPaid = Number(priorVerifiedSum._sum.paidAmount ?? 0);
+		const feeAmount = Number(existing.fee.amount);
+		const waivedAmount = Number(existing.fee.waivedAmount ?? 0);
+		const netPayable = Math.max(0, feeAmount - waivedAmount);
+		const remainingDue = Math.max(
+			0,
+			Number((netPayable - priorVerifiedPaid).toFixed(2)),
+		);
+		const paymentAmount = Number(existing.paidAmount);
+
+		if (existing.fee.status === FeeStatus.PAID || remainingDue <= 0) {
+			throw new AppError(
+				400,
+				"Cannot verify payment because this fee invoice has no remaining due balance. Please reject duplicate payments instead.",
+			);
+		}
+		if (paymentAmount > remainingDue + 0.009) {
+			throw new AppError(
+				400,
+				`Cannot verify payment of ৳${paymentAmount} because it exceeds the remaining due balance of ৳${remainingDue}`,
+			);
+		}
+
 		const verifiedAt = new Date();
 		const receiptNo =
 			existing.receiptNo ??
@@ -370,9 +421,12 @@ export const verifyStudentPayment = async (
 		});
 
 		const totalVerifiedPaid = Number(verifiedSum._sum.paidAmount ?? 0);
-		const feeAmount = Number(existing.fee.amount);
-		const waivedAmount = Number(existing.fee.waivedAmount ?? 0);
-		const netPayable = Math.max(0, feeAmount - waivedAmount);
+		if (totalVerifiedPaid > netPayable + 0.009) {
+			throw new AppError(
+				409,
+				"Verifying this payment would exceed the fee invoice's remaining due balance due to a concurrent verification",
+			);
+		}
 
 		const nextFeeStatus =
 			totalVerifiedPaid >= netPayable

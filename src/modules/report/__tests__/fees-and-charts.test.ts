@@ -5,6 +5,7 @@ import {
 	DiscountMode,
 	FeeStatus,
 	PaymentMethod,
+	PaymentStatus,
 	Prisma,
 	StudentConcessionType,
 	UserRole,
@@ -15,13 +16,16 @@ import { requireSchoolAccess } from "../../../middleware/schoolAccess.js";
 import { approveAdmission } from "../../admission/service.js";
 import { resolveClassFeeAmount } from "../../class/service.js";
 import { getDashboard } from "../../dashboard/service.js";
-import { updateStudent } from "../../student/service.js";
+import { createStudent, updateStudent } from "../../student/service.js";
 import {
 	computeConcessionDiscount,
 	computeFeeFinancials,
 	updateStudentFee,
 } from "../../student-fee/service.js";
-import { submitStudentPayment } from "../../student-payment/service.js";
+import {
+	submitStudentPayment,
+	verifyStudentPayment,
+} from "../../student-payment/service.js";
 import {
 	getAdmissionChartReport,
 	getDefaulterListReport,
@@ -932,5 +936,269 @@ describe("Student Concessions, Automated OVERDUE, Partial Waivers & Defaulter Li
 		assert.equal(waivedRemainder.fee.computedPaid, 600);
 		assert.equal(waivedRemainder.fee.computedWaived, 900);
 		assert.equal(waivedRemainder.fee.computedDue, 0);
+	});
+
+	it("blocks non-ADMIN createStudent payloads that set non-default fee concessions with 403", async () => {
+		const basePayload = {
+			studentName: "Tariqul Islam",
+			dateOfBirth: new Date("2015-05-01"),
+			gender: "MALE",
+			academicYear: "2026",
+			classId: 2,
+			guardianName: "Md. Rahim",
+			guardianPhone: "01711223344",
+		};
+
+		await assert.rejects(
+			() =>
+				createStudent(
+					10,
+					{
+						...basePayload,
+						concessionType: StudentConcessionType.ORPHAN,
+						concessionMode: DiscountMode.PERCENTAGE,
+						concessionValue: 100,
+					},
+					{ userId: 2, role: UserRole.MANAGER },
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		await assert.rejects(
+			() =>
+				createStudent(
+					10,
+					{
+						...basePayload,
+						concessionValue: 500,
+						concessionMode: DiscountMode.FIXED,
+					},
+					{ userId: 2, role: UserRole.MANAGER },
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		await assert.rejects(
+			() =>
+				createStudent(
+					10,
+					{
+						...basePayload,
+						concessionReason: "Unauthorized note",
+					},
+					{ userId: 2, role: UserRole.MANAGER },
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+	});
+
+	it("scopes trxId duplicate lookup by schoolId, enforces staff-only BANK_TRANSFER/CHEQUE, and blocks overpayment verification", async () => {
+		const capturedTrxWhere: Array<Record<string, unknown>> = [];
+
+		stubDelegate("guardian", {
+			findFirst: async () => ({ id: 7 }),
+		});
+		stubDelegate("guardianStudent", {
+			findUnique: async () => ({ guardianId: 7, studentId: 301 }),
+		});
+		stubDelegate("studentFee", {
+			findFirst: async () => ({
+				id: 88,
+				schoolId: 10,
+				studentId: 301,
+				status: FeeStatus.PENDING,
+				amount: new Prisma.Decimal("1500.00"),
+				waivedAmount: new Prisma.Decimal("0.00"),
+			}),
+		});
+		stubDelegate("schoolSetting", {
+			findUnique: async () => ({
+				bkashNumber: "01711111111",
+				nagadNumber: "01822222222",
+				rocketNumber: "01933333333",
+			}),
+		});
+		stubDelegate("studentPayment", {
+			findFirst: async (args: { where: Record<string, unknown> }) => {
+				capturedTrxWhere.push(args.where);
+				return null;
+			},
+			create: async (args: { data: Record<string, unknown> }) => ({
+				id: 500,
+				...args.data,
+			}),
+		});
+
+		// Guardian attempting BANK_TRANSFER or CHEQUE -> 403
+		await assert.rejects(
+			() =>
+				submitStudentPayment(
+					10,
+					{ userId: 99, role: UserRole.GUARDIAN },
+					{
+						studentId: 301,
+						feeId: 88,
+						paymentMethod: PaymentMethod.BANK_TRANSFER,
+						trxId: "BANK-001",
+						paidAmount: 1500,
+					},
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		await assert.rejects(
+			() =>
+				submitStudentPayment(
+					10,
+					{ userId: 99, role: UserRole.GUARDIAN },
+					{
+						studentId: 301,
+						feeId: 88,
+						paymentMethod: PaymentMethod.CHEQUE,
+						trxId: "CHQ-001",
+						paidAmount: 1500,
+					},
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 403,
+		);
+
+		// MFS payment missing senderNumber -> 400
+		await assert.rejects(
+			() =>
+				submitStudentPayment(
+					10,
+					{ userId: 99, role: UserRole.GUARDIAN },
+					{
+						studentId: 301,
+						feeId: 88,
+						paymentMethod: PaymentMethod.BKASH,
+						senderNumber: "   ",
+						trxId: "BKX998877",
+						paidAmount: 1500,
+					},
+				),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 400,
+		);
+
+		// Valid ADMIN CHEQUE submission checks trxId strictly within schoolId=10
+		await submitStudentPayment(
+			10,
+			{ userId: 1, role: UserRole.ADMIN },
+			{
+				studentId: 301,
+				feeId: 88,
+				paymentMethod: PaymentMethod.CHEQUE,
+				trxId: "CHQ-001",
+				paidAmount: 1500,
+			},
+		);
+		assert.equal(capturedTrxWhere[0]?.schoolId, 10);
+		assert.equal(capturedTrxWhere[0]?.trxId, "CHQ-001");
+
+		// verifyStudentPayment rejects when fee is already fully paid (remainingDue <= 0)
+		const alreadyPaidTx = {
+			studentPayment: {
+				findFirst: async () => ({
+					id: 601,
+					schoolId: 10,
+					feeId: 88,
+					paidAmount: new Prisma.Decimal("500.00"),
+					status: PaymentStatus.PENDING,
+					receiptNo: null,
+					paidAt: new Date("2026-11-20T06:00:00Z"),
+					fee: {
+						id: 88,
+						amount: new Prisma.Decimal("1500.00"),
+						waivedAmount: new Prisma.Decimal("0.00"),
+						status: FeeStatus.PAID,
+					},
+				}),
+				aggregate: async () => ({
+					_sum: { paidAmount: new Prisma.Decimal("1500.00") },
+				}),
+			},
+		};
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof alreadyPaidTx) => Promise<unknown>,
+		) => fn(alreadyPaidTx)) as unknown as Record<string, unknown>);
+
+		await assert.rejects(
+			() => verifyStudentPayment(10, 601, 1),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 400,
+		);
+
+		// verifyStudentPayment rejects when payment amount exceeds remaining due
+		const overpaymentTx = {
+			studentPayment: {
+				findFirst: async () => ({
+					id: 602,
+					schoolId: 10,
+					feeId: 88,
+					paidAmount: new Prisma.Decimal("800.00"),
+					status: PaymentStatus.PENDING,
+					receiptNo: null,
+					paidAt: new Date("2026-11-20T06:00:00Z"),
+					fee: {
+						id: 88,
+						amount: new Prisma.Decimal("1500.00"),
+						waivedAmount: new Prisma.Decimal("0.00"),
+						status: FeeStatus.PARTIAL,
+					},
+				}),
+				aggregate: async () => ({
+					_sum: { paidAmount: new Prisma.Decimal("1000.00") },
+				}),
+			},
+		};
+		stubDelegate("$transaction", (async (
+			fn: (tx: typeof overpaymentTx) => Promise<unknown>,
+		) => fn(overpaymentTx)) as unknown as Record<string, unknown>);
+
+		await assert.rejects(
+			() => verifyStudentPayment(10, 602, 1),
+			(err: unknown) => (err as { statusCode?: number }).statusCode === 400,
+		);
+	});
+
+	it("filters getDefaulterListReport to active students by default and supports includeInactive=true with deterministic enrollment ordering", async () => {
+		const capturedQueries: Array<{
+			where: Record<string, unknown>;
+			orderBy?: unknown;
+		}> = [];
+
+		stubDelegate("school", {
+			findUnique: async () => ({
+				id: 19,
+				name: "Nooria Madrasa",
+				code: "NM-19",
+				logo: null,
+				address: "Dhaka",
+				phone: "01712345678",
+				email: null,
+			}),
+		});
+		stubDelegate("studentFee", {
+			findMany: async (args: {
+				where: Record<string, unknown>;
+				orderBy?: unknown;
+			}) => {
+				capturedQueries.push(args);
+				return [];
+			},
+		});
+		stubDelegate("studentPayment", {
+			groupBy: async () => [],
+		});
+
+		await getDefaulterListReport(19, {});
+		assert.deepEqual(capturedQueries[0]?.where.student, { isActive: true });
+		assert.deepEqual(capturedQueries[0]?.orderBy, [
+			{ enrollment: { academicYear: "desc" } },
+			{ enrollment: { id: "desc" } },
+			{ dueDate: "asc" },
+		]);
+
+		await getDefaulterListReport(19, { includeInactive: true });
+		assert.equal("student" in (capturedQueries[1]?.where ?? {}), false);
 	});
 });

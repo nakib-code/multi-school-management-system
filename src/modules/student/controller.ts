@@ -16,14 +16,21 @@ import {
 	updateStudent,
 } from "./service.js";
 
-export const createStudentController = async (req: Request, res: Response) => {
+export const createStudentController = async (
+	req: AuthRequest,
+	res: Response,
+) => {
 	const schoolId = Number(req.params.schoolId);
 
 	if (!schoolId || Number.isNaN(schoolId)) {
 		throw new AppError(400, "Invalid school ID");
 	}
 
-	const result = await createStudent(schoolId, req.body);
+	const result = await createStudent(
+		schoolId,
+		req.body,
+		req.user ? { userId: req.user.userId, role: req.user.role } : undefined,
+	);
 
 	return sendResponse(res, {
 		statusCode: 201,

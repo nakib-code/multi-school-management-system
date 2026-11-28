@@ -288,8 +288,7 @@ const getTeacherDashboard = async (user: DashboardUser) => {
 	});
 
 	const classIds = [...new Set(assignments.map((a) => a.classId))];
-	const today = new Date();
-	today.setUTCHours(0, 0, 0, 0);
+	const today = getDhakaStartOfToday();
 
 	const [
 		assignedStudents,

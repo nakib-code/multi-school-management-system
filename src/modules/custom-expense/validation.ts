@@ -73,6 +73,17 @@ const attachmentUrlSchema = z.preprocess(
 		.trim()
 		.url("Attachment must be a valid URL")
 		.max(1000)
+		.refine(
+			(val) => {
+				try {
+					const parsed = new URL(val);
+					return parsed.protocol === "https:" || parsed.protocol === "http:";
+				} catch {
+					return false;
+				}
+			},
+			{ message: "Attachment URL must use http or https protocol" },
+		)
 		.nullable()
 		.optional(),
 );
