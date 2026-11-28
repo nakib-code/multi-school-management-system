@@ -409,6 +409,9 @@ export const ModelName = {
   ClassFeeStructure: 'ClassFeeStructure',
   ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
+  CustomExpenseSheet: 'CustomExpenseSheet',
+  CustomExpenseField: 'CustomExpenseField',
+  CustomExpenseEntry: 'CustomExpenseEntry',
   Enrollment: 'Enrollment',
   Exam: 'Exam',
   Guardian: 'Guardian',
@@ -456,7 +459,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
+    modelProps: "admission" | "admissionPayment" | "attendance" | "schoolHoliday" | "attendanceHistory" | "leaveRequest" | "monthlyReport" | "auditLog" | "classDiary" | "classFeeStructure" | "classRoutine" | "schoolClass" | "customExpenseSheet" | "customExpenseField" | "customExpenseEntry" | "enrollment" | "exam" | "guardian" | "guardianStudent" | "hefzDailyLog" | "hefzEnrollment" | "manager" | "notification" | "package" | "passwordResetToken" | "platformAuditLog" | "platformSetting" | "result" | "salaryPayment" | "school" | "schoolContactMessage" | "schoolGalleryImage" | "schoolNotice" | "schoolPageContent" | "schoolSetting" | "schoolSubscription" | "section" | "studentFee" | "studentPayment" | "student" | "subject" | "subscriptionPayment" | "teacherAssignment" | "teacherSalary" | "teacher" | "uploadedFile" | "user"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1345,6 +1348,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.SchoolClassCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.SchoolClassCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomExpenseSheet: {
+      payload: Prisma.$CustomExpenseSheetPayload<ExtArgs>
+      fields: Prisma.CustomExpenseSheetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomExpenseSheetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomExpenseSheetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomExpenseSheetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomExpenseSheetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>
+        }
+        findMany: {
+          args: Prisma.CustomExpenseSheetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>[]
+        }
+        create: {
+          args: Prisma.CustomExpenseSheetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>
+        }
+        createMany: {
+          args: Prisma.CustomExpenseSheetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomExpenseSheetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomExpenseSheetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>
+        }
+        update: {
+          args: Prisma.CustomExpenseSheetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomExpenseSheetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomExpenseSheetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomExpenseSheetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomExpenseSheetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseSheetPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomExpenseSheetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomExpenseSheet>
+        }
+        groupBy: {
+          args: Prisma.CustomExpenseSheetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomExpenseSheetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomExpenseSheetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomExpenseSheetCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomExpenseField: {
+      payload: Prisma.$CustomExpenseFieldPayload<ExtArgs>
+      fields: Prisma.CustomExpenseFieldFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomExpenseFieldFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomExpenseFieldFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomExpenseFieldFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomExpenseFieldFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>
+        }
+        findMany: {
+          args: Prisma.CustomExpenseFieldFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>[]
+        }
+        create: {
+          args: Prisma.CustomExpenseFieldCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>
+        }
+        createMany: {
+          args: Prisma.CustomExpenseFieldCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomExpenseFieldCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomExpenseFieldDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>
+        }
+        update: {
+          args: Prisma.CustomExpenseFieldUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomExpenseFieldDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomExpenseFieldUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomExpenseFieldUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomExpenseFieldUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseFieldPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomExpenseFieldAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomExpenseField>
+        }
+        groupBy: {
+          args: Prisma.CustomExpenseFieldGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomExpenseFieldGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomExpenseFieldCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomExpenseFieldCountAggregateOutputType> | number
+        }
+      }
+    }
+    CustomExpenseEntry: {
+      payload: Prisma.$CustomExpenseEntryPayload<ExtArgs>
+      fields: Prisma.CustomExpenseEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CustomExpenseEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CustomExpenseEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.CustomExpenseEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CustomExpenseEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>
+        }
+        findMany: {
+          args: Prisma.CustomExpenseEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>[]
+        }
+        create: {
+          args: Prisma.CustomExpenseEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>
+        }
+        createMany: {
+          args: Prisma.CustomExpenseEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CustomExpenseEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.CustomExpenseEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>
+        }
+        update: {
+          args: Prisma.CustomExpenseEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.CustomExpenseEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CustomExpenseEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CustomExpenseEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.CustomExpenseEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CustomExpenseEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.CustomExpenseEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCustomExpenseEntry>
+        }
+        groupBy: {
+          args: Prisma.CustomExpenseEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomExpenseEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CustomExpenseEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CustomExpenseEntryCountAggregateOutputType> | number
         }
       }
     }
@@ -3991,6 +4216,52 @@ export const SchoolClassScalarFieldEnum = {
 export type SchoolClassScalarFieldEnum = (typeof SchoolClassScalarFieldEnum)[keyof typeof SchoolClassScalarFieldEnum]
 
 
+export const CustomExpenseSheetScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomExpenseSheetScalarFieldEnum = (typeof CustomExpenseSheetScalarFieldEnum)[keyof typeof CustomExpenseSheetScalarFieldEnum]
+
+
+export const CustomExpenseFieldScalarFieldEnum = {
+  id: 'id',
+  sheetId: 'sheetId',
+  schoolId: 'schoolId',
+  label: 'label',
+  fieldKey: 'fieldKey',
+  fieldType: 'fieldType',
+  isRequired: 'isRequired',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomExpenseFieldScalarFieldEnum = (typeof CustomExpenseFieldScalarFieldEnum)[keyof typeof CustomExpenseFieldScalarFieldEnum]
+
+
+export const CustomExpenseEntryScalarFieldEnum = {
+  id: 'id',
+  sheetId: 'sheetId',
+  schoolId: 'schoolId',
+  entryDate: 'entryDate',
+  billingMonth: 'billingMonth',
+  amount: 'amount',
+  fieldValues: 'fieldValues',
+  recordedById: 'recordedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomExpenseEntryScalarFieldEnum = (typeof CustomExpenseEntryScalarFieldEnum)[keyof typeof CustomExpenseEntryScalarFieldEnum]
+
+
 export const EnrollmentScalarFieldEnum = {
   id: 'id',
   schoolId: 'schoolId',
@@ -4642,6 +4913,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const NullableJsonNullValueInput = {
   DbNull: DbNull,
   JsonNull: JsonNull
@@ -4899,6 +5177,34 @@ export type ListEnumDayOfWeekFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'CustomExpenseFieldType'
+ */
+export type EnumCustomExpenseFieldTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomExpenseFieldType'>
+    
+
+
+/**
+ * Reference to a field of type 'CustomExpenseFieldType[]'
+ */
+export type ListEnumCustomExpenseFieldTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CustomExpenseFieldType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
  * Reference to a field of type 'EnrollmentStatus'
  */
 export type EnumEnrollmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EnrollmentStatus'>
@@ -4993,20 +5299,6 @@ export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'NotificationType[]'
  */
 export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -5396,6 +5688,9 @@ export type GlobalOmitConfig = {
   classFeeStructure?: Prisma.ClassFeeStructureOmit
   classRoutine?: Prisma.ClassRoutineOmit
   schoolClass?: Prisma.SchoolClassOmit
+  customExpenseSheet?: Prisma.CustomExpenseSheetOmit
+  customExpenseField?: Prisma.CustomExpenseFieldOmit
+  customExpenseEntry?: Prisma.CustomExpenseEntryOmit
   enrollment?: Prisma.EnrollmentOmit
   exam?: Prisma.ExamOmit
   guardian?: Prisma.GuardianOmit

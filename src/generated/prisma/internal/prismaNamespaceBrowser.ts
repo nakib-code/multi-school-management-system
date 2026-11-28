@@ -63,6 +63,9 @@ export const ModelName = {
   ClassFeeStructure: 'ClassFeeStructure',
   ClassRoutine: 'ClassRoutine',
   SchoolClass: 'SchoolClass',
+  CustomExpenseSheet: 'CustomExpenseSheet',
+  CustomExpenseField: 'CustomExpenseField',
+  CustomExpenseEntry: 'CustomExpenseEntry',
   Enrollment: 'Enrollment',
   Exam: 'Exam',
   Guardian: 'Guardian',
@@ -347,6 +350,52 @@ export const SchoolClassScalarFieldEnum = {
 } as const
 
 export type SchoolClassScalarFieldEnum = (typeof SchoolClassScalarFieldEnum)[keyof typeof SchoolClassScalarFieldEnum]
+
+
+export const CustomExpenseSheetScalarFieldEnum = {
+  id: 'id',
+  schoolId: 'schoolId',
+  name: 'name',
+  description: 'description',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomExpenseSheetScalarFieldEnum = (typeof CustomExpenseSheetScalarFieldEnum)[keyof typeof CustomExpenseSheetScalarFieldEnum]
+
+
+export const CustomExpenseFieldScalarFieldEnum = {
+  id: 'id',
+  sheetId: 'sheetId',
+  schoolId: 'schoolId',
+  label: 'label',
+  fieldKey: 'fieldKey',
+  fieldType: 'fieldType',
+  isRequired: 'isRequired',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomExpenseFieldScalarFieldEnum = (typeof CustomExpenseFieldScalarFieldEnum)[keyof typeof CustomExpenseFieldScalarFieldEnum]
+
+
+export const CustomExpenseEntryScalarFieldEnum = {
+  id: 'id',
+  sheetId: 'sheetId',
+  schoolId: 'schoolId',
+  entryDate: 'entryDate',
+  billingMonth: 'billingMonth',
+  amount: 'amount',
+  fieldValues: 'fieldValues',
+  recordedById: 'recordedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CustomExpenseEntryScalarFieldEnum = (typeof CustomExpenseEntryScalarFieldEnum)[keyof typeof CustomExpenseEntryScalarFieldEnum]
 
 
 export const EnrollmentScalarFieldEnum = {
@@ -998,6 +1047,13 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const NullableJsonNullValueInput = {

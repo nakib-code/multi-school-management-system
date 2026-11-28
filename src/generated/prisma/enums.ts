@@ -146,6 +146,15 @@ export const FeeStatus = {
 export type FeeStatus = (typeof FeeStatus)[keyof typeof FeeStatus]
 
 
+export const CustomExpenseFieldType = {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  DATE: 'DATE'
+} as const
+
+export type CustomExpenseFieldType = (typeof CustomExpenseFieldType)[keyof typeof CustomExpenseFieldType]
+
+
 export const SalaryStatus = {
   PENDING: 'PENDING',
   PARTIAL: 'PARTIAL',

@@ -102,6 +102,21 @@ export type ClassRoutine = Prisma.ClassRoutineModel
  */
 export type SchoolClass = Prisma.SchoolClassModel
 /**
+ * Model CustomExpenseSheet
+ * 
+ */
+export type CustomExpenseSheet = Prisma.CustomExpenseSheetModel
+/**
+ * Model CustomExpenseField
+ * 
+ */
+export type CustomExpenseField = Prisma.CustomExpenseFieldModel
+/**
+ * Model CustomExpenseEntry
+ * 
+ */
+export type CustomExpenseEntry = Prisma.CustomExpenseEntryModel
+/**
  * Model Enrollment
  * 
  */

@@ -89,6 +89,12 @@ enum FeeStatus {
   WAIVED
 }
 
+enum CustomExpenseFieldType {
+  TEXT
+  NUMBER
+  DATE
+}
+
 enum SalaryStatus {
   PENDING
   PARTIAL

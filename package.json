@@ -8,7 +8,7 @@
 		"seed": "tsx src/seed.ts",
 		"build": "tsup",
 		"start": "node dist/server.js",
-		"test": "tsx --test src/modules/attendance/__tests__/attendance.test.ts src/modules/auth/__tests__/core-flows.test.ts src/modules/report/__tests__/fees-and-charts.test.ts",
+		"test": "tsx --test src/modules/attendance/__tests__/attendance.test.ts src/modules/auth/__tests__/core-flows.test.ts src/modules/report/__tests__/fees-and-charts.test.ts src/modules/custom-expense/__tests__/custom-expense.test.ts",
 		"format:check": "npx @biomejs/biome format ./src",
 		"format:fix": "npx @biomejs/biome format ./src --write",
 		"lint:check": "npx @biomejs/biome lint ./src",

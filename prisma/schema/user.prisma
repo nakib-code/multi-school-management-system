@@ -39,6 +39,8 @@ model User {
   platformAuditLogs            PlatformAuditLog[]    @relation("PlatformAuditActor")
   uploadedFiles                UploadedFile[]
   classDiariesCreated          ClassDiary[]          @relation("ClassDiaryAuthor")
+  customExpenseSheetsCreated   CustomExpenseSheet[]  @relation("CustomExpenseSheetCreator")
+  customExpenseEntriesRecorded CustomExpenseEntry[]  @relation("CustomExpenseEntryRecorder")
 
   @@index([role])
   @@index([status])

@@ -1,0 +1,64 @@
+model CustomExpenseSheet {
+  id          Int     @id @default(autoincrement())
+  schoolId    Int
+  name        String
+  description String?
+  isActive    Boolean @default(true)
+  createdById Int
+
+  school    School @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  createdBy User   @relation("CustomExpenseSheetCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  fields  CustomExpenseField[]
+  entries CustomExpenseEntry[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([schoolId, name])
+  @@index([schoolId, isActive])
+  @@map("custom_expense_sheets")
+}
+
+model CustomExpenseField {
+  id         Int                    @id @default(autoincrement())
+  sheetId    Int
+  schoolId   Int
+  label      String
+  fieldKey   String
+  fieldType  CustomExpenseFieldType @default(TEXT)
+  isRequired Boolean                @default(false)
+  sortOrder  Int                    @default(0)
+
+  sheet  CustomExpenseSheet @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+  school School             @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([sheetId, fieldKey])
+  @@index([schoolId, sheetId, sortOrder])
+  @@map("custom_expense_fields")
+}
+
+model CustomExpenseEntry {
+  id           Int      @id @default(autoincrement())
+  sheetId      Int
+  schoolId     Int
+  entryDate    DateTime
+  billingMonth String
+  amount       Decimal  @db.Decimal(10, 2)
+  fieldValues  Json     @default("{}")
+  recordedById Int
+
+  sheet      CustomExpenseSheet @relation(fields: [sheetId], references: [id], onDelete: Cascade)
+  school     School             @relation(fields: [schoolId], references: [id], onDelete: Cascade)
+  recordedBy User               @relation("CustomExpenseEntryRecorder", fields: [recordedById], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([schoolId, sheetId, billingMonth])
+  @@index([schoolId, sheetId, entryDate])
+  @@map("custom_expense_entries")
+}
